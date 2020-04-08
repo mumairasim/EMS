@@ -1,17 +1,17 @@
+using SMS.DATA.Infrastructure;
+using System.Data.Entity;
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-
-    public partial class SMS : DbContext
+    public partial class SMS : DbContext, IDbContext
     {
         public SMS()
-            : base("name=SMS")
+            : base("name=SmsConnection")
         {
         }
-
+        public virtual new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
+        {
+            return base.Set<TEntity>();
+        }
         public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<ClassAssignement> ClassAssignements { get; set; }
@@ -83,6 +83,23 @@ namespace SMS.DATA.Models
                 .HasMany(e => e.Student_Finances)
                 .WithOptional(e => e.StudentFinanceDetail)
                 .HasForeignKey(e => e.StudentFinanceDetailsId);
+        }
+        public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
+        {
+            int result;
+            if (!doNotEnsureTransaction)
+            {
+                //use with transaction
+                using (var transaction = Database.BeginTransaction())
+                {
+                    result = Database.ExecuteSqlCommand(sql, parameters);
+                    transaction.Commit();
+                }
+            }
+            else
+                result = Database.ExecuteSqlCommand(sql, parameters);
+
+            return result;
         }
     }
 }

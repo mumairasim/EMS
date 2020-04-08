@@ -1,13 +1,10 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     [Table("Employee")]
-    public partial class Employee
+    public partial class Employee : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
@@ -20,25 +17,10 @@ namespace SMS.DATA.Models
             Worksheets = new HashSet<Worksheet>();
         }
 
-        public int Id { get; set; }
 
         public int? PersonId { get; set; }
 
         public int? DesignationId { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? CreatedBy { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
-
-        public int? UpdateBy { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
-
-        public int? DeletedBy { get; set; }
-
-        public bool? IsDeleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }

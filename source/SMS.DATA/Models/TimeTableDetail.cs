@@ -1,15 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    public partial class TimeTableDetail
+    public partial class TimeTableDetail : BaseEntity
     {
-        public int Id { get; set; }
-
         [StringLength(50)]
         public string Day { get; set; }
 

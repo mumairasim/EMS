@@ -1,13 +1,12 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Class")]
-    public partial class Class
+    public partial class Class : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Class()
@@ -20,25 +19,9 @@ namespace SMS.DATA.Models
             TimeTableDetails = new HashSet<TimeTableDetail>();
         }
 
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string ClassName { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? CreatedBy { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
-
-        public int? UpdateBy { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
-
-        public int? DeletedBy { get; set; }
-
-        public bool? IsDeleted { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassAssignement> ClassAssignements { get; set; }
