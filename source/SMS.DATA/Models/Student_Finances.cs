@@ -1,15 +1,10 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    public partial class Student_Finances
+    public partial class Student_Finances : BaseEntity
     {
-        public int Id { get; set; }
-
         public int? StudentFinanceDetailsId { get; set; }
 
         public bool? FeeSubmitted { get; set; }
@@ -23,20 +18,6 @@ namespace SMS.DATA.Models
         public string FeeYear { get; set; }
 
         public DateTime? LastDateSubmission { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? CreatedBy { get; set; }
-
-        public DateTime? UpdateDate { get; set; }
-
-        public int? UpdateBy { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
-
-        public int? DeletedBy { get; set; }
-
-        public bool? IsDeleted { get; set; }
 
         public virtual StudentFinanceDetail StudentFinanceDetail { get; set; }
     }
