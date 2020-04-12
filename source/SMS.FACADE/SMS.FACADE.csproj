@@ -41,12 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\StudentFacade.cs" />
+    <Compile Include="Infrastructure\IStudentFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementation\" />
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SMS.DTOs\SMS.DTOs.csproj">
       <Project>{afadb3c9-3f0f-4680-96de-a6a7e7ec92bb}</Project>

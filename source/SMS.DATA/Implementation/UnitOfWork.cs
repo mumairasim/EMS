@@ -1,6 +1,5 @@
-﻿
-
-using SMS.DATA.Infrastructure;
+﻿using SMS.DATA.Infrastructure;
+using SMSContext = SMS.DATA.Models.SMS;
 
 namespace SMS.DATA.Implementation
 {
@@ -8,9 +7,9 @@ namespace SMS.DATA.Implementation
     {
         public IDbContext Context { get; }
 
-        public UnitOfWork(IDbContext context)
+        public UnitOfWork()
         {
-            Context = context;
+            Context = new SMSContext();
         }
         public void Commit()
         {

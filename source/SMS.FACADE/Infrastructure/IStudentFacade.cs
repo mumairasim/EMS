@@ -2,5 +2,6 @@
 {
     public interface IStudentFacade
     {
+        string Test();
     }
 }
