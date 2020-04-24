@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SMS.REQUESTDATA.RequestModels
+{
+    [Table("Student")]
+    public partial class Student:BaseEntity
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Student()
+        {
+            StudentAssignments = new HashSet<StudentAssignment>();
+            StudentFinanceDetails = new HashSet<StudentFinanceDetail>();
+            StudentStudentDiaries = new HashSet<StudentStudentDiary>();
+        }
+
+        [Required]
+        [StringLength(50)]
+        public string RegistrationNumber { get; set; }
+
+        public int? PersonId { get; set; }
+
+        public int? ClassId { get; set; }
+
+        public int? SchoolId { get; set; }
+
+        public int? RequestTypeId { get; set; }
+
+        public virtual RequestType RequestType { get; set; }
+        public virtual Class Class { get; set; }
+
+        public virtual Person Person { get; set; }
+
+        public virtual School School { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentAssignment> StudentAssignments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentFinanceDetail> StudentFinanceDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentStudentDiary> StudentStudentDiaries { get; set; }
+    }
+}
