@@ -24,6 +24,10 @@ namespace SMS.DATA.Models
 
         public int? ClassId { get; set; }
 
+        public int? SchoolId { get; set; }
+
+        public virtual School School { get; set; }
+
         public virtual Class Class { get; set; }
 
         public virtual Person Person { get; set; }
@@ -36,5 +40,6 @@ namespace SMS.DATA.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentStudentDiary> StudentStudentDiaries { get; set; }
+
     }
 }

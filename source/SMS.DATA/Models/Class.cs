@@ -22,6 +22,9 @@ namespace SMS.DATA.Models
         [Required]
         [StringLength(50)]
         public string ClassName { get; set; }
+        public int? SchoolId { get; set; }
+
+        public virtual School School { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassAssignement> ClassAssignements { get; set; }
