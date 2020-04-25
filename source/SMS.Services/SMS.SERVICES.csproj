@@ -59,6 +59,10 @@
       <Project>{8c54d1d5-e377-434e-97c5-1da53c7e3fbf}</Project>
       <Name>SMS.MAP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SMS.REQUESTDATA\SMS.REQUESTDATA.csproj">
+      <Project>{a7dbd438-6800-4f1b-9e97-9ba2b431d963}</Project>
+      <Name>SMS.REQUESTDATA</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
