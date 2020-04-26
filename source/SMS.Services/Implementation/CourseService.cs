@@ -20,7 +20,7 @@ namespace SMS.Services.Implementation
         {
             var courseList = _repository.Get().ToList();
             var courseRequestList = _requestRepository.Get().ToList();
-            return "Hello World";
+            return "Hello Courses";
         }
     }
 }
