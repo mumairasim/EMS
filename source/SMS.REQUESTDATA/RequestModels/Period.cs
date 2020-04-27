@@ -21,9 +21,9 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public TimeSpan? ToTime { get; set; }
 
-        public int? SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
-        public int? RequestTypeId { get; set; }
+        public Guid? RequestTypeId { get; set; }
 
         public virtual RequestType RequestType { get; set; }
         public virtual School School { get; set; }

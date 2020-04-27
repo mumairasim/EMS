@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Designation")]
-    public partial class Designation:BaseEntity
+    public partial class Designation : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Designation()
@@ -13,9 +14,9 @@ namespace SMS.REQUESTDATA.RequestModels
         }
         public string Name { get; set; }
 
-        public int? SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
-        public int? RequestTypeId { get; set; }
+        public Guid? RequestTypeId { get; set; }
 
         public virtual RequestType RequestType { get; set; }
         public virtual School School { get; set; }

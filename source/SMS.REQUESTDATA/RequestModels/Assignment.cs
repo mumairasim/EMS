@@ -18,11 +18,11 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public DateTime? LastDateOfSubmission { get; set; }
 
-        public int? InstructorId { get; set; }
+        public Guid? InstructorId { get; set; }
 
-        public int? SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
-        public int? RequestTypeId { get; set; }
+        public Guid? RequestTypeId { get; set; }
 
         public virtual Employee Employee { get; set; }
 

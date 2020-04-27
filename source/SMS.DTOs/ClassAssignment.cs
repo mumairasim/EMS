@@ -1,10 +1,12 @@
+
 using System;
 
 namespace SMS.DTOs
 {
-    public class StudentAssignment : DtoBaseEntity
+    public class ClassAssignment : DtoBaseEntity
     {
-        public Guid? StudentId { get; set; }
+
+        public Guid? ClassId { get; set; }
 
         public Guid? AssignmentId { get; set; }
 

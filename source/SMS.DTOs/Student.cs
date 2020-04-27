@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DTOs
@@ -8,8 +9,8 @@ namespace SMS.DTOs
         [StringLength(50)]
         public string RegistrationNumber { get; set; }
 
-        public int? PersonId { get; set; }
+        public Guid? PersonId { get; set; }
 
-        public int? ClassId { get; set; }
+        public Guid? ClassId { get; set; }
     }
 }

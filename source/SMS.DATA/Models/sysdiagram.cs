@@ -1,10 +1,8 @@
+using System;
+
 namespace SMS.DATA.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class sysdiagram
     {
@@ -15,9 +13,9 @@ namespace SMS.DATA.Models
         public int principal_id { get; set; }
 
         [Key]
-        public int diagram_id { get; set; }
+        public Guid diagram_id { get; set; }
 
-        public int? version { get; set; }
+        public Guid? version { get; set; }
 
         public byte[] definition { get; set; }
     }

@@ -1,10 +1,12 @@
+using System;
+
 namespace SMS.DTOs
 {
     public class StudentStudentDiary : DtoBaseEntity
     {
-        public int? StudentDiaryId { get; set; }
+        public Guid? StudentDiaryId { get; set; }
 
-        public int? StudentId { get; set; }
+        public Guid? StudentId { get; set; }
         
     }
 }

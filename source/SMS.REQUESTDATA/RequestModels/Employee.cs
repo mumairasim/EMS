@@ -18,13 +18,13 @@ namespace SMS.REQUESTDATA.RequestModels
             Worksheets = new HashSet<Worksheet>();
         }
 
-        public int? PersonId { get; set; }
+        public Guid? PersonId { get; set; }
 
-        public int? DesignationId { get; set; }
+        public Guid? DesignationId { get; set; }
 
-        public int? SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
-        public int? RequestTypeId { get; set; }
+        public Guid? RequestTypeId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }

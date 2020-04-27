@@ -11,7 +11,7 @@ namespace SMS.DTOs
 
         public DateTime? LastDateOfSubmission { get; set; }
 
-        public int? InstructorId { get; set; }
+        public Guid? InstructorId { get; set; }
 
     }
 }
