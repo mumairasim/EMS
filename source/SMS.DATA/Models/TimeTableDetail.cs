@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DATA.Models
@@ -7,13 +8,13 @@ namespace SMS.DATA.Models
         [StringLength(50)]
         public string Day { get; set; }
 
-        public int? ClassId { get; set; }
+        public Guid? ClassId { get; set; }
 
-        public int? PeriodId { get; set; }
+        public Guid? PeriodId { get; set; }
 
-        public int? TeacherId { get; set; }
+        public Guid? TeacherId { get; set; }
 
-        public int? TimeTableId { get; set; }
+        public Guid? TimeTableId { get; set; }
 
         public virtual Class Class { get; set; }
 

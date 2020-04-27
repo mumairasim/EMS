@@ -12,7 +12,7 @@ namespace SMS.REQUESTDATA.RequestModels
             EmployeeFinances = new HashSet<EmployeeFinance>();
         }
 
-        public int? EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
         [Column(TypeName = "money")]
         public decimal? Salary { get; set; }

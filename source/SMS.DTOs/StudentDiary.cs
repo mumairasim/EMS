@@ -8,6 +8,6 @@ namespace SMS.DTOs
 
         public DateTime? DairyDate { get; set; }
 
-        public int? InstructorId { get; set; }
+        public Guid? InstructorId { get; set; }
     }
 }

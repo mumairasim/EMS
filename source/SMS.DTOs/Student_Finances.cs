@@ -5,7 +5,7 @@ namespace SMS.DTOs
 {
     public class Student_Finances : DtoBaseEntity
     {
-        public int? StudentFinanceDetailsId { get; set; }
+        public Guid? StudentFinanceDetailsId { get; set; }
 
         public bool? FeeSubmitted { get; set; }
 

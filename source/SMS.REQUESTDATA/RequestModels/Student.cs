@@ -20,13 +20,13 @@ namespace SMS.REQUESTDATA.RequestModels
         [StringLength(50)]
         public string RegistrationNumber { get; set; }
 
-        public int? PersonId { get; set; }
+        public Guid? PersonId { get; set; }
 
-        public int? ClassId { get; set; }
+        public Guid? ClassId { get; set; }
 
-        public int? SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
-        public int? RequestTypeId { get; set; }
+        public Guid? RequestTypeId { get; set; }
 
         public virtual RequestType RequestType { get; set; }
         public virtual Class Class { get; set; }

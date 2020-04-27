@@ -16,8 +16,8 @@ namespace SMS.DATA.Models
 
         public DateTime? DairyDate { get; set; }
 
-        public int? InstructorId { get; set; }
-        public int? SchoolId { get; set; }
+        public Guid? InstructorId { get; set; }
+        public Guid? SchoolId { get; set; }
 
         public virtual School School { get; set; }
 

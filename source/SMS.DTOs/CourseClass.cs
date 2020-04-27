@@ -1,11 +1,13 @@
 
+using System;
+
 namespace SMS.DTOs
 {
     public class CourseClass : DtoBaseEntity
     {
-        public int? CourseId { get; set; }
+        public Guid? CourseId { get; set; }
 
-        public int? ClassId { get; set; }
+        public Guid? ClassId { get; set; }
 
     }
 }

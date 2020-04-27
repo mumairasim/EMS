@@ -5,7 +5,7 @@ namespace SMS.REQUESTDATA.RequestModels
 {
     public partial class Student_Finances:BaseEntity
     {
-        public int? StudentFinanceDetailsId { get; set; }
+        public Guid? StudentFinanceDetailsId { get; set; }
 
         public bool? FeeSubmitted { get; set; }
 

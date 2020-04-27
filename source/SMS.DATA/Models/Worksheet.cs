@@ -10,8 +10,8 @@ namespace SMS.DATA.Models
 
         public DateTime? ForDate { get; set; }
 
-        public int? InstructorId { get; set; }
-        public int? SchoolId { get; set; }
+        public Guid? InstructorId { get; set; }
+        public Guid? SchoolId { get; set; }
 
         public virtual School School { get; set; }
         public virtual Employee Employee { get; set; }
