@@ -1,5 +1,8 @@
-﻿using SMS.FACADE.Infrastructure;
+﻿using System;
+using DTOStudent = SMS.DTOs.DTOs.Student;
+using SMS.FACADE.Infrastructure;
 using SMS.Services.Infrastructure;
+
 
 namespace SMS.FACADE.Implementation
 {
@@ -13,6 +16,10 @@ namespace SMS.FACADE.Implementation
         public string Test()
         {
             return _studentService.Get();
+        }
+        public DTOStudent GetStudentById(Guid id)
+        {
+            return _studentService.GetbyId(id);
         }
     }
 }

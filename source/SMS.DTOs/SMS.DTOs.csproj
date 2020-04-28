@@ -42,33 +42,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assignment.cs" />
-    <Compile Include="BaseEntity.cs" />
-    <Compile Include="Class.cs" />
-    <Compile Include="ClassAssignement.cs" />
-    <Compile Include="ClassStudentDiary.cs" />
-    <Compile Include="ClassTeacherDiary.cs" />
-    <Compile Include="Course.cs" />
-    <Compile Include="CourseClass.cs" />
-    <Compile Include="Designation.cs" />
-    <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeFinance.cs" />
-    <Compile Include="EmployeeFinanceDetail.cs" />
-    <Compile Include="FinanceType.cs" />
-    <Compile Include="LessonPlan.cs" />
-    <Compile Include="Period.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="DTOs\Assignment.cs" />
+    <Compile Include="DTOs\DtoBaseEntity.cs" />
+    <Compile Include="DTOs\Class.cs" />
+    <Compile Include="DTOs\Course.cs" />
+    <Compile Include="DTOs\Designation.cs" />
+    <Compile Include="DTOs\Employee.cs" />
+    <Compile Include="DTOs\EmployeeFinance.cs" />
+    <Compile Include="DTOs\EmployeeFinanceDetail.cs" />
+    <Compile Include="DTOs\FinanceType.cs" />
+    <Compile Include="DTOs\LessonPlan.cs" />
+    <Compile Include="DTOs\Period.cs" />
+    <Compile Include="DTOs\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Student.cs" />
-    <Compile Include="StudentAssignment.cs" />
-    <Compile Include="StudentDiary.cs" />
-    <Compile Include="StudentFinanceDetail.cs" />
-    <Compile Include="StudentStudentDiary.cs" />
-    <Compile Include="Student_Finances.cs" />
-    <Compile Include="TeacherDiary.cs" />
-    <Compile Include="TimeTable.cs" />
-    <Compile Include="TimeTableDetail.cs" />
-    <Compile Include="Worksheet.cs" />
+    <Compile Include="DTOs\Student.cs" />
+    <Compile Include="DTOs\StudentDiary.cs" />
+    <Compile Include="DTOs\StudentFinanceDetail.cs" />
+    <Compile Include="DTOs\Student_Finances.cs" />
+    <Compile Include="DTOs\TeacherDiary.cs" />
+    <Compile Include="DTOs\TimeTable.cs" />
+    <Compile Include="DTOs\TimeTableDetail.cs" />
+    <Compile Include="DTOs\Worksheet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RequestDTOs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using SMS.FACADE.Infrastructure;
+﻿using System;
+using SMS.FACADE.Infrastructure;
 using System.Web.Http;
 
 namespace SMS.API.Controllers
@@ -17,6 +18,13 @@ namespace SMS.API.Controllers
         public IHttpActionResult Get()
         {
             return Ok(_studentFacade.Test());
+
+        }
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult Get(Guid id)
+        {
+            return Ok(_studentFacade.GetStudentById(id));
 
         }
     }

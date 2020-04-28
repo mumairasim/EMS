@@ -1,5 +1,5 @@
 
-namespace SMS.DTOs
+namespace SMS.DTOs.DTOs
 {
     public class Designation : DtoBaseEntity
     {

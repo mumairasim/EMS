@@ -1,8 +1,9 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SMS.DTOs
+namespace SMS.DTOs.DTOs
 {
-    public class Person : DtoBaseEntity
+    public class Student : DtoBaseEntity
     {
         [StringLength(250)]
         public string FirstName { get; set; }
@@ -25,5 +26,13 @@ namespace SMS.DTOs
 
         [StringLength(50)]
         public string Phone { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string RegistrationNumber { get; set; }
+
+        public Guid? PersonId { get; set; }
+
+        public Guid? ClassId { get; set; }
+        public Guid? SchoolId { get; set; }
     }
 }

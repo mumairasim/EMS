@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SMS.DTOs
+namespace SMS.DTOs.DTOs
 {
     public class Class : DtoBaseEntity
     {

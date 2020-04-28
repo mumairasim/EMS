@@ -60,14 +60,6 @@
     <Compile Include="Infrastructure\IDbContext.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202004081619506_firstMigration.cs" />
-    <Compile Include="Migrations\202004081619506_firstMigration.designer.cs">
-      <DependentUpon>202004081619506_firstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004241042230_schoolentity.cs" />
-    <Compile Include="Migrations\202004241042230_schoolentity.designer.cs">
-      <DependentUpon>202004241042230_schoolentity.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -105,14 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004081619506_firstMigration.resx">
-      <DependentUpon>202004081619506_firstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004241042230_schoolentity.resx">
-      <DependentUpon>202004241042230_schoolentity.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

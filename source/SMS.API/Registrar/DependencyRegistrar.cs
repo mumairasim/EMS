@@ -1,11 +1,16 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac;
 using Autofac.Integration.WebApi;
 using SMS.DATA.Implementation;
 using SMS.DATA.Infrastructure;
 using System.Reflection;
 using System.Web.Http;
+using AutoMapper;
 using SMS.REQUESTDATA.Implementation;
 using SMS.REQUESTDATA.Infrastructure;
+using SMS.MAP;
 
 namespace SMS.API.Registrar
 {
@@ -28,10 +33,22 @@ namespace SMS.API.Registrar
                 .Where(t => t.Name.EndsWith("Facade"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+            var autoMapperProfile = new MapperConfigurationInternal();
+
+            builder.Register(ctx => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(autoMapperProfile);
+            }));
+
+            //register your mapper
+            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().InstancePerLifetimeScope();
             var container = builder.Build();
+
             var resolver = new AutofacWebApiDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
 
         }
+
     }
+
 }

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SMS.DTOs
+namespace SMS.DTOs.DTOs
 {
     public class EmployeeFinanceDetail : DtoBaseEntity
     {

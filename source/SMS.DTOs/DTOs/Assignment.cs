@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 
-namespace SMS.DTOs
+namespace SMS.DTOs.DTOs
 {
 
     public class Assignment : DtoBaseEntity
