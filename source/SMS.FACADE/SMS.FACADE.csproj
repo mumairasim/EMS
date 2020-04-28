@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\CourseFacade.cs" />
     <Compile Include="Implementation\StudentFacade.cs" />
+    <Compile Include="Infrastructure\ICourseFacade.cs" />
     <Compile Include="Infrastructure\IStudentFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

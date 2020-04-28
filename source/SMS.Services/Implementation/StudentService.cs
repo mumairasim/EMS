@@ -30,7 +30,7 @@ namespace SMS.Services.Implementation
         {
             var studentList = _repository.Get().ToList();
             var studentRequestList = _requestRepository.Get().ToList();
-            return "Hello World";
+            return "Hello World"; 
         }
 
         public DTOStudent GetbyId(Guid id)
