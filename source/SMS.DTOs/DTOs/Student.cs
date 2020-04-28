@@ -33,5 +33,6 @@ namespace SMS.DTOs.DTOs
         public Guid? PersonId { get; set; }
 
         public Guid? ClassId { get; set; }
+        public Guid? SchoolId { get; set; }
     }
 }

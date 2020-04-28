@@ -40,8 +40,8 @@ namespace SMS.Services.Implementation
             {
                 return null;
             }
-            var studentRecord = _repository.Get().FirstOrDefault(st => st.Id == personRecord.Id);
-            var dto = _mapper.Map<DTOStudent>(personRecord);
+            var studentRecord = _repository.Get().FirstOrDefault(st => st.PersonId == personRecord.Id);
+            var dto = _mapper.Map<Person, DTOStudent>(personRecord);
             return _mapper.Map(studentRecord, dto);
         }
     }
