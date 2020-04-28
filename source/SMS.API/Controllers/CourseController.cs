@@ -6,18 +6,18 @@ namespace SMS.API.Controllers
     [RoutePrefix("api/v1/Course")]
     public class CourseController : ApiController
     {
-        public ICourseFacade _courseFacade;
+        public ICourseFacade CourseFacade;
 
         public CourseController(ICourseFacade courseFacade)
         {
-            _courseFacade = courseFacade;
+            CourseFacade = courseFacade;
         }
         [HttpGet]
         [Route("Get")]
 
         public IHttpActionResult Get()
         {
-            return Ok(_courseFacade.Test());
+            return Ok(CourseFacade.Test());
 
         }
     }

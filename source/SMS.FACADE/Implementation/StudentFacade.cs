@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using SMS.FACADE.Infrastructure;
 using SMS.Services.Infrastructure;
@@ -8,18 +9,32 @@ namespace SMS.FACADE.Implementation
 {
     public class StudentFacade : IStudentFacade
     {
-        public IStudentService _studentService;
+        public IStudentService StudentService;
         public StudentFacade(IStudentService studentService)
         {
-            _studentService = studentService;
+            StudentService = studentService;
         }
-        public string Test()
+        public List<DTOStudent> Get()
         {
-            return _studentService.Get();
+            return StudentService.Get();
         }
-        public DTOStudent GetStudentById(Guid id)
+        public DTOStudent Get(Guid id)
         {
-            return _studentService.GetbyId(id);
+            return StudentService.Get(id);
+        }
+
+        public void Create(DTOStudent dtoStudent)
+        {
+            StudentService.Create(dtoStudent);
+        }
+        public void Update(DTOStudent dtoStudent)
+        {
+            StudentService.Update(dtoStudent);
+        }
+
+        public void Delete(Guid? id)
+        {
+            StudentService.Delete(id);
         }
     }
 }
