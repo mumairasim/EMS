@@ -1,13 +1,15 @@
 ﻿using System;
-using Student = SMS.DATA.Models.Student;
-using RequestStudent = SMS.REQUESTDATA.RequestModels.Student;
+using System.Collections.Generic;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.Services.Infrastructure
 {
     public interface IStudentService
     {
-        string Get();
-        DTOStudent GetbyId(Guid id);
+        List<DTOStudent> Get();
+        DTOStudent Get(Guid? id);
+        void Create(DTOStudent student);
+        void Update(DTOStudent dtoStudent);
+        void Delete(Guid? id);
     }
 }

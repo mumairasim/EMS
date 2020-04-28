@@ -6,10 +6,10 @@ using SMS.DATA.Infrastructure;
 
 namespace SMS.DATA.Implementation
 {
-    public class EFRepository<T> : IRepository<T> where T : BaseEntity
+    public class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly IUnitOfWork _unitOfWork;
-        public EFRepository(IUnitOfWork unitOfWork)
+        public EfRepository(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

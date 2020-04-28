@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
-using SMS.DATA.Models;
 using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
+using Person = SMS.DATA.Models.Person;
+using DTOPerson = SMS.DTOs.DTOs.Person;
+using Class = SMS.DATA.Models.Class;
+using DTOClass = SMS.DTOs.DTOs.Class;
+using School = SMS.DATA.Models.School;
+using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.MAP
 {
@@ -9,11 +14,33 @@ namespace SMS.MAP
     {
         public MapperConfigurationInternal()
         {
-            CreateMap<Person, DTOStudent>();
+            #region DB to DTO
+
+
+            //Db to DTO
             CreateMap<Student, DTOStudent>();
-             //.ForMember(dest => dest.PersonId, act => act.MapFrom(src => src.PersonId));
+            CreateMap<DTOStudent, DTOStudent>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DTOPerson, DTOPerson>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<Person, DTOPerson>();
+            CreateMap<Class, DTOClass>();
+            CreateMap<School, DTOSchool>();
+
+            #endregion
+            #region DTO to DB
+
+
+            //.ForMember(dest => dest.PersonId, act => act.MapFrom(src => src.PersonId));
+            //DTO to Db
             CreateMap<DTOStudent, Student>();
-            CreateMap<DTOStudent, Person>();
+            CreateMap<DTOPerson, Person>();
+            CreateMap<DTOClass, Class>();
+            CreateMap<DTOSchool, School>();
+
+            #endregion
         }
     }
 }
