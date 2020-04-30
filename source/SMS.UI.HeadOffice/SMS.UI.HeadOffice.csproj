@@ -138,6 +138,7 @@
     <Content Include="App\Controllers\Modules\studentSearchCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
     <Content Include="App\Services\apiService.js" />
+    <Content Include="Content\App\mainDashboard.css" />
     <Content Include="Content\App\util.css" />
     <Content Include="Content\App\main.css" />
     <Content Include="Content\App\style.css" />
@@ -148,20 +149,33 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fa-solid-900.svg" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
     <Content Include="fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="fonts\material-icon\css\material-design-iconic-font.css" />
     <Content Include="fonts\material-icon\css\material-design-iconic-font.min.css" />
     <Content Include="fonts\material-icon\fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="fonts\montserrat\OFL.txt" />
+    <Content Include="fonts\Pe-icon-7-stroke.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\avatars\1.jpg" />
+    <Content Include="Images\avatars\10.jpg" />
+    <Content Include="Images\avatars\11.jpg" />
+    <Content Include="Images\avatars\12.jpg" />
+    <Content Include="Images\avatars\2.jpg" />
+    <Content Include="Images\avatars\3.jpg" />
+    <Content Include="Images\avatars\4.jpg" />
+    <Content Include="Images\avatars\5.jpg" />
+    <Content Include="Images\avatars\8.jpg" />
+    <Content Include="Images\avatars\9.jpg" />
     <Content Include="Images\bg-01.jpg" />
     <Content Include="Images\bg-02.jpg" />
+    <Content Include="Images\logo-inverse.png" />
+    <Content Include="Images\logo.png" />
     <Content Include="Images\signup-img.jpg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -194,6 +208,7 @@
     <Content Include="Scripts\App\angular-growl-notifications.js" />
     <Content Include="Scripts\App\angular-ui-router.min.js" />
     <Content Include="Scripts\App\checklist-model.js" />
+    <Content Include="Scripts\App\main.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />
@@ -293,6 +308,13 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="fonts\fa-solid-900.eot" />
+    <Content Include="fonts\fa-solid-900.ttf" />
+    <Content Include="fonts\fa-solid-900.woff" />
+    <Content Include="fonts\fa-solid-900.woff2" />
+    <Content Include="fonts\Pe-icon-7-stroke.eot" />
+    <Content Include="fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="fonts\Pe-icon-7-stroke.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1070,10 +1092,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
@@ -1096,7 +1114,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51451</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44366/</IISUrl>
+          <IISUrl>http://localhost:44366/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

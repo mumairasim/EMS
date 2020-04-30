@@ -52,6 +52,7 @@ namespace SMS.UI.HeadOffice
                       "~/Content/bootstrap.min.css",
                       "~/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
                       "~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
+                      "~/Content/App/mainDashboard.css",
                       "~/Content/App/main.css",
                       "~/Content/App/util.css",
                       "~/Content/App/style.css"));
