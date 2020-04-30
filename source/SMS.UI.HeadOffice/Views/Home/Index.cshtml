@@ -5,18 +5,18 @@
 <html lang="en" ng-app="SMSHO">
 <head>
     <meta charset="UTF-8">
-    <title>PIM</title>
+    <title>Excelence Education System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @Styles.Render("~/Content/css")
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/JsResources")
-        @Scripts.Render("~/bundles/bootstrap")*@
+    
 
     <base href="/">
 </head>
-<body ng-controller="rootCtrl" ng-cloak class="main-grid">
+<body ng-controller="rootCtrl" style="background-color: transparent;">
     <div ng-view></div>
 @Scripts.RenderFormat(@"<script src="" {0}""></script>", "~/bundles/JsResources")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

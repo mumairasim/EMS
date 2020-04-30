@@ -24,20 +24,14 @@ namespace SMS.UI.HeadOffice
                        "~/Scripts/App/angular-ui-router.min.js",
                        "~/Scripts/angular-local-storage.min.js",
                        //External Scripts
-                       "~/Scripts/App/Login/jquery/jquery-3.2.1.min.js",
-                       "~/Scripts/App/Login/animsition/js/animsition.min.js",
-                       "~/Scripts/App/Login/bootstrap/js/popper.js",
-                       "~/Scripts/App/Login/bootstrap/js/bootstrap.min.js",
-                       "~/Scripts/App/Login/select2/select2.min.js",
-                       "~/Scripts/App/Login/daterangepicker/moment.min.js",
-                       "~/Scripts/App/Login/daterangepicker/daterangepicker.js",
-                       "~/Scripts/App/Login/countdowntime/countdowntime.js",
-                       "~/Scripts/App/Login/main.js",
+                       //"~/Scripts/App/js/main.js",
                        //Angular App Scripts
                        "~/App/App.js",
                         "~/App/Services/*.js",
                         "~/App/Controllers/*.js",
-                        "~/App/Controllers/Authentication/*.js"
+                        "~/App/Controllers/Authentication/*.js",
+                       "~/App/Controllers/Dashboard/*.js",
+                       "~/App/Controllers/Modules/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -51,22 +45,16 @@ namespace SMS.UI.HeadOffice
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                "~/Scripts/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
                       //External Contents
-                      "~/Content/Login/bootstrap/css/bootstrap.min.css",
+                      "~/Content/bootstrap.min.css",
                       "~/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
                       "~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
-                      "~/Content/Login/animate/animate.css",
-                      "~/Content/Login/css-hamburgers/hamburgers.min.css",
-                      "~/Content/Login/animsition/css/animsition.min.css",
-                      "~/Content/Login/select2/select2.min.css",
-                      "~/Content/Login/daterangepicker/daterangepicker.css",
-                      "~/Content/Login/main.css",
-                      "~/Content/Login/util.css"));
+                      "~/Content/App/main.css",
+                      "~/Content/App/util.css",
+                      "~/Content/App/style.css"));
         }
     }
 }
