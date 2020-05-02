@@ -203,7 +203,7 @@ $RECYCLE.BIN/
 project.lock.json
 
 # VS 2015+
-*.vc.vc.opendb
+*.vc.vc.opendb 
 *.vc.db
 
 # Rider
@@ -224,3 +224,7 @@ project.lock.json
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+/source/SMS.REQUESTDATA/Migrations/
+/source/SMS.DATA/Migrations/
+*/Web.config
+*/App.config
