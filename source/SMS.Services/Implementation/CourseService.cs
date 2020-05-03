@@ -49,10 +49,13 @@ namespace SMS.Services.Implementation
             if (id == null)
                 return;
             var course = Get(id);
-            course.IsDeleted = true;
-            course.DeletedDate = DateTime.Now;
+            if (course != null)
+            {
+                course.IsDeleted = true;
+                course.DeletedDate = DateTime.Now;
 
-            _repository.Update(_mapper.Map<DTOCourse, DBCourse>(course));
+                _repository.Update(_mapper.Map<DTOCourse, DBCourse>(course));
+            }
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace SMS.Services.Implementation
                 return null;
             }
 
-            var course = _repository.Get().FirstOrDefault(st => st.Id == id && st.IsDeleted == false);
+            var course = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var courseDto = _mapper.Map<DBCourse, DTOCourse>(course);
 
             return courseDto;
@@ -80,10 +83,14 @@ namespace SMS.Services.Implementation
         public void Update(DTOCourse dtoCourse)
         {
             var course = Get(dtoCourse.Id);
-            dtoCourse.UpdateDate = DateTime.Now;
-            var updated = _mapper.Map(dtoCourse, course);
+            if (course != null)
+            {
+                dtoCourse.UpdateDate = DateTime.Now;
+                var updated = _mapper.Map(dtoCourse, course);
+                dtoCourse.IsDeleted = false;
 
-            _repository.Update(_mapper.Map<DTOCourse, DBCourse>(updated));
+                _repository.Update(_mapper.Map<DTOCourse, DBCourse>(updated));
+            }
         }
 
         /// <summary>
@@ -92,7 +99,7 @@ namespace SMS.Services.Implementation
         /// <returns></returns>
         List<DTOCourse> ICourseService.GetAll()
         {
-            var courses = _repository.Get().Where(st => st.IsDeleted == false).ToList();
+            var courses = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var courseList = new List<DTOCourse>();
             foreach (var course in courses)
             {
