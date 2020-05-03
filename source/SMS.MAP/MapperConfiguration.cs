@@ -7,6 +7,8 @@ using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using School = SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
+using Course = SMS.DATA.Models.Course;
+using DTOCourse = SMS.DTOs.DTOs.Course;
 
 namespace SMS.MAP
 {
@@ -28,6 +30,7 @@ namespace SMS.MAP
             CreateMap<Person, DTOPerson>();
             CreateMap<Class, DTOClass>();
             CreateMap<School, DTOSchool>();
+            CreateMap<Course, DTOCourse>();
 
             #endregion
             #region DTO to DB
@@ -39,7 +42,7 @@ namespace SMS.MAP
             CreateMap<DTOPerson, Person>();
             CreateMap<DTOClass, Class>();
             CreateMap<DTOSchool, School>();
-
+            CreateMap<DTOCourse, Course>();
             #endregion
         }
     }
