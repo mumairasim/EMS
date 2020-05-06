@@ -45,17 +45,18 @@ namespace SMS.UI.HeadOffice
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.min.js"));
+                "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //External Contents
-                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap.css",
                       "~/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
                       "~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
-                      "~/Content/App/mainDashboard.css",
+                      //"~/Content/App/mainDashboard.css",
                       "~/Content/App/main.css",
                       "~/Content/App/util.css",
-                      "~/Content/App/style.css"));
+                      "~/Content/App/OverridedStyle.css",
+                      "~/Content/App/customStyle.css"));
         }
     }
 }

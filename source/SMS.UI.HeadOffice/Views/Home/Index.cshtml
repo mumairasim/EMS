@@ -8,15 +8,64 @@
     <title>Excelence Education System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @Styles.Render("~/Content/css")
-    
-
     <base href="/">
 </head>
-<body ng-controller="rootCtrl" style="background-color: transparent;">
+<body ng-controller="rootCtrl" style="background-color: #e2e5e7;">
+    <growl-notifications></growl-notifications>
+    <div class="navbar navbar-default navbarshadow">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/#!/dashboard">Excellence Education System</a>
+            </div>
+            <div class="nav navbar-nav navbar-right navbarstyle">
+
+                <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn" ng-click="userDropdownClicked()">
+                    <img width="42" class="rounded-circle" src="~/images/avatars/2.jpg" alt="">
+                    <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                </div>
+                <div role="menu" class="dropdown-menu dropdown-menu-right" ng-show="userDropdown">
+                    <button type="button" tabindex="0" class="dropdown-item">Profile</button>
+                    <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                    <button type="button" tabindex="0" class="dropdown-item">Change Password</button>
+                    <div tabindex="-1" class="dropdown-divider"></div>
+                    <button type="button" tabindex="0" class="dropdown-item">Sign out</button>
+                </div>
+                <div class="widget-content-left  ml-3 header-user-info">
+                    <div class="widget-heading">
+                        Ruben Tillman
+                    </div>
+                    <div class="widget-subheading">
+                        VP People Manager
+                    </div>
+                </div>
+                @*<li class="dropdown navbarstyleli">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <img width="42" class="rounded-circle" src="~/images/avatars/1.jpg" alt="">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Sign out</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Default</a></li>
+                        </ul>
+                    </li>*@
+            </div>
+        </div>
+    </div>
+    <div ng-repeat="message in notifications">
+        <growl-notification class="fading" ttl="{{growlmsgtime}}" ng-class="{'growlerror':message.iserror}" ng-if="growlshow">
+            {{message.growlinfo}}
+            <div>
+                <!-- Manually remove the notification using the $growlNotification.remove() method -->
+                <a href="" ng-click="$growlNotification.remove()"><span class="cross"></span></a>
+            </div>
+        </growl-notification>
+    </div>
     <div ng-view></div>
-@Scripts.RenderFormat(@"<script src="" {0}""></script>", "~/bundles/JsResources")
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.RenderFormat(@"<script src="" {0}""></script>", "~/bundles/JsResources")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

@@ -1,9 +1,11 @@
 ﻿using SMS.FACADE.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Course")]
+    [EnableCors("*", "*", "*")]
     public class CourseController : ApiController
     {
         public ICourseFacade CourseFacade;

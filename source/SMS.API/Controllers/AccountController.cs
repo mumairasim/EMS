@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
+using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -21,6 +21,7 @@ namespace SMS.API.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
+    [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -328,7 +329,7 @@ namespace SMS.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

@@ -12,15 +12,12 @@ SMSHO.controller('registerCtrl', ['$scope', 'apiService', '$cookies', function (
     };
     $scope.response = '';
     $scope.registercall = function () {
-        $scope.loader(true);
         var data = $scope.Register;
         var responsedata = apiService.register('/api/Account/Register', data);
         responsedata.then(function mySucces(response) {
-            $scope.loader(false);
             $scope.response = response.data;
             $scope.growltext("User created successfully.", false);
         }, function myError(response) {
-            $scope.loader(false);
             $scope.response = response.data;
         });
     };

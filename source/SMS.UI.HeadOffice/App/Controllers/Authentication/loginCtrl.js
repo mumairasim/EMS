@@ -3,7 +3,6 @@
 
 SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-
     //$scope.identitydate = $cookies.get('token-expire-identity');
     $scope.iserror = false;
     $scope.authorizeobj = apiService.authorizationbit();
@@ -23,7 +22,7 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
         $scope.iserror = false;
     }
     if ($cookies.get('token') != null) {
-        window.location = "#!/search";
+        window.location = "#!/dashboard";
     }
     else {
         apiService.logout();
@@ -33,10 +32,8 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
         }
     }
     $scope.logincall = function () {
-        $scope.loader(true);
-        //window.location = "#!/search";
+        //$scope.loader(true);
         var data = "grant_type=password&username=" + $scope.logindata.userName + "&password=" + $scope.logindata.password;
-        // var data = $scope.logindata;
         var responsedata = apiService.login('/Token', data);
         responsedata.then(function mySucces(response) {
             $cookies.put('token', response.data.access_token);
@@ -48,18 +45,20 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
             $scope.Setisloggedin();
             apiService.setaccesstoken();
             $scope.iserror = false;
-            window.location = "#!/search";
-            $scope.loader(false);
+            $scope.growltext("Login sucessfull.", false);
+            window.location = "#!/dashboard";
         }, function myError(response) {
             if (response.status != 200) {
                 $scope.iserror = true;
-                $scope.responsemsg = response.data.error_description;
+                //$scope.responsemsg = response.data.error_description;
+                $scope.growltext("Login failed.", true);
             }
-            $scope.loader(false);
 
         });
     };
-
+    $scope.test = function () {
+        $scope.growltext("login notification test.", false);
+    }
 
 }]);
 

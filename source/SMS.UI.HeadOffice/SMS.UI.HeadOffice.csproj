@@ -134,11 +134,16 @@
     <Content Include="App\Controllers\Authentication\loginCtrl.js" />
     <Content Include="App\Controllers\Dashboard\dashboard.html" />
     <Content Include="App\Controllers\Dashboard\dashboardCtrl.js" />
+    <Content Include="App\Controllers\Modules\studentCreate.html" />
+    <Content Include="App\Controllers\Modules\studentCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\studentSearch.html" />
     <Content Include="App\Controllers\Modules\studentSearchCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
     <Content Include="App\Services\apiService.js" />
+    <Content Include="Content\App\customStyle.css" />
+    <Content Include="Content\App\growl.css" />
     <Content Include="Content\App\mainDashboard.css" />
+    <Content Include="Content\App\OverridedStyle.css" />
     <Content Include="Content\App\util.css" />
     <Content Include="Content\App\main.css" />
     <Content Include="Content\App\style.css" />
@@ -1115,6 +1120,8 @@
           <DevelopmentServerPort>51451</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:44366/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:44366/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
