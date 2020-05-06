@@ -2,20 +2,18 @@
 using SMS.Services.Infrastructure;
 using System;
 using System.Web.Http;
-using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
-    [RoutePrefix("api/v1/Course")]
-    [EnableCors("*", "*", "*")]
-    public class CourseController : ApiController
+    [RoutePrefix("api/v1/Worksheet")]
+    public class WorksheetController : ApiController
     {
         #region Props and Init
-        public ICourseService _courseService;
+        public IWorksheetService _worksheetService;
 
-        public CourseController(ICourseService courseService)
+        public WorksheetController(IWorksheetService worksheetService)
         {
-            _courseService = courseService;
+            _worksheetService = worksheetService;
         }
 
         #endregion
@@ -32,7 +30,7 @@ namespace SMS.API.Controllers
 
             try
             {
-                var result = _courseService.Get(id);
+                var result = _worksheetService.Get(id);
                 return Ok(result);
             }
             catch (Exception)
@@ -47,7 +45,7 @@ namespace SMS.API.Controllers
         {
             try
             {
-                var result = _courseService.GetAll();
+                var result = _worksheetService.GetAll();
                 return Ok(result);
             }
             catch (Exception)
@@ -58,18 +56,18 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(Course course)
+        public IHttpActionResult Create(Worksheet worksheet)
         {
-            if (course == null)
+            if (worksheet == null)
             {
-                return BadRequest("Course not Recieved");
+                return BadRequest("worksheet not Recieved");
             }
 
             try
             {
-                _courseService.Create(course);
+                _worksheetService.Create(worksheet);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
@@ -78,16 +76,16 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(Course course)
+        public IHttpActionResult Update(Worksheet worksheet)
         {
-            if (course == null)
+            if (worksheet == null)
             {
-                return BadRequest("Course not Recieved");
+                return BadRequest("worksheet not Recieved");
             }
 
             try
             {
-                _courseService.Update(course);
+                _worksheetService.Update(worksheet);
             }
             catch (Exception)
             {
@@ -107,7 +105,7 @@ namespace SMS.API.Controllers
 
             try
             {
-                _courseService.Delete(id);
+                _worksheetService.Delete(id);
             }
             catch (Exception)
             {
@@ -118,5 +116,3 @@ namespace SMS.API.Controllers
         #endregion
     }
 }
-
-
