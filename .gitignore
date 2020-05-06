@@ -228,3 +228,7 @@ project.lock.json
 /source/SMS.DATA/Migrations/
 */Web.config
 */App.config
+/source/SMS.WEB/Web.config
+/source/SMS.REQUESTDATA/App.config
+/source/SMS.DATA/App.config
+/source/SMS.API/Web.config

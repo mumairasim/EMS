@@ -1,12 +1,22 @@
 ﻿using AutoMapper;
 using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
+
 using Person = SMS.DATA.Models.Person;
 using DTOPerson = SMS.DTOs.DTOs.Person;
+
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
+
 using School = SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
+
+using Course = SMS.DATA.Models.Course;
+using DTOCourse = SMS.DTOs.DTOs.Course;
+
+using DBWorksheet = SMS.DATA.Models.Worksheet;
+using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
+
 
 namespace SMS.MAP
 {
@@ -28,6 +38,8 @@ namespace SMS.MAP
             CreateMap<Person, DTOPerson>();
             CreateMap<Class, DTOClass>();
             CreateMap<School, DTOSchool>();
+            CreateMap<Course, DTOCourse>();
+            CreateMap<DBWorksheet, DTOWorksheet>();
 
             #endregion
             #region DTO to DB
@@ -39,7 +51,8 @@ namespace SMS.MAP
             CreateMap<DTOPerson, Person>();
             CreateMap<DTOClass, Class>();
             CreateMap<DTOSchool, School>();
-
+            CreateMap<DTOCourse, Course>();
+            CreateMap<DTOWorksheet, DBWorksheet>();
             #endregion
         }
     }
