@@ -47,10 +47,12 @@
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\PersonService.cs" />
     <Compile Include="Implementation\StudentService.cs" />
+    <Compile Include="Implementation\TeacherDiaryService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IPersonService.cs" />
     <Compile Include="Infrastructure\IStudentService.cs" />
+    <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

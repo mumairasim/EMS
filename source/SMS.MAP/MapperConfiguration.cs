@@ -17,6 +17,10 @@ using DTOCourse = SMS.DTOs.DTOs.Course;
 using DBWorksheet = SMS.DATA.Models.Worksheet;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 
+using TeacherDiary = SMS.DATA.Models.TeacherDiary;
+using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
+
+
 
 namespace SMS.MAP
 {
@@ -41,6 +45,10 @@ namespace SMS.MAP
             CreateMap<Course, DTOCourse>();
             CreateMap<DBWorksheet, DTOWorksheet>();
 
+            CreateMap<TeacherDiary, DTOTeacherDiary>();
+            CreateMap<DTOTeacherDiary, DTOTeacherDiary>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
             #region DTO to DB
 
@@ -53,6 +61,7 @@ namespace SMS.MAP
             CreateMap<DTOSchool, School>();
             CreateMap<DTOCourse, Course>();
             CreateMap<DTOWorksheet, DBWorksheet>();
+            CreateMap<DTOTeacherDiary, TeacherDiary>();
             #endregion
         }
     }
