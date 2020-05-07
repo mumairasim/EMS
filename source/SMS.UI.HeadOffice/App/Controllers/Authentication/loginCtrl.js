@@ -36,12 +36,12 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
         var data = "grant_type=password&username=" + $scope.logindata.userName + "&password=" + $scope.logindata.password;
         var responsedata = apiService.login('/Token', data);
         responsedata.then(function mySucces(response) {
-            $cookies.put('token', response.data.access_token);
-            $cookies.put('isloggedin', 'true');
-            $cookies.put('userPIM', response.data.userName);
-            $cookies.put('userIdPIM', response.data.Id);
-            $cookies.put('token-expire-identity', response.data[".expires"]);
-            $cookies.put('logout', false);
+            $cookies.put('SMS_token', response.data.access_token);
+            $cookies.put('SMS_Isloggedin', 'true');
+            $cookies.put('SMS_user', response.data.userName);
+            $cookies.put('SMS_userId', response.data.Id);
+            $cookies.put('SMS_token-expire-identity', response.data[".expires"]);
+            $cookies.put('SMS_logout', false);
             $scope.Setisloggedin();
             apiService.setaccesstoken();
             $scope.iserror = false;
