@@ -38,20 +38,10 @@
                         VP People Manager
                     </div>
                 </div>
-                @*<li class="dropdown navbarstyleli">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img width="42" class="rounded-circle" src="~/images/avatars/1.jpg" alt="">
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Sign out</a></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Default</a></li>
-                        </ul>
-                    </li>*@
             </div>
         </div>
     </div>
+    
     <div ng-repeat="message in notifications">
         <growl-notification class="fading" ttl="{{growlmsgtime}}" ng-class="{'growlerror':message.iserror}" ng-if="growlshow">
             {{message.growlinfo}}

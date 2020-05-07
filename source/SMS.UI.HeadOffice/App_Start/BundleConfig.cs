@@ -31,7 +31,7 @@ namespace SMS.UI.HeadOffice
                         "~/App/Controllers/*.js",
                         "~/App/Controllers/Authentication/*.js",
                        "~/App/Controllers/Dashboard/*.js",
-                       "~/App/Controllers/Modules/*.js"
+                       "~/App/Controllers/Modules/Student/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -54,6 +54,7 @@ namespace SMS.UI.HeadOffice
                       "~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css",
                       //"~/Content/App/mainDashboard.css",
                       "~/Content/App/main.css",
+                      "~/Content/App/mainDashboard.css",
                       "~/Content/App/util.css",
                       "~/Content/App/OverridedStyle.css",
                       "~/Content/App/customStyle.css"));

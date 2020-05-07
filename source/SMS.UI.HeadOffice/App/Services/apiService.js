@@ -7,7 +7,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
     var unauthorizemsg = '';
     var baseUrl = 'http://localhost:44358/';
     function setaccesstoken() {
-        accesstoken = $cookies.get('token');
+        accesstoken = $cookies.get('SMS_token');
     }
     function login(url, datatosend) {
         return $http({
@@ -15,12 +15,12 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             url: baseUrl + url,
             data: datatosend,
             headers: { 'Content-Type': "application/x-www-form-urlencoded" }
-        })
+        });
     }
     function logout() {
-        $cookies.remove('token');
-        $cookies.put('isloggedin', false);
-        $cookies.put('logout', true);
+        $cookies.remove('SMS_token');
+        $cookies.put('SMS_Isloggedin', false);
+        $cookies.put('SMS_logout', true);
         unauthorizemsg = '';
         var isauthorize = true;
     }
@@ -31,9 +31,9 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             data: JSON.stringify(datatosend),
             headers: {
                 'Content-Type': "application/json; charset=utf-8",
-                'Authorization': "Bearer " + $cookies.get('token')
+                'Authorization': "Bearer " + $cookies.get('SMS_token')
             }
-        })
+        });
     }
     function masterpost(url, datatosend) {
         return $http({
@@ -42,11 +42,11 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             data: JSON.stringify(datatosend),
             headers: {
                 'Content-Type': "application/json; charset=utf-8",
-                'Authorization': "Bearer " + $cookies.get('token'),
-                'UserId': $cookies.get('userIdPIM'),
-                'UserName': $cookies.get('userPIM'),
+                'Authorization': "Bearer " + $cookies.get('SMS_token'),
+                'UserId': $cookies.get('SMS_userId'),
+                'UserName': $cookies.get('SMS_user')
             }
-        })
+        });
     }
     function masterget(url) {
         return $http({
@@ -54,11 +54,11 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             url: baseUrl + url,
             headers: {
                 'Content-Type': "application/json; charset=utf-8",
-                'Authorization': "Bearer " + $cookies.get('token'),
-                'UserId': $cookies.get('userIdPIM'),
-                'UserName': $cookies.get('userPIM'),
+                'Authorization': "Bearer " + $cookies.get('SMS_token'),
+                'UserId': $cookies.get('SMS_userId'),
+                'UserName': $cookies.get('SMS_user')
             }
-        })
+        });
     }
 
     function IsUserAuthorized(data, msg) {
