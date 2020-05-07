@@ -10,7 +10,9 @@ using School = SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
 using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
-
+using Employee = SMS.DATA.Models.Employee;
+using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using SMS.DATA.Models;
 
 namespace SMS.MAP
 {
@@ -37,6 +39,10 @@ namespace SMS.MAP
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<Employee, DTOEmployee>();
+            CreateMap<DTOEmployee, DTOEmployee>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
             #region DTO to DB
 
@@ -48,6 +54,7 @@ namespace SMS.MAP
             CreateMap<DTOClass, Class>();
             CreateMap<DTOSchool, School>();
             CreateMap<DTOLessonPlan, LessonPlan>();
+            CreateMap<DTOEmployee, Employee>();
 
             #endregion
         }

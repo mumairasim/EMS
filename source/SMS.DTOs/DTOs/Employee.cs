@@ -9,5 +9,7 @@ namespace SMS.DTOs.DTOs
 
         public Guid? DesignationId { get; set; }
 
+        public Person Person { get; set; }
+
     }
 }
