@@ -20,7 +20,7 @@ namespace SMS.Services.Implementation
         }
         public List<DTOTeacherDiary> Get()
         {
-            var teacherDiaries = _repository.Get().Where(st => st.IsDeleted == false).ToList();
+            var teacherDiaries = _repository.Get().Where(td => td.IsDeleted == false).ToList();
             var teacherDiaryList = new List<DTOTeacherDiary>();
             foreach (var teacherDiary in teacherDiaries)
             {
