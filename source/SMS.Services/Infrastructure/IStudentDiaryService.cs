@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 namespace SMS.Services.Infrastructure
 {
-    class IStudentDiaryService
+    public interface IStudentDiaryService
     {
+        List<DTOStudentDiary> Get();
+        DTOStudentDiary Get(Guid? id);
+        void Create(DTOStudentDiary StudentDiary );
+        void Update(DTOStudentDiary dtoStudentDiary);
+        void Delete(Guid? id);
     }
 }
