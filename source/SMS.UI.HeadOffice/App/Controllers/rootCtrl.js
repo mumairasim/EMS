@@ -33,10 +33,16 @@
         //$scope.user = $cookies.get("SMS_user");
         //}
     };
+    $scope.Setisloggedinfalse = function () {
+        $scope.islogin = false;
+    };
     $scope.growltext = function (infomsg, iserror) {
         $scope.growlmsgtime = 5000;
         $scope.growlshow = true;
         $scope.invalidNotification = false;
         $scope.notifications.push({ growlinfo: infomsg, iserror: iserror });
+    };
+    $scope.loader = function (value) {
+        $scope.onload = value;
     };
 }]);

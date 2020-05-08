@@ -13,6 +13,5 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
             });
     };
     $scope.GetStudents();
-    $scope.Setisloggedin();
 }]);
 

@@ -173,14 +173,17 @@
     <Content Include="Images\avatars\10.jpg" />
     <Content Include="Images\avatars\11.jpg" />
     <Content Include="Images\avatars\12.jpg" />
+    <Content Include="Images\avatars\13.jpg" />
     <Content Include="Images\avatars\2.jpg" />
     <Content Include="Images\avatars\3.jpg" />
     <Content Include="Images\avatars\4.jpg" />
     <Content Include="Images\avatars\5.jpg" />
     <Content Include="Images\avatars\8.jpg" />
     <Content Include="Images\avatars\9.jpg" />
+    <Content Include="Images\avatar_2x.png" />
     <Content Include="Images\bg-01.jpg" />
     <Content Include="Images\bg-02.jpg" />
+    <Content Include="Images\Loader\load1.gif" />
     <Content Include="Images\logo-inverse.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\signup-img.jpg" />
@@ -1095,6 +1098,7 @@
     <Content Include="Scripts\version.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Directives\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

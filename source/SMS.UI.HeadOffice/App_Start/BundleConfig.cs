@@ -27,7 +27,8 @@ namespace SMS.UI.HeadOffice
                        //"~/Scripts/App/js/main.js",
                        //Angular App Scripts
                        "~/App/App.js",
-                        "~/App/Services/*.js",
+                       "~/App/Services/*.js",
+                       "~/App/Directives/*.js",
                         "~/App/Controllers/*.js",
                         "~/App/Controllers/Authentication/*.js",
                        "~/App/Controllers/Dashboard/*.js",
