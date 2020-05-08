@@ -9,7 +9,7 @@ using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.Services.Implementation
 {
-    public class SchoolService
+    public class SchoolService :   ISchoolService
     {
         private readonly IRepository<School> _repository;
         private IMapper _mapper;

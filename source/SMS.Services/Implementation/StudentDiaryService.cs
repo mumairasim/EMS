@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SMS.Services.Implementation
 {
-    public class StudentDiaryService
+    public class StudentDiaryService : IStudentDiaryService
     {
         private readonly IRepository<StudentDiary> _repository;
         private readonly IMapper _mapper;
