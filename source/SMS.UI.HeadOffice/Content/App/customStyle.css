@@ -111,9 +111,9 @@ growl-notification.fading.ng-leave {
     pointer-events: none;
 }
 
-input[type='file'] {
+/*input[type='file'] {
     display: none;
-}
+}*/
 
 .wrapping {
     white-space: pre-wrap !important;

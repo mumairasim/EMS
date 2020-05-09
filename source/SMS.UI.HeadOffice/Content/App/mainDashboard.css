@@ -9982,8 +9982,8 @@ a, button, .btn {
 }
 
     .app-header__logo .logo-src {
-        height: 23px;
-        width: 97px;
+        height: 40px;
+        width: 150px;
         background: url(../../images/logo-inverse.png)
     }
 
@@ -10728,7 +10728,7 @@ a, button, .btn {
 }
 
     .closed-sidebar.closed-sidebar-mobile .app-sidebar:hover .app-header__logo .logo-src {
-        width: 97px;
+        width: 150px;
         margin: 0
     }
 

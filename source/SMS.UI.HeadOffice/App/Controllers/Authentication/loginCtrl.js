@@ -5,33 +5,12 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
     'use strict';
     //$scope.identitydate = $cookies.get('token-expire-identity');
     $scope.Setisloggedinfalse();
-    $scope.iserror = false;
-    $scope.authorizeobj = apiService.authorizationbit();
-    $scope.logindata = {
-        grant_type: 'password',
-        userName: '',
-        password: ''
-    };
-    $scope.responsebadrequest = '';
-    $scope.responsemsg = 'This is for showing any error that may occur during login.';
-    if (!$scope.authorizeobj.authorize) {
-        $scope.responsemsg = $scope.authorizeobj.authorizemsg;
-        $scope.iserror = true;
-    }
-    else {
-        $scope.responsemsg = '';
-        $scope.iserror = false;
-    }
-    if ($cookies.get('token') != null) {
+
+    if ($cookies.get('SMS_token') != null) {
         window.location = "#!/dashboard";
     }
-    else {
-        apiService.logout();
-        if ($cookies.get('logout') == 'false') {
-            $scope.iserror = true;
-            $scope.responsemsg = 'Your session has expired please login again';
-        }
-    }
+
+    
     $scope.logincall = function () {
         $scope.loader(true);
         var data = "grant_type=password&username=" + $scope.logindata.userName + "&password=" + $scope.logindata.password;
@@ -44,7 +23,6 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
             $cookies.put('SMS_token-expire-identity', response.data[".expires"]);
             $cookies.put('SMS_logout', false);
             $scope.Setisloggedin();
-            apiService.setaccesstoken();
             $scope.iserror = false;
             $scope.growltext("Login sucessfull.", false);
             window.location = "#!/dashboard";
@@ -62,7 +40,7 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
     $scope.test = function () {
         $scope.growltext("login notification test.", false);
     }
-    $scope.loginEnterKey = function(event) {
+    $scope.loginEnterKey = function (event) {
         if (event.keyCode == '13') {
             //$scope.Action = 'Search';
             $scope.logincall();
