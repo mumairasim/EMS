@@ -19,6 +19,7 @@ namespace SMS.UI.HeadOffice
                        //BootStrap
                        "~/Scripts/bootstrap.min.js",
                        //App Scripts
+                       "~/Scripts/App/main.js",
                        "~/Scripts/App/checklist-model.js",
                        "~/Scripts/App/angular-growl-notifications.js",
                        "~/Scripts/App/angular-ui-router.min.js",

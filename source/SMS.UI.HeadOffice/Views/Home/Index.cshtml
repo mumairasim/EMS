@@ -16,7 +16,7 @@
         <div class="app-header header-shadow" ng-show="islogin">
             <div class="app-header__logo">
                 <div class="logo-src"></div>
-                
+
             </div>
             <div class="app-header__mobile-menu">
                 <div>
@@ -35,7 +35,7 @@
                         </span>
                     </button>
                 </span>
-            </div>    
+            </div>
             <div class="app-header__content">
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
@@ -47,7 +47,7 @@
                                             <img width="42" class="rounded-circle" src="~/images/avatars/13.jpg" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
-                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" id="profileCaret"> 
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" id="profileCaret">
                                             <button type="button" tabindex="0" class="dropdown-item">Profile</button>
                                             <button type="button" tabindex="0" class="dropdown-item">Change Password</button>
                                             <div tabindex="-1" class="dropdown-divider"></div>
@@ -113,10 +113,10 @@
                             </li>
                             <li class="app-sidebar__heading">Modules</li>
                             <li>
-                                <a>
+                                <a class="pointercollapsable">
                                     <i class="metismenu-icon pe-7s-users"></i>
                                     Student
-                                    @*<i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>*@
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                                 <ul>
                                     <li>
@@ -135,7 +135,7 @@
                             </li>
                             <li class="app-sidebar__heading">Settings</li>
                             <li>
-                                <a target="_blank">
+                                <a target="_blank" class="pointerSet">
                                     <i class="metismenu-icon pe-7s-settings">
                                     </i>
                                     User Settings
@@ -146,6 +146,7 @@
                 </div>
             </div>
         </div>
+        <div ng-view></div>
         <div ng-repeat="message in notifications">
             <growl-notification class="fading" ttl="{{growlmsgtime}}" ng-class="{'growlerror':message.iserror}" ng-if="growlshow">
                 {{message.growlinfo}}
@@ -155,7 +156,6 @@
                 </div>
             </growl-notification>
         </div>
-        <div ng-view></div>
         <div class="please-wait" ng-class="{'display-load':onload}">
             <div class="please-wait-container">
                 <div class="please-wait-message">

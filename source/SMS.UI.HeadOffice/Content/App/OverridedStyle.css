@@ -3,7 +3,7 @@
 }
 
 .containerCreate {
-    margin: 55px 55px 55px 300px;
+    margin: 25px 25px 25px 300px;
     padding: 20px 20px 20px 20px;
     border: 1px solid #ced4da;
     border-radius: .25rem;
@@ -11,13 +11,22 @@
 }
 
 .containerBase {
-    margin: 55px 55px 55px 300px;
+    margin: 25px 25px 25px 300px;
     padding: 20px 20px 20px 20px;
     border: 1px solid #ced4da;
     border-radius: .25rem;
     background-color: white;
 }
-
+.containerDashboard {
+    margin: 25px 25px 25px 300px;
+    padding: 20px 20px 20px 20px;
+}
+.pointercollapsable {
+    cursor: pointer;
+}
+.pointerSet {
+    cursor: context-menu;
+}
 .searchField:focus {
     box-shadow: none;
 }
