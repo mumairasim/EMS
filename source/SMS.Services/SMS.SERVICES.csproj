@@ -44,12 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\ClassService.cs" />
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\PersonService.cs" />
+    <Compile Include="Implementation\SchoolService.cs" />
+    <Compile Include="Implementation\StudentDiaryService.cs" />
     <Compile Include="Implementation\StudentService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
+    <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IPersonService.cs" />
+    <Compile Include="Infrastructure\ISchoolService.cs" />
+    <Compile Include="Infrastructure\IStudentDiaryService.cs" />
     <Compile Include="Infrastructure\IStudentService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
