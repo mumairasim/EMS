@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
@@ -10,6 +11,11 @@ using DTOClass = SMS.DTOs.DTOs.Class;
 
 using School = SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
+using LessonPlan = SMS.DATA.Models.LessonPlan;
+using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
+using Employee = SMS.DATA.Models.Employee;
+using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using SMS.DATA.Models;
 
 using Course = SMS.DATA.Models.Course;
 using DTOCourse = SMS.DTOs.DTOs.Course;
@@ -41,6 +47,14 @@ namespace SMS.MAP
             CreateMap<Course, DTOCourse>();
             CreateMap<DBWorksheet, DTOWorksheet>();
 
+            CreateMap<LessonPlan, DTOLessonPlan>();
+            CreateMap<DTOLessonPlan, DTOLessonPlan>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<Employee, DTOEmployee>();
+            CreateMap<DTOEmployee, DTOEmployee>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
             #region DTO to DB
 
@@ -53,6 +67,9 @@ namespace SMS.MAP
             CreateMap<DTOSchool, School>();
             CreateMap<DTOCourse, Course>();
             CreateMap<DTOWorksheet, DBWorksheet>();
+            CreateMap<DTOLessonPlan, LessonPlan>();
+            CreateMap<DTOEmployee, Employee>();
+
             #endregion
         }
     }
