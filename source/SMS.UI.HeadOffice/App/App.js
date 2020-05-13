@@ -31,8 +31,29 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Student Search",
         templateUrl: "App/Controllers/Modules/Student/studentBase.html",
         controller: "studentBaseCtrl"
-    }).otherwise({
-        redirectTo: '/'
-    });
+    })
+        .when("/worksheetBase", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetBase.html",
+            controller: "worksheetBaseCtrl"
+        })
+        .when("/worksheetSearch", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetSearch.html",
+            controller: "worksheetSearchCtrl"
+        })
+        .when("/worksheetCreate", {
+            title: "Worksheet Create",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetCreate.html",
+            controller: "worksheetCreateCtrl"
+        })
+        .when("/worksheetUpdate", {
+            title: "Worksheet Update",
+            templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
+            controller: "worksheetUpdateCtrl"
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
     $locationProvider.html5Mode(false);
 }]);

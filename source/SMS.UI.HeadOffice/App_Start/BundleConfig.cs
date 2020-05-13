@@ -24,15 +24,16 @@ namespace SMS.UI.HeadOffice
                        "~/Scripts/App/angular-growl-notifications.js",
                        "~/Scripts/App/angular-ui-router.min.js",
                        //External Scripts
-                       //"~/Scripts/App/js/main.js",
+                       "~/Scripts/App/js/main.js",
                        //Angular App Scripts
                        "~/App/App.js",
                        "~/App/Services/*.js",
-                       "~/App/Directives/*.js",
+                        //"~/App/Directives/*.js",
                         "~/App/Controllers/*.js",
                         "~/App/Controllers/Authentication/*.js",
                        "~/App/Controllers/Dashboard/*.js",
-                       "~/App/Controllers/Modules/Student/*.js"
+                       "~/App/Controllers/Modules/Student/*.js",
+                       "~/App/Controllers/Modules/Worksheet/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
