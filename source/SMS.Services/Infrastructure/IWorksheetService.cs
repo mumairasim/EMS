@@ -22,13 +22,13 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Creates a single record of a Worksheet
         /// </summary>
         /// <param name="dtoWorksheet"></param>
-        void Create(DTOWorksheet student);
+        void Create(DTOWorksheet dTOWorksheet);
 
         /// <summary>
         /// Service level call : Updates the Single Record of a Worksheet 
         /// </summary>
         /// <param name="dtoWorksheet"></param>
-        void Update(DTOWorksheet dtoStudent);
+        void Update(DTOWorksheet dTOWorksheet);
 
         /// <summary>
         /// Service level call : Delete a single record of a Worksheet
