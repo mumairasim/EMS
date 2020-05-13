@@ -1,11 +1,13 @@
 ﻿using System;
 using SMS.FACADE.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Student")]
+    [EnableCors("*", "*", "*")]
     public class StudentController : ApiController
     {
         public IStudentFacade _studentFacade;
