@@ -1,11 +1,13 @@
 ﻿using System;
 using SMS.FACADE.Infrastructure;
+using System.Web.Http.Cors;
 using System.Web.Http;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Employee")]
+    [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
         public IEmployeeFacade _employeeFacade;
