@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SMS.FACADE.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -32,6 +33,7 @@ namespace SMS.API.Controllers
         [Route("Create")]
         public IHttpActionResult Create(DTOStudent dtoStudent)
         {
+            dtoStudent.CreatedBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
             _studentFacade.Create(dtoStudent);
             return Ok();
         }
@@ -39,6 +41,7 @@ namespace SMS.API.Controllers
         [Route("Update")]
         public IHttpActionResult Update(DTOStudent dtoStudent)
         {
+            dtoStudent.UpdateBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
             _studentFacade.Update(dtoStudent);
             return Ok();
         }
@@ -46,6 +49,7 @@ namespace SMS.API.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
+            var DeletedBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
             _studentFacade.Delete(id);
             return Ok();
         }

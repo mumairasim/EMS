@@ -56,4 +56,6 @@
                 $scope.growltext("Student creation failed", true);
             });
     };
+    $scope.GetSchools();
+    $scope.GetClasses();
 }]);
