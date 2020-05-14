@@ -11,6 +11,7 @@ SMSHO.controller('worksheetBaseCtrl', ['$scope', 'apiService', '$cookies', funct
             $scope.loader(false);
         },
             function myError(response) {
+                $scope.loader(false);
                 $scope.response = response.data;
             });
     };
