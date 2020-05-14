@@ -31,7 +31,25 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Student Search",
         templateUrl: "App/Controllers/Modules/Student/studentBase.html",
         controller: "studentBaseCtrl"
-    }).otherwise({
+    })
+        .when("/schoolSearch", {
+        title: "School Search",
+        templateUrl: "App/Controllers/Modules/School/schoolSearch.html",
+            controller: "schoolSearchCtrl"
+        }).when("/schoolCreate", {
+        title: "School Create",
+        templateUrl: "App/Controllers/Modules/School/schoolCreate.html",
+        controller: "schoolCreateCtrl"
+    }).when("/schoolUpdate", {
+        title: "School Update",
+        templateUrl: "App/Controllers/Modules/School/schoolUpdate.html",
+        controller: "schoolUpdateCtrl"
+    }).when("/schoolBase", {
+        title: "School Search",
+        templateUrl: "App/Controllers/Modules/School/schoolBase.html",
+        controller: "schoolBaseCtrl"
+    })
+        .otherwise({
         redirectTo: '/'
     });
     $locationProvider.html5Mode(false);
