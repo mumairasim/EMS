@@ -20,12 +20,6 @@ using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
-using Course = SMS.DATA.Models.Course;
-using DTOCourse = SMS.DTOs.DTOs.Course;
-
-using DBWorksheet = SMS.DATA.Models.Worksheet;
-using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
-
 
 namespace SMS.MAP
 {
