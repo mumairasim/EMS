@@ -47,7 +47,7 @@ namespace SMS.Services.Implementation
             dtoStudent.IsDeleted = false;
             dtoStudent.Id = Guid.NewGuid();
             dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
-            dtoStudent.Person = null;
+            HelpingMethodForRelationship(dtoStudent);
             _repository.Add(_mapper.Map<DTOStudent, Student>(dtoStudent));
         }
         public void Update(DTOStudent dtoStudent)
@@ -67,6 +67,15 @@ namespace SMS.Services.Implementation
             student.DeletedDate = DateTime.Now;
             _personService.Delete(student.PersonId);
             _repository.Update(_mapper.Map<DTOStudent, Student>(student));
+        }
+
+        private void HelpingMethodForRelationship(DTOStudent dtoStudent)
+        {
+            dtoStudent.SchoolId = dtoStudent.School.Id;
+            dtoStudent.ClassId = dtoStudent.Class.Id;
+            dtoStudent.Person = null;
+            dtoStudent.Class = null;
+            dtoStudent.School = null;
         }
     }
 }

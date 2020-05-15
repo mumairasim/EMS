@@ -4,7 +4,7 @@ namespace SMS.DTOs.DTOs
 {
     public class Student : DtoBaseEntity
     {
-        public int RegistrationNumber { get; set; }
+        public int? RegistrationNumber { get; set; }
 
         public Guid? PersonId { get; set; }
 

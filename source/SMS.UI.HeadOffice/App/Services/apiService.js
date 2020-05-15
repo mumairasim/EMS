@@ -13,7 +13,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         });
     }
     function logout(url) {
-        
+
         return $http({
             method: "POST",
             url: baseUrl + url,
@@ -46,6 +46,19 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
                 'Authorization': "Bearer " + $cookies.get('SMS_token'),
                 'UserId': $cookies.get('SMS_userId'),
                 'UserName': $cookies.get('SMS_user')
+            }
+        });
+    }
+    function post(url, datatosend) {
+        return $http({
+            method: "POST",
+            url: baseUrl + url,
+            data: datatosend,
+            headers: {
+                'Content-Type': undefined,
+                'Authorization': "Bearer " + $cookies.get('SMS_token'),
+                'UserId': $cookies.get('SMS_userId'),
+                'UserName': $cookies.get('SMS_user'),
             }
         });
     }
@@ -94,8 +107,9 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         masterpost: masterpost,
         masterget: masterget,
         masterput: masterput,
-        masterdelete: masterdelete
-        
+        masterdelete: masterdelete,
+        post: post
+
 
     };
 }]);

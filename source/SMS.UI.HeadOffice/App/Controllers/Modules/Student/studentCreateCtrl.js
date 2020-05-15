@@ -45,7 +45,9 @@
     };
     $scope.StudentCreate = function () {
         var data = $scope.StudentModel;
-        var responsedata = apiService.register('/api/v1/Student/Create', data);
+        var formData = new FormData();
+        formData.append('studentModel', JSON.stringify(data));
+        var responsedata = apiService.post('/api/v1/Student/Create', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
             $scope.growltext("Student created successfully.", false);

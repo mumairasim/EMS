@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Web;
 using SMS.FACADE.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.API.Controllers
@@ -31,17 +34,20 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOStudent dtoStudent)
+        public IHttpActionResult Create()
         {
-            dtoStudent.CreatedBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
-            _studentFacade.Create(dtoStudent);
+
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Create(studentDetail);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
         public IHttpActionResult Update(DTOStudent dtoStudent)
         {
-            dtoStudent.UpdateBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
+            dtoStudent.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _studentFacade.Update(dtoStudent);
             return Ok();
         }
@@ -49,7 +55,7 @@ namespace SMS.API.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            var DeletedBy = Guid.Parse(Request.Headers.GetValues("UserId").FirstOrDefault());
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _studentFacade.Delete(id);
             return Ok();
         }
