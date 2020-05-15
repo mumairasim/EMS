@@ -249,7 +249,10 @@
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\StudentDiaryController.cs" />
+    <Compile Include="Controllers\StudentFinanceController.cs" />
+    <Compile Include="Controllers\StudentFinanceDetailsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\WorksheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
