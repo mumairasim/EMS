@@ -1,16 +1,12 @@
-﻿SMSHO.controller('employeeCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('employeeUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.employeeModel = {
         Person: $scope.Person,
         Designation: $scope.Designation
     };
-    $scope.Designation = {
-        Name: '' 
-    };
     $scope.Person = {
         FirstName: '',
         LastName: '',
-        Designation:'',
         Cnic: '',
         Nationality: '',
         Religion: '',
@@ -18,7 +14,19 @@
         PermanentAddress: '',
         Phone: ''
     };
+    $scope.Designation = {
+        Name: ''
+    };
     
+    $scope.GetClasses = function () {
+        var responsedata = apiService.masterget('/api/v1/Class/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Classes = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {
@@ -33,12 +41,12 @@
         var responsedata = apiService.register('/api/v1/Employee/Create', data);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Employee created successfully.", false);
+            $scope.growltext("Student created successfully.", false);
             window.location = "#!/dashboard";
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Employee creation failed", true);
+                $scope.growltext("Student creation failed", true);
             });
     };
 }]);

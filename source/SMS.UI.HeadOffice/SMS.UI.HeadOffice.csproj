@@ -138,6 +138,8 @@
     <Content Include="App\Controllers\Modules\Employee\employeeBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\Employee\employeeCreate.html" />
     <Content Include="App\Controllers\Modules\Employee\employeeCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Employee\employeeUpdate.html" />
+    <Content Include="App\Controllers\Modules\Employee\employeeUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBase.html" />
     <Content Include="App\Controllers\Modules\Student\studentUpdate.html" />
     <Content Include="App\Controllers\Modules\Student\studentCreate.html" />
