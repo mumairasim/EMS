@@ -56,12 +56,13 @@ namespace SMS.Services.Implementation
             _personService.Update(mergedStudent.Person);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
         }
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
             if (id == null)
                 return;
             var student = Get(id);
             student.IsDeleted = true;
+            student.DeletedBy = DeletedBy;
             student.DeletedDate = DateTime.Now;
             _personService.Delete(student.PersonId);
             _repository.Update(_mapper.Map<DTOStudent, Student>(student));
