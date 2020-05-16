@@ -29,6 +29,7 @@
         var responsedata = apiService.masterget('/api/v1/Class/Get');
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
+            $scope.StudentModel.Class = $scope.Classes[0];
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -38,6 +39,7 @@
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
+            $scope.StudentModel.School = $scope.Schools[0];
         },
             function myError(response) {
                 $scope.response = response.data;

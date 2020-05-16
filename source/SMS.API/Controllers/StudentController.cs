@@ -45,10 +45,12 @@ namespace SMS.API.Controllers
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOStudent dtoStudent)
+        public IHttpActionResult Update()
         {
-            dtoStudent.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _studentFacade.Update(dtoStudent);
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Update(studentDetail);
             return Ok();
         }
         [HttpDelete]

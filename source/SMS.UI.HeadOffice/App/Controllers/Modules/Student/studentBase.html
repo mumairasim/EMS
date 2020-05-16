@@ -1,6 +1,6 @@
 ﻿<div class="container containerBase">
     <h5 class="card-title fs-35">Search Student</h5>
-    
+
     <div class="position-relative row form-group">
         <div class="input-group col-sm-6">
             <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button">
@@ -13,7 +13,7 @@
             <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-modal="StudentModel.Person.LastName">
         </div>-->
     </div>
-    
+
 
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
@@ -36,7 +36,7 @@
                 <td>{{student.Person.Religion}}</td>
                 <td>{{student.Person.Phone}}</td>
                 <td>
-                    <a href="/#!/studentUpdate"><i class="fa fa-edit fa-fw"></i> Edit</a>
+                    <a href="#!/studentUpdate?Id={{student.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="/#!/studentBase"><i class="fa fa-trash fa-fw"></i> Delete</a>
                 </td>
             </tr>

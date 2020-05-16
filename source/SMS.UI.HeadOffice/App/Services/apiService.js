@@ -66,12 +66,12 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         return $http({
             method: "PUT",
             url: baseUrl + url,
-            data: JSON.stringify(datatosend),
+            data: datatosend,
             headers: {
-                'Content-Type': "application/json; charset=utf-8",
+                'Content-Type': undefined,
                 'Authorization': "Bearer " + $cookies.get('SMS_token'),
                 'UserId': $cookies.get('SMS_userId'),
-                'UserName': $cookies.get('SMS_user')
+                'UserName': $cookies.get('SMS_user'),
             }
         });
     }
