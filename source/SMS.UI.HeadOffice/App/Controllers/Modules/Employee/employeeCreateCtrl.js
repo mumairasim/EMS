@@ -1,10 +1,12 @@
 ﻿SMSHO.controller('employeeCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-    $scope.employeeModel = {
+    $scope.EmployeeModel = {
+        RegistrationNumber: '',
         Person: $scope.Person,
         Designation: $scope.Designation
     };
     $scope.Designation = {
+        //Id:'',
         Name: '' 
     };
     $scope.Person = {
@@ -28,17 +30,25 @@
                 $scope.response = response.data;
             });
     };
-    $scope.EmployeeCreate = function () {
+
+    $scope.EmployeeCreate = function ()
+    {
         var data = $scope.EmployeeModel;
-        var responsedata = apiService.register('/api/v1/Employee/Create', data);
-        responsedata.then(function mySucces(response) {
+        var formData = new FormData();
+        formData.append('employeeModel', JSON.stringify(data));
+        var responsedata = apiService.post('/api/v1/Employee/Create', formData);
+        responsedata.then(function mySucces(response)
+        {
             $scope.response = response.data;
             $scope.growltext("Employee created successfully.", false);
             window.location = "#!/dashboard";
         },
-            function myError(response) {
+            function myError(response)
+            {
                 $scope.response = response.data;
                 $scope.growltext("Employee creation failed", true);
             });
     };
+    $scope.GetDesignations();
+
 }]);
