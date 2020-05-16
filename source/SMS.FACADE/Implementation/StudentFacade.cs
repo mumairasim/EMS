@@ -32,9 +32,9 @@ namespace SMS.FACADE.Implementation
             StudentService.Update(dtoStudent);
         }
 
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
-            StudentService.Delete(id);
+            StudentService.Delete(id,DeletedBy);
         }
     }
 }

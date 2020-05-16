@@ -10,6 +10,6 @@ namespace SMS.Services.Infrastructure
         DTOStudent Get(Guid? id);
         void Create(DTOStudent student);
         void Update(DTOStudent dtoStudent);
-        void Delete(Guid? id);
+        void Delete(Guid? id, string DeletedBy);
     }
 }

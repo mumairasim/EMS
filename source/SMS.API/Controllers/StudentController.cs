@@ -58,7 +58,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult Delete(Guid id)
         {
             var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _studentFacade.Delete(id);
+            _studentFacade.Delete(id, DeletedBy);
             return Ok();
         }
     }

@@ -10,6 +10,6 @@ namespace SMS.FACADE.Infrastructure
         DTOStudent Get(Guid id);
         void Create(DTOStudent dtoStudent);
         void Update(DTOStudent dtoStudent);
-        void Delete(Guid? id);
+        void Delete(Guid? id,string DeletedBy);
     }
 }
