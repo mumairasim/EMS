@@ -41,7 +41,7 @@ namespace SMS.API.Registrar
             }));
 
             //register your mapper
-            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().InstancePerLifetimeScope();
+            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().SingleInstance();
             var container = builder.Build();
 
             var resolver = new AutofacWebApiDependencyResolver(container);

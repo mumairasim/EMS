@@ -22,6 +22,7 @@ using DTOEmployee = SMS.DTOs.DTOs.Employee;
 using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
 
+
 namespace SMS.MAP
 {
     public class MapperConfigurationInternal : Profile
@@ -46,9 +47,17 @@ namespace SMS.MAP
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
             CreateMap<Person, DTOPerson>();
+
             CreateMap<Class, DTOClass>();
+            CreateMap<DTOClass, DTOClass>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<School, DTOSchool>();
+            CreateMap<DTOSchool, DTOSchool>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<Course, DTOCourse>();
+
             CreateMap<DBWorksheet, DTOWorksheet>();
 
             CreateMap<LessonPlan, DTOLessonPlan>();
