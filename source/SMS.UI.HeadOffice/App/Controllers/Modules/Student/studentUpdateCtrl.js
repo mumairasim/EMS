@@ -1,4 +1,4 @@
-﻿SMSHO.controller('studentUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('studentUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
     $scope.StudentModel = {
         RegistrationNumber: '',
@@ -29,6 +29,7 @@
         var responsedata = apiService.masterget('/api/v1/Class/Get');
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
+            $scope.FetchStudent();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -38,22 +39,43 @@
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
+            $scope.GetClasses();
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
-    $scope.StudentCreate = function () {
+    $scope.StudentUpdate = function () {
         var data = $scope.StudentModel;
-        var responsedata = apiService.register('/api/v1/Student/Create', data);
+        var formData = new FormData();
+        formData.append('studentModel', JSON.stringify(data));
+        var responsedata = apiService.masterput('/api/v1/Student/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Student created successfully.", false);
-            window.location = "#!/dashboard";
+            $scope.growltext("Student updated successfully.", false);
+            window.location = "#!/studentBase";
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student creation failed", true);
+                $scope.growltext("Student updation failed", true);
             });
     };
+    $scope.FetchStudent = function () {
+        var id = $routeParams.Id;
+        var url = '/api/v1/Student/Get?id=' + id;
+        var responsedata = apiService.masterget(url);
+        responsedata.then(function mySucces(response) {
+            $scope.StudentModel = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/studentBase";
+    };
+    $scope.GetSchools();
+
+
+
 }]);

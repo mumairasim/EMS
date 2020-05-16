@@ -43,13 +43,13 @@
                     <div class="col-sm-6">
                         <label for="school" class="col-form-label">School</label>
                         <select name="school" id="school" class="form-control" ng-Model="StudentModel.School" 
-                                ng-options="School.Name for School in Schools">
+                                ng-options="School.Name for School in Schools  track by School.Id">
                         </select>
                     </div>
                     <div class="col-sm-6">
                         <label for="class" class="col-form-label">Class</label>
                         <select name="class" id="class" class="form-control" ng-Model="StudentModel.Class"
-                            ng-options="Class.ClassName for Class in Classes">
+                            ng-options="Class.ClassName for Class in Classes  track by Class.Id">
                         </select>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="position-relative row form-group">
-            <div class="col-sm-6 offset-sm-2">
+            <div class="col-sm-6">
                 <button class="btn btn-primary" ng-click="StudentCreate()">Submit</button>
                 <button class="btn btn-secondary">Cancel</button>
             </div>

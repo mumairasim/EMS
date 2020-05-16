@@ -33,11 +33,9 @@ namespace SMS.Services.Implementation
 
         public DTOStudent Get(Guid? id)
         {
-            var personRecord = _personService.Get(id);
-            if (personRecord == null) return null;
-            var studentRecord = _repository.Get().FirstOrDefault(st => st.PersonId == personRecord.Id && st.IsDeleted == false);
+            if (id == null) return null;
+            var studentRecord = _repository.Get().FirstOrDefault(st => st.Id == id && st.IsDeleted == false);
             var student = _mapper.Map<Student, DTOStudent>(studentRecord);
-            //return _mapper.Map(studentRecord, dto); // just for example if need to map two sources in one model
             return student;
         }
 
@@ -52,7 +50,7 @@ namespace SMS.Services.Implementation
         }
         public void Update(DTOStudent dtoStudent)
         {
-            var student = Get(dtoStudent.PersonId);
+            var student = Get(dtoStudent.Id);
             dtoStudent.UpdateDate = DateTime.Now;
             var mergedStudent = _mapper.Map(dtoStudent, student);
             _personService.Update(mergedStudent.Person);
