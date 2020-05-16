@@ -18,15 +18,7 @@
         Name: ''
     };
     
-    $scope.GetClasses = function () {
-        var responsedata = apiService.masterget('/api/v1/Class/Get');
-        responsedata.then(function mySucces(response) {
-            $scope.Classes = response.data;
-        },
-            function myError(response) {
-                $scope.response = response.data;
-            });
-    };
+    
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {

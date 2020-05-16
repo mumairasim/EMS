@@ -1,7 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.FACADE.Infrastructure;
-using System.Web.Http.Cors;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.API.Controllers
@@ -31,9 +35,13 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOEmployee dtoEmployee)
+        public IHttpActionResult Create()
         {
-            _employeeFacade.Create(dtoEmployee);
+
+            var httpRequest = HttpContext.Current.Request;
+            var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
+            employeeDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Create(employeeDetail);
             return Ok();
         }
         [HttpPut]

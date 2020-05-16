@@ -31,7 +31,7 @@ namespace SMS.Services.Implementation
         public DTODesignation Get(Guid? id)
         {
             if (id == null) return null;
-            var designationRecord = _repository.Get().FirstOrDefault(s => s.Id == id);
+            var designationRecord = _repository.Get().FirstOrDefault(d => d.Id == id);
             if (designationRecord == null) return null;
 
             return _mapper.Map<Designation, DTODesignation>(designationRecord);
