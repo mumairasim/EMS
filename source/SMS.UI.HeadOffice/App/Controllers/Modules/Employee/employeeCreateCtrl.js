@@ -1,7 +1,6 @@
 ﻿SMSHO.controller('employeeCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.EmployeeModel = {
-        RegistrationNumber: '',
         Person: $scope.Person,
         Designation: $scope.Designation
     };

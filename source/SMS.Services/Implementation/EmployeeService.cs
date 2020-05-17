@@ -45,7 +45,9 @@ namespace SMS.Services.Implementation
             dtoEmployee.IsDeleted = false;
             dtoEmployee.Id = Guid.NewGuid();
             dtoEmployee.PersonId = _personService.Create(dtoEmployee.Person);
+            dtoEmployee.DesignationId = dtoEmployee.Designation.Id;
             dtoEmployee.Person = null;
+            dtoEmployee.Designation = null;
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
         }
 
