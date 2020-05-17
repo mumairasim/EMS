@@ -101,7 +101,9 @@
     height: auto;
     animation: ghoom 3s linear infinite;
 }
-
+.paginationLocalClass {
+    margin-top: -30px;
+}
 
 @media (max-width: 1350px) {
     .containerCreate {
