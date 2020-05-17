@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
@@ -20,15 +21,23 @@ namespace SMS.Services.Implementation
             _personService = personService;
             _mapper = mapper;
         }
-        public List<DTOStudent> Get()
+        public StudentsList Get(int pageNumber, int pageSize)
         {
-            var students = _repository.Get().Where(st => st.IsDeleted == false).ToList();
-            var studentList = new List<DTOStudent>();
+            var students = _repository.Get().Where(st => st.IsDeleted == false).OrderByDescending(st => st.RegistrationNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var studentCount = _repository.Get().Count();
+            var studentTempList = new List<DTOStudent>();
             foreach (var student in students)
             {
-                studentList.Add(_mapper.Map<Student, DTOStudent>(student));
+                studentTempList.Add(_mapper.Map<Student, DTOStudent>(student));
             }
-            return studentList;
+
+            var studentsList = new StudentsList()
+            {
+                Students = studentTempList,
+                StudentsCount = studentCount
+            };
+
+            return studentsList;
         }
 
         public DTOStudent Get(Guid? id)

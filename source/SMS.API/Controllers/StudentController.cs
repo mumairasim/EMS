@@ -22,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_studentFacade.Get());
+            return Ok(_studentFacade.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -40,6 +40,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
             studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _studentFacade.Create(studentDetail);
             return Ok();
         }

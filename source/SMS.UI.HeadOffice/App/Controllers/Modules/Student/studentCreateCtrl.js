@@ -53,12 +53,15 @@
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
             $scope.growltext("Student created successfully.", false);
-            window.location = "#!/dashboard";
+            window.location = "#!/studentBase";
         },
             function myError(response) {
                 $scope.response = response.data;
                 $scope.growltext("Student creation failed", true);
             });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/studentBase";
     };
     $scope.GetSchools();
     $scope.GetClasses();

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using SMS.DTOs.DTOs;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.Services.Infrastructure
 {
     public interface IStudentService
     {
-        List<DTOStudent> Get();
+        StudentsList Get(int pageNumber, int pageSize);
         DTOStudent Get(Guid? id);
         void Create(DTOStudent student);
         void Update(DTOStudent dtoStudent);
