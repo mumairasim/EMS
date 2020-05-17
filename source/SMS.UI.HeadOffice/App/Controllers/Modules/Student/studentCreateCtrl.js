@@ -29,6 +29,7 @@
         var responsedata = apiService.masterget('/api/v1/Class/Get');
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
+            $scope.StudentModel.Class = $scope.Classes[0];
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -38,6 +39,7 @@
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
+            $scope.StudentModel.School = $scope.Schools[0];
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -51,12 +53,15 @@
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
             $scope.growltext("Student created successfully.", false);
-            window.location = "#!/dashboard";
+            window.location = "#!/studentBase";
         },
             function myError(response) {
                 $scope.response = response.data;
                 $scope.growltext("Student creation failed", true);
             });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/studentBase";
     };
     $scope.GetSchools();
     $scope.GetClasses();

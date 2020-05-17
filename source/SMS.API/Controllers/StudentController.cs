@@ -22,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_studentFacade.Get());
+            return Ok(_studentFacade.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -40,15 +40,18 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
             studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _studentFacade.Create(studentDetail);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOStudent dtoStudent)
+        public IHttpActionResult Update()
         {
-            dtoStudent.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _studentFacade.Update(dtoStudent);
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Update(studentDetail);
             return Ok();
         }
         [HttpDelete]
@@ -56,7 +59,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult Delete(Guid id)
         {
             var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _studentFacade.Delete(id);
+            _studentFacade.Delete(id, DeletedBy);
             return Ok();
         }
     }
