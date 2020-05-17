@@ -13,9 +13,9 @@ namespace SMS.FACADE.Implementation
         {
             EmployeeService = employeeService;
         }
-        public List<DTOEmployee> Get()
+        public EmployeesList Get(int pageNumber, int pageSize)
         {
-            return EmployeeService.Get();
+            return EmployeeService.Get(pageNumber, pageSize);
         }
         public DTOEmployee Get(Guid id)
         {

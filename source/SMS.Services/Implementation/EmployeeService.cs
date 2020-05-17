@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
@@ -20,21 +21,29 @@ namespace SMS.Services.Implementation
             _personService = personService;
             _mapper = mapper;
         }
-        public List<DTOEmployee> Get()
+        
+        public EmployeesList Get(int pageNumber, int pageSize)
         {
-            var employees = _repository.Get().Where(st => st.IsDeleted == false).ToList();
-            var employeeList = new List<DTOEmployee>();
+            var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.SerialNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var employeeCount = _repository.Get().Count();
+            var employeeTempList = new List<DTOEmployee>();
             foreach (var employee in employees)
             {
-                employeeList.Add(_mapper.Map<Employee, DTOEmployee>(employee));
+                employeeTempList.Add(_mapper.Map<Employee, DTOEmployee>(employee));
             }
-            return employeeList;
+
+            var employeesList = new EmployeesList()
+            {
+                Employees = employeeTempList,
+                EmployeesCount = employeeCount
+            };
+            return employeesList;
         }
+
         public DTOEmployee Get(Guid? id)
         {
-            var personRecord = _personService.Get(id);
-            if (personRecord == null) return null;
-            var employeeRecord = _repository.Get().FirstOrDefault(st => st.PersonId == personRecord.Id && st.IsDeleted == false);
+            if (id == null) return null;
+            var employeeRecord = _repository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
             var employee = _mapper.Map<Employee, DTOEmployee>(employeeRecord);
             return employee;
         }

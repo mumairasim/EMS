@@ -22,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_employeeFacade.Get());
+            return Ok(_employeeFacade.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
