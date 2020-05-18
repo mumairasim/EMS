@@ -17,9 +17,8 @@ namespace SMS.DATA.Models
         }
 
 
-        [Required]
-        [StringLength(50)]
-        public string RegistrationNumber { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int RegistrationNumber { get; set; }
 
         public Guid? PersonId { get; set; }
 

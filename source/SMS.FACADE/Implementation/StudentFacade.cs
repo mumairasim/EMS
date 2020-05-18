@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SMS.DTOs.DTOs;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using SMS.FACADE.Infrastructure;
 using SMS.Services.Infrastructure;
@@ -14,9 +15,9 @@ namespace SMS.FACADE.Implementation
         {
             StudentService = studentService;
         }
-        public List<DTOStudent> Get()
+        public StudentsList Get(int pageNumber, int pageSize)
         {
-            return StudentService.Get();
+            return StudentService.Get(pageNumber, pageSize);
         }
         public DTOStudent Get(Guid id)
         {
@@ -32,9 +33,9 @@ namespace SMS.FACADE.Implementation
             StudentService.Update(dtoStudent);
         }
 
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
-            StudentService.Delete(id);
+            StudentService.Delete(id, DeletedBy);
         }
     }
 }
