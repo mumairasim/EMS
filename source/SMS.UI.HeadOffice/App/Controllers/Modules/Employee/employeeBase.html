@@ -19,7 +19,6 @@
 
         <thead>
             <tr>
-                <th>Serial No.</th>
                 <th>Name</th>
                 <th>Designation</th>
                 <th>Cnic</th>
@@ -32,7 +31,6 @@
 
         <tbody>
             <tr class="odd" ng-repeat="employee in employeeList">
-                <td>{{employee.SerialNumber}}</td>
                 <td>{{employee.Person.FirstName}} {{employee.Person.LastName}}</td>
                 <td>{{employee.Designation.Name}}</td>
                 <td>{{employee.Person.Cnic}}</td>

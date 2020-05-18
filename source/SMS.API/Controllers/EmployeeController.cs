@@ -41,21 +41,28 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
             employeeDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            employeeDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _employeeFacade.Create(employeeDetail);
             return Ok();
         }
+
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOEmployee dtoEmployee)
+        public IHttpActionResult Update()
         {
-            _employeeFacade.Update(dtoEmployee);
+            var httpRequest = HttpContext.Current.Request;
+            var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
+            employeeDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Update(employeeDetail);
             return Ok();
         }
+
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _employeeFacade.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Delete(id, DeletedBy);
             return Ok();
         }
 

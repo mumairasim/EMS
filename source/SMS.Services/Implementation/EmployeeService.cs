@@ -24,7 +24,7 @@ namespace SMS.Services.Implementation
         
         public EmployeesList Get(int pageNumber, int pageSize)
         {
-            var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.SerialNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             var employeeCount = _repository.Get().Count();
             var employeeTempList = new List<DTOEmployee>();
             foreach (var employee in employees)
@@ -60,6 +60,7 @@ namespace SMS.Services.Implementation
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
         }
 
+        
         public void Update(DTOEmployee dtoEmployee)
         {
             var employee = Get(dtoEmployee.PersonId);
@@ -68,12 +69,13 @@ namespace SMS.Services.Implementation
             _personService.Update(mergedEmployee.Person);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));
         }
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
             if (id == null)
                 return;
             var employee = Get(id);
             employee.IsDeleted = true;
+            employee.DeletedBy = DeletedBy;
             employee.DeletedDate = DateTime.Now;
             _personService.Delete(employee.PersonId);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(employee));

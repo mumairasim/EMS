@@ -28,17 +28,22 @@
                 $scope.response = response.data;
             });
     };
-    $scope.EmployeeCreate = function () {
+    $scope.EmployeeUpdate = function () {
         var data = $scope.EmployeeModel;
-        var responsedata = apiService.register('/api/v1/Employee/Create', data);
+        var formData = new FormData();
+        formData.append('employeeModel', JSON.stringify(data));
+        var responsedata = apiService.masterput('/api/v1/Employee/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Student created successfully.", false);
-            window.location = "#!/dashboard";
+            $scope.growltext("Employee updated successfully.", false);
+            window.location = "#!/employeeBase";
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student creation failed", true);
+                $scope.growltext("Employee updation failed", true);
             });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/employeeBase";
     };
 }]);
