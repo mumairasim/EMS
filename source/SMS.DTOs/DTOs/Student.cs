@@ -1,13 +1,10 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DTOs.DTOs
 {
     public class Student : DtoBaseEntity
     {
-        [Required]
-        [StringLength(50)]
-        public string RegistrationNumber { get; set; }
+        public int? RegistrationNumber { get; set; }
 
         public Guid? PersonId { get; set; }
 
