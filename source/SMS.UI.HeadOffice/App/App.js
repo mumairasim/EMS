@@ -49,6 +49,23 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         templateUrl: "App/Controllers/Modules/School/schoolBase.html",
         controller: "schoolBaseCtrl"
     })
+        .when("/studentDiarySearch", {
+            title: "StudentDiary Search",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiarySearch.html",
+            controller: "studentDiarySearchCtrl"
+        }).when("/studentDiaryCreate", {
+            title: "StudentDiary Create",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryCreate.html",
+            controller: "studentDiaryCreateCtrl"
+        }).when("/studentDiaryUpdate", {
+            title: "StudentDiary Update",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryUpdate.html",
+            controller: "studentDiaryUpdateCtrl"
+        }).when("/studentDiaryBase", {
+            title: "StudentDiary Search",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryBase.html",
+            controller: "studentDiarylBaseCtrl"
+        })
         .otherwise({
         redirectTo: '/'
     });
