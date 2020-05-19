@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using SMS.DTOs.DTOs;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 using SMS.FACADE.Infrastructure;
 using SMS.Services.Infrastructure;
+
 
 namespace SMS.FACADE.Implementation
 {
@@ -13,9 +15,9 @@ namespace SMS.FACADE.Implementation
         {
             EmployeeService = employeeService;
         }
-        public List<DTOEmployee> Get()
+        public EmployeesList Get(int pageNumber, int pageSize)
         {
-            return EmployeeService.Get();
+            return EmployeeService.Get(pageNumber, pageSize);
         }
         public DTOEmployee Get(Guid id)
         {
@@ -31,9 +33,9 @@ namespace SMS.FACADE.Implementation
             EmployeeService.Update(dtoEmployee);
         }
 
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
-            EmployeeService.Delete(id);
+            EmployeeService.Delete(id, DeletedBy);
         }
 
 

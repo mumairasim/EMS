@@ -134,6 +134,12 @@
     <Content Include="App\Controllers\Authentication\loginCtrl.js" />
     <Content Include="App\Controllers\Dashboard\dashboard.html" />
     <Content Include="App\Controllers\Dashboard\dashboardCtrl.js" />
+    <Content Include="App\Controllers\Modules\Employee\employeeBase.html" />
+    <Content Include="App\Controllers\Modules\Employee\employeeBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\Employee\employeeCreate.html" />
+    <Content Include="App\Controllers\Modules\Employee\employeeCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Employee\employeeUpdate.html" />
+    <Content Include="App\Controllers\Modules\Employee\employeeUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBase.html" />
     <Content Include="App\Controllers\Modules\Student\studentUpdate.html" />
     <Content Include="App\Controllers\Modules\Student\studentCreate.html" />
@@ -1084,19 +1090,19 @@
     <Content Include="Scripts\test-bundles\angular-route.js" />
     <Content Include="Scripts\test-bundles\angular-sanitize.js" />
     <Content Include="Scripts\test-bundles\angular-touch.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Directives\" />

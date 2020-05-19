@@ -24,7 +24,7 @@ namespace SMS.Services.Implementation
         public StudentsList Get(int pageNumber, int pageSize)
         {
             var students = _repository.Get().Where(st => st.IsDeleted == false).OrderByDescending(st => st.RegistrationNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var studentCount = _repository.Get().Count();
+            var studentCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
             var studentTempList = new List<DTOStudent>();
             foreach (var student in students)
             {
