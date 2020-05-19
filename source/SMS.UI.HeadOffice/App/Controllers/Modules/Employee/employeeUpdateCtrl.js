@@ -1,8 +1,9 @@
-﻿SMSHO.controller('employeeUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('employeeUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
-    $scope.employeeModel = {
+    $scope.EmployeeModel = {
         Person: $scope.Person,
-        Designation: $scope.Designation
+        Designation: $scope.Designation,
+        School: $scope.School
     };
     $scope.Person = {
         FirstName: '',
@@ -17,17 +18,33 @@
     $scope.Designation = {
         Name: ''
     };
-    
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
+    };
     
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {
             $scope.Designations = response.data;
+            $scope.FetchEmployee();
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
+            $scope.GetDesignations();
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+
     $scope.EmployeeUpdate = function () {
         var data = $scope.EmployeeModel;
         var formData = new FormData();
@@ -43,7 +60,20 @@
                 $scope.growltext("Employee updation failed", true);
             });
     };
+    $scope.FetchEmployee = function () {
+        var id = $routeParams.Id;
+        var url = '/api/v1/Employee/Get?id=' + id;
+        var responsedata = apiService.masterget(url);
+        responsedata.then(function mySucces(response) {
+            $scope.EmployeeModel = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+
     $scope.Cancel = function () {
         window.location = "#!/employeeBase";
     };
+    $scope.GetSchools();
 }]);

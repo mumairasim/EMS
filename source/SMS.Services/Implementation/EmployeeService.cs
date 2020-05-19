@@ -54,13 +54,21 @@ namespace SMS.Services.Implementation
             dtoEmployee.IsDeleted = false;
             dtoEmployee.Id = Guid.NewGuid();
             dtoEmployee.PersonId = _personService.Create(dtoEmployee.Person);
+            HelpingMethodForRelationship(dtoEmployee);
+            //dtoEmployee.DesignationId = dtoEmployee.Designation.Id;
+            //dtoEmployee.Person = null;
+            //dtoEmployee.Designation = null;
+            _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
+        }
+        private void HelpingMethodForRelationship(DTOEmployee dtoEmployee)
+        {
+            dtoEmployee.SchoolId = dtoEmployee.School.Id;
             dtoEmployee.DesignationId = dtoEmployee.Designation.Id;
             dtoEmployee.Person = null;
             dtoEmployee.Designation = null;
-            _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
+            dtoEmployee.School = null;
         }
 
-        
         public void Update(DTOEmployee dtoEmployee)
         {
             var employee = Get(dtoEmployee.PersonId);

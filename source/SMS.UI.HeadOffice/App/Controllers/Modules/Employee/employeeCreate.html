@@ -38,14 +38,20 @@
                         <input name="religion" id="religion" placeholder="religion" type="text" class="form-control" ng-model="EmployeeModel.Person.Religion">
                     </div>
                 </div>
-                    <div class="position-relative row form-group">
-                        <div class="col-sm-6">
-                            <label for="designation" class="col-form-label">Designation</label>
-                            <select name="designation" id="designation" class="form-control" ng-Model="EmployeeModel.Designation"
-                                    ng-options="Designation.Name for Designation in Designations">
-                            </select>
-                        </div>
+                <div class="position-relative row form-group">
+                    <div class="col-sm-6">
+                        <label for="school" class="col-form-label">School</label>
+                        <select name="school" id="school" class="form-control" ng-Model="EmployeeModel.School"
+                                ng-options="School.Name for School in Schools  track by School.Id">
+                        </select>
                     </div>
+                    <div class="col-sm-6">
+                        <label for="designation" class="col-form-label">Designation</label>
+                        <select name="designation" id="designation" class="form-control" ng-Model="EmployeeModel.Designation"
+                                ng-options="Designation.Name for Designation in Designations">
+                        </select>
+                    </div>
+                </div>
                 </div>
             </div>
         <div class="position-relative row form-group">

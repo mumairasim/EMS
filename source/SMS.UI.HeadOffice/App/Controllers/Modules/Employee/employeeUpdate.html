@@ -19,7 +19,7 @@
                         <label for="lastname" class="col-form-label">Lastname</label>
                         <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-model="EmployeeModel.Person.LastName">
                     </div>
-                </div>a
+                </div>
 
                 <div class="position-relative row form-group">
                     <div class="col-sm-3">
@@ -40,6 +40,12 @@
                     </div>
                 </div>
                 <div class="position-relative row form-group">
+                    <div class="col-sm-6">
+                        <label for="school" class="col-form-label">School</label>
+                        <select name="school" id="school" class="form-control" ng-Model="EmployeeModel.School"
+                                ng-options="School.Name for School in Schools track by School.Id">
+                        </select>
+                    </div>
                     <div class="col-sm-6">
                         <label for="designation" class="col-form-label">Designation</label>
                         <select name="designation" id="designation" class="form-control" ng-Model="EmployeeModel.Designation"
@@ -63,7 +69,7 @@
         </div>
         <div class="position-relative row form-group">
             <div class="col-sm-6 offset-sm-2">
-                <button class="btn btn-primary" ng-click="EmployeeCreate()">Submit</button>
+                <button class="btn btn-primary" ng-click="EmployeeUpdate()">Submit</button>
                 <button class="btn btn-secondary">Cancel</button>
             </div>
         </div>

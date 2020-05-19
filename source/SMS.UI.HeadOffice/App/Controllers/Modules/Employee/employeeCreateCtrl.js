@@ -2,7 +2,8 @@
     'use strict';
     $scope.EmployeeModel = {
         Person: $scope.Person,
-        Designation: $scope.Designation
+        Designation: $scope.Designation,
+        School: $scope.School
     };
     $scope.Designation = {
         //Id:'',
@@ -19,6 +20,11 @@
         PermanentAddress: '',
         Phone: ''
     };
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
+    };
 
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
@@ -29,6 +35,17 @@
                 $scope.response = response.data;
             });
     };
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
+            $scope.EmployeeModel.School = $scope.Schools[0];
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+
     $scope.EmployeeCreate = function () {
         var data = $scope.EmployeeModel;
         var formData = new FormData();
@@ -45,5 +62,6 @@
             });
     };
     $scope.GetDesignations();
+    $scope.GetSchools();
 
 }]);
