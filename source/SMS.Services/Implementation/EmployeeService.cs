@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
         public EmployeesList Get(int pageNumber, int pageSize)
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var employeeCount = _repository.Get().Count();
+            var employeeCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
             var employeeTempList = new List<DTOEmployee>();
             foreach (var employee in employees)
             {
