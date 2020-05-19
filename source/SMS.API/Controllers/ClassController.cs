@@ -1,12 +1,17 @@
 ﻿using System;
-using SMS.FACADE.Infrastructure;
-using System.Web.Http;
-using DTOClass = SMS.DTOs.DTOs.Class;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.Services.Infrastructure;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
+using DTOClass = SMS.DTOs.DTOs.Class;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Class")]
+    [EnableCors("*", "*", "*")]
     public class ClassController : ApiController
     {
         public IClassService _classService;
@@ -17,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_classService.Get());
+            return Ok(_classService.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -29,23 +34,32 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOClass dtoClass)
+        public IHttpActionResult Create()
         {
-            _classService.Create(dtoClass);
+
+            var httpRequest = HttpContext.Current.Request;
+            var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
+            classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Create(classDetail);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOClass dtoClass)
+        public IHttpActionResult Update()
         {
-            _classService.Update(dtoClass);
+            var httpRequest = HttpContext.Current.Request;
+            var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
+            classDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Update(classDetail);
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _classService.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Delete(id, DeletedBy);
             return Ok();
         }
     }

@@ -1,10 +1,14 @@
-﻿SMSHO.controller('studentUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('studentDiaryUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-    $scope.StudentModel = {
-        RegistrationNumber: '',
-        Person: $scope.Person,
-        Class: $scope.Class,
+    $scope.StudentDiaryDiaryModel = {
+        Diarytext: '',
+        DairyDate: '',
+        Employee: $scope.Employee,
         School: $scope.School
+    };
+    $scope.Employee = {
+        Person: '',
+        Designation: ''
     };
     $scope.Person = {
         FirstName: '',
@@ -16,19 +20,19 @@
         PermanentAddress: '',
         Phone: ''
     };
-    $scope.Class = {
-        Id: '',
-        ClassName: ''
+    $scope.Designation = {
+        Name: ''
     };
     $scope.School = {
         Id: '',
         Name: '',
         Location: ''
     };
-    $scope.GetClasses = function () {
-        var responsedata = apiService.masterget('/api/v1/Class/Get');
+    $scope.GetEmployees = function () {
+        var responsedata = apiService.masterget('/api/v1/Employee/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Classes = response.data;
+            $scope.Employees = response.data;
+            
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -38,22 +42,40 @@
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
+            $scope.GetClasses();
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
-    $scope.StudentCreate = function () {
-        var data = $scope.StudentModel;
-        var responsedata = apiService.register('/api/v1/Student/Create', data);
+    $scope.StudentDiaryUpdate = function () {
+        var data = $scope.StudentDiaryModel;
+        var formData = new FormData();
+        formData.append('studentDiaryModel', JSON.stringify(data));
+        var responsedata = apiService.masterput('/api/v1/StudentDiary/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Student created successfully.", false);
-            window.location = "#!/dashboard";
+            $scope.growltext("StudentDiary updated successfully.", false);
+            window.location = "#!/studentDiaryBase";
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student creation failed", true);
+                $scope.growltext("StudentDiary updation failed", true);
             });
     };
+    $scope.FetchStudentDiary = function () {
+        var id = $routeParams.Id;
+        var url = '/api/v1/StudentDiary/Get?id=' + id;
+        var responsedata = apiService.masterget(url);
+        responsedata.then(function mySucces(response) {
+            $scope.StudentDiaryModel = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/studentDiaryBase";
+    };
+    $scope.GetSchools();
 }]);

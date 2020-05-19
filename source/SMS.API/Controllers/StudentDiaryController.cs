@@ -1,12 +1,18 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.Services.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/StudentDiary")]
+    [EnableCors("*", "*", "*")]
     public class StudentDiaryController : ApiController
     {
         public IStudentDiaryService _studentDiaryService;
@@ -17,9 +23,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_studentDiaryService.Get());
+            return Ok(_studentDiaryService.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -29,23 +35,32 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOStudentDiary dtoStudentDiary)
+        public IHttpActionResult Create()
         {
-            _studentDiaryService.Create(dtoStudentDiary);
+
+            var httpRequest = HttpContext.Current.Request;
+            var studentDiaryDetail = JsonConvert.DeserializeObject<DTOStudentDiary>(httpRequest.Params["studentDiaryModel"]);
+            studentDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentDiaryService.Create(studentDiaryDetail);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOStudentDiary dtoStudentDiary)
+        public IHttpActionResult Update()
         {
-            _studentDiaryService.Update(dtoStudentDiary);
+            var httpRequest = HttpContext.Current.Request;
+            var studentDiaryDetail = JsonConvert.DeserializeObject<DTOStudentDiary>(httpRequest.Params["studentDiaryModel"]);
+            studentDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentDiaryService.Update(studentDiaryDetail);
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _studentDiaryService.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentDiaryService.Delete(id, DeletedBy);
             return Ok();
         }
     }

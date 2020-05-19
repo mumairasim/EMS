@@ -7,26 +7,22 @@
         Location: ''
     };
     
-    $scope.GetSchools = function () {
-        var responsedata = apiService.masterget('/api/v1/School/Get');
-        responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
-        },
-            function myError(response) {
-                $scope.response = response.data;
-            });
-    };
     $scope.SchoolCreate = function () {
         var data = $scope.SchoolModel;
-        var responsedata = apiService.register('/api/v1/School/Create', data);
+        var formData = new FormData();
+        formData.append('schoolModel', JSON.stringify(data));
+        var responsedata = apiService.post('/api/v1/School/Create', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
             $scope.growltext("School created successfully.", false);
-            window.location = "#!/dashboard";
+            window.location = "#!/schoolBase";
         },
             function myError(response) {
                 $scope.response = response.data;
                 $scope.growltext("School creation failed", true);
             });
+    };
+    $scope.Cancel = function () {
+        window.location = "#!/schoolBase";
     };
 }]);

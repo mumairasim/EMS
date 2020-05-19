@@ -27,39 +27,49 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.School = null;
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }
-        public List<DTOStudentDiary> Get()
+        public List<DTOStudentDiary> Get(int pageNumber, int pageSize)
         {
-            var studentDiary = _repository.Get().ToList();
+             var studentDiaries = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             var StudentDiaryList = new List<DTOStudentDiary>();
-            foreach (var studentdiary in studentDiary)
+            foreach (var Classes in studentDiaries)
             {
-                StudentDiaryList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(studentdiary));
+                StudentDiaryList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(Classes));
             }
             return StudentDiaryList;
         }
         public DTOStudentDiary Get(Guid? id)
         {
             if (id == null) return null;
-            var StudentDiaryRecord = _repository.Get().FirstOrDefault(sd => sd.Id == id);
-            if (StudentDiaryRecord == null) return null;
-
-            return _mapper.Map<StudentDiary, DTOStudentDiary>(StudentDiaryRecord);
+            var studentRecord = _repository.Get().FirstOrDefault(st => st.Id == id && st.IsDeleted == false);
+            var student = _mapper.Map<StudentDiary, DTOStudentDiary>(studentRecord);
+            return student;
         }
         public void Update(DTOStudentDiary dtoStudentDiary)
         {
-            var studentDiary = Get(dtoStudentDiary.Id);
+            var student = Get(dtoStudentDiary.Id);
             dtoStudentDiary.UpdateDate = DateTime.Now;
-            var mergedstudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
-            _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(mergedstudentDiary));
+            var mergedStudentDiary = _mapper.Map(dtoStudentDiary, student);
+           
+            _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(mergedStudentDiary));
         }
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
             if (id == null)
                 return;
             var studentDiary = Get(id);
             studentDiary.IsDeleted = true;
+            studentDiary.DeletedBy = DeletedBy;
             studentDiary.DeletedDate = DateTime.Now;
+            
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(studentDiary));
+        }
+
+        private void HelpingMethodForRelationship(DTOStudentDiary dtoStudentDiary)
+        {
+            dtoStudentDiary.SchoolId = dtoStudentDiary.School.Id;
+            dtoStudentDiary.InstructorId = dtoStudentDiary.Employee.Id;
+             dtoStudentDiary.School = null;
+            dtoStudentDiary.Employee = null;
         }
 
     }
