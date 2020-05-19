@@ -86,5 +86,24 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         .otherwise({
         redirectTo: '/'
     });
+    }).when("/employeeSearch", {
+        title: "Employee Search",
+        templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",
+        controller: "employeeSearchCtrl"
+    }).when("/employeeCreate", {
+        title: "Employee Create",
+        templateUrl: "App/Controllers/Modules/Employee/employeeCreate.html",
+        controller: "employeeCreateCtrl"
+    }).when("/employeeUpdate", {
+        title: "Employee Update",
+        templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
+        controller: "employeeUpdateCtrl"
+    }).when("/employeeBase", {
+         title: "Employee Search",
+         templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
+         controller: "employeeBaseCtrl"
+        }).otherwise({
+            redirectTo: '/'
+        });
     $locationProvider.html5Mode(false);
 }]);

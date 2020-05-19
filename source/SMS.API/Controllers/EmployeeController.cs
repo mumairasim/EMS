@@ -1,11 +1,17 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.FACADE.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Employee")]
+    [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
         public IEmployeeFacade _employeeFacade;
@@ -16,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_employeeFacade.Get());
+            return Ok(_employeeFacade.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -29,23 +35,34 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOEmployee dtoEmployee)
+        public IHttpActionResult Create()
         {
-            _employeeFacade.Create(dtoEmployee);
+
+            var httpRequest = HttpContext.Current.Request;
+            var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
+            employeeDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            employeeDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Create(employeeDetail);
             return Ok();
         }
+
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOEmployee dtoEmployee)
+        public IHttpActionResult Update()
         {
-            _employeeFacade.Update(dtoEmployee);
+            var httpRequest = HttpContext.Current.Request;
+            var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
+            employeeDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Update(employeeDetail);
             return Ok();
         }
+
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _employeeFacade.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _employeeFacade.Delete(id, DeletedBy);
             return Ok();
         }
 

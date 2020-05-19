@@ -50,6 +50,7 @@
     <Compile Include="DTOs\Employee.cs" />
     <Compile Include="DTOs\EmployeeFinance.cs" />
     <Compile Include="DTOs\EmployeeFinanceDetail.cs" />
+    <Compile Include="DTOs\EmployeesList.cs" />
     <Compile Include="DTOs\FinanceType.cs" />
     <Compile Include="DTOs\LessonPlan.cs" />
     <Compile Include="DTOs\Period.cs" />
