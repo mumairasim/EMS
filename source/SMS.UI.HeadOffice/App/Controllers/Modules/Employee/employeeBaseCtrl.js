@@ -1,14 +1,15 @@
 ﻿
-SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+
+SMSHO.controller('employeeBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
-    $scope.GetStudents = function () {
+    $scope.GetEmployees = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/Student/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/Employee/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.studentList = response.data.Students;
-            $scope.TotalStudents = response.data.StudentsCount;
+            $scope.employeeList = response.data.Employees;
+            $scope.TotalEmployees = response.data.EmployeesCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
             $scope.loader(false);
         },
@@ -16,8 +17,9 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
                 $scope.response = response.data;
             });
     };
+    
     $scope.NextAndPreviousButtonsEnablingAndDisabling = function () {
-        if ($scope.TotalStudents > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.TotalEmployees > $scope.pageNumber * $scope.pageSize) {
             $("#nextButton").removeClass('disabled');
         } else {
             $("#nextButton").addClass('disabled');
@@ -29,47 +31,52 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
         }
     };
     $scope.nextPage = function () {
-        if ($scope.TotalStudents > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.TotalEmployees > $scope.pageNumber * $scope.pageSize) {
             $scope.pageNumber++;
-            $scope.GetStudents();
+            $scope.GetEmployees();
 
         }
     };
     $scope.MoveToPage = function (page) {
-        if ($scope.TotalStudents > (page-1) * $scope.pageSize) {
+        if ($scope.TotalEmployees > (page - 1) * $scope.pageSize) {
             $scope.pageNumber = page;
-            $scope.GetStudents();
+            $scope.GetEmployees();
         } else {
-            $scope.growltext("Page "+ page + " doesn't exist.", true);
+            $scope.growltext("Page " + page + " doesn't exist.", true);
         }
-
     }
     $scope.previousPage = function () {
         if ($scope.pageNumber > 1)
             $scope.pageNumber--;
-        $scope.GetStudents();
+        $scope.GetEmployees();
     };
     $scope.ConfirmDelete = function (id) {
-        $scope.StudentToDelete = id;
+        $scope.EmployeeToDelete = id;
     };
     $scope.NoDelete = function () {
-        $scope.StudentToDelete = 0;
+        $scope.EmployeeToDelete = 0;
     };
-    $scope.StudentDelete = function () {
-        var url = '/api/v1/Student/Delete?id=' + $scope.StudentToDelete;
+    $scope.EmployeeDelete = function () {
+        var url = '/api/v1/Employee/Delete?id=' + $scope.EmployeeToDelete;
         var responsedata = apiService.masterdelete(url);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Student deleted successfully.", false);
+            $scope.growltext("Employee deleted successfully.", false);
             window.location.reload();
-            $scope.StudentToDelete = 0;
+            $scope.EmployeeToDelete = 0;
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student deletion failed", true);
-                $scope.StudentToDelete = 0;
+                $scope.growltext("Employee deletion failed", true);
+                $scope.EmployeeToDelete = 0;
             });
     };
-    $scope.GetStudents();
+    $scope.GetEmployees();
 }]);
+
+
+
+
+
+
 

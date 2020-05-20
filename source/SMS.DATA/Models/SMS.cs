@@ -39,6 +39,8 @@ namespace SMS.DATA.Models
         public virtual DbSet<TimeTableDetail> TimeTableDetails { get; set; }
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
