@@ -4,7 +4,9 @@ using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
+using School= SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.Services.Implementation
@@ -18,31 +20,36 @@ namespace SMS.Services.Implementation
             _repository = repository;
             _mapper = mapper;
         }
-        public List<DTOSchool> Get(int pageNumber, int pageSize)
+        public SchoolsList Get(int pageNumber, int pageSize)
         {
-            var Schools = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var schoolList = new List<DTOSchool>();
-            foreach (var schools in Schools)
+             var schools = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var SchoolCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var schoolTempList = new List<DTOSchool>();
+            foreach (var Schools in schools)
             {
-                schoolList.Add(_mapper.Map<School, DTOSchool>(schools));
+                schoolTempList.Add(_mapper.Map<School, DTOSchool>(Schools));
             }
-            return schoolList;
+            var schoolsList = new SchoolsList()
+            {
+                Schools = schoolTempList,
+                SchoolsCount = SchoolCount
+            };
+            return schoolsList;
         }
         public DTOSchool Get(Guid? id)
         {
             if (id == null) return null;
-            var schoolRecord = _repository.Get().FirstOrDefault(s => s.Id == id);
-            if (schoolRecord == null) return null;
+            var schoolRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
+            var schools = _mapper.Map<School, DTOSchool>(schoolRecord);
 
-            return _mapper.Map<School, DTOSchool>(schoolRecord);
+            return schools;
         }
-        public Guid Create(DTOSchool dtoSchool)
+        public void Create(DTOSchool dtoSchool)
         {
             dtoSchool.CreatedDate = DateTime.Now;
             dtoSchool.IsDeleted = false;
             dtoSchool.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOSchool, School>(dtoSchool));
-            return dtoSchool.Id;
         }
         public void Update(DTOSchool dtoSchool)
         {

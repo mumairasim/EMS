@@ -19,13 +19,15 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>School</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr class="odd" ng-repeat="class in ClassList">
-               
-                <td>{{class.ClassName}} </td> 
+
+                <td>{{class.ClassName}} </td>
+                <td>{{class.School.Name}} </td>
                 <td>
                     <a href="#!/classUpdate?Id={{class.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(class.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>
