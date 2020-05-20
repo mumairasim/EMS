@@ -1,12 +1,19 @@
 ﻿
 using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.Services.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
+
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/LessonPlan")]
+    [EnableCors("*", "*", "*")]
     public class LessonPlanController : ApiController
     {
         public ILessonPlanService _lessonplanService;
@@ -17,9 +24,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_lessonplanService.Get());
+            return Ok(_lessonplanService.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
