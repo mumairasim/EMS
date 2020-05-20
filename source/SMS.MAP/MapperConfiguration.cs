@@ -21,6 +21,8 @@ using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
+using DBFile = SMS.DATA.Models.File;
+using DTOFile = SMS.DTOs.DTOs.File;
 
 
 namespace SMS.MAP
@@ -64,6 +66,10 @@ namespace SMS.MAP
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<DBFile, DTOFile>();
+            CreateMap<DTOFile, DTOFile>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<Employee, DTOEmployee>();
             CreateMap<DTOEmployee, DTOEmployee>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -90,6 +96,7 @@ namespace SMS.MAP
             CreateMap<DTODesignation, Designation>();
             CreateMap<DTOStudentFinances, DBStudentFinances>();
             CreateMap<DTOStudentFinanceDetails, DBStudentFinanceDetails>();
+            CreateMap<DTOFile, DBFile>();
 
             #endregion
         }

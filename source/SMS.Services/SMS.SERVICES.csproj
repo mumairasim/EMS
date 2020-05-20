@@ -48,6 +48,7 @@
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
     <Compile Include="Implementation\EmployeeService.cs" />
+    <Compile Include="Implementation\FileService.cs" />
     <Compile Include="Implementation\LessonPlanService.cs" />
     <Compile Include="Implementation\PersonService.cs" />
     <Compile Include="Implementation\SchoolService.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IDesignationService.cs" />
     <Compile Include="Infrastructure\IEmployeeService.cs" />
+    <Compile Include="Infrastructure\IFileService.cs" />
     <Compile Include="Infrastructure\ILessonPlanService.cs" />
     <Compile Include="Infrastructure\IPersonService.cs" />
     <Compile Include="Infrastructure\ISchoolService.cs" />

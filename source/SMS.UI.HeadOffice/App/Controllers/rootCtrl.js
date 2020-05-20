@@ -52,6 +52,11 @@
                 }
             });
     };
+
+    $scope.redirect = function (url) {
+        window.location = "#!/" + url;
+    }
+
     $scope.showDropdown = function () {
         if ($scope.dropDownVisible == false) {
             $("#profileCaret").removeClass('reverseProfileCaretDisplay');

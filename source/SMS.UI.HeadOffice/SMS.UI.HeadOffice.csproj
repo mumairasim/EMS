@@ -132,6 +132,10 @@
     <Content Include="App\Controllers\Authentication\register.html" />
     <Content Include="App\Controllers\Authentication\registerCtrl.js" />
     <Content Include="App\Controllers\Authentication\loginCtrl.js" />
+    <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
+    <Content Include="App\Controllers\UserProfile\UserProfile.html" />
+    <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />
+    <Content Include="App\Controllers\UserProfile\UserProfileCtrl.js" />
     <Content Include="App\Controllers\Dashboard\dashboard.html" />
     <Content Include="App\Controllers\Dashboard\dashboardCtrl.js" />
     <Content Include="App\Controllers\Modules\Employee\employeeBase.html" />

@@ -47,7 +47,16 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
          title: "Employee Search",
          templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
          controller: "employeeBaseCtrl"
-        }).otherwise({
+    }).when("/userProfile", {
+        title: "User Profile View",
+        templateUrl: "App/Controllers/UserProfile/UserProfile.html",
+        controller: "UserProfileCtrl"
+    }).when("/changePassword", {
+        title: "Change Pasword",
+        templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
+        controller: "ChangePasswordCtrl"
+    })
+        .otherwise({
             redirectTo: '/'
         });
     $locationProvider.html5Mode(false);
