@@ -36,11 +36,17 @@ namespace SMS.API.Controllers
             return Ok(_lessonplanService.Get(id));
         }
 
+        
+        
+
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOLessonPlan dtoLessonPlan)
+        public IHttpActionResult Create()
         {
-            _lessonplanService.Create(dtoLessonPlan);
+            var httpRequest = HttpContext.Current.Request;
+            var lessonPlanDetail = JsonConvert.DeserializeObject<DTOLessonPlan>(httpRequest.Params["lessonPlanModel"]);
+            lessonPlanDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _lessonplanService.Create(lessonPlanDetail);
             return Ok();
         }
 

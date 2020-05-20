@@ -43,11 +43,14 @@ namespace SMS.Services.Implementation
             var lessonplan= _mapper.Map<LessonPlan, DTOLessonPlan>(lessonplanRecord);
             return lessonplan;
         }
+        
         public void Create(DTOLessonPlan lessonPlan)
         {
             lessonPlan.CreatedDate = DateTime.Now;
             lessonPlan.IsDeleted = false;
             lessonPlan.Id = Guid.NewGuid();
+            lessonPlan.SchoolId = lessonPlan.School.Id;
+            lessonPlan.School = null;
             _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonPlan));
         }
         public void Update(DTOLessonPlan dtoLessonplan)

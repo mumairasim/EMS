@@ -17,7 +17,7 @@ SMSHO.controller('lessonPlanBaseCtrl', ['$scope', 'apiService', '$cookies', func
             });
     };
     $scope.NextAndPreviousButtonsEnablingAndDisabling = function () {
-        if ($scope.TotalLessonplans > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.TotalLessonPlans > $scope.pageNumber * $scope.pageSize) {
             $("#nextButton").removeClass('disabled');
         } else {
             $("#nextButton").addClass('disabled');
@@ -60,13 +60,13 @@ SMSHO.controller('lessonPlanBaseCtrl', ['$scope', 'apiService', '$cookies', func
         var responsedata = apiService.masterdelete(url);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("Student deleted successfully.", false);
+            $scope.growltext("Lesson Plan deleted successfully.", false);
             window.location.reload();
             $scope.LessonPlanToDelete = 0;
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student deletion failed", true);
+                $scope.growltext("Lesson Plan deletion failed", true);
                 $scope.LessonPlanToDelete = 0;
             });
     };
