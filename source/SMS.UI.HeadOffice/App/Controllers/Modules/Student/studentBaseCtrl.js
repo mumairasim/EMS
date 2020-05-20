@@ -1,6 +1,4 @@
-﻿//(function (app) {
-//    'use strict';
-
+﻿
 SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.pageSize = "10";

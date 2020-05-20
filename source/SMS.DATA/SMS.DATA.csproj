@@ -72,6 +72,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
     <Compile Include="Models\EmployeeFinanceDetail.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\FinanceType.cs" />
     <Compile Include="Models\LessonPlan.cs" />
     <Compile Include="Models\Period.cs" />

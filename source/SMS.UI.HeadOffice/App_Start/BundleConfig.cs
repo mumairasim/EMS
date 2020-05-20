@@ -29,10 +29,11 @@ namespace SMS.UI.HeadOffice
                        //Angular App Scripts
                        "~/App/App.js",
                        "~/App/Services/*.js",
-                       //"~/App/Directives/*.js",
+                        //"~/App/Directives/*.js",
                         "~/App/Controllers/*.js",
                         "~/App/Controllers/Authentication/*.js",
                        "~/App/Controllers/Dashboard/*.js",
+                       "~/App/Controllers/UserProfile/*.js",
                        "~/App/Controllers/Modules/Student/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

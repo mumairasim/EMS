@@ -31,8 +31,17 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Student Search",
         templateUrl: "App/Controllers/Modules/Student/studentBase.html",
         controller: "studentBaseCtrl"
-    }).otherwise({
-        redirectTo: '/'
-    });
+    }).when("/userProfile", {
+        title: "User Profile View",
+        templateUrl: "App/Controllers/UserProfile/UserProfile.html",
+        controller: "UserProfileCtrl"
+    }).when("/changePassword", {
+        title: "Change Pasword",
+        templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
+        controller: "ChangePasswordCtrl"
+    })
+        .otherwise({
+            redirectTo: '/'
+        });
     $locationProvider.html5Mode(false);
 }]);
