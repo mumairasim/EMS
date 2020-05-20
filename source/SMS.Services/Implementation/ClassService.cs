@@ -1,10 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using SMS.DTOs.DTOs;
-using SMS.DATA.Infrastructure;
-using SMS.Services.Infrastructure;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
 
@@ -26,7 +26,6 @@ namespace SMS.Services.Implementation
             dtoClass.CreatedDate = DateTime.Now;
             dtoClass.IsDeleted = false;
             dtoClass.Id = Guid.NewGuid();
-            dtoClass.School = null;
             HelpingMethodForRelationship(dtoClass);
             _repository.Add(_mapper.Map<DTOClass, Class>(dtoClass));
         }
@@ -73,7 +72,8 @@ namespace SMS.Services.Implementation
         }
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
-            dtoClass.SchoolId = Guid.Parse("ECC7C939-8E19-4E47-A5DE-032414CBD8B7");
+            dtoClass.SchoolId = dtoClass.School.Id;
+            dtoClass.School = null;
         }
     }
 }

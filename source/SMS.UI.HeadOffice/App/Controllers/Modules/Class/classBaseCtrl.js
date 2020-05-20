@@ -1,16 +1,17 @@
 ﻿//(function (app) {
 //    'use strict';
 
-SMSHO.controller('ClassBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+SMSHO.controller('classBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
-    $scope.GetClasss = function () {
+    $scope.GetClass = function () {
         $scope.loader(true);
         var responsedata = apiService.masterget('/api/v1/Class/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.ClassList = response.data.Classs;
-            $scope.TotalClasss = response.data.ClasssCount;
+            debugger;
+            $scope.ClassList = response.data.Classes;
+            $scope.TotalClass = response.data.classesCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
             $scope.loader(false);
         },
@@ -19,7 +20,7 @@ SMSHO.controller('ClassBaseCtrl', ['$scope', 'apiService', '$cookies', function 
             });
     };
     $scope.NextAndPreviousButtonsEnablingAndDisabling = function () {
-        if ($scope.TotalClasss > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.TotalClass > $scope.pageNumber * $scope.pageSize) {
             $("#nextButton").removeClass('disabled');
         } else {
             $("#nextButton").addClass('disabled');
@@ -31,16 +32,16 @@ SMSHO.controller('ClassBaseCtrl', ['$scope', 'apiService', '$cookies', function 
         }
     };
     $scope.nextPage = function () {
-        if ($scope.TotalClasss > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.TotalClass > $scope.pageNumber * $scope.pageSize) {
             $scope.pageNumber++;
-            $scope.GetClasss();
+            $scope.GetClass();
 
         }
     };
     $scope.MoveToPage = function (page) {
-        if ($scope.TotalClasss > (page - 1) * $scope.pageSize) {
+        if ($scope.TotalClass > (page - 1) * $scope.pageSize) {
             $scope.pageNumber = page;
-            $scope.GetClasss();
+            $scope.GetClass();
         } else {
             $scope.growltext("Page " + page + " doesn't exist.", true);
         }
@@ -49,7 +50,7 @@ SMSHO.controller('ClassBaseCtrl', ['$scope', 'apiService', '$cookies', function 
     $scope.previousPage = function () {
         if ($scope.pageNumber > 1)
             $scope.pageNumber--;
-        $scope.GetClasss();
+        $scope.GetClass();
     };
     $scope.ConfirmDelete = function (id) {
         $scope.ClassToDelete = id;
@@ -72,6 +73,6 @@ SMSHO.controller('ClassBaseCtrl', ['$scope', 'apiService', '$cookies', function 
                 $scope.ClassToDelete = 0;
             });
     };
-    $scope.GetClasss();
+    $scope.GetClass();
 }]);
 

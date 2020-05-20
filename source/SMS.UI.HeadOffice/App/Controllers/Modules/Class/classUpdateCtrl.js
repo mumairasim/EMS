@@ -1,16 +1,16 @@
-﻿SMSHO.controller('classUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('classUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
     $scope.ClassModel = {
         Name: '',
         School: $scope.School
     };
-    
+
     $scope.School = {
         Id: '',
         Name: '',
         Location: ''
     };
-   
+
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
@@ -50,5 +50,7 @@
     $scope.Cancel = function () {
         window.location = "#!/classBase";
     };
+
+    $scope.FetchClass();
     $scope.GetSchools();
 }]);

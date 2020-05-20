@@ -81,7 +81,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         }).when("/classBase", {
             title: "Class Search",
             templateUrl: "App/Controllers/Modules/class/classBase.html",
-            controller: "classlBaseCtrl"
+            controller: "classBaseCtrl"
         })
         .otherwise({
         redirectTo: '/'

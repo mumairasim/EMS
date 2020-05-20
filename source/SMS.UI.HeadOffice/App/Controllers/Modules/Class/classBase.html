@@ -23,9 +23,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="odd" ng-repeat="class in classList">
+            <tr class="odd" ng-repeat="class in ClassList">
                
-                <td>{{class.Name}} </td> 
+                <td>{{class.ClassName}} </td> 
                 <td>
                     <a href="#!/classUpdate?Id={{class.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(class.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="NoDelete()">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="classDelete()">Delete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="ClassDelete()">Delete</button>
                 </div>
             </div>
         </div>
