@@ -15,7 +15,7 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<Class> _repository;
         private readonly IMapper _mapper;
-        public ClassService(IRepository<Class> repository,IMapper mapper)
+        public ClassService(IRepository<Class> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -73,8 +73,7 @@ namespace SMS.Services.Implementation
         }
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
-            dtoClass.SchoolId = dtoClass.School.Id;
-            dtoClass.School = null;
+            dtoClass.SchoolId = Guid.Parse("ECC7C939-8E19-4E47-A5DE-032414CBD8B7");
         }
     }
 }
