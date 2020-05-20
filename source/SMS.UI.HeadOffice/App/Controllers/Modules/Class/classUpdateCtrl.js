@@ -1,7 +1,7 @@
 ﻿SMSHO.controller('classUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.ClassModel = {
-        Id: '',
+        Name: '',
         School: $scope.School
     };
     

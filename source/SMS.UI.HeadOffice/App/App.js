@@ -85,7 +85,6 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         })
         .otherwise({
         redirectTo: '/'
-    });
     }).when("/employeeSearch", {
         title: "Employee Search",
         templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",

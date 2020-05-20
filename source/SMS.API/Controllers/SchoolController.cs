@@ -40,7 +40,6 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var schoolDetail = JsonConvert.DeserializeObject<DTOSchool>(httpRequest.Params["schoolModel"]);
             schoolDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            schoolDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _schoolService.Create(schoolDetail);
             return Ok();
         }
