@@ -55,6 +55,10 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "LessonPlan Create",
         templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanCreate.html",
         controller: "lessonPlanCreateCtrl"
+    }).when("/lessonPlanUpdate", {
+        title: "LessonPlan Update",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
+        controller: "lessonPlanUpdateCtrl"
     }).when("/userProfile", {
         title: "User Profile View",
         templateUrl: "App/Controllers/UserProfile/UserProfile.html",

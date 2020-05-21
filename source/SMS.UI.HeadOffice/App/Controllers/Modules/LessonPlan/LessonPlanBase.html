@@ -21,15 +21,19 @@
                 <th>Text</th>
                 <th>From Date</th>
                 <th>To Date</th>
+                <th>School Name</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr class="odd" ng-repeat="lessonPlan in lessonPlanList">
                 <td>{{lessonPlan.Text}}</td>
                 <td>{{lessonPlan.FromDate}}</td>
-                <td>{{lessonPlan.Person.ToDate}}</td>
+                <td>{{lessonPlan.ToDate}}</td>
+                <td>{{lessonPlan.School.Name}}</td>
+
                 <td>
-                    <a href="#!/studentUpdate?Id={{lessonPlan.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
+                    <a href="#!/lessonPlanUpdate?Id={{lessonPlan.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(lessonPlan.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>
                 </td>
             </tr>

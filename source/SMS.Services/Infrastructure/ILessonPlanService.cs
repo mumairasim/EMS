@@ -12,7 +12,7 @@ namespace SMS.Services.Infrastructure
         DTOLessonPlan Get(Guid? id);
         void Create(DTOLessonPlan lessonplan);
         void Update(DTOLessonPlan dtolessonplan);
-        void Delete(Guid? id);
+        void Delete(Guid? id, string DeletedBy);
     }
 }
 

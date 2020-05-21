@@ -36,9 +36,6 @@ namespace SMS.API.Controllers
             return Ok(_lessonplanService.Get(id));
         }
 
-        
-        
-
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
@@ -52,9 +49,12 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOLessonPlan dtoLessonPlan)
+        public IHttpActionResult Update()
         {
-            _lessonplanService.Update(dtoLessonPlan);
+            var httpRequest = HttpContext.Current.Request;
+            var lessonPlanDetail = JsonConvert.DeserializeObject<DTOLessonPlan>(httpRequest.Params["lessonPlanModel"]);
+            lessonPlanDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _lessonplanService.Update(lessonPlanDetail);
             return Ok();
         }
 
@@ -62,7 +62,8 @@ namespace SMS.API.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _lessonplanService.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _lessonplanService.Delete(id, DeletedBy);
             return Ok();
         }
 
