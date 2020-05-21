@@ -1,11 +1,17 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using SMS.FACADE.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Student")]
+    [EnableCors("*", "*", "*")]
     public class StudentController : ApiController
     {
         public IStudentFacade _studentFacade;
@@ -16,9 +22,9 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_studentFacade.Get());
+            return Ok(_studentFacade.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -28,23 +34,32 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOStudent dtoStudent)
+        public IHttpActionResult Create()
         {
-            _studentFacade.Create(dtoStudent);
+
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Create(studentDetail);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOStudent dtoStudent)
+        public IHttpActionResult Update()
         {
-            _studentFacade.Update(dtoStudent);
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Update(studentDetail);
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _studentFacade.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentFacade.Delete(id, DeletedBy);
             return Ok();
         }
     }

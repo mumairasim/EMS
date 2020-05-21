@@ -44,13 +44,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\ClassService.cs" />
     <Compile Include="Implementation\CourseService.cs" />
+    <Compile Include="Implementation\DesignationService.cs" />
+    <Compile Include="Implementation\EmployeeService.cs" />
+    <Compile Include="Implementation\FileService.cs" />
+    <Compile Include="Implementation\LessonPlanService.cs" />
     <Compile Include="Implementation\PersonService.cs" />
+    <Compile Include="Implementation\SchoolService.cs" />
+    <Compile Include="Implementation\StudentDiaryService.cs" />
+    <Compile Include="Implementation\StudentFinanceDetailsService.cs" />
+    <Compile Include="Implementation\StudentFinanceService.cs" />
     <Compile Include="Implementation\StudentService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
+    <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
+    <Compile Include="Infrastructure\IDesignationService.cs" />
+    <Compile Include="Infrastructure\IEmployeeService.cs" />
+    <Compile Include="Infrastructure\IFileService.cs" />
+    <Compile Include="Infrastructure\ILessonPlanService.cs" />
     <Compile Include="Infrastructure\IPersonService.cs" />
+    <Compile Include="Infrastructure\ISchoolService.cs" />
+    <Compile Include="Infrastructure\IStudentDiaryService.cs" />
+    <Compile Include="Infrastructure\IStudentFinanceDetailsService.cs" />
+    <Compile Include="Infrastructure\IStudentFinanceService.cs" />
     <Compile Include="Infrastructure\IStudentService.cs" />
     <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />

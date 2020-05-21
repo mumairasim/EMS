@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Results
 {
+    [EnableCors("*", "*", "*")]
     public class ChallengeResult : IHttpActionResult
     {
         public ChallengeResult(string loginProvider, ApiController controller)

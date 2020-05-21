@@ -39,9 +39,13 @@ namespace SMS.DATA.Models
         public virtual DbSet<TimeTableDetail> TimeTableDetails { get; set; }
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Student>()
+                .Property(s => s.RegistrationNumber).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<Employee>()
                 .HasMany(e => e.Assignments)
                 .WithOptional(e => e.Employee)
