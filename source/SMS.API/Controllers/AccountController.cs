@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.AspNet.Identity;
@@ -64,6 +66,22 @@ namespace SMS.API.Controllers
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+            };
+        }
+
+        // GET api/Account/UserInfo
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [Route("UserDetailedInfo")]
+        public UserInfoDetailedViewModel GetUserDetailedInfo()
+        {
+            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+            var path = HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["FileUploadFolder"]);
+            return new UserInfoDetailedViewModel
+            {
+                Email = User.Identity.GetUserName(),
+                HasRegistered = externalLogin == null,
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                Image = System.IO.File.ReadAllBytes($"{path}/348960e2-8028-4977-bac0-97adb3d84788.png")
             };
         }
 

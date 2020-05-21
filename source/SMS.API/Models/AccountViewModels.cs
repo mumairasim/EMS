@@ -33,6 +33,10 @@ namespace SMS.API.Models
 
         public string LoginProvider { get; set; }
     }
+    public class UserInfoDetailedViewModel : UserInfoViewModel
+    {
+        public byte[] Image { get; set; }
+    }
 
     public class UserLoginInfoViewModel
     {

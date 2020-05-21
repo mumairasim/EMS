@@ -13,7 +13,7 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     $scope.FileDescription = "";
     $scope.selectedFileForUpload = null;
 
-    $scope.$watch("f1.$valid", function (isValid) {
+    $scope.$watch("userForm.$valid", function (isValid) {
         $scope.isFormValid = isValid;
     });
 
@@ -70,10 +70,12 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     };
     $scope.GetUser = function () {
         var id = $routeParams.Id;
-        var url = '/api/Account/UserInfo';
+        var url = '/api/Account/UserDetailedInfo';
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
+            debugger;
             $scope.UserModel = response.data;
+            $scope.UserModel.Image = "data:image/png;base64," + $scope.UserModel.Image;
         },
             function myError(response) {
                 $scope.response = response.data;
