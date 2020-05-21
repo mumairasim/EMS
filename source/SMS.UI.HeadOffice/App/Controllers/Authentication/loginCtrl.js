@@ -12,7 +12,6 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
 
     
     $scope.logincall = function () {
-        $scope.loader(true);
         var data = "grant_type=password&username=" + $scope.logindata.userName + "&password=" + $scope.logindata.password;
         var responsedata = apiService.login('/Token', data);
         responsedata.then(function mySucces(response) {
@@ -26,11 +25,9 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
             $scope.iserror = false;
             $scope.growltext("Login sucessfull.", false);
             window.location = "#!/dashboard";
-            $scope.loader(false);
         }, function myError(response) {
             if (response.status != 200) {
                 $scope.iserror = true;
-                $scope.loader(false);
                 //$scope.responsemsg = response.data.error_description;
                 $scope.growltext("Login failed.", true);
             }

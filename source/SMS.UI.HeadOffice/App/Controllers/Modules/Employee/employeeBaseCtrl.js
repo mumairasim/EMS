@@ -5,13 +5,11 @@ SMSHO.controller('employeeBaseCtrl', ['$scope', 'apiService', '$cookies', functi
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
     $scope.GetEmployees = function () {
-        $scope.loader(true);
         var responsedata = apiService.masterget('/api/v1/Employee/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.employeeList = response.data.Employees;
             $scope.TotalEmployees = response.data.EmployeesCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
-            $scope.loader(false);
         },
             function myError(response) {
                 $scope.response = response.data;

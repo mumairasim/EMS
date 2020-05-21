@@ -1,76 +1,38 @@
 ﻿<div class="container containerCreate">
-    <h5 class="card-title fs-50 text-center">Update Student</h5>
+    <h5 class="card-title fs-50 text-center">Update Worksheet</h5>
     <form class="">
         <div class="position-relative row form-group">
             <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
             </div>-->
-            <div class="col-sm-3">
-                <img src="../../images/avatar_2x.png" class=" img-circle img-thumbnail" alt="avatar">
-                <div style="margin-top: 10px;">
-                    <input type="file" class="text-center center-block">
-                </div>
-            </div>
+
             <div class="col-sm-9">
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="firstname" class="col-form-label">Firstname</label>
-                        <input name="firstname" id="firstname" placeholder="firstname" type="text" class="form-control" ng-modal="StudentModel.Person.FirstName">
+                        <label for="text" class="col-form-label">Text</label>
+                        <input name="text" id="text" placeholder="text" type="text" class="form-control" ng-Model="WorksheetModel.Text">
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastname" class="col-form-label">Lastname</label>
-                        <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-modal="StudentModel.Person.LastName">
+                        <label for="fordate" class="col-form-label">ForDate</label>
+                        <input name="fordate" id="fordate" placeholder="fordate" type="date" class="form-control" ng-Model="WorksheetModel.ForDate">
                     </div>
                 </div>
-                <div class="position-relative row form-group">
-                    <div class="col-sm-3">
-                        <label for="cnic" class="col-form-label">CNIC/B.Form</label>
-                        <input name="cnic" id="cnic" placeholder="cnic/b.form" type="text" class="form-control" ng-modal="StudentModel.Person.Cnic">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="phone" class="col-form-label">Phone</label>
-                        <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-modal="StudentModel.Person.Phone">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="nationality" class="col-form-label">Nationality</label>
-                        <input name="nationality" id="nationality" placeholder="Nationality" type="text" class="form-control" ng-modal="StudentModel.Person.Nationality">
-                    </div>
-                    <div class="col-sm-3">
-                        <label for="religion" class="col-form-label">Religion</label>
-                        <input name="religion" id="religion" placeholder="religion" type="text" class="form-control" ng-modal="StudentModel.Person.Religion">
-                    </div>
-                </div>
+
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="school" class="col-form-label">School</label>
-                        <select name="school" id="school" class="form-control" ng-Model="StudentModel.School" 
-                                ng-options="School.Name for School in Schools">
+                        <label for="employee" class="col-form-label">Employee</label>
+                        <select name="employee" id="employee" class="form-control" ng-Model="WorksheetModel.Employee"
+                                ng-options="Employee.Person.FirstName for Employee in Employees track by Employee.Id">
                         </select>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="class" class="col-form-label">Class</label>
-                        <select name="class" id="class" class="form-control" ng-Model="StudentModel.Class"
-                            ng-options="Class.ClassName for Class in Classes">
-                        </select>
-                    </div>
+
                 </div>
             </div>
         </div>
+
         <div class="position-relative row form-group">
-            <div class="col-sm-12">
-                <label for="presentaddress" class="col-form-label">Present Address</label>
-                <textarea name="presentaddress" id="presentaddress" placeholder="present address" type="text" rows="3" class="form-control" ng-modal="StudentModel.Person.PresentAddress"></textarea>
-            </div>
-        </div>
-        <div class="position-relative row form-group">
-            <div class="col-sm-12">
-                <label for="permanentaddress" class="col-form-label">Permanent Address</label>
-                <textarea name="permanentaddress" id="permanentaddress" placeholder="permanent address" type="text" rows="3" class="form-control" ng-modal="StudentModel.Person.PermanentAddress"></textarea>
-            </div>
-        </div>
-        <div class="position-relative row form-group">
-            <div class="col-sm-6 offset-sm-2">
-                <button class="btn btn-primary" ng-click="StudentCreate()">Submit</button>
-                <button class="btn btn-secondary">Cancel</button>
+            <div class="col-sm-6">
+                <button class="btn btn-primary" ng-click="WorksheetUpdate()">Update</button>
+                <button class="btn btn-secondary" ng-click="Cancel()">Cancel</button>
             </div>
         </div>
     </form>

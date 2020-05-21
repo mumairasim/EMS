@@ -56,7 +56,11 @@
     $scope.redirect = function (url) {
         window.location = "#!/" + url;
     }
+    $scope.$watch(isLoading, function () { $scope.loader(isLoading()); });
 
+    function isLoading() {
+        return $http.pendingRequests.length > 0;
+    }
     $scope.showDropdown = function () {
         if ($scope.dropDownVisible == false) {
             $("#profileCaret").removeClass('reverseProfileCaretDisplay');
