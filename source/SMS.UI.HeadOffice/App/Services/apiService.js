@@ -119,6 +119,10 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         });
     }
 
+    //auto loader
+
+
+
     return {
         login: login,
         logout: logout,

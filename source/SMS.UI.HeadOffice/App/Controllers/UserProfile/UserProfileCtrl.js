@@ -29,12 +29,10 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     }
 
     $scope.SelectFileForUpload = function (file) {
-        debugger;
         $scope.SelectedFileForUpload = file[0];
     }
 
     $scope.SaveFile = function () {
-        debugger;
         $scope.IsFormSubimtted = true;
         $scope.Message = "";
         $scope.CheckIsFileValid($scope.SelectedFileForUpload);
@@ -53,7 +51,6 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     }
 
     $scope.UserUpdate = function () {
-        debugger;
         var data = $scope.UserModel;
         var formData = new FormData();
         formData.append('userModel', JSON.stringify(data));
