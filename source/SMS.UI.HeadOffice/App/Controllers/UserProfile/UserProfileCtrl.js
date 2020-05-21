@@ -37,7 +37,10 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         $scope.Message = "";
         $scope.CheckIsFileValid($scope.SelectedFileForUpload);
         if ($scope.IsFileValid) {
-            apiService.uploadFile($scope.SelectedFileForUpload, $scope.FileDescription, 'api/v1/File/Save')
+            var formData = new FormData();
+            formData.append("file", $scope.SelectedFileForUpload);
+            formData.append("description", $scope.FileDescription);
+            apiService.post(formData, 'api/v1/File/Save')
                 .then(function (d) {
                     alert(d.Message);
                 }, function (e) {
