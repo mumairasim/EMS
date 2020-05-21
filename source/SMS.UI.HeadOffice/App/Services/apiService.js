@@ -8,7 +8,6 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         var formData = new FormData();
         formData.append("file", file);
         formData.append("description", description);
-        debugger;
         return post(url, JSON.stringify(formData));
     }
 

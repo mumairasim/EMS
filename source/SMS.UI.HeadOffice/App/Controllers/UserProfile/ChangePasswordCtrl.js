@@ -9,7 +9,6 @@ SMSHO.controller('ChangePasswordCtrl', ['$scope', 'apiService', '$cookies', '$ro
     };
 
     $scope.Submit = function () {
-        debugger;
         var responsedata = apiService.masterpost('api/Account/ChangePassword', $scope.ChangePasswordModel);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
