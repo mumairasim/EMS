@@ -4,6 +4,7 @@ using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using DBFile = SMS.DATA.Models.File;
 using DTOFile = SMS.DTOs.DTOs.File;
 
@@ -39,6 +40,15 @@ namespace SMS.Services.Implementation
             dTOFile.Id = Guid.NewGuid();
 
             _repository.Add(_mapper.Map<DTOFile, DBFile>(dTOFile));
+        }
+        public void Create(HttpPostedFile file)
+        {
+            var dtoFile = new DTOFile();
+            dtoFile.CreatedDate = DateTime.Now;
+            dtoFile.IsDeleted = false;
+            dtoFile.Id = Guid.NewGuid();
+
+            _repository.Add(_mapper.Map<DTOFile, DBFile>(dtoFile));
         }
 
         /// <summary>

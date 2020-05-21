@@ -51,6 +51,12 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
             studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            MemoryStream fileMemoryStream = new MemoryStream();
+            if (httpRequest.Files.Count > 0)
+            {
+                var file = httpRequest.Files[0];
+            }
+
             _studentFacade.Update(studentDetail);
             return Ok();
         }
