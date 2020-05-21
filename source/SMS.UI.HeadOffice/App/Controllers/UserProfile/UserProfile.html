@@ -1,11 +1,10 @@
 ﻿<div class="container containerCreate">
     <h5 class="card-title fs-50 text-center">User Profile</h5>
-    <form class="">
+    <form name="userForm" class="">
         <div class="position-relative row form-group">
             <div class="col-sm-3">
-                <img src="../../images/avatar_2x.png" class=" img-circle img-thumbnail" alt="avatar">
+                <img src="{{UserModel.Image}}" class=" img-circle img-thumbnail" alt="avatar">
                 <div style="margin-top: 10px;">
-                    <!--<input type="file" accept="image/*" required ng-change="SaveFile()" ng-model="selectedFileForUpload" class="text-center center-block">-->
                     <input type="file" name="file" onchange="angular.element(this).scope().SelectFileForUpload(this.files)" />
                 </div>
             </div>

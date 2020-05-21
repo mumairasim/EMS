@@ -13,7 +13,7 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     $scope.FileDescription = "";
     $scope.selectedFileForUpload = null;
 
-    $scope.$watch("f1.$valid", function (isValid) {
+    $scope.$watch("userForm.$valid", function (isValid) {
         $scope.isFormValid = isValid;
     });
 
@@ -37,7 +37,10 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         $scope.Message = "";
         $scope.CheckIsFileValid($scope.SelectedFileForUpload);
         if ($scope.IsFileValid) {
-            apiService.uploadFile($scope.SelectedFileForUpload, $scope.FileDescription, 'api/v1/File/Save')
+            var formData = new FormData();
+            formData.append("file", $scope.SelectedFileForUpload);
+            formData.append("description", $scope.FileDescription);
+            apiService.post('api/v1/File/Save', formData)
                 .then(function (d) {
                     alert(d.Message);
                 }, function (e) {
@@ -67,10 +70,12 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     };
     $scope.GetUser = function () {
         var id = $routeParams.Id;
-        var url = '/api/Account/UserInfo';
+        var url = '/api/Account/UserDetailedInfo';
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
+            debugger;
             $scope.UserModel = response.data;
+            $scope.UserModel.Image = "data:image/png;base64," + $scope.UserModel.Image;
         },
             function myError(response) {
                 $scope.response = response.data;
