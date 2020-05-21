@@ -35,6 +35,7 @@ namespace SMS.UI.HeadOffice
                        "~/App/Controllers/Dashboard/*.js",
                        "~/App/Controllers/Modules/Student/*.js",
                        "~/App/Controllers/Modules/Employee/*.js",
+                       "~/App/Controllers/Modules/LessonPlan/*.js",
                        "~/App/Controllers/UserProfile/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

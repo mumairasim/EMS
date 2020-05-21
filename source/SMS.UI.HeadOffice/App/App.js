@@ -47,6 +47,18 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
          title: "Employee Search",
          templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
          controller: "employeeBaseCtrl"
+    }).when("/lessonPlanBase", {
+        title: "LessonPlan Search",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
+        controller: "lessonPlanBaseCtrl"
+    }).when("/lessonPlanCreate", {
+        title: "LessonPlan Create",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanCreate.html",
+        controller: "lessonPlanCreateCtrl"
+    }).when("/lessonPlanUpdate", {
+        title: "LessonPlan Update",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
+        controller: "lessonPlanUpdateCtrl"
     }).when("/userProfile", {
         title: "User Profile View",
         templateUrl: "App/Controllers/UserProfile/UserProfile.html",
@@ -55,8 +67,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
-    })
-        .otherwise({
+    }).otherwise({
             redirectTo: '/'
         });
     $locationProvider.html5Mode(false);
