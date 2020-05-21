@@ -67,7 +67,29 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
-    }).otherwise({
+    
+    })
+        .when("/worksheetBase", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetBase.html",
+            controller: "worksheetBaseCtrl"
+        })
+        .when("/worksheetSearch", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetSearch.html",
+            controller: "worksheetSearchCtrl"
+        })
+        .when("/worksheetCreate", {
+            title: "Worksheet Create",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetCreate.html",
+            controller: "worksheetCreateCtrl"
+        })
+        .when("/worksheetUpdate", {
+            title: "Worksheet Update",
+            templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
+            controller: "worksheetUpdateCtrl"
+        })
+        .otherwise({
             redirectTo: '/'
         });
     $locationProvider.html5Mode(false);

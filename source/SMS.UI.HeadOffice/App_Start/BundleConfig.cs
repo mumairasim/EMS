@@ -25,7 +25,7 @@ namespace SMS.UI.HeadOffice
                        "~/Scripts/App/angular-ui-router.min.js",
                        "~/Scripts/angular-local-storage.min.js",
                        //External Scripts
-                       //"~/Scripts/App/js/main.js",
+                       "~/Scripts/App/js/main.js",
                        //Angular App Scripts
                        "~/App/App.js",
                        "~/App/Services/*.js",
@@ -35,8 +35,9 @@ namespace SMS.UI.HeadOffice
                        "~/App/Controllers/Dashboard/*.js",
                        "~/App/Controllers/Modules/Student/*.js",
                        "~/App/Controllers/Modules/Employee/*.js",
-                       "~/App/Controllers/Modules/LessonPlan/*.js",
-                       "~/App/Controllers/UserProfile/*.js"
+                       "~/App/Controllers/UserProfile/*.js",                      
+                       "~/App/Controllers/Modules/Worksheet/*.js",
+                       "~/App/Controllers/Modules/LessonPlan/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

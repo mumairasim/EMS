@@ -4,13 +4,11 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
     $scope.GetStudents = function () {
-        $scope.loader(true);
         var responsedata = apiService.masterget('/api/v1/Student/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.studentList = response.data.Students;
             $scope.TotalStudents = response.data.StudentsCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
-            $scope.loader(false);
         },
             function myError(response) {
                 $scope.response = response.data;
