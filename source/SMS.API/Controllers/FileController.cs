@@ -75,7 +75,14 @@ namespace SMS.API.Controllers
 
                 try
                 {
-                    path = Path.Combine(HostingEnvironment.MapPath("~/UploadedFiles"));
+
+                    path = Path.Combine(HostingEnvironment.MapPath("~/UploadedFiles/"));
+
+                    bool exists = Directory.Exists(path);
+                    if (!exists)
+                        Directory.CreateDirectory(path);
+
+                    path = path + fileName;
                     file.SaveAs(path);
                     DTOFile newFile = new DTOFile
                     {
