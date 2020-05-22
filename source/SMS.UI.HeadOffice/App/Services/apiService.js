@@ -132,6 +132,6 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         masterput: masterput,
         masterdelete: masterdelete,
         post: post,
-        uploadFile, uploadFile
+        uploadFile: uploadFile
     };
 }]);
