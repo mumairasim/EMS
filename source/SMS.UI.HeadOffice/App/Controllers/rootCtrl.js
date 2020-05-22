@@ -1,7 +1,7 @@
 ﻿SMSHO.controller('rootCtrl', ["$scope", "$location", '$timeout', "$rootScope", '$http', 'apiService', '$cookies', function ($scope, $location, $timeout, $rootScope, $http, apiService, $cookies) {
     'use strict';
-    $scope.isLogin = false;
-    $scope.dropDownVisible = false;
+    //$scope.isLogin = false;
+    //$scope.dropDownVisible = false;
     $scope.notifications = [];
     $scope.CheckUser = function () {
         if ($cookies.get('SMS_Isloggedin') == 'false') {
@@ -61,15 +61,4 @@
     function isLoading() {
         return $http.pendingRequests.length > 0;
     }
-    $scope.showDropdown = function () {
-        if ($scope.dropDownVisible == false) {
-            $("#profileCaret").removeClass('reverseProfileCaretDisplay');
-            $("#profileCaret").addClass('profileCaretDisplay');
-            $scope.dropDownVisible = true;
-        } else {
-            $("#profileCaret").removeClass('profileCaretDisplay');
-            $("#profileCaret").addClass('reverseProfileCaretDisplay');
-            $scope.dropDownVisible = false;
-        }
-    };
 }]);

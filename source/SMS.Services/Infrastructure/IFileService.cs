@@ -24,18 +24,24 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Creates a single record of a File
         /// </summary>
         /// <param name="dtoFile"></param>
-        void Create(DTOFile dTOFile);
+        Guid Create(DTOFile dTOFile);
         /// <summary>
         /// Service level call : Creates a single record of a File and save the file in directory
         /// </summary>
         /// <param name="file"></param>
-        void Create(HttpPostedFile file);
+        Guid? Create(HttpPostedFile file);
 
         /// <summary>
         /// Service level call : Updates the Single Record of a File 
         /// </summary>
         /// <param name="dtoFile"></param>
         void Update(DTOFile dTOFile);
+        /// <summary>
+        /// Service level call : Updates the Single Record of a File and actual image
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="dtoFile"></param>
+        void Update(HttpPostedFile file, DTOFile dtoFile);
 
         /// <summary>
         /// Service level call : Delete a single record of a File

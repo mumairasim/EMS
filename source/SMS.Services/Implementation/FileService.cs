@@ -36,28 +36,24 @@ namespace SMS.Services.Implementation
         /// Service level call : Creates a single record of a File
         /// </summary>
         /// <param name="dToFile"></param>
-        public void Create(DTOFile dToFile)
+        public Guid Create(DTOFile dToFile)
         {
             dToFile.CreatedDate = DateTime.Now;
             dToFile.IsDeleted = false;
             dToFile.Id = Guid.NewGuid();
-
             _repository.Add(_mapper.Map<DTOFile, DBFile>(dToFile));
+            return dToFile.Id;
         }
-        public void Create(HttpPostedFile file)
+        public Guid? Create(HttpPostedFile file)
         {
             var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
             int size = file.ContentLength;
-
             try
             {
-
                 var path = Path.Combine(HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["FileUploadFolder"]));
-
                 bool exists = Directory.Exists(path);
                 if (!exists)
                     Directory.CreateDirectory(path);
-
                 path = path + fileName;
                 file.SaveAs(path);
                 DTOFile newFile = new DTOFile
@@ -67,13 +63,12 @@ namespace SMS.Services.Implementation
                     Size = size,
                     IsDeleted = false
                 };
-
-                Create(newFile);
-
+                return Create(newFile);
             }
             catch
             {
                 // ignored
+                return null;
             }
         }
 
@@ -109,7 +104,7 @@ namespace SMS.Services.Implementation
 
             var file = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var fileDto = _mapper.Map<DBFile, DTOFile>(file);
-
+            fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
             return fileDto;
         }
 
@@ -127,6 +122,19 @@ namespace SMS.Services.Implementation
                 var updated = _mapper.Map(dtoFile, file);
 
                 _repository.Update(_mapper.Map<DTOFile, DBFile>(updated));
+            }
+        }
+        public void Update(HttpPostedFile file, DTOFile dtoFile)
+        {
+            try
+            {
+                File.Delete(dtoFile.Path);
+                file.SaveAs(dtoFile.Path);
+                Update(dtoFile);
+            }
+            catch
+            {
+                // ignored
             }
         }
 

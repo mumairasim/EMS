@@ -45,8 +45,7 @@ namespace SMS.API.Controllers
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                FileService.Create(file);
-
+                studentDetail.ImageId = FileService.Create(file);
             }
             StudentService.Create(studentDetail);
             return Ok();
@@ -58,7 +57,12 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
             studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-
+            studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            if (httpRequest.Files.Count > 0)
+            {
+                var file = httpRequest.Files[0];
+                FileService.Update(file, studentDetail.Image);
+            }
             StudentService.Update(studentDetail);
             return Ok();
         }

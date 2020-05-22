@@ -1,10 +1,12 @@
 ﻿using SMS.Services.Infrastructure;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Web.Http;
+using SMS.DTOs.DTOs;
 using DTOFile = SMS.DTOs.DTOs.File;
 
 
@@ -29,11 +31,6 @@ namespace SMS.API.Controllers
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            if (id == null)
-            {
-                return BadRequest("No Id Recieved");
-            }
-
             try
             {
                 var result = _fileService.Get(id);

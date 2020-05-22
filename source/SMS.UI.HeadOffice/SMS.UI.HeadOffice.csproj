@@ -163,7 +163,6 @@
     <Content Include="App\Controllers\Modules\Student\studentCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBaseCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
-    <Content Include="App\Directives\fileModel.js" />
     <Content Include="App\Services\apiService.js" />
     <Content Include="Content\App\customStyle.css" />
     <Content Include="Content\App\growl.css" />
@@ -242,6 +241,7 @@
     <Content Include="Scripts\App\angular-ui-router.min.js" />
     <Content Include="Scripts\App\checklist-model.js" />
     <Content Include="Scripts\App\main.js" />
+    <Content Include="Scripts\App\ng-file-upload-all.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />
@@ -1122,6 +1122,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Directives\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

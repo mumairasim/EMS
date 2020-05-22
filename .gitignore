@@ -232,3 +232,4 @@ project.lock.json
 #/source/SMS.REQUESTDATA/App.config
 #/source/SMS.DATA/App.config
 #/source/SMS.API/Web.config
+/source/SMS.API/UploadedFiles

@@ -84,6 +84,7 @@ namespace SMS.Services.Implementation
             dtoStudent.Person = null;
             dtoStudent.Class = null;
             dtoStudent.School = null;
+            dtoStudent.Image = null;
         }
     }
 }

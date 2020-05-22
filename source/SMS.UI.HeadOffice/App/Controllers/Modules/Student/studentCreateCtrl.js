@@ -4,7 +4,16 @@
         RegistrationNumber: '',
         Person: $scope.Person,
         Class: $scope.Class,
-        School: $scope.School
+        School: $scope.School,
+        Image: $scope.Image
+    };
+    $scope.Image = {
+        Id: '',
+        Name: '',
+        Description: '',
+        Path: '',
+        Size: '',
+        ImageFile: ''
     };
     $scope.Person = {
         FirstName: '',
@@ -46,15 +55,14 @@
             });
     };
     $scope.StudentCreate = function () {
-        debugger;
         var data = $scope.StudentModel;
         var formData = new FormData();
         formData.append('studentModel', JSON.stringify(data));
         $scope.CheckIsFileValid($scope.SelectedFileForUpload);
         if ($scope.IsFileValid) {
-            formData.append("file", $scope.SelectedFileForUpload);
+            formData.append("file", $scope.StudentModel.Image.ImageFile);
         } else {
-            $scope.growltext("Invalid file", true);
+            $scope.growltext("Invalid Image file", true);
         }
         var responsedata = apiService.post('/api/v1/Student/Create', formData);
         responsedata.then(function mySucces(response) {
@@ -80,12 +88,13 @@
     };
 
     $scope.SelectFileForUpload = function (file) {
-        $scope.SelectedFileForUpload = file[0];
+        $scope.StudentModel.Image.ImageFile = file[0];
     };
 
     $scope.Cancel = function () {
         window.location = "#!/studentBase";
     };
+
     $scope.GetSchools();
     $scope.GetClasses();
 }]);
