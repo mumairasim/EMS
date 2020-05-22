@@ -14,7 +14,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             url: baseUrl + url,
             data: formData,
             headers: {
-                'Content-Type': "application/json; charset=utf-8",
+                'Content-Type': undefined,
                 'Authorization': "Bearer " + $cookies.get('SMS_token'),
                 'UserId': $cookies.get('SMS_userId'),
                 'UserName': $cookies.get('SMS_user')
@@ -118,6 +118,10 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             }
         });
     }
+
+    //auto loader
+
+
 
     return {
         login: login,

@@ -1,6 +1,9 @@
-﻿using SMS.DTOs.DTOs;
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 namespace SMS.API.Controllers
@@ -56,13 +59,12 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(Worksheet worksheet)
+        public IHttpActionResult Create()
         {
-            if (worksheet == null)
-            {
-                return BadRequest("worksheet not Recieved");
-            }
-
+            var httpRequest = HttpContext.Current.Request;
+            var worksheet = JsonConvert.DeserializeObject<Worksheet>(httpRequest.Params["worksheetModel"]);
+            worksheet.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            worksheet.Employee = null;
             try
             {
                 _worksheetService.Create(worksheet);
@@ -76,12 +78,12 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(Worksheet worksheet)
+        public IHttpActionResult Update()
         {
-            if (worksheet == null)
-            {
-                return BadRequest("worksheet not Recieved");
-            }
+            var httpRequest = HttpContext.Current.Request;
+            var worksheet = JsonConvert.DeserializeObject<Worksheet>(httpRequest.Params["worksheetModel"]);
+            worksheet.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            worksheet.Employee = null;
 
             try
             {

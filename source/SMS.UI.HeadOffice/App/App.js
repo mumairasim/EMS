@@ -47,6 +47,18 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
          title: "Employee Search",
          templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
          controller: "employeeBaseCtrl"
+    }).when("/lessonPlanBase", {
+        title: "LessonPlan Search",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
+        controller: "lessonPlanBaseCtrl"
+    }).when("/lessonPlanCreate", {
+        title: "LessonPlan Create",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanCreate.html",
+        controller: "lessonPlanCreateCtrl"
+    }).when("/lessonPlanUpdate", {
+        title: "LessonPlan Update",
+        templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
+        controller: "lessonPlanUpdateCtrl"
     }).when("/userProfile", {
         title: "User Profile View",
         templateUrl: "App/Controllers/UserProfile/UserProfile.html",
@@ -55,7 +67,28 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
+    
     })
+        .when("/worksheetBase", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetBase.html",
+            controller: "worksheetBaseCtrl"
+        })
+        .when("/worksheetSearch", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetSearch.html",
+            controller: "worksheetSearchCtrl"
+        })
+        .when("/worksheetCreate", {
+            title: "Worksheet Create",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetCreate.html",
+            controller: "worksheetCreateCtrl"
+        })
+        .when("/worksheetUpdate", {
+            title: "Worksheet Update",
+            templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
+            controller: "worksheetUpdateCtrl"
+        })
         .otherwise({
             redirectTo: '/'
         });

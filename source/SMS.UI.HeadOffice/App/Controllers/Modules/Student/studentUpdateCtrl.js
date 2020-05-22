@@ -45,6 +45,7 @@
                 $scope.response = response.data;
             });
     };
+    
     $scope.StudentUpdate = function () {
         var data = $scope.StudentModel;
         var formData = new FormData();
