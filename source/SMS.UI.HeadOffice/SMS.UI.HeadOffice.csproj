@@ -163,6 +163,7 @@
     <Content Include="App\Controllers\Modules\Student\studentCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBaseCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
+    <Content Include="App\Directives\fileModel.js" />
     <Content Include="App\Services\apiService.js" />
     <Content Include="Content\App\customStyle.css" />
     <Content Include="Content\App\growl.css" />
@@ -1121,7 +1122,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Directives\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
