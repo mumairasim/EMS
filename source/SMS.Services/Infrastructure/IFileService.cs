@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using DTOFile = SMS.DTOs.DTOs.File;
 
 namespace SMS.Services.Infrastructure
@@ -24,6 +25,11 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <param name="dtoFile"></param>
         void Create(DTOFile dTOFile);
+        /// <summary>
+        /// Service level call : Creates a single record of a File and save the file in directory
+        /// </summary>
+        /// <param name="file"></param>
+        void Create(HttpPostedFile file);
 
         /// <summary>
         /// Service level call : Updates the Single Record of a File 

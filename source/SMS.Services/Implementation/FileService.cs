@@ -3,8 +3,11 @@ using SMS.DATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.Hosting;
 using DBFile = SMS.DATA.Models.File;
 using DTOFile = SMS.DTOs.DTOs.File;
 
@@ -32,23 +35,46 @@ namespace SMS.Services.Implementation
         /// <summary>
         /// Service level call : Creates a single record of a File
         /// </summary>
-        /// <param name="dTOFile"></param>
-        public void Create(DTOFile dTOFile)
+        /// <param name="dToFile"></param>
+        public void Create(DTOFile dToFile)
         {
-            dTOFile.CreatedDate = DateTime.Now;
-            dTOFile.IsDeleted = false;
-            dTOFile.Id = Guid.NewGuid();
+            dToFile.CreatedDate = DateTime.Now;
+            dToFile.IsDeleted = false;
+            dToFile.Id = Guid.NewGuid();
 
-            _repository.Add(_mapper.Map<DTOFile, DBFile>(dTOFile));
+            _repository.Add(_mapper.Map<DTOFile, DBFile>(dToFile));
         }
         public void Create(HttpPostedFile file)
         {
-            var dtoFile = new DTOFile();
-            dtoFile.CreatedDate = DateTime.Now;
-            dtoFile.IsDeleted = false;
-            dtoFile.Id = Guid.NewGuid();
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            int size = file.ContentLength;
 
-            _repository.Add(_mapper.Map<DTOFile, DBFile>(dtoFile));
+            try
+            {
+
+                var path = Path.Combine(HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["FileUploadFolder"]));
+
+                bool exists = Directory.Exists(path);
+                if (!exists)
+                    Directory.CreateDirectory(path);
+
+                path = path + fileName;
+                file.SaveAs(path);
+                DTOFile newFile = new DTOFile
+                {
+                    Name = fileName,
+                    Path = path,
+                    Size = size,
+                    IsDeleted = false
+                };
+
+                Create(newFile);
+
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         /// <summary>
@@ -112,9 +138,9 @@ namespace SMS.Services.Implementation
         {
             var files = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var fileList = new List<DTOFile>();
-            foreach (var File in files)
+            foreach (var file in files)
             {
-                fileList.Add(_mapper.Map<DBFile, DTOFile>(File));
+                fileList.Add(_mapper.Map<DBFile, DTOFile>(file));
             }
             return fileList;
         }

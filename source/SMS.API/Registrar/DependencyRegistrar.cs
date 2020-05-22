@@ -29,10 +29,6 @@ namespace SMS.API.Registrar
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(Assembly.Load("SMS.FACADE"))
-                .Where(t => t.Name.EndsWith("Facade"))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
             var autoMapperProfile = new MapperConfigurationInternal();
 
             builder.Register(ctx => new MapperConfiguration(cfg =>
