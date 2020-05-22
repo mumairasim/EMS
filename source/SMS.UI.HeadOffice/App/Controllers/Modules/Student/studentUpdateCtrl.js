@@ -58,14 +58,11 @@
 
     $scope.StudentUpdate = function () {
         var data = $scope.StudentModel;
+        $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
         var formData = new FormData();
+        data.Image.ImageFile = null;
         formData.append('studentModel', JSON.stringify(data));
-        $scope.CheckIsFileValid($scope.SelectedFileForUpload);
-        if ($scope.IsFileValid) {
-            formData.append("file", $scope.StudentModel.Image.ImageFile);
-        } else {
-            $scope.growltext("Invalid Image file", true);
-        }
+        formData.append("file", $scope.NewImageFile[0]);
         var responsedata = apiService.masterput('/api/v1/Student/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
@@ -90,7 +87,6 @@
             });
     };
     $scope.FetchImage = function () {
-        debugger;
         var url = '/api/v1/File/Get?id=' + $scope.StudentModel.Image.Id;
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
@@ -102,19 +98,24 @@
             });
     };
     $scope.CheckIsFileValid = function (file) {
-        if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
-                file.size <= (512 * 1024)) {
-                $scope.IsFileValid = true;
-            } else {
-                $scope.IsFileValid = false;
-            }
+        if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
+            file.size <= (512 * 1024)) {
+            $scope.IsFileValid = true;
+        } else {
+            $scope.IsFileValid = false;
         }
     };
     $scope.SelectFileForUpload = function (file) {
         if (file.length > 0) {
-            $scope.StudentModel.Image.ImageFile = file[0];
-            $scope.updatedImage = true;
+            $scope.CheckIsFileValid(file[0]);
+            if ($scope.IsFileValid) {
+                $scope.StudentModel.Image.ImageFile = file[0];
+                $scope.updatedImage = true;
+            } else {
+                $scope.growltext("Invalid Image file please select image of size less than 1MB", true);
+            }
+
+
         }
     };
     $scope.Cancel = function () {

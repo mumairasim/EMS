@@ -2,11 +2,14 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Web.Http;
+using Newtonsoft.Json;
 using SMS.DTOs.DTOs;
+using SMS.Services.Implementation;
 using DTOFile = SMS.DTOs.DTOs.File;
 
 
@@ -17,11 +20,11 @@ namespace SMS.API.Controllers
     {
 
         #region Props and Init
-        public IFileService _fileService;
+        public IFileService FileService;
 
         public FileController(IFileService fileService)
         {
-            _fileService = fileService;
+            FileService = fileService;
         }
 
         #endregion
@@ -33,7 +36,8 @@ namespace SMS.API.Controllers
         {
             try
             {
-                var result = _fileService.Get(id);
+                var result = FileService.Get(id);
+                result.Path = string.Empty;
                 return Ok(result);
             }
             catch (Exception)
@@ -48,7 +52,7 @@ namespace SMS.API.Controllers
         {
             try
             {
-                var result = _fileService.GetAll();
+                var result = FileService.GetAll();
                 return Ok(result);
             }
             catch (Exception)
@@ -90,7 +94,7 @@ namespace SMS.API.Controllers
                         IsDeleted = false
                     };
 
-                    _fileService.Create(newFile);
+                    FileService.Create(newFile);
 
 
                 }
@@ -102,27 +106,20 @@ namespace SMS.API.Controllers
             }
             return Ok();
         }
-
-        [HttpPut]
+        [HttpPost]
         [Route("Update")]
-        public IHttpActionResult Update(DTOFile file)
+        public IHttpActionResult Update()
         {
-            if (file == null)
+            var httpRequest = HttpContext.Current.Request;
+            var fileDetail = JsonConvert.DeserializeObject<DTOFile>(httpRequest.Params["fileModel"]);
+            fileDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            if (httpRequest.Files.Count > 0)
             {
-                return BadRequest("file not Recieved");
-            }
-
-            try
-            {
-                _fileService.Update(file);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
+                var file = httpRequest.Files[0];
+                FileService.Update(file, fileDetail.Id);
             }
             return Ok();
         }
-
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
@@ -134,7 +131,7 @@ namespace SMS.API.Controllers
 
             try
             {
-                _fileService.Delete(id);
+                FileService.Delete(id);
             }
             catch (Exception)
             {

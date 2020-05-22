@@ -32,16 +32,11 @@ namespace SMS.Services.Infrastructure
         Guid? Create(HttpPostedFile file);
 
         /// <summary>
-        /// Service level call : Updates the Single Record of a File 
-        /// </summary>
-        /// <param name="dtoFile"></param>
-        void Update(DTOFile dTOFile);
-        /// <summary>
         /// Service level call : Updates the Single Record of a File and actual image
         /// </summary>
         /// <param name="file"></param>
-        /// <param name="dtoFile"></param>
-        void Update(HttpPostedFile file, DTOFile dtoFile);
+        /// <param name="fileId"></param>
+        void Update(HttpPostedFile file, Guid fileId);
 
         /// <summary>
         /// Service level call : Delete a single record of a File

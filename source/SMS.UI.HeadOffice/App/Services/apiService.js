@@ -77,7 +77,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
                 'Content-Type': undefined,
                 'Authorization': "Bearer " + $cookies.get('SMS_token'),
                 'UserId': $cookies.get('SMS_userId'),
-                'UserName': $cookies.get('SMS_user'),
+                'UserName': $cookies.get('SMS_user')
             }
         });
     }
@@ -90,7 +90,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
                 'Content-Type': undefined,
                 'Authorization': "Bearer " + $cookies.get('SMS_token'),
                 'UserId': $cookies.get('SMS_userId'),
-                'UserName': $cookies.get('SMS_user'),
+                'UserName': $cookies.get('SMS_user')
             }
         });
     }

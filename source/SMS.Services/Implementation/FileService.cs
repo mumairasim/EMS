@@ -112,25 +112,20 @@ namespace SMS.Services.Implementation
         /// Service level call : Updates the Single Record of a File 
         /// </summary>
         /// <param name="dtoFile"></param>
-        public void Update(DTOFile dtoFile)
+        private void Update(DTOFile dtoFile)
         {
-            var file = Get(dtoFile.Id);
-            if (file != null)
-            {
-                dtoFile.UpdateDate = DateTime.Now;
-                dtoFile.IsDeleted = false;
-                var updated = _mapper.Map(dtoFile, file);
-
-                _repository.Update(_mapper.Map<DTOFile, DBFile>(updated));
-            }
+            dtoFile.UpdateDate = DateTime.Now;
+            dtoFile.IsDeleted = false;
+            _repository.Update(_mapper.Map<DTOFile, DBFile>(dtoFile));
         }
-        public void Update(HttpPostedFile file, DTOFile dtoFile)
+        public void Update(HttpPostedFile file, Guid fileId)
         {
             try
             {
-                File.Delete(dtoFile.Path);
-                file.SaveAs(dtoFile.Path);
-                Update(dtoFile);
+                var dbFile = Get(fileId);
+                File.Delete(dbFile.Path);
+                file.SaveAs(dbFile.Path);
+                Update(dbFile);
             }
             catch
             {
