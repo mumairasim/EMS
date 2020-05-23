@@ -10,5 +10,6 @@ namespace SMS.DATA.Models
         public string Description { get; set; }
         public string Path { get; set; }
         public int Size { get; set; }
+        public string Extenstion { get; set; }
     }
 }
