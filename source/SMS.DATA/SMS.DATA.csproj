@@ -60,9 +60,9 @@
     <Compile Include="Infrastructure\IDbContext.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202005220943024_test.cs" />
-    <Compile Include="Migrations\202005220943024_test.designer.cs">
-      <DependentUpon>202005220943024_test.cs</DependentUpon>
+    <Compile Include="Migrations\202005231251560_imageadded.cs" />
+    <Compile Include="Migrations\202005231251560_imageadded.designer.cs">
+      <DependentUpon>202005231251560_imageadded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
@@ -104,8 +104,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005220943024_test.resx">
-      <DependentUpon>202005220943024_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005231251560_imageadded.resx">
+      <DependentUpon>202005231251560_imageadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

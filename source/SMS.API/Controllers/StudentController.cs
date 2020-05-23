@@ -13,25 +13,25 @@ namespace SMS.API.Controllers
     [EnableCors("*", "*", "*")]
     public class StudentController : ApiController
     {
-        public IStudentService StudentService;
-        public IFileService FileService;
+        private readonly IStudentService _studentService;
+        private readonly IFileService _fileService;
         public StudentController(IStudentService studentService, IFileService fileService)
         {
-            StudentService = studentService;
-            FileService = fileService;
+            _studentService = studentService;
+            _fileService = fileService;
         }
 
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(StudentService.Get(pageNumber, pageSize));
+            return Ok(_studentService.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(StudentService.Get(id));
+            return Ok(_studentService.Get(id));
         }
         [HttpPost]
         [Route("Create")]
@@ -45,9 +45,9 @@ namespace SMS.API.Controllers
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                studentDetail.ImageId = FileService.Create(file);
+                studentDetail.ImageId = _fileService.Create(file);
             }
-            StudentService.Create(studentDetail);
+            _studentService.Create(studentDetail);
             return Ok();
         }
         [HttpPut]
@@ -61,9 +61,9 @@ namespace SMS.API.Controllers
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                FileService.Update(file, studentDetail.Image.Id);
+                _fileService.Update(file, studentDetail.Image.Id);
             }
-            StudentService.Update(studentDetail);
+            _studentService.Update(studentDetail);
             return Ok();
         }
         [HttpDelete]
@@ -71,7 +71,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult Delete(Guid id)
         {
             var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentService.Delete(id, deletedBy);
+            _studentService.Delete(id, deletedBy);
             return Ok();
         }
     }
