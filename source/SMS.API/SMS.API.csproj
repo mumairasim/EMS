@@ -370,10 +370,6 @@
       <Project>{afadb3c9-3f0f-4680-96de-a6a7e7ec92bb}</Project>
       <Name>SMS.DTOs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SMS.FACADE\SMS.FACADE.csproj">
-      <Project>{0638047f-110e-4968-88bd-f19d3862e297}</Project>
-      <Name>SMS.FACADE</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SMS.MAP\SMS.MAP.csproj">
       <Project>{8C54D1D5-E377-434E-97C5-1DA53C7E3FBF}</Project>
       <Name>SMS.MAP</Name>

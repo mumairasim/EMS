@@ -17,22 +17,22 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         $scope.isFormValid = isValid;
     });
 
-    $scope.CheckIsFileValid = function (file) {
+    $scope.CheckIsFileValid = function(file) {
         if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') && file.size <= (512 * 1024)) {
+            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
+                file.size <= (512 * 1024)) {
                 $scope.IsFileValid = true;
-            }
-            else {
+            } else {
                 $scope.IsFileValid = false;
             }
         }
-    }
+    };
 
-    $scope.SelectFileForUpload = function (file) {
+    $scope.SelectFileForUpload = function(file) {
         $scope.SelectedFileForUpload = file[0];
-    }
+    };
 
-    $scope.SaveFile = function () {
+    $scope.SaveFile = function() {
         $scope.IsFormSubimtted = true;
         $scope.Message = "";
         $scope.CheckIsFileValid($scope.SelectedFileForUpload);
@@ -41,17 +41,17 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
             formData.append("file", $scope.SelectedFileForUpload);
             formData.append("description", $scope.FileDescription);
             apiService.post('api/v1/File/Save', formData)
-                .then(function (d) {
-                    alert(d.Message);
-                }, function (e) {
-                    alert(e);
-                });
-        }
-        else {
+                .then(function(d) {
+                        alert(d.Message);
+                    },
+                    function(e) {
+                        alert(e);
+                    });
+        } else {
             $scope = "Fileds Required";
         }
 
-    }
+    };
 
     $scope.UserUpdate = function () {
         var data = $scope.UserModel;
