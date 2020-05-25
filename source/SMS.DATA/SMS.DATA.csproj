@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -56,14 +57,12 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Implementation\EFRepository.cs" />
+    <Compile Include="Implementation\StoredProcCaller.cs" />
     <Compile Include="Implementation\UnitOfWork.cs" />
     <Compile Include="Infrastructure\IDbContext.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IStoredProcCaller.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202005231251560_imageadded.cs" />
-    <Compile Include="Migrations\202005231251560_imageadded.designer.cs">
-      <DependentUpon>202005231251560_imageadded.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FinanceType.cs" />
     <Compile Include="Models\LessonPlan.cs" />
+    <Compile Include="Models\NonDbContextModels\UserInfo.cs" />
     <Compile Include="Models\Period.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\School.cs" />
@@ -102,11 +102,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005231251560_imageadded.resx">
-      <DependentUpon>202005231251560_imageadded.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

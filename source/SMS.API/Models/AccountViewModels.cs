@@ -36,6 +36,7 @@ namespace SMS.API.Models
     public class UserInfoDetailedViewModel : UserInfoViewModel
     {
         public byte[] Image { get; set; }
+
     }
 
     public class UserLoginInfoViewModel

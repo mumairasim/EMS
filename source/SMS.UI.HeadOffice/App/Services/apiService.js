@@ -4,24 +4,6 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
 
     var baseUrl = 'http://localhost:44358/';
 
-    function uploadFile(file, description, url) {
-        var formData = new FormData();
-        formData.append("file", file);
-        formData.append("description", description);
-        debugger;
-        return $http({
-            method: "POST",
-            url: baseUrl + url,
-            data: formData,
-            headers: {
-                'Content-Type': undefined,
-                'Authorization': "Bearer " + $cookies.get('SMS_token'),
-                'UserId': $cookies.get('SMS_userId'),
-                'UserName': $cookies.get('SMS_user')
-            }
-        });
-    }
-
     function login(url, datatosend) {
         return $http({
             method: "POST",
@@ -131,7 +113,6 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         masterget: masterget,
         masterput: masterput,
         masterdelete: masterdelete,
-        post: post,
-        uploadFile: uploadFile
+        post: post
     };
 }]);

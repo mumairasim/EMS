@@ -52,6 +52,7 @@ namespace SMS.Services.Implementation
         public Guid? Create(HttpPostedFile file)
         {
             var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var extension = Path.GetExtension(file.FileName);
             int size = file.ContentLength;
             try
             {
@@ -66,7 +67,8 @@ namespace SMS.Services.Implementation
                     Name = fileName,
                     Path = path,
                     Size = size,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Extension = extension
                 };
                 return Create(newFile);
             }
@@ -110,6 +112,7 @@ namespace SMS.Services.Implementation
             var file = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var fileDto = _mapper.Map<DBFile, DTOFile>(file);
             fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
+            fileDto.Extension = Path.GetExtension(fileDto.Path);
             return fileDto;
         }
 
