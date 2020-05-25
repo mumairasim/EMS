@@ -162,6 +162,7 @@
     <Content Include="App\Controllers\Modules\Student\studentCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBaseCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
+    <Content Include="App\Controllers\UserProfile\UserProfileCtrl.js" />
     <Content Include="App\Services\apiService.js" />
     <Content Include="Content\App\customStyle.css" />
     <Content Include="Content\App\growl.css" />
