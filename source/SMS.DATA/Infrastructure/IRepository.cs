@@ -1,5 +1,6 @@
 ﻿using SMS.DATA.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -17,7 +18,6 @@ namespace SMS.DATA.Infrastructure
         IQueryable<T> TableNoTracking { get; }
         IQueryable<T> Table { get; }
 
-        
         //DbQuery<T> ViewDbQuery { get; }
     }
 }

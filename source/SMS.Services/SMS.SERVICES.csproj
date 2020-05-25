@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\AccountService.cs" />
     <Compile Include="Implementation\ClassService.cs" />
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Implementation\StudentFinanceService.cs" />
     <Compile Include="Implementation\StudentService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
+    <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IDesignationService.cs" />

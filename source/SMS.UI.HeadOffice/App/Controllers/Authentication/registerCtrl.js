@@ -7,9 +7,10 @@ SMSHO.controller('registerCtrl', ['$scope', 'apiService', '$cookies', function (
     $scope.Register = {
         Username: '',
         Email: '',
+        FirstName: '',
+        LastName: '',
         Password: '',
         ConfirmPassword: ''
-
     };
     $scope.response = '';
     $scope.registercall = function () {

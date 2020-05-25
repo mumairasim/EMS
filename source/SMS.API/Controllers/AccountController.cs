@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -15,9 +16,12 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using SMS.API.Models;
 using SMS.API.Providers;
 using SMS.API.Results;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
 
 namespace SMS.API.Controllers
 {
@@ -28,9 +32,14 @@ namespace SMS.API.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
-        public AccountController()
+        private readonly IPersonService _personService;
+        private readonly IAccountService _accountService;
+        private readonly IFileService _fileService;
+        public AccountController(IPersonService personService, IAccountService accountService, IFileService fileService)
         {
+            _personService = personService;
+            _accountService = accountService;
+            _fileService = fileService;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -71,18 +80,39 @@ namespace SMS.API.Controllers
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("UserDetailedInfo")]
-        public UserInfoDetailedViewModel GetUserDetailedInfo()
+        [Route("GetUserDetailedInfo")]
+        public UserInfo GetUserDetailedInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-            var path = HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["FileUploadFolder"]);
-            return new UserInfoDetailedViewModel
+            var userInfo = _accountService.GetUserInfo(User.Identity.GetUserName());
+         
+
+            return userInfo;
+        }
+
+       
+        [Route("UpdateUserInfo")]
+        public IHttpActionResult UpdateUserInfo()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var userInfo = JsonConvert.DeserializeObject<UserInfo>(httpRequest.Params["userModel"]);
+
+            if (httpRequest.Files.Count > 0)
             {
-                Email = User.Identity.GetUserName(),
-                HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
-                Image = System.IO.File.ReadAllBytes($"{path}/348960e2-8028-4977-bac0-97adb3d84788.png")
-            };
+                var file = httpRequest.Files[0];
+                if (userInfo.ImageId == Guid.Empty)
+                {
+                    userInfo.ImageId = _fileService.Create(file) ?? Guid.Empty;
+                }
+                else
+                {
+                    _fileService.Update(file, userInfo.ImageId);
+                }
+            }
+
+            _accountService.UpdateUserInfo(userInfo);
+
+            return Ok();
         }
 
         // POST api/Account/Logout
@@ -356,6 +386,21 @@ namespace SMS.API.Controllers
                 return GetErrorResult(result);
             }
 
+            var person = new Person
+            {
+                AspNetUserId = Guid.Parse(user.Id),
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            try
+            {
+                _personService.Create(person);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
             return Ok();
         }
 

@@ -1,4 +1,5 @@
 ﻿using SMS.DATA.Infrastructure;
+using System.Data.Entity.Infrastructure;
 using SMSContext = SMS.DATA.Models.SMS;
 
 namespace SMS.DATA.Implementation

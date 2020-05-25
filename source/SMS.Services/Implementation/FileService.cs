@@ -17,7 +17,7 @@ namespace SMS.Services.Implementation
     {
         #region Properties
         private readonly IRepository<DBFile> _repository;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Init
@@ -33,7 +33,7 @@ namespace SMS.Services.Implementation
         #region Service Calls
 
         /// <summary>
-        /// Service level call : Creates a single record of a File
+        /// Service level call : Creates a single record of a File in a table
         /// </summary>
         /// <param name="dToFile"></param>
         public Guid Create(DTOFile dToFile)
@@ -44,9 +44,15 @@ namespace SMS.Services.Implementation
             _repository.Add(_mapper.Map<DTOFile, DBFile>(dToFile));
             return dToFile.Id;
         }
+
+        /// <summary>
+        /// Service level call : Saves a file and create a single record of a File in a table
+        /// </summary>
+        /// <param name="dToFile"></param>
         public Guid? Create(HttpPostedFile file)
         {
             var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var extension = Path.GetExtension(file.FileName);
             int size = file.ContentLength;
             try
             {
@@ -61,7 +67,8 @@ namespace SMS.Services.Implementation
                     Name = fileName,
                     Path = path,
                     Size = size,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Extension = extension
                 };
                 return Create(newFile);
             }
@@ -105,6 +112,7 @@ namespace SMS.Services.Implementation
             var file = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var fileDto = _mapper.Map<DBFile, DTOFile>(file);
             fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
+            fileDto.Extension = Path.GetExtension(fileDto.Path);
             return fileDto;
         }
 
