@@ -1,11 +1,13 @@
 ﻿using System;
 using SMS.Services.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/AttendanceStatus")]
+    [EnableCors("*", "*", "*")]
     public class AttendanceStatusController : ApiController
     {
         public IAttendanceStatusService AttendanceStatusService;

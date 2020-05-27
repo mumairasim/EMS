@@ -7,8 +7,8 @@ namespace SMS.Services.Infrastructure
     {
         List<DTOAttendanceStatus> Get();
         DTOAttendanceStatus Get(Guid? id);
-        Guid Create(DTOAttendanceStatus dtoDesignation);
-        void Update(DTOAttendanceStatus dtoDesignation);
+        Guid Create(DTOAttendanceStatus dtoAttendanceStatus);
+        void Update(DTOAttendanceStatus dtoAttendanceStatus);
         void Delete(Guid? id);
     }
 }
