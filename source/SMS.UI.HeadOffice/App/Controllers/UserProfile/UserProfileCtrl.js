@@ -20,7 +20,7 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
 
     $scope.CheckIsFileValid = function (file) {
         if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
+            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') && 
                 file.size <= (512 * 1024)) {
                 $scope.IsFileValid = true;
             } else {
