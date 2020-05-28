@@ -1,11 +1,13 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
-using StudentDiary = SMS.DATA.Models.StudentDiary;
-using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using StudentDiary = SMS.DATA.Models.StudentDiary;
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
+
 
 namespace SMS.Services.Implementation
 {
@@ -23,33 +25,38 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.CreatedDate = DateTime.Now;
             dtoStudentDiary.IsDeleted = false;
             dtoStudentDiary.Id = Guid.NewGuid();
-            dtoStudentDiary.InstructorId = null;
-            dtoStudentDiary.School = null;
+            HelpingMethodForRelationship(dtoStudentDiary);
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }
-        public List<DTOStudentDiary> Get(int pageNumber, int pageSize)
+        public StudentDiariesList Get(int pageNumber, int pageSize)
         {
-             var studentDiaries = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var StudentDiaryList = new List<DTOStudentDiary>();
-            foreach (var Classes in studentDiaries)
+            var StudentDiaries = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var StudentDiariesCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var studentDiaryTempList = new List<DTOStudentDiary>();
+            foreach (var studentdiary in StudentDiaries)
             {
-                StudentDiaryList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(Classes));
+                studentDiaryTempList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(studentdiary));
             }
-            return StudentDiaryList;
+            var studentDiariesList = new StudentDiariesList()
+            {
+                StudentDiaries = studentDiaryTempList,
+                StudentDiariesCount= StudentDiariesCount
+            };
+            return studentDiariesList;
         }
         public DTOStudentDiary Get(Guid? id)
         {
             if (id == null) return null;
-            var studentRecord = _repository.Get().FirstOrDefault(st => st.Id == id && st.IsDeleted == false);
-            var student = _mapper.Map<StudentDiary, DTOStudentDiary>(studentRecord);
-            return student;
+            var studentDiaryRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
+            var studentdiary = _mapper.Map < StudentDiary, DTOStudentDiary >(studentDiaryRecord);
+
+            return studentdiary;
         }
         public void Update(DTOStudentDiary dtoStudentDiary)
         {
-            var student = Get(dtoStudentDiary.Id);
+            var studentDiary = Get(dtoStudentDiary.Id);
             dtoStudentDiary.UpdateDate = DateTime.Now;
-            var mergedStudentDiary = _mapper.Map(dtoStudentDiary, student);
-           
+            var mergedStudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(mergedStudentDiary));
         }
         public void Delete(Guid? id, string DeletedBy)
@@ -60,7 +67,7 @@ namespace SMS.Services.Implementation
             studentDiary.IsDeleted = true;
             studentDiary.DeletedBy = DeletedBy;
             studentDiary.DeletedDate = DateTime.Now;
-            
+
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(studentDiary));
         }
 
@@ -68,9 +75,11 @@ namespace SMS.Services.Implementation
         {
             dtoStudentDiary.SchoolId = dtoStudentDiary.School.Id;
             dtoStudentDiary.InstructorId = dtoStudentDiary.Employee.Id;
-             dtoStudentDiary.School = null;
+            dtoStudentDiary.School = null;
             dtoStudentDiary.Employee = null;
         }
-
     }
+     
+
 }
+

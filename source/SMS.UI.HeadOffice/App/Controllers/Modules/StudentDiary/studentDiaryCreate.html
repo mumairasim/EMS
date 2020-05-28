@@ -4,42 +4,33 @@
         <div class="position-relative row form-group">
             <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
             </div>-->
-            
             <div class="col-sm-9">
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="diaryText" class="col-form-label">DiaryText</label>
-                        <input name="diarytext" id="dirayText" placeholder="diaryText" type="text" class="form-control" ng-modal="StudentDiaryModel.DiaryText">
+                        <label for="diarytext" class="col-form-label">DiaryText</label>
+                        <input name="diarytext" id="diarytext" placeholder="Diarytext" type="text" class="form-control" ng-Model="StudentDiaryModel.DiaryText">
                     </div>
                     <div class="col-sm-6">
-                        <label for="diaryDate" class="col-form-label">DiaryDate</label>
-                        <input name="diaryDate" id="diaryDate" placeholder="diaryDate" type="text" class="form-control" ng-modal="StudentDiaryModel.diaryDate">
+                        <label for="diarydate" class="col-form-label">DiaryDate</label>
+                        <input name="diarydate" id="diarydate" placeholder="DiaryDate" type="date" class="form-control" ng-Model="StudentDiaryModel.DiaryDate">
                     </div>
                 </div>
-                
-                <div class="position-relative row form-group">
-                    <div class="col-sm-6">
-                        <label for="school" class="col-form-label">School</label>
-                        <select name="school" id="school" class="form-control" ng-Model="StudentDiaryModel.School" 
-                                ng-options="School.Name for School in Schools">
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="employee" class="col-form-label">Class</label>
-                        <select name="employee" id="employee" class="form-control" ng-Model="StudentDiaryModel.Employee"
-                            ng-options="Employee.ClassName for Employee in Employees">
-                        </select>
-                    </div>
+                <!--<div class="position-relative row form-group">
+            <div class="col-sm-6">
+                <label for="school" class="col-form-label">School</label>
+                <select name="school" id="school" class="form-control" ng-Model="StudentDiaryModel.School"
+                        ng-options="School.Name for School in Schools  track by School.Id">
+                </select>
+            </div>
+
+        </div>-->
+            </div>
+            </div>
+            <div class="position-relative row form-group">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary" ng-click="StudentDiaryCreate()">Submit</button>
+                    <button class="btn btn-secondary" ng-click="Cancel()">Cancel</button>
                 </div>
             </div>
-        </div>
-        
-        
-        <div class="position-relative row form-group">
-            <div class="col-sm-6 offset-sm-2">
-                <button class="btn btn-primary" ng-click="StudentDiaryCreate()">Submit</button>
-                <button class="btn btn-secondary">Cancel</button>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>

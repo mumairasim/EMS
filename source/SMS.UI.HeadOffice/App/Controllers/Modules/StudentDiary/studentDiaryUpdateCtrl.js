@@ -4,7 +4,6 @@
         Diarytext: '',
         DairyDate: '',
         Employee: $scope.Employee,
-        School: $scope.School
     };
     $scope.Employee = {
         Person: '',
@@ -23,26 +22,11 @@
     $scope.Designation = {
         Name: ''
     };
-    $scope.School = {
-        Id: '',
-        Name: '',
-        Location: ''
-    };
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
         responsedata.then(function mySucces(response) {
             $scope.Employees = response.data;
             
-        },
-            function myError(response) {
-                $scope.response = response.data;
-            });
-    };
-    $scope.GetSchools = function () {
-        var responsedata = apiService.masterget('/api/v1/School/Get');
-        responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
-            $scope.GetClasses();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -77,5 +61,5 @@
     $scope.Cancel = function () {
         window.location = "#!/studentDiaryBase";
     };
-    $scope.GetSchools();
+    $scope.FetchStudentDiary();
 }]);
