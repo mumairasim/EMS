@@ -1,12 +1,11 @@
-﻿SMSHO.controller('schoolUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('schoolUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
     $scope.School = {
-        Id: '',
         Name: '',
         Location: ''
     };
 
-    $scope.SchoolUpdate = function () {
+    $scope.ClassUpdate = function () {
         var data = $scope.SchoolModel;
         var formData = new FormData();
         formData.append('schoolModel', JSON.stringify(data));
@@ -21,12 +20,12 @@
                 $scope.growltext("School updation failed", true);
             });
     };
-    $scope.FetchSchool = function () {
+    $scope.FetchClass = function () {
         var id = $routeParams.Id;
         var url = '/api/v1/School/Get?id=' + id;
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
-            $scope.SchoolModel = response.data;
+            $scope.ClassModel = response.data;
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -35,4 +34,6 @@
     $scope.Cancel = function () {
         window.location = "#!/schoolBase";
     };
+
+    $scope.FetchSchool();
 }]);

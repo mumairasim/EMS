@@ -9,7 +9,6 @@ SMSHO.controller('classBaseCtrl', ['$scope', 'apiService', '$cookies', function 
         $scope.loader(true);
         var responsedata = apiService.masterget('/api/v1/Class/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            debugger;
             $scope.ClassList = response.data.Classes;
             $scope.TotalClass = response.data.classesCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();

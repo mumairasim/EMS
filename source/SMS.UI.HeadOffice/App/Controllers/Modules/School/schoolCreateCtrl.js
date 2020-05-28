@@ -1,12 +1,10 @@
 ﻿SMSHO.controller('schoolCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-    
+ 
     $scope.School = {
-        Id: '',
         Name: '',
         Location: ''
     };
-    
     $scope.SchoolCreate = function () {
         var data = $scope.SchoolModel;
         var formData = new FormData();
@@ -19,10 +17,11 @@
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("School creation failed", true);
+                $scope.growltext("Class creation failed", true);
             });
     };
     $scope.Cancel = function () {
         window.location = "#!/schoolBase";
     };
+    
 }]);
