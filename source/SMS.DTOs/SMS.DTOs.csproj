@@ -52,7 +52,6 @@
     <Compile Include="DTOs\EmployeeFinanceDetail.cs" />
     <Compile Include="DTOs\EmployeesList.cs" />
     <Compile Include="DTOs\File.cs" />
->>>>>>>>> Temporary merge branch 2
     <Compile Include="DTOs\FinanceType.cs" />
     <Compile Include="DTOs\LessonPlan.cs" />
     <Compile Include="DTOs\LessonPlansList.cs" />

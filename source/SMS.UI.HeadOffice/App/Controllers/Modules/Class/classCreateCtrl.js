@@ -4,7 +4,7 @@
         Name: '',
         School: $scope.School
     };
-    
+
     $scope.School = {
         Id: '',
         Name: '',

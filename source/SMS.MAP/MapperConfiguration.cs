@@ -19,7 +19,6 @@ using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
-<<<<<<<<< Temporary merge branch 1
 using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
 using DBFile = SMS.DATA.Models.File;

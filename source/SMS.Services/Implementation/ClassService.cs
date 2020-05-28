@@ -75,6 +75,8 @@ namespace SMS.Services.Implementation
             dtoClass.SchoolId = dtoClass.School.Id;
             dtoClass.School = null;
         }
+
+       
     }
 }
 
