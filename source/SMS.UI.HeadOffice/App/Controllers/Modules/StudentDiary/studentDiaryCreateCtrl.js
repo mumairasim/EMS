@@ -7,7 +7,7 @@
     $scope.StudentDiaryCreate = function () {
         var data = $scope.StudentDiaryModel;
         var formData = new FormData();
-        formData.append('StudentDiaryModel', JSON.stringify(data));
+        formData.append('studentDiaryModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/StudentDiary/Create', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
