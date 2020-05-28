@@ -71,7 +71,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult BulkCreate()
         {
             var httpRequest = HttpContext.Current.Request;
-            var studentsAttendanceListDetail = JsonConvert.DeserializeObject<StudentsAttendanceList>(httpRequest.Params["StudentsAttendanceList"]);
+            var studentsAttendanceListDetail = JsonConvert.DeserializeObject<StudentsAttendanceList>(httpRequest.Params["StudentsAttendanceListDetail"]);
             var createdBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             StudentAttendanceService.Create(studentsAttendanceListDetail, createdBy);
             return Ok();

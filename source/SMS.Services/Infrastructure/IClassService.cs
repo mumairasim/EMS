@@ -8,8 +8,10 @@ namespace SMS.Services.Infrastructure
     {
         List<DTOClass> Get();
         DTOClass Get(Guid? id);
+        List<DTOClass> GetBySchool(Guid? schoolId);
         void Create(DTOClass Class);
         void Update(DTOClass dtoClass);
         void Delete(Guid? id);
+
     }
 }

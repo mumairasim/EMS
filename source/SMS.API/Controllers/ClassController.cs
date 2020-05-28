@@ -26,6 +26,12 @@ namespace SMS.API.Controllers
         {
             return Ok(ClassService.Get(id));
         }
+        [HttpGet]
+        [Route("GetBySchool")]
+        public IHttpActionResult GetBySchool(Guid schoolId)
+        {
+            return Ok(ClassService.GetBySchool(schoolId));
+        }
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create(DTOClass dtoClass)

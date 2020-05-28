@@ -14,7 +14,7 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<Class> _repository;
         private readonly IMapper _mapper;
-        public ClassService(IRepository<Class> repository,IMapper mapper)
+        public ClassService(IRepository<Class> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -32,9 +32,9 @@ namespace SMS.Services.Implementation
         {
             var clasess = _repository.Get().Where(cl => cl.IsDeleted == false).ToList();
             var classList = new List<DTOClass>();
-            foreach (var Classes in clasess)
+            foreach (var itemClass in clasess)
             {
-                classList.Add(_mapper.Map<Class, DTOClass>(Classes));
+                classList.Add(_mapper.Map<Class, DTOClass>(itemClass));
             }
             return classList;
         }
@@ -44,6 +44,16 @@ namespace SMS.Services.Implementation
             var classes = _mapper.Map<Class, DTOClass>(classRecord);
 
             return classes;
+        }
+        public List<DTOClass> GetBySchool(Guid? schoolId)
+        {
+            var classes = _repository.Get().Where(cl => cl.SchoolId == schoolId && cl.IsDeleted == false).ToList();
+            var classList = new List<DTOClass>();
+            foreach (var itemClass in classes)
+            {
+                classList.Add(_mapper.Map<Class, DTOClass>(itemClass));
+            }
+            return classList;
         }
         public void Update(DTOClass dtoClass)
         {

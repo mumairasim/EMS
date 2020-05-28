@@ -89,6 +89,11 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
             controller: "worksheetUpdateCtrl"
         })
+        .when("/studentAttendanceSheet", {
+            title: "Student Attendance",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",
+            controller: "studentAttendanceSheetCtrl"
+        })
         .otherwise({
             redirectTo: '/'
         });

@@ -132,6 +132,8 @@
     <Content Include="App\Controllers\Authentication\register.html" />
     <Content Include="App\Controllers\Authentication\registerCtrl.js" />
     <Content Include="App\Controllers\Authentication\loginCtrl.js" />
+    <Content Include="App\Controllers\Modules\Attendance\studentAttendanceSheet.html" />
+    <Content Include="App\Controllers\Modules\Attendance\studentAttendanceSheetCtrl.js" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanBase.html" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanCreate.html" />

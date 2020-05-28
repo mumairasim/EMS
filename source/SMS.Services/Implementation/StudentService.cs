@@ -47,6 +47,24 @@ namespace SMS.Services.Implementation
             var student = _mapper.Map<Student, DTOStudent>(studentRecord);
             return student;
         }
+        public StudentsList Get(Guid classId, Guid schoolId)
+        {
+            var students = _repository.Get().Where(st => st.IsDeleted == false && st.SchoolId == schoolId && st.ClassId == classId).OrderByDescending(st => st.RegistrationNumber).ToList();
+            var studentCount = _repository.Get().Count(st => st.IsDeleted == false);
+            var studentTempList = new List<DTOStudent>();
+            foreach (var student in students)
+            {
+                studentTempList.Add(_mapper.Map<Student, DTOStudent>(student));
+            }
+
+            var studentsList = new StudentsList()
+            {
+                Students = studentTempList,
+                StudentsCount = studentCount
+            };
+
+            return studentsList;
+        }
 
         public void Create(DTOStudent dtoStudent)
         {
