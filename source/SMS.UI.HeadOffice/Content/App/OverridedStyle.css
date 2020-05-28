@@ -58,14 +58,6 @@
     padding-right: 5px;
 }
 
-.profileCaretDisplay {
-    display: block;
-}
-
-.reverseProfileCaretDisplay {
-    display: none;
-}
-
 .please-wait {
     position: fixed;
     z-index: 5000;

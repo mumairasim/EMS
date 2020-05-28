@@ -19,10 +19,13 @@ using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
-using DBFile = SMS.DATA.Models.File;
-using DTOFile = SMS.DTOs.DTOs.File;
+<<<<<<<<< Temporary merge branch 1
 using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
+using DBFile = SMS.DATA.Models.File;
+using DTOFile = SMS.DTOs.DTOs.File;
+using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
+using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 
 
 namespace SMS.MAP
@@ -56,6 +59,9 @@ namespace SMS.MAP
 
             CreateMap<School, DTOSchool>();
             CreateMap<DTOSchool, DTOSchool>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<DBUserInfo, DTOUserInfo>();
+            CreateMap<DTOUserInfo, DTOUserInfo>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
             CreateMap<Course, DTOCourse>();
@@ -97,7 +103,16 @@ namespace SMS.MAP
             CreateMap<DTOStudentFinances, DBStudentFinances>();
             CreateMap<DTOStudentFinanceDetails, DBStudentFinanceDetails>();
             CreateMap<DTOFile, DBFile>();
+            CreateMap<DTOUserInfo, DBUserInfo>();
 
+            #endregion
+
+            #region Others
+            CreateMap<DTOUserInfo, DTOPerson>();
+            CreateMap<DTOUserInfo, DTOPerson>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<DTOUserInfo, DTOPerson>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PersonId));
             #endregion
         }
     }

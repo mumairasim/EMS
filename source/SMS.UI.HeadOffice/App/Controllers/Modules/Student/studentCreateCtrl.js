@@ -4,7 +4,16 @@
         RegistrationNumber: '',
         Person: $scope.Person,
         Class: $scope.Class,
-        School: $scope.School
+        School: $scope.School,
+        Image: $scope.Image
+    };
+    $scope.Image = {
+        Id: '',
+        Name: '',
+        Description: '',
+        Path: '',
+        Size: '',
+        ImageFile: ''
     };
     $scope.Person = {
         FirstName: '',
@@ -49,6 +58,12 @@
         var data = $scope.StudentModel;
         var formData = new FormData();
         formData.append('studentModel', JSON.stringify(data));
+        $scope.CheckIsFileValid($scope.SelectedFileForUpload);
+        if ($scope.IsFileValid) {
+            formData.append("file", $scope.StudentModel.Image.ImageFile);
+        } else {
+            $scope.growltext("Invalid Image file", true);
+        }
         var responsedata = apiService.post('/api/v1/Student/Create', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
@@ -60,9 +75,26 @@
                 $scope.growltext("Student creation failed", true);
             });
     };
+
+    $scope.CheckIsFileValid = function (file) {
+        if ($scope.SelectedFileForUpload != null) {
+            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
+                file.size <= (512 * 1024)) {
+                $scope.IsFileValid = true;
+            } else {
+                $scope.IsFileValid = false;
+            }
+        }
+    };
+
+    $scope.SelectFileForUpload = function (file) {
+        $scope.StudentModel.Image.ImageFile = file[0];
+    };
+
     $scope.Cancel = function () {
         window.location = "#!/studentBase";
     };
+
     $scope.GetSchools();
     $scope.GetClasses();
 }]);

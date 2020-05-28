@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,8 @@ namespace SMS.DATA.Models
             Employees = new HashSet<Employee>();
             Students = new HashSet<Student>();
         }
+        public Guid? AspNetUserId { get; set; }
+
         [StringLength(250)]
         public string FirstName { get; set; }
 
@@ -31,6 +34,10 @@ namespace SMS.DATA.Models
         public string PresentAddress { get; set; }
 
         public string PermanentAddress { get; set; }
+
+        public Guid? ImageId { get; set; }
+
+        public virtual File Image { get; set; }
 
         [StringLength(50)]
         public string Phone { get; set; }

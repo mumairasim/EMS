@@ -89,8 +89,8 @@ namespace SMS.Services.Implementation
                 dtoWorksheet.UpdateDate = DateTime.Now;
                 dtoWorksheet.IsDeleted = false;
                 var updated = _mapper.Map(dtoWorksheet, worksheet);
-
-                _repository.Update(_mapper.Map<DTOWorksheet, DBWorksheet>(updated));
+                var updatedDbRec = _mapper.Map<DTOWorksheet, DBWorksheet>(updated);
+                _repository.Update(updatedDbRec);
             }
         }
 

@@ -132,10 +132,15 @@
     <Content Include="App\Controllers\Authentication\register.html" />
     <Content Include="App\Controllers\Authentication\registerCtrl.js" />
     <Content Include="App\Controllers\Authentication\loginCtrl.js" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanBase.html" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanCreate.html" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdate.html" />
+    <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdateCtrl.js" />
     <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
     <Content Include="App\Controllers\UserProfile\UserProfile.html" />
     <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />
-    <Content Include="App\Controllers\UserProfile\UserProfileCtrl.js" />
     <Content Include="App\Controllers\Dashboard\dashboard.html" />
     <Content Include="App\Controllers\Dashboard\dashboardCtrl.js" />
     <Content Include="App\Controllers\Modules\School\schoolBase.html" />
@@ -156,6 +161,12 @@
     <Content Include="App\Controllers\Modules\StudentDiary\studentDiaryCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\StudentDiary\studentDiaryUpdate.html" />
     <Content Include="App\Controllers\Modules\StudentDiary\studentDiaryUpdateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetBase.html" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetCreate.html" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetUpdate.html" />
+    <Content Include="App\Controllers\Modules\Worksheet\worksheetUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\Employee\employeeBase.html" />
     <Content Include="App\Controllers\Modules\Employee\employeeBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\Employee\employeeCreate.html" />
@@ -169,6 +180,7 @@
     <Content Include="App\Controllers\Modules\Student\studentCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\Student\studentBaseCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
+    <Content Include="App\Controllers\UserProfile\UserProfileCtrl.js" />
     <Content Include="App\Services\apiService.js" />
     <Content Include="Content\App\customStyle.css" />
     <Content Include="Content\App\growl.css" />
@@ -247,6 +259,7 @@
     <Content Include="Scripts\App\angular-ui-router.min.js" />
     <Content Include="Scripts\App\checklist-model.js" />
     <Content Include="Scripts\App\main.js" />
+    <Content Include="Scripts\App\ng-file-upload-all.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />

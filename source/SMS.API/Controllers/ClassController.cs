@@ -14,10 +14,10 @@ namespace SMS.API.Controllers
     [EnableCors("*", "*", "*")]
     public class ClassController : ApiController
     {
-        public IClassService _classService;
+        public IClassService ClassService;
         public ClassController(IClassService classService)
         {
-            _classService = classService;
+            ClassService = classService;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace SMS.API.Controllers
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_classService.Get(id));
+            return Ok(ClassService.Get(id));
         }
         [HttpPost]
         [Route("Create")]

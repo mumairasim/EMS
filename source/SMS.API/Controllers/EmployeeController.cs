@@ -1,11 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Web;
-using SMS.FACADE.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.API.Controllers
@@ -14,24 +13,24 @@ namespace SMS.API.Controllers
     [EnableCors("*", "*", "*")]
     public class EmployeeController : ApiController
     {
-        public IEmployeeFacade _employeeFacade;
-        public EmployeeController(IEmployeeFacade employeeFacade)
+        public IEmployeeService EmployeeService;
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _employeeFacade = employeeFacade;
+            EmployeeService = employeeService;
         }
 
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_employeeFacade.Get(pageNumber, pageSize));
+            return Ok(EmployeeService.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_employeeFacade.Get(id));
+            return Ok(EmployeeService.Get(id));
         }
         [HttpPost]
         [Route("Create")]
@@ -42,7 +41,7 @@ namespace SMS.API.Controllers
             var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
             employeeDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             employeeDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _employeeFacade.Create(employeeDetail);
+            EmployeeService.Create(employeeDetail);
             return Ok();
         }
 
@@ -53,7 +52,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var employeeDetail = JsonConvert.DeserializeObject<DTOEmployee>(httpRequest.Params["employeeModel"]);
             employeeDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _employeeFacade.Update(employeeDetail);
+            EmployeeService.Update(employeeDetail);
             return Ok();
         }
 
@@ -61,8 +60,8 @@ namespace SMS.API.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _employeeFacade.Delete(id, DeletedBy);
+            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            EmployeeService.Delete(id, deletedBy);
             return Ok();
         }
 
