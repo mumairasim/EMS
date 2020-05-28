@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\AccountService.cs" />
+    <Compile Include="Implementation\AttendanceStatusService.cs" />
     <Compile Include="Implementation\ClassService.cs" />
     <Compile Include="Implementation\CourseService.cs" />
+    <Compile Include="Implementation\StudentAttendanceService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
     <Compile Include="Implementation\EmployeeService.cs" />
     <Compile Include="Implementation\FileService.cs" />
@@ -62,6 +64,8 @@
     <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
+    <Compile Include="Infrastructure\IStudentAttendanceService.cs" />
+    <Compile Include="Infrastructure\IAttendanceStatusService.cs" />
     <Compile Include="Infrastructure\IDesignationService.cs" />
     <Compile Include="Infrastructure\IEmployeeService.cs" />
     <Compile Include="Infrastructure\IFileService.cs" />

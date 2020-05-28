@@ -63,6 +63,10 @@
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IStoredProcCaller.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Migrations\202005272123261_attendance.cs" />
+    <Compile Include="Migrations\202005272123261_attendance.designer.cs">
+      <DependentUpon>202005272123261_attendance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -71,6 +75,7 @@
     <Compile Include="Models\ClassTeacherDiary.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseClass.cs" />
+    <Compile Include="Models\AttendanceStatus.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Models\StudentStudentDiary.cs" />
     <Compile Include="Models\Student_Finances.cs" />
     <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\StudentAttendance.cs" />
     <Compile Include="Models\TeacherDiary.cs" />
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\TimeTableDetail.cs" />
@@ -102,6 +108,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005272123261_attendance.resx">
+      <DependentUpon>202005272123261_attendance.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
