@@ -3,24 +3,7 @@
     $scope.StudentDiaryDiaryModel = {
         Diarytext: '',
         DairyDate: '',
-        Employee: $scope.Employee,
-    };
-    $scope.Employee = {
-        Person: '',
-        Designation: ''
-    };
-    $scope.Person = {
-        FirstName: '',
-        LastName: '',
-        Cnic: '',
-        Nationality: '',
-        Religion: '',
-        PresentAddress: '',
-        PermanentAddress: '',
-        Phone: ''
-    };
-    $scope.Designation = {
-        Name: ''
+        InstructorId: '',
     };
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
@@ -34,6 +17,7 @@
     };
     $scope.StudentDiaryUpdate = function () {
         var data = $scope.StudentDiaryModel;
+        $scope.StudentDiaryModel.InstructorId = $scope.StudentDiaryModel.Employee.Id;
         var formData = new FormData();
         formData.append('studentDiaryModel', JSON.stringify(data));
         var responsedata = apiService.masterput('/api/v1/StudentDiary/Update', formData);
@@ -62,4 +46,5 @@
         window.location = "#!/studentDiaryBase";
     };
     $scope.FetchStudentDiary();
+    $scope.GetEmployees();
 }]);
