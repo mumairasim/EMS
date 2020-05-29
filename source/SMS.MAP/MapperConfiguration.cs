@@ -25,6 +25,8 @@ using DBFile = SMS.DATA.Models.File;
 using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
+using DBStudentDiary = SMS.DATA.Models.StudentDiary;
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 
 
 namespace SMS.MAP
@@ -83,6 +85,10 @@ namespace SMS.MAP
             CreateMap<DTODesignation, DTODesignation>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<DBStudentDiary, DTOStudentDiary>();
+            CreateMap<DBStudentDiary, DTOStudentDiary>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
 
             #region DTO to DB
@@ -103,6 +109,7 @@ namespace SMS.MAP
             CreateMap<DTOStudentFinanceDetails, DBStudentFinanceDetails>();
             CreateMap<DTOFile, DBFile>();
             CreateMap<DTOUserInfo, DBUserInfo>();
+            CreateMap<DTOStudentDiary, DBStudentDiary>();
 
             #endregion
 

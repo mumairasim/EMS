@@ -72,7 +72,7 @@ namespace SMS.Services.Implementation
         }
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
-            dtoClass.SchoolId = dtoClass.School.Id;
+            dtoClass.Id = dtoClass.School.Id;
             dtoClass.School = null;
         }
 

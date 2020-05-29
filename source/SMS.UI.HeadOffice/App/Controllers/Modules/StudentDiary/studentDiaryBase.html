@@ -1,9 +1,9 @@
 ﻿<div class="container containerBase">
-    <h5 class="card-title fs-35">Search StudentDiary</h5>
+    <h5 class="card-title fs-35">Search Student Diary</h5>
 
     <div class="position-relative row form-group">
         <div class="col-sm-6">
-            <label class="col-form-label recordsCount">Total classs found:<span> {{TotalStudentDiary}}</span></label>
+            <label class="col-form-label recordsCount">Total student Diary found:<span> {{TotalStudentDiary}}</span></label>
         </div>
         <div class="input-group col-sm-6">
             <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button">
@@ -20,18 +20,17 @@
             <tr>
                 <th>DiaryText</th>
                 <th>DiaryDate</th>
-                <th>School</th>
                 <th>Instructor</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="odd" ng-repeat="class in ClassList">
+            <tr class="odd" ng-repeat="studentDiary in  StudentDiariesList">
 
                 <td>{{studentDiary.DiraryText}} </td>
                 <td>{{studentDiary.DiaryDate}} </td>
-                <td>{{studentDiary.Employee.InstructorId}} </td>
-                <td>{{studentDiary.School.Name}} </td>
+                <td>{{studentDiary.Employee..Person.FirstName}} </td>
+                
                 <td>
                     <a href="#!/studentDiaryUpdate?Id={{studentDiary.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(studentDiary.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>

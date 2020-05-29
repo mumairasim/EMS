@@ -2,14 +2,10 @@
     'use strict';
     $scope.ClassModel = {
         Name: '',
-        School: $scope.School
+        Id: '',
     };
 
-    $scope.School = {
-        Id: '',
-        Name: '',
-        Location: ''
-    };
+   
     
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/Schools/Get');
@@ -25,6 +21,7 @@
     };
     $scope.ClassCreate = function () {
         var data = $scope.ClassModel;
+        data.Id = $scope.ClassModel.School.Id;
         var formData = new FormData();
         formData.append('classModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/Class/Create', formData);

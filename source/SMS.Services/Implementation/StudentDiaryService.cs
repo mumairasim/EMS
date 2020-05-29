@@ -73,9 +73,7 @@ namespace SMS.Services.Implementation
 
         private void HelpingMethodForRelationship(DTOStudentDiary dtoStudentDiary)
         {
-            dtoStudentDiary.SchoolId = dtoStudentDiary.School.Id;
             dtoStudentDiary.InstructorId = dtoStudentDiary.Employee.Id;
-            dtoStudentDiary.School = null;
             dtoStudentDiary.Employee = null;
         }
     }
