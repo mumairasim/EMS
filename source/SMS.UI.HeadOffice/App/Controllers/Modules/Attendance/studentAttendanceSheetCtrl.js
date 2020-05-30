@@ -3,8 +3,10 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
     'use strict';
 
     $scope.StudentAttendanceModel = {
+        AttendanceDate: '',
         Class: $scope.Class,
-        School: $scope.School
+        School: $scope.School,
+        StudentAttendanceDetail: []
     };
     $scope.Class = {
         Id: '',
@@ -15,24 +17,28 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
         Name: '',
         Location: ''
     };
-    $scope.StudentsAttendanceListDetail = {
-        StudentsAttendances: []
+    $scope.StudentAttendanceDetailModel = {
+        AttendanceStatusId: '',
+        StudentId: ''
     };
+    $scope.showfailureInfo = false;
+    $scope.showSuccessInfo = false;
     $scope.GetStudents = function () {
         var responsedata = apiService.masterget('/api/v1/Student/Get?classId=' + $scope.Class.Id + '&schoolId=' + $scope.School.Id);
         responsedata.then(function mySucces(response) {
             $scope.studentList = response.data.Students;
             $scope.TotalStudents = response.data.StudentsCount;
+
+            $scope.StudentAttendanceModel.SchoolId = $scope.School.Id;
+            $scope.StudentAttendanceModel.ClassId = $scope.Class.Id;
             for (var i = 0; i < response.data.Students.length; i++) {
-                $scope.StudentAttendanceModel.SchoolId = $scope.School.Id;
-                $scope.StudentAttendanceModel.ClassId = $scope.Class.Id;
                 for (var j = 0; j < $scope.AttendanceStatusList.length; j++) {
                     if ($scope.AttendanceStatusList[j].Status == 'Present') {
-                        $scope.StudentAttendanceModel.AttendanceStatusId = $scope.AttendanceStatusList[j].Id;
+                        $scope.StudentAttendanceDetailModel.AttendanceStatusId = $scope.AttendanceStatusList[j].Id;
                     }
                 }
-                $scope.StudentAttendanceModel.StudentId = response.data.Students[i].Id;
-                $scope.StudentsAttendanceListDetail.StudentsAttendances.push($scope.StudentAttendanceModel);
+                $scope.StudentAttendanceDetailModel.StudentId = response.data.Students[i].Id;
+                $scope.StudentAttendanceModel.StudentAttendanceDetail.push($scope.StudentAttendanceDetailModel);
             }
         },
             function myError(response) {
@@ -55,6 +61,7 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
             $scope.Class = $scope.Classes[0];
             $scope.GetStudents();
             $scope.GetAttendanceStatus();
+            $scope.StudentAttendanceModel.AttendanceDate = new Date();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -72,25 +79,35 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
             });
     };
     $scope.StatusUpdation = function (studentId, status) {
-        for (var i = 0; i < $scope.StudentsAttendanceListDetail.StudentsAttendances.length; i++) {
-            if ($scope.StudentsAttendanceListDetail.StudentsAttendances.StudentId == studentId) {
+        for (var i = 0; i < $scope.StudentAttendanceModel.StudentAttendanceDetail.length; i++) {
+            if ($scope.StudentAttendanceModel.StudentAttendanceDetail[i].StudentId == studentId) {
                 for (var j = 0; j < $scope.AttendanceStatusList.length; j++) {
                     if ($scope.AttendanceStatusList[j].Status == status) {
-                        $scope.StudentsAttendanceListDetail.StudentsAttendances[i].AttendanceStatusId = $scope.AttendanceStatusList[i].Id;
+                        $scope.StudentAttendanceModel.StudentAttendanceDetail[i].AttendanceStatusId = $scope.AttendanceStatusList[i].Id;
                     }
                 }
             }
         }
     };
     $scope.SubmitAttendance = function () {
-        var data = $scope.StudentsAttendanceListDetail;
+        var data = $scope.StudentAttendanceModel;
         var formData = new FormData();
-        formData.append('StudentsAttendanceListDetail', JSON.stringify(data));
-        var responsedata = apiService.post('/api/v1/StudentAttendance/BulkCreate', formData);
+        formData.append('studentAttendanceModel', JSON.stringify(data));
+        var responsedata = apiService.post('api/v1/StudentAttendance/Create', formData);
         responsedata.then(function mySucces(response) {
-            $scope.response = response.data;
-            $scope.growltext("Attendance marked successfully.", false);
-            window.location = "#!/dashboard";
+            $scope.attendanceCreationResponse = response.data;
+            if ($scope.attendanceCreationResponse.StatusCode == '200') {
+                //$scope.growltext($scope.attendanceCreationResponse.Description, false);
+                $scope.showSuccessInfo = true;
+                $scope.showfailureInfo = false;
+                $scope.growltext("Attendance marked successfully.", false);
+                window.location = "#!/dashboard";
+            }
+            if ($scope.attendanceCreationResponse.StatusCode == '400') {
+                $scope.showSuccessInfo = false;
+                $scope.showfailureInfo = true;
+                //$scope.growltext($scope.attendanceCreationResponse.Description, true);
+            }
         },
             function myError(response) {
                 $scope.response = response.data;

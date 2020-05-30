@@ -27,6 +27,7 @@ using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 
 
@@ -92,6 +93,9 @@ namespace SMS.MAP
             CreateMap<AttendanceStatus, DTOAttendanceStatus>();
             CreateMap<DTOAttendanceStatus, DTOAttendanceStatus>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<StudentAttendanceDetail, DTOStudentAttendanceDetail>();
+            CreateMap<DTOStudentAttendanceDetail, DTOStudentAttendanceDetail>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             #endregion
 
             #region DTO to DB
@@ -114,6 +118,7 @@ namespace SMS.MAP
             CreateMap<DTOUserInfo, DBUserInfo>();
             CreateMap<DTOAttendanceStatus, AttendanceStatus>();
             CreateMap<DTOStudentAttendance, StudentAttendance>();
+            CreateMap<DTOStudentAttendanceDetail, StudentAttendanceDetail>();
 
             #endregion
 

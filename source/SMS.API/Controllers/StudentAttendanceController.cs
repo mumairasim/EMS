@@ -63,18 +63,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
             studentAttendanceDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.Create(studentAttendanceDetail);
-            return Ok();
-        }
-        [HttpPost]
-        [Route("BulkCreate")]
-        public IHttpActionResult BulkCreate()
-        {
-            var httpRequest = HttpContext.Current.Request;
-            var studentsAttendanceListDetail = JsonConvert.DeserializeObject<StudentsAttendanceList>(httpRequest.Params["StudentsAttendanceListDetail"]);
-            var createdBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.Create(studentsAttendanceListDetail, createdBy);
-            return Ok();
+            return Ok(StudentAttendanceService.Create(studentAttendanceDetail));
         }
         [HttpPut]
         [Route("Update")]
