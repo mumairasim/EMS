@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202005272123261_attendance.designer.cs">
       <DependentUpon>202005272123261_attendance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005301902260_attendanceModuleChanges.cs" />
+    <Compile Include="Migrations\202005301902260_attendanceModuleChanges.designer.cs">
+      <DependentUpon>202005301902260_attendanceModuleChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -90,12 +94,13 @@
     <Compile Include="Models\SMS.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentAssignment.cs" />
+    <Compile Include="Models\StudentAttendance.cs" />
     <Compile Include="Models\StudentDiary.cs" />
     <Compile Include="Models\StudentFinanceDetail.cs" />
     <Compile Include="Models\StudentStudentDiary.cs" />
     <Compile Include="Models\Student_Finances.cs" />
     <Compile Include="Models\sysdiagram.cs" />
-    <Compile Include="Models\StudentAttendance.cs" />
+    <Compile Include="Models\StudentAttendanceDetail.cs" />
     <Compile Include="Models\TeacherDiary.cs" />
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\TimeTableDetail.cs" />
@@ -112,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005272123261_attendance.resx">
       <DependentUpon>202005272123261_attendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005301902260_attendanceModuleChanges.resx">
+      <DependentUpon>202005301902260_attendanceModuleChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

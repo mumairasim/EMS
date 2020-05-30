@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
 using StudentAttendance = SMS.DATA.Models.StudentAttendance;
@@ -13,11 +15,13 @@ namespace SMS.Services.Implementation
     public class StudentAttendanceService : IStudentAttendanceService
     {
         private readonly IRepository<StudentAttendance> _repository;
+        private readonly IStudentAttendanceDetailService _studentAttendanceDetailService;
         private readonly IMapper _mapper;
-        public StudentAttendanceService(IRepository<StudentAttendance> repository, IMapper mapper)
+        public StudentAttendanceService(IRepository<StudentAttendance> repository, IMapper mapper, IStudentAttendanceDetailService studentAttendanceDetailService)
         {
             _repository = repository;
             _mapper = mapper;
+            _studentAttendanceDetailService = studentAttendanceDetailService;
         }
         public StudentsAttendanceList Get(int pageNumber, int pageSize)
         {
@@ -61,22 +65,28 @@ namespace SMS.Services.Implementation
 
             return studentsAttendanceList;
         }
-        public Guid Create(DTOStudentAttendance dtoStudentAttendance)
+        public StudentAttendanceResponse Create(DTOStudentAttendance dtoStudentAttendance)
         {
-            dtoStudentAttendance.CreatedDate = DateTime.Now;
-            dtoStudentAttendance.IsDeleted = false;
-            dtoStudentAttendance.Id = Guid.NewGuid();
-            _repository.Add(_mapper.Map<DTOStudentAttendance, StudentAttendance>(dtoStudentAttendance));
-            return dtoStudentAttendance.Id;
-        }
-        public void Create(StudentsAttendanceList dtoStudentAttendanceList, string createdBy)
-        {
-            foreach (var studentAttendance in dtoStudentAttendanceList.StudentsAttendances)
+            if (dtoStudentAttendance.AttendanceDate != null)
             {
-                studentAttendance.CreatedBy = createdBy;
-                Create(studentAttendance);
+                if (IsAttendanceExist(dtoStudentAttendance))
+                    return PrepareFailureResponse(
+                        dtoStudentAttendance.Id,
+                        "AttendanceAlreadyExist",
+                        "Attendance Record for Date: " + dtoStudentAttendance.AttendanceDate.Value.ToShortDateString() + " already exist and can not be created. Please Update if you want to edit attendance.");
+                dtoStudentAttendance.CreatedDate = DateTime.Now;
+                dtoStudentAttendance.IsDeleted = false;
+                dtoStudentAttendance.Id = Guid.NewGuid();
+                _repository.Add(_mapper.Map<DTOStudentAttendance, StudentAttendance>(dtoStudentAttendance));
+                _studentAttendanceDetailService.Create(dtoStudentAttendance.StudentAttendanceDetail,
+                    dtoStudentAttendance.CreatedBy,
+                    dtoStudentAttendance.Id);
+                return PrepareSuccessResponse(
+                    dtoStudentAttendance.Id,
+                    "AttendanceCreated",
+                    "Attendance Record for Date: " + dtoStudentAttendance.AttendanceDate.Value.ToShortDateString() + " has been successfully created.");
             }
-
+            return null;
         }
         public void Update(DTOStudentAttendance dtoStudentAttendance)
         {
@@ -94,6 +104,42 @@ namespace SMS.Services.Implementation
             studentAttendance.DeletedBy = deletedBy;
             studentAttendance.DeletedDate = DateTime.Now;
             _repository.Update(_mapper.Map<DTOStudentAttendance, StudentAttendance>(studentAttendance));
+        }
+
+        private bool IsAttendanceExist(DTOStudentAttendance dtoStudentAttendance)
+        {
+            var attendanceRecord = _repository.Get()
+                .FirstOrDefault(
+                    aR => aR.ClassId == dtoStudentAttendance.ClassId &&
+                          aR.SchoolId == dtoStudentAttendance.SchoolId &&
+                          DbFunctions.TruncateTime(aR.AttendanceDate) == DbFunctions.TruncateTime(dtoStudentAttendance.AttendanceDate.Value));
+            if (attendanceRecord != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private StudentAttendanceResponse PrepareFailureResponse(Guid id, string errorMessage, string descriptionMessage)
+        {
+            return new StudentAttendanceResponse
+            {
+                Id = id,
+                StatusCode = "400",
+                Message = errorMessage,
+                Description = descriptionMessage
+            };
+        }
+        private StudentAttendanceResponse PrepareSuccessResponse(Guid id, string message, string descriptionMessage)
+        {
+            return new StudentAttendanceResponse
+            {
+                Id = id,
+                StatusCode = "200",
+                Message = message,
+                Description = descriptionMessage
+            };
         }
     }
 }

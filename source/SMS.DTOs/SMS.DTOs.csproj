@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\Assignment.cs" />
+    <Compile Include="DTOs\StudentAttendanceDetail.cs" />
     <Compile Include="DTOs\StudentAttendance.cs" />
     <Compile Include="DTOs\AttendanceStatus.cs" />
     <Compile Include="DTOs\DtoBaseEntity.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="DTOs\TimeTable.cs" />
     <Compile Include="DTOs\TimeTableDetail.cs" />
     <Compile Include="DTOs\Worksheet.cs" />
+    <Compile Include="ReponseDTOs\GenericApiResponse.cs" />
+    <Compile Include="ReponseDTOs\StudentAttendanceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RequestDTOs\" />
