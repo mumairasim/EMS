@@ -13,14 +13,14 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     $scope.Message = "";
     $scope.FileDescription = "";
     $scope.selectedFileForUpload = null;
-
+    $scope.imageLoaded = false;
     $scope.$watch("userForm.$valid", function (isValid) {
         $scope.isFormValid = isValid;
     });
 
     $scope.CheckIsFileValid = function (file) {
         if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') && 
+            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
                 file.size <= (512 * 1024)) {
                 $scope.IsFileValid = true;
             } else {
@@ -35,7 +35,7 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         //preview the uploaded image
         var reader = new FileReader();
 
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             $scope.UserModel.Image = event.target.result;
             $scope.ImageBase = '';
             $scope.$apply();
@@ -78,6 +78,10 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
             if ($scope.UserModel.ImageExtension !== "") {
 
                 $scope.ImageBase = 'data:image/' + $scope.UserModel.ImageExtension + ';base64,';
+                localStorage.setItem('SMS_UserImage', $scope.ImageBase + $scope.UserModel.Image);
+                $scope.UserImage = $scope.ImageBase + $scope.UserModel.Image;
+                $scope.imageLoaded = true;
+                $scope.$apply();
             }
         },
             function myError(response) {
