@@ -38,7 +38,7 @@ namespace SMS.Services.Implementation
         }
         public Guid Create(DTOAttendanceStatus dtoAttendanceStatus)
         {
-            dtoAttendanceStatus.CreatedDate = DateTime.Now;
+            dtoAttendanceStatus.CreatedDate = DateTime.UtcNow;
             dtoAttendanceStatus.IsDeleted = false;
             dtoAttendanceStatus.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOAttendanceStatus, AttendanceStatus>(dtoAttendanceStatus));
@@ -47,7 +47,7 @@ namespace SMS.Services.Implementation
         public void Update(DTOAttendanceStatus dtoAttendanceStatus)
         {
             var attendanceStatus = Get(dtoAttendanceStatus.Id);
-            dtoAttendanceStatus.UpdateDate = DateTime.Now;
+            dtoAttendanceStatus.UpdateDate = DateTime.UtcNow;
             var mergedAttendanceStatus = _mapper.Map(dtoAttendanceStatus, attendanceStatus);
             _repository.Update(_mapper.Map<DTOAttendanceStatus, AttendanceStatus>(mergedAttendanceStatus));
         }
@@ -57,7 +57,7 @@ namespace SMS.Services.Implementation
                 return;
             var attendanceStatus = Get(id);
             attendanceStatus.IsDeleted = true;
-            attendanceStatus.DeletedDate = DateTime.Now;
+            attendanceStatus.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOAttendanceStatus, AttendanceStatus>(attendanceStatus));
         }
     }
