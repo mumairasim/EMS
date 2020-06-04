@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -56,9 +57,11 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Implementation\EFRepository.cs" />
+    <Compile Include="Implementation\StoredProcCaller.cs" />
     <Compile Include="Implementation\UnitOfWork.cs" />
     <Compile Include="Infrastructure\IDbContext.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IStoredProcCaller.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Models\ClassTeacherDiary.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseClass.cs" />
+    <Compile Include="Models\AttendanceStatus.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
@@ -75,17 +79,20 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FinanceType.cs" />
     <Compile Include="Models\LessonPlan.cs" />
+    <Compile Include="Models\NonDbContextModels\UserInfo.cs" />
     <Compile Include="Models\Period.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\SMS.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentAssignment.cs" />
+    <Compile Include="Models\StudentAttendance.cs" />
     <Compile Include="Models\StudentDiary.cs" />
     <Compile Include="Models\StudentFinanceDetail.cs" />
     <Compile Include="Models\StudentStudentDiary.cs" />
     <Compile Include="Models\Student_Finances.cs" />
     <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\StudentAttendanceDetail.cs" />
     <Compile Include="Models\TeacherDiary.cs" />
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\TimeTableDetail.cs" />

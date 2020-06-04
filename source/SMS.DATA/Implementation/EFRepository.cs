@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Text;
 using SMS.DATA.Infrastructure;
 
 namespace SMS.DATA.Implementation
@@ -13,10 +15,11 @@ namespace SMS.DATA.Implementation
         {
             _unitOfWork = unitOfWork;
         }
-        public void Add(T entity)
+        public T Add(T entity)
         {
-            _unitOfWork.Context.Set<T>().Add(entity);
+            var res = _unitOfWork.Context.Set<T>().Add(entity);
             _unitOfWork.Commit();
+            return res;
         }
 
         public void Delete(T entity)

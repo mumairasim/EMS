@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SMS.DATA.Models;
 using Class = SMS.DATA.Models.Class;
 using Course = SMS.DATA.Models.Course;
 using DBStudentFinanceDetails = SMS.DATA.Models.StudentFinanceDetail;
@@ -23,6 +24,11 @@ using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
 using DBFile = SMS.DATA.Models.File;
 using DTOFile = SMS.DTOs.DTOs.File;
+using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
+using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
+using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
+using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
@@ -61,6 +67,9 @@ namespace SMS.MAP
             CreateMap<School, DTOSchool>();
             CreateMap<DTOSchool, DTOSchool>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<DBUserInfo, DTOUserInfo>();
+            CreateMap<DTOUserInfo, DTOUserInfo>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
             CreateMap<Course, DTOCourse>();
 
@@ -82,6 +91,15 @@ namespace SMS.MAP
             CreateMap<DTODesignation, DTODesignation>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<StudentAttendance, DTOStudentAttendance>();
+            CreateMap<DTOStudentAttendance, DTOStudentAttendance>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<AttendanceStatus, DTOAttendanceStatus>();
+            CreateMap<DTOAttendanceStatus, DTOAttendanceStatus>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<StudentAttendanceDetail, DTOStudentAttendanceDetail>();
+            CreateMap<DTOStudentAttendanceDetail, DTOStudentAttendanceDetail>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<TeacherDiary, DTOTeacherDiary>();
             CreateMap<DTOTeacherDiary, DTOTeacherDiary>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -105,7 +123,19 @@ namespace SMS.MAP
             CreateMap<DTOStudentFinances, DBStudentFinances>();
             CreateMap<DTOStudentFinanceDetails, DBStudentFinanceDetails>();
             CreateMap<DTOFile, DBFile>();
+            CreateMap<DTOUserInfo, DBUserInfo>();
+            CreateMap<DTOAttendanceStatus, AttendanceStatus>();
+            CreateMap<DTOStudentAttendance, StudentAttendance>();
+            CreateMap<DTOStudentAttendanceDetail, StudentAttendanceDetail>();
 
+            #endregion
+
+            #region Others
+            CreateMap<DTOUserInfo, DTOPerson>();
+            CreateMap<DTOUserInfo, DTOPerson>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<DTOUserInfo, DTOPerson>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PersonId));
             CreateMap<DTOTeacherDiary, TeacherDiary>();
             #endregion
         }

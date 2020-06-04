@@ -43,11 +43,12 @@
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left">
                                     <div class="btn-group">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn" ng-click="showDropdown()">
-                                            <img width="42" class="rounded-circle" src="~/images/avatars/13.jpg" alt="">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <img width="42" class="rounded-circle" ng-show="UserImage === ''" src="~/Images/avatar_2x.png" alt="">
+                                            <img width="42" class="rounded-circle" ng-show="UserImage !== ''" src="{{UserImage}}" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
-                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" id="profileCaret">
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" ng-click="redirect('userProfile')" class="dropdown-item">Profile</button>
                                             <div tabindex="-1" class="dropdown-divider"></div>
                                             <button type="button" tabindex="0" class="dropdown-item" ng-click="logout()">Logout</button>
@@ -57,7 +58,7 @@
 
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Muhammad Umair Asim
+                                        {{UserName}}
                                     </div>
                                     <div class="widget-subheading">
                                         Developer
@@ -131,7 +132,8 @@
                                         </a>
                                     </li>
                                 </ul>
-
+                            </li>
+                            <li>
                                 <a class="pointercollapsable">
                                     <i class="metismenu-icon pe-7s-users"></i>
                                     Employee
@@ -151,7 +153,8 @@
                                         </a>
                                     </li>
                                 </ul>
-
+                            </li>
+                            <li>
                                 <a class="pointercollapsable">
                                     <i class="metismenu-icon pe-7s-note"></i>
                                     LessonPlan
@@ -172,6 +175,44 @@
                                     </li>
                                 </ul>
                             </li>
+
+                            <li>
+                                <a class="pointercollapsable">
+                                    <i class="metismenu-icon pe-7s-users"></i>
+                                    Worksheet
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#!/worksheetBase">
+                                            <i class="metismenu-icon"></i>
+                                            Worksheet Search
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#!/worksheetCreate">
+                                            <i class="metismenu-icon">
+                                            </i>Worksheet Create
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="pointercollapsable">
+                                    <i class="metismenu-icon pe-7s-note2"></i>
+                                    Student Attendance
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="#!/studentAttendanceSheet">
+                                            <i class="metismenu-icon"></i>
+                                            Mark Attendance
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li class="app-sidebar__heading">Settings</li>
                             <li>
                                 <a href="/#!/userProfile" class="pointerSet">

@@ -24,15 +24,12 @@ namespace SMS.API.Registrar
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(RequestRepository<>)).As(typeof(IRequestRepository<>)).InstancePerLifetimeScope();
             builder.RegisterType<RequestUnitOfWork>().As<IRequestUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<StoredProcCaller>().As<IStoredProcCaller>().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assembly.Load("SMS.SERVICES"))
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(Assembly.Load("SMS.FACADE"))
-                .Where(t => t.Name.EndsWith("Facade"))
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
             var autoMapperProfile = new MapperConfigurationInternal();
 
             builder.Register(ctx => new MapperConfiguration(cfg =>

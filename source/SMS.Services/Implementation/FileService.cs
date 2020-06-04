@@ -3,7 +3,11 @@ using SMS.DATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Hosting;
 using DBFile = SMS.DATA.Models.File;
 using DTOFile = SMS.DTOs.DTOs.File;
 
@@ -13,7 +17,7 @@ namespace SMS.Services.Implementation
     {
         #region Properties
         private readonly IRepository<DBFile> _repository;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Init
@@ -29,16 +33,50 @@ namespace SMS.Services.Implementation
         #region Service Calls
 
         /// <summary>
-        /// Service level call : Creates a single record of a File
+        /// Service level call : Creates a single record of a File in a table
         /// </summary>
-        /// <param name="dTOFile"></param>
-        public void Create(DTOFile dTOFile)
+        /// <param name="dToFile"></param>
+        public Guid Create(DTOFile dToFile)
         {
-            dTOFile.CreatedDate = DateTime.Now;
-            dTOFile.IsDeleted = false;
-            dTOFile.Id = Guid.NewGuid();
+            dToFile.CreatedDate = DateTime.Now;
+            dToFile.IsDeleted = false;
+            dToFile.Id = Guid.NewGuid();
+            _repository.Add(_mapper.Map<DTOFile, DBFile>(dToFile));
+            return dToFile.Id;
+        }
 
-            _repository.Add(_mapper.Map<DTOFile, DBFile>(dTOFile));
+        /// <summary>
+        /// Service level call : Saves a file and create a single record of a File in a table
+        /// </summary>
+        /// <param name="dToFile"></param>
+        public Guid? Create(HttpPostedFile file)
+        {
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var extension = Path.GetExtension(file.FileName);
+            int size = file.ContentLength;
+            try
+            {
+                var path = Path.Combine(HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["FileUploadFolder"]));
+                bool exists = Directory.Exists(path);
+                if (!exists)
+                    Directory.CreateDirectory(path);
+                path = path + fileName;
+                file.SaveAs(path);
+                DTOFile newFile = new DTOFile
+                {
+                    Name = fileName,
+                    Path = path,
+                    Size = size,
+                    IsDeleted = false,
+                    Extension = extension
+                };
+                return Create(newFile);
+            }
+            catch
+            {
+                // ignored
+                return null;
+            }
         }
 
         /// <summary>
@@ -73,7 +111,8 @@ namespace SMS.Services.Implementation
 
             var file = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var fileDto = _mapper.Map<DBFile, DTOFile>(file);
-
+            fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
+            fileDto.Extension = Path.GetExtension(fileDto.Path);
             return fileDto;
         }
 
@@ -81,16 +120,24 @@ namespace SMS.Services.Implementation
         /// Service level call : Updates the Single Record of a File 
         /// </summary>
         /// <param name="dtoFile"></param>
-        public void Update(DTOFile dtoFile)
+        private void Update(DTOFile dtoFile)
         {
-            var file = Get(dtoFile.Id);
-            if (file != null)
+            dtoFile.UpdateDate = DateTime.Now;
+            dtoFile.IsDeleted = false;
+            _repository.Update(_mapper.Map<DTOFile, DBFile>(dtoFile));
+        }
+        public void Update(HttpPostedFile file, Guid fileId)
+        {
+            try
             {
-                dtoFile.UpdateDate = DateTime.Now;
-                dtoFile.IsDeleted = false;
-                var updated = _mapper.Map(dtoFile, file);
-
-                _repository.Update(_mapper.Map<DTOFile, DBFile>(updated));
+                var dbFile = Get(fileId);
+                File.Delete(dbFile.Path);
+                file.SaveAs(dbFile.Path);
+                Update(dbFile);
+            }
+            catch
+            {
+                // ignored
             }
         }
 
@@ -102,9 +149,9 @@ namespace SMS.Services.Implementation
         {
             var files = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var fileList = new List<DTOFile>();
-            foreach (var File in files)
+            foreach (var file in files)
             {
-                fileList.Add(_mapper.Map<DBFile, DTOFile>(File));
+                fileList.Add(_mapper.Map<DBFile, DTOFile>(file));
             }
             return fileList;
         }

@@ -1,9 +1,12 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DTOs.DTOs
 {
     public class Person : DtoBaseEntity
     {
+        public Guid? AspNetUserId { get; set; }
+
         [StringLength(250)]
         public string FirstName { get; set; }
 
@@ -25,5 +28,8 @@ namespace SMS.DTOs.DTOs
 
         [StringLength(50)]
         public string Phone { get; set; }
+
+        public Guid? ImageId { get; set; }
+
     }
 }

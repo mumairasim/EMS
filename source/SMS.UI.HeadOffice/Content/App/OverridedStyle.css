@@ -58,14 +58,6 @@
     padding-right: 5px;
 }
 
-.profileCaretDisplay {
-    display: block;
-}
-
-.reverseProfileCaretDisplay {
-    display: none;
-}
-
 .please-wait {
     position: fixed;
     z-index: 5000;
@@ -120,6 +112,31 @@
     .recordsCount > span {
         color: #0056b3;
     }
+
+.tableCenterAllign {
+    text-align: center;
+}
+
+.radioButtonSize {
+    height: 20px;
+    width: 20px;
+}
+
+.infoMessage {
+    border-radius: 5px;
+    padding: 10px 0 0 0;
+    text-align: center;
+}
+
+.successMessege {
+    border: 1px solid #00B03B;
+    color: #00B03B;
+}
+
+.failureMessege {
+    border: 1px solid #f97070;
+    color: #f97070;
+}
 
 @media (max-width: 1350px) {
     .containerCreate {

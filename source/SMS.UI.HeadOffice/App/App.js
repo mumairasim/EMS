@@ -1,4 +1,4 @@
-﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate']);
+﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate', 'ngFileUpload']);
 SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($routeProvider, $locationProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('SMSHOLocalStorage');
@@ -67,7 +67,34 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
-    }).otherwise({
+    
+    })
+        .when("/worksheetBase", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetBase.html",
+            controller: "worksheetBaseCtrl"
+        })
+        .when("/worksheetSearch", {
+            title: "Worksheet Search",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetSearch.html",
+            controller: "worksheetSearchCtrl"
+        })
+        .when("/worksheetCreate", {
+            title: "Worksheet Create",
+            templateUrl: "App/Controllers/Modules/Worksheet/worksheetCreate.html",
+            controller: "worksheetCreateCtrl"
+        })
+        .when("/worksheetUpdate", {
+            title: "Worksheet Update",
+            templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
+            controller: "worksheetUpdateCtrl"
+        })
+        .when("/studentAttendanceSheet", {
+            title: "Student Attendance",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",
+            controller: "studentAttendanceSheetCtrl"
+        })
+        .otherwise({
             redirectTo: '/'
         });
     $locationProvider.html5Mode(false);

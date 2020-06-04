@@ -40,6 +40,8 @@ namespace SMS.DATA.Models
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<AttendanceStatus> AttendanceStatus { get; set; }
+        public virtual DbSet<StudentAttendanceDetail> StudentAttendance { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

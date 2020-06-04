@@ -2,9 +2,9 @@
 
 namespace SMS.DTOs.DTOs
 {
-    public class StudentsList
+    public class StudentsAttendanceList
     {
-        public List<Student> Students { get; set; }
-        public int StudentsCount { get; set; }
+        public List<StudentAttendance> StudentsAttendances { get; set; }
+        public int StudentsAttendanceCount { get; set; }
     }
 }
