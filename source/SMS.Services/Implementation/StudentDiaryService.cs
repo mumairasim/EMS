@@ -20,7 +20,7 @@ namespace SMS.Services.Implementation
         }
         public void Create(DTOStudentDiary dtoStudentDiary)
         {
-            dtoStudentDiary.CreatedDate = DateTime.Now;
+            dtoStudentDiary.CreatedDate = DateTime.UtcNow;
             dtoStudentDiary.IsDeleted = false;
             dtoStudentDiary.Id = Guid.NewGuid();
             dtoStudentDiary.InstructorId = null;
@@ -48,7 +48,7 @@ namespace SMS.Services.Implementation
         public void Update(DTOStudentDiary dtoStudentDiary)
         {
             var studentDiary = Get(dtoStudentDiary.Id);
-            dtoStudentDiary.UpdateDate = DateTime.Now;
+            dtoStudentDiary.UpdateDate = DateTime.UtcNow;
             var mergedstudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(mergedstudentDiary));
         }
@@ -58,7 +58,7 @@ namespace SMS.Services.Implementation
                 return;
             var studentDiary = Get(id);
             studentDiary.IsDeleted = true;
-            studentDiary.DeletedDate = DateTime.Now;
+            studentDiary.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(studentDiary));
         }
 

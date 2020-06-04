@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\PredicateBuilder.cs" />
     <Compile Include="Implementation\AccountService.cs" />
     <Compile Include="Implementation\AttendanceStatusService.cs" />
     <Compile Include="Implementation\ClassService.cs" />
@@ -115,6 +116,7 @@
       <Name>SMS.REQUESTDATA</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -38,7 +38,7 @@ namespace SMS.Services.Implementation
         }
         public Guid Create(DTOSchool dtoSchool)
         {
-            dtoSchool.CreatedDate = DateTime.Now;
+            dtoSchool.CreatedDate = DateTime.UtcNow;
             dtoSchool.IsDeleted = false;
             dtoSchool.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOSchool, School>(dtoSchool));
@@ -47,7 +47,7 @@ namespace SMS.Services.Implementation
         public void Update(DTOSchool dtoSchool)
         {
             var school = Get(dtoSchool.Id);
-            dtoSchool.UpdateDate = DateTime.Now;
+            dtoSchool.UpdateDate = DateTime.UtcNow;
             var mergedSchool = _mapper.Map(dtoSchool, school) ;
             _repository.Update(_mapper.Map<DTOSchool, School>(mergedSchool));
         }
@@ -57,7 +57,7 @@ namespace SMS.Services.Implementation
                 return;
             var school = Get(id);
             school.IsDeleted = true;
-            school.DeletedDate = DateTime.Now;
+            school.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOSchool, School>(school));
         }
     }

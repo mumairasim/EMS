@@ -11,5 +11,6 @@ namespace SMS.Services.Infrastructure
         void Create(List<DTOStudentAttendanceDetail> dtoStudentAttendanceDetailList, string createdBy, Guid id);
         void Update(DTOStudentAttendanceDetail dtoStudentAttendance);
         void Delete(Guid? id, string deletedBy);
+        List<DTOStudentAttendanceDetail> GetByStudentAttendanceId(Guid? studentId);
     }
 }

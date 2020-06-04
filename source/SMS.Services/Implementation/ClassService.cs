@@ -22,7 +22,7 @@ namespace SMS.Services.Implementation
 
         public void Create(DTOClass dtoClass)
         {
-            dtoClass.CreatedDate = DateTime.Now;
+            dtoClass.CreatedDate = DateTime.UtcNow;
             dtoClass.IsDeleted = false;
             dtoClass.Id = Guid.NewGuid();
             dtoClass.School = null;
@@ -58,7 +58,7 @@ namespace SMS.Services.Implementation
         public void Update(DTOClass dtoClass)
         {
             var Classes = Get(dtoClass.SchoolId);
-            dtoClass.UpdateDate = DateTime.Now;
+            dtoClass.UpdateDate = DateTime.UtcNow;
             var mergedClass = _mapper.Map(dtoClass, Classes);
             _repository.Update(_mapper.Map<DTOClass, Class>(mergedClass));
         }
@@ -68,7 +68,7 @@ namespace SMS.Services.Implementation
                 return;
             var classes = Get(id);
             classes.IsDeleted = true;
-            classes.DeletedDate = DateTime.Now;
+            classes.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOClass, Class>(classes));
         }
 
