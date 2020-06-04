@@ -31,6 +31,8 @@ namespace SMS.DATA.Models
 
         public virtual Class Class { get; set; }
         public virtual File Image { get; set; }
+        public string PreviousSchoolName { get; set; }
+        public string ReasonForLeaving { get; set; }
 
         public virtual Person Person { get; set; }
 
