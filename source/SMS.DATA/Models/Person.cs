@@ -15,7 +15,7 @@ namespace SMS.DATA.Models
             Students = new HashSet<Student>();
         }
         public Guid? AspNetUserId { get; set; }
-        public int Age { get; set; }
+        public int? Age { get; set; }
         [StringLength(250)]
         public string FirstName { get; set; }
 
