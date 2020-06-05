@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202006050955067_adding_more_modules_in_student.designer.cs">
       <DependentUpon>202006050955067_adding_more_modules_in_student.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006051250302_adding_more_fields_in_student.cs" />
+    <Compile Include="Migrations\202006051250302_adding_more_fields_in_student.designer.cs">
+      <DependentUpon>202006051250302_adding_more_fields_in_student.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -113,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202006050955067_adding_more_modules_in_student.resx">
       <DependentUpon>202006050955067_adding_more_modules_in_student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006051250302_adding_more_fields_in_student.resx">
+      <DependentUpon>202006051250302_adding_more_fields_in_student.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
