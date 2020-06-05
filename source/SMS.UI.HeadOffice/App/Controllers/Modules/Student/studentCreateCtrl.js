@@ -5,7 +5,9 @@
         Person: $scope.Person,
         Class: $scope.Class,
         School: $scope.School,
-        Image: $scope.Image
+        Image: $scope.Image,
+        PreviousSchoolName:'',
+        ReasonForLeaving:''
     };
     $scope.Image = {
         Id: '',
@@ -18,7 +20,23 @@
     $scope.Person = {
         FirstName: '',
         LastName: '',
+        ParentName: '',
+        Age: '',
+        DOB: '',
         Cnic: '',
+        ParentCnic: '',
+        ParentCity: '',
+        ParentEmail: '',
+        ParentRelation: '',
+        ParentOccupation: '',
+        ParentHighestEducation: '',
+        ParentNationality: '',
+        ParentOfficeAddress: '',
+        ParentMobile1: '',
+        ParentMobile2: '',
+        ParentEmergencyName: '',
+        ParentEmergencyRelation: '',
+        ParentEmergencyMobile: '',
         Nationality: '',
         Religion: '',
         PresentAddress: '',
