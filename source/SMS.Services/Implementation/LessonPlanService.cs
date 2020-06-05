@@ -62,12 +62,12 @@ namespace SMS.Services.Implementation
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(mergedLessonPlan));
         }
 
-        public void Delete(Guid? id, string DeletedBy)
+        public void Delete(Guid? id, string deletedBy)
         {
             if (id == null)
                 return;
             var lessonplan= Get(id);
-            lessonplan.DeletedBy = DeletedBy;
+            lessonplan.DeletedBy = deletedBy;
             lessonplan.IsDeleted = true;
             lessonplan.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonplan));
