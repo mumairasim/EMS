@@ -58,11 +58,15 @@
 
     $scope.StudentUpdate = function () {
         var data = $scope.StudentModel;
-        $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
+
         var formData = new FormData();
-        data.Image.ImageFile = null;
+
+        if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
+            $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
+            formData.append("file", $scope.NewImageFile[0]);
+            data.Image.ImageFile = null;
+        }
         formData.append('studentModel', JSON.stringify(data));
-        formData.append("file", $scope.NewImageFile[0]);
         var responsedata = apiService.masterput('/api/v1/Student/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
@@ -80,7 +84,9 @@
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
             $scope.StudentModel = response.data;
-            $scope.FetchImage();
+            if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
+                $scope.FetchImage();
+            }
         },
             function myError(response) {
                 $scope.response = response.data;

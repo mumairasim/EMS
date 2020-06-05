@@ -13,14 +13,14 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
     $scope.Message = "";
     $scope.FileDescription = "";
     $scope.selectedFileForUpload = null;
-
+    $scope.imageLoaded = false;
     $scope.$watch("userForm.$valid", function (isValid) {
         $scope.isFormValid = isValid;
     });
 
     $scope.CheckIsFileValid = function (file) {
         if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') && 
+            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
                 file.size <= (512 * 1024)) {
                 $scope.IsFileValid = true;
             } else {
@@ -36,11 +36,11 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         var reader = new FileReader();
 
         reader.onload = function (event) {
-            $scope.UserModel.Image = event.target.result
+            $scope.UserModel.Image = event.target.result;
             $scope.ImageBase = '';
-            $scope.$apply()
+            $scope.$apply();
 
-        }
+        };
         // when the file is read it triggers the onload event above.
         reader.readAsDataURL(file[0]);
     };
@@ -73,10 +73,15 @@ SMSHO.controller('UserProfileCtrl', ['$scope', 'apiService', '$cookies', '$route
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
             $scope.UserModel = response.data;
+            $scope.UserModel.CreationDate = new Date(response.data.CreationDate);
 
             if ($scope.UserModel.ImageExtension !== "") {
 
                 $scope.ImageBase = 'data:image/' + $scope.UserModel.ImageExtension + ';base64,';
+                localStorage.setItem('SMS_UserImage', $scope.ImageBase + $scope.UserModel.Image);
+                $scope.UserImage = $scope.ImageBase + $scope.UserModel.Image;
+                $scope.imageLoaded = true;
+                $scope.$apply();
             }
         },
             function myError(response) {

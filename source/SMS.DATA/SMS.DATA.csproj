@@ -71,6 +71,7 @@
     <Compile Include="Models\ClassTeacherDiary.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseClass.cs" />
+    <Compile Include="Models\AttendanceStatus.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
@@ -85,11 +86,13 @@
     <Compile Include="Models\SMS.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentAssignment.cs" />
+    <Compile Include="Models\StudentAttendance.cs" />
     <Compile Include="Models\StudentDiary.cs" />
     <Compile Include="Models\StudentFinanceDetail.cs" />
     <Compile Include="Models\StudentStudentDiary.cs" />
     <Compile Include="Models\Student_Finances.cs" />
     <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\StudentAttendanceDetail.cs" />
     <Compile Include="Models\TeacherDiary.cs" />
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\TimeTableDetail.cs" />

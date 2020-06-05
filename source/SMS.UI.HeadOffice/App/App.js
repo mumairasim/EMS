@@ -1,5 +1,5 @@
 ﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate', 'ngFileUpload']);
-SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($routeProvider, $locationProvider, localStorageServiceProvider) {
+SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('SMSHOLocalStorage');
 
@@ -95,9 +95,9 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
         controller: "employeeUpdateCtrl"
     }).when("/employeeBase", {
-         title: "Employee Search",
-         templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
-         controller: "employeeBaseCtrl"
+        title: "Employee Search",
+        templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
+        controller: "employeeBaseCtrl"
     }).when("/lessonPlanBase", {
         title: "LessonPlan Search",
         templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
@@ -118,7 +118,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
-    
+
     })
         .when("/worksheetBase", {
             title: "Worksheet Search",
@@ -139,6 +139,21 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "Worksheet Update",
             templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
             controller: "worksheetUpdateCtrl"
+        })
+        .when("/studentAttendanceSheet", {
+            title: "Student Attendance",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",
+            controller: "studentAttendanceSheetCtrl"
+        })
+        .when("/studentAttendanceSheetBase", {
+            title: "Student Attendance Search",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetBase.html",
+            controller: "studentAttendanceSheetBaseCtrl"
+        })
+        .when("/studentAttendanceSheetUpdate", {
+            title: "Student Attendance Update",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetUpdate.html",
+            controller: "studentAttendanceSheetUpdateCtrl"
         })
         .otherwise({
             redirectTo: '/'

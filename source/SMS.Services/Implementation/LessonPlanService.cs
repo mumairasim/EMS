@@ -46,7 +46,7 @@ namespace SMS.Services.Implementation
         
         public void Create(DTOLessonPlan lessonPlan)
         {
-            lessonPlan.CreatedDate = DateTime.Now;
+            lessonPlan.CreatedDate = DateTime.UtcNow;
             lessonPlan.IsDeleted = false;
             lessonPlan.Id = Guid.NewGuid();
             lessonPlan.SchoolId = lessonPlan.School.Id;
@@ -57,19 +57,19 @@ namespace SMS.Services.Implementation
         public void Update(DTOLessonPlan dtoLessonplan)
         {
             var lessonplan = Get(dtoLessonplan.Id);
-            dtoLessonplan.UpdateDate = DateTime.Now;
+            dtoLessonplan.UpdateDate = DateTime.UtcNow;
             var mergedLessonPlan = _mapper.Map(dtoLessonplan, lessonplan);
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(mergedLessonPlan));
         }
 
-        public void Delete(Guid? id, string DeletedBy)
+        public void Delete(Guid? id, string deletedBy)
         {
             if (id == null)
                 return;
             var lessonplan= Get(id);
-            lessonplan.DeletedBy = DeletedBy;
+            lessonplan.DeletedBy = deletedBy;
             lessonplan.IsDeleted = true;
-            lessonplan.DeletedDate = DateTime.Now;
+            lessonplan.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonplan));
         }
     }

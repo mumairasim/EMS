@@ -23,7 +23,7 @@ namespace SMS.Services.Implementation
 
         public void Create(DTOClass dtoClass)
         {
-            dtoClass.CreatedDate = DateTime.Now;
+            dtoClass.CreatedDate = DateTime.UtcNow;
             dtoClass.IsDeleted = false;
             dtoClass.Id = Guid.NewGuid();
             HelpingMethodForRelationship(dtoClass);
@@ -53,10 +53,20 @@ namespace SMS.Services.Implementation
 
             return classes;
         }
+        public List<DTOClass> GetBySchool(Guid? schoolId)
+        {
+            var classes = _repository.Get().Where(cl => cl.SchoolId == schoolId && cl.IsDeleted == false).ToList();
+            var classList = new List<DTOClass>();
+            foreach (var itemClass in classes)
+            {
+                classList.Add(_mapper.Map<Class, DTOClass>(itemClass));
+            }
+            return classList;
+        }
         public void Update(DTOClass dtoClass)
         {
             var Classes = Get(dtoClass.Id);
-            dtoClass.UpdateDate = DateTime.Now;
+            dtoClass.UpdateDate = DateTime.UtcNow;
             var mergedClass = _mapper.Map(dtoClass, Classes);
             _repository.Update(_mapper.Map<DTOClass, Class>(mergedClass));
         }
@@ -66,8 +76,8 @@ namespace SMS.Services.Implementation
                 return;
             var classes = Get(id);
             classes.IsDeleted = true;
+            classes.DeletedDate = DateTime.UtcNow;
             classes.DeletedBy = DeletedBy;
-            classes.DeletedDate = DateTime.Now;
             _repository.Update(_mapper.Map<DTOClass, Class>(classes));
         }
         private void HelpingMethodForRelationship(DTOClass dtoClass)

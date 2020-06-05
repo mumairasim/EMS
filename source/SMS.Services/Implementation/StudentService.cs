@@ -24,7 +24,7 @@ namespace SMS.Services.Implementation
         public StudentsList Get(int pageNumber, int pageSize)
         {
             var students = _repository.Get().Where(st => st.IsDeleted == false).OrderByDescending(st => st.RegistrationNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var studentCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var studentCount = _repository.Get().Count(st => st.IsDeleted == false);
             var studentTempList = new List<DTOStudent>();
             foreach (var student in students)
             {
@@ -47,10 +47,28 @@ namespace SMS.Services.Implementation
             var student = _mapper.Map<Student, DTOStudent>(studentRecord);
             return student;
         }
+        public StudentsList Get(Guid classId, Guid schoolId)
+        {
+            var students = _repository.Get().Where(st => st.IsDeleted == false && st.SchoolId == schoolId && st.ClassId == classId).OrderByDescending(st => st.RegistrationNumber).ToList();
+            var studentCount = _repository.Get().Count(st => st.IsDeleted == false);
+            var studentTempList = new List<DTOStudent>();
+            foreach (var student in students)
+            {
+                studentTempList.Add(_mapper.Map<Student, DTOStudent>(student));
+            }
+
+            var studentsList = new StudentsList()
+            {
+                Students = studentTempList,
+                StudentsCount = studentCount
+            };
+
+            return studentsList;
+        }
 
         public void Create(DTOStudent dtoStudent)
         {
-            dtoStudent.CreatedDate = DateTime.Now;
+            dtoStudent.CreatedDate = DateTime.UtcNow;
             dtoStudent.IsDeleted = false;
             dtoStudent.Id = Guid.NewGuid();
             dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
@@ -60,19 +78,19 @@ namespace SMS.Services.Implementation
         public void Update(DTOStudent dtoStudent)
         {
             var student = Get(dtoStudent.Id);
-            dtoStudent.UpdateDate = DateTime.Now;
+            dtoStudent.UpdateDate = DateTime.UtcNow;
             var mergedStudent = _mapper.Map(dtoStudent, student);
             _personService.Update(mergedStudent.Person);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
         }
-        public void Delete(Guid? id, string DeletedBy)
+        public void Delete(Guid? id, string deletedBy)
         {
             if (id == null)
                 return;
             var student = Get(id);
             student.IsDeleted = true;
-            student.DeletedBy = DeletedBy;
-            student.DeletedDate = DateTime.Now;
+            student.DeletedBy = deletedBy;
+            student.DeletedDate = DateTime.UtcNow;
             _personService.Delete(student.PersonId);
             _repository.Update(_mapper.Map<DTOStudent, Student>(student));
         }

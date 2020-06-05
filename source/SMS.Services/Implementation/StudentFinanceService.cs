@@ -34,7 +34,7 @@ namespace SMS.Services.Implementation
         /// <param name="DTOStudentFinances"></param>
         public void Create(DTOStudentFinances DTOStudentFinances)
         {
-            DTOStudentFinances.CreatedDate = DateTime.Now;
+            DTOStudentFinances.CreatedDate = DateTime.UtcNow;
             DTOStudentFinances.IsDeleted = false;
             DTOStudentFinances.Id = Guid.NewGuid();
 
@@ -53,7 +53,7 @@ namespace SMS.Services.Implementation
             if (StudentFinances != null)
             {
                 StudentFinances.IsDeleted = true;
-                StudentFinances.DeletedDate = DateTime.Now;
+                StudentFinances.DeletedDate = DateTime.UtcNow;
                 _repository.Update(_mapper.Map<DTOStudentFinances, DBStudentFinances>(StudentFinances));
             }
 
@@ -86,7 +86,7 @@ namespace SMS.Services.Implementation
             var StudentFinances = Get(DTOStudentFinances.Id);
             if (StudentFinances != null)
             {
-                DTOStudentFinances.UpdateDate = DateTime.Now;
+                DTOStudentFinances.UpdateDate = DateTime.UtcNow;
                 DTOStudentFinances.IsDeleted = false;
                 var updated = _mapper.Map(DTOStudentFinances, StudentFinances);
 

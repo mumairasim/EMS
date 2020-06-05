@@ -8,6 +8,7 @@ namespace SMS.Services.Infrastructure
     {
         ClassesList Get(int pageNumber, int pageSize);
         DTOClass Get(Guid? id);
+        List<DTOClass> GetBySchool(Guid? schoolId);
         void Create(DTOClass Class);
         void Update(DTOClass dtoClass);
         void Delete(Guid? id, string DeletedBy);

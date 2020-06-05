@@ -38,7 +38,7 @@ namespace SMS.Services.Implementation
         }
         public Guid Create(DTODesignation dtoDesignation)
         {
-            dtoDesignation.CreatedDate = DateTime.Now;
+            dtoDesignation.CreatedDate = DateTime.UtcNow;
             dtoDesignation.IsDeleted = false;
             dtoDesignation.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTODesignation, Designation>(dtoDesignation));
@@ -47,7 +47,7 @@ namespace SMS.Services.Implementation
         public void Update(DTODesignation dtoDesignation)
         {
             var designation = Get(dtoDesignation.Id);
-            dtoDesignation.UpdateDate = DateTime.Now;
+            dtoDesignation.UpdateDate = DateTime.UtcNow;
             var mergedDesignation = _mapper.Map(dtoDesignation, designation);
             _repository.Update(_mapper.Map<DTODesignation, Designation>(mergedDesignation));
         }
@@ -57,7 +57,7 @@ namespace SMS.Services.Implementation
                 return;
             var designation = Get(id);
             designation.IsDeleted = true;
-            designation.DeletedDate = DateTime.Now;
+            designation.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTODesignation, Designation>(designation));
         }
     }

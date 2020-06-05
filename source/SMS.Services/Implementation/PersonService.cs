@@ -39,7 +39,7 @@ namespace SMS.Services.Implementation
 
         public Guid Create(DTOPerson dtoPerson)
         {
-            dtoPerson.CreatedDate = DateTime.Now;
+            dtoPerson.CreatedDate = DateTime.UtcNow;
             dtoPerson.IsDeleted = false;
             dtoPerson.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOPerson, Person>(dtoPerson));
@@ -48,7 +48,7 @@ namespace SMS.Services.Implementation
         public void Update(DTOPerson dtoPerson)
         {
             var person = Get(dtoPerson.Id);
-            dtoPerson.UpdateDate = DateTime.Now;
+            dtoPerson.UpdateDate = DateTime.UtcNow;
             var mergedPerson = _mapper.Map(dtoPerson, person);
             _repository.Update(_mapper.Map<DTOPerson, Person>(mergedPerson));
         }
@@ -58,7 +58,7 @@ namespace SMS.Services.Implementation
                 return;
             var person = Get(id);
             person.IsDeleted = true;
-            person.DeletedDate = DateTime.Now;
+            person.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOPerson, Person>(person));
         }
     }

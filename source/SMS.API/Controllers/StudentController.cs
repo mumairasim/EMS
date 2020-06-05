@@ -33,15 +33,20 @@ namespace SMS.API.Controllers
         {
             return Ok(_studentService.Get(id));
         }
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult Get(Guid classId, Guid schoolId)
+        {
+            return Ok(_studentService.Get(classId, schoolId));
+        }
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
         {
-
-            var httpRequest = HttpContext.Current.Request;
-            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
-            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+                var httpRequest = HttpContext.Current.Request;
+                var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+                studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+                studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
