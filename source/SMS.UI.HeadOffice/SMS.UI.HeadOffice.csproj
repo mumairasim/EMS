@@ -140,6 +140,12 @@
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdate.html" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdateCtrl.js" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeBase.html" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeCreate.html" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdate.html" />
+    <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdateCtrl.js" />
     <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
     <Content Include="App\Controllers\UserProfile\UserProfile.html" />
     <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />

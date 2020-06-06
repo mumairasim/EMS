@@ -44,9 +44,9 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
         controller: "employeeUpdateCtrl"
     }).when("/employeeBase", {
-         title: "Employee Search",
-         templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
-         controller: "employeeBaseCtrl"
+        title: "Employee Search",
+        templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
+        controller: "employeeBaseCtrl"
     }).when("/lessonPlanBase", {
         title: "LessonPlan Search",
         templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
@@ -67,7 +67,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Change Pasword",
         templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
         controller: "ChangePasswordCtrl"
-    
+
     })
         .when("/worksheetBase", {
             title: "Worksheet Search",
@@ -93,6 +93,28 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "Student Attendance",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",
             controller: "studentAttendanceSheetCtrl"
+        })
+
+
+        .when("/financeTypeBase", {
+            title: "FinanceType Search",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeBase.html",
+            controller: "financeTypeBaseCtrl"
+        })
+        .when("/financeTypeSearch", {
+            title: "FinanceType Search",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeSearch.html",
+            controller: "financeTypeSearchCtrl"
+        })
+        .when("/financeTypeCreate", {
+            title: "FinanceType Create",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeCreate.html",
+            controller: "financeTypeCreateCtrl"
+        })
+        .when("/financeTypeUpdate", {
+            title: "FinanceType Update",
+            templateUrl: "App/Controllers/Modules/FinanceType/FinanceTypeUpdate.html",
+            controller: "financeTypeUpdateCtrl"
         })
         .otherwise({
             redirectTo: '/'

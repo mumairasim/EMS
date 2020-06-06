@@ -63,14 +63,6 @@
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IStoredProcCaller.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202005272123261_attendance.cs" />
-    <Compile Include="Migrations\202005272123261_attendance.designer.cs">
-      <DependentUpon>202005272123261_attendance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005301902260_attendanceModuleChanges.cs" />
-    <Compile Include="Migrations\202005301902260_attendanceModuleChanges.designer.cs">
-      <DependentUpon>202005301902260_attendanceModuleChanges.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -113,14 +105,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005272123261_attendance.resx">
-      <DependentUpon>202005272123261_attendance.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005301902260_attendanceModuleChanges.resx">
-      <DependentUpon>202005301902260_attendanceModuleChanges.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

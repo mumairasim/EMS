@@ -1,5 +1,8 @@
-﻿using SMS.Services.Infrastructure;
+﻿using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
 using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
 
@@ -55,12 +58,11 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOStudentFinances dTOStudentFinances)
+        public IHttpActionResult Create()
         {
-            if (dTOStudentFinances == null)
-            {
-                return BadRequest("StudentFinances not Recieved");
-            }
+            var httpRequest = HttpContext.Current.Request;
+            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
+            dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
 
             try
             {
@@ -75,13 +77,11 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOStudentFinances dTOStudentFinances)
+        public IHttpActionResult Update()
         {
-            if (dTOStudentFinances == null)
-            {
-                return BadRequest("StudentFinances not Recieved");
-            }
-
+            var httpRequest = HttpContext.Current.Request;
+            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
+            dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             try
             {
                 _studentFinanceService.Update(dTOStudentFinances);

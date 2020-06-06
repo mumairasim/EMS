@@ -29,7 +29,12 @@ using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
-
+using DBFinanceType = SMS.DATA.Models.FinanceType;
+using DTOFinanceType = SMS.DTOs.DTOs.FinanceType;
+using DBEmployeeFinanceDetail = SMS.DATA.Models.EmployeeFinanceDetail;
+using DTOEmployeeFinanceDetail = SMS.DTOs.DTOs.EmployeeFinanceDetail;
+using DBEmployeeFinance = SMS.DATA.Models.EmployeeFinance;
+using DTOEmployeeFinance = SMS.DTOs.DTOs.EmployeeFinance;
 
 namespace SMS.MAP
 {
@@ -96,12 +101,25 @@ namespace SMS.MAP
             CreateMap<StudentAttendanceDetail, DTOStudentAttendanceDetail>();
             CreateMap<DTOStudentAttendanceDetail, DTOStudentAttendanceDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DBFinanceType, DTOFinanceType>();
+            CreateMap<DBFinanceType, DTOFinanceType>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DBEmployeeFinance, DBEmployeeFinance>();
+            CreateMap<DBEmployeeFinance, DBEmployeeFinance>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DBEmployeeFinanceDetail, DTOEmployeeFinanceDetail>();
+            CreateMap<DBEmployeeFinanceDetail, DTOEmployeeFinanceDetail>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+
             #endregion
 
             #region DTO to DB
 
 
-            //.ForMember(dest => dest.PersonId, act => act.MapFrom(src => src.PersonId));
             //DTO to Db
             CreateMap<DTOStudent, Student>();
             CreateMap<DTOPerson, Person>();
@@ -119,6 +137,9 @@ namespace SMS.MAP
             CreateMap<DTOAttendanceStatus, AttendanceStatus>();
             CreateMap<DTOStudentAttendance, StudentAttendance>();
             CreateMap<DTOStudentAttendanceDetail, StudentAttendanceDetail>();
+            CreateMap<DTOEmployeeFinance, DBEmployeeFinance>();
+            CreateMap<DTOEmployeeFinanceDetail, DBEmployeeFinanceDetail>();
+            CreateMap<DTOFinanceType, DBFinanceType>();
 
             #endregion
 
