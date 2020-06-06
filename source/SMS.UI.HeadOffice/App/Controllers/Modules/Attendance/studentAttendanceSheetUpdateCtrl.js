@@ -1,7 +1,5 @@
-﻿
-SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('studentAttendanceSheetUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
-
     $scope.StudentAttendanceModel = {
         AttendanceDate: '',
         Class: $scope.Class,
@@ -17,32 +15,28 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
         Name: '',
         Location: ''
     };
-    //$scope.StudentAttendanceDetailModel = {
-    //    AttendanceStatusId: '',
-    //    StudentId: ''
-    //};
     $scope.showfailureInfo = false;
     $scope.showSuccessInfo = false;
-    $scope.GetStudents = function () {
-        var responsedata = apiService.masterget('/api/v1/Student/Get?classId=' + $scope.Class.Id + '&schoolId=' + $scope.School.Id);
+    $scope.GetAttendance = function () {
+        var id = $routeParams.Id;
+        var responsedata = apiService.masterget('/api/v1/StudentAttendance/Get?id=' + id);
         responsedata.then(function mySucces(response) {
-            $scope.studentList = response.data.Students;
-            $scope.TotalStudents = response.data.StudentsCount;
-
+            $scope.studentAttendanceList = response.data.StudentAttendanceDetail;
+            $scope.Class = response.data.Class;
+            $scope.School = response.data.School;
+            $scope.StudentAttendanceModel.Id = response.data.Id;
+            $scope.StudentAttendanceModel.AttendanceDate = new Date(response.data.AttendanceDate);
             $scope.StudentAttendanceModel.SchoolId = $scope.School.Id;
             $scope.StudentAttendanceModel.ClassId = $scope.Class.Id;
-            for (var i = 0; i < response.data.Students.length; i++) {
+            for (var i = 0; i < $scope.studentAttendanceList.length; i++) {
                 var studentAttendanceDetailModel = {
+                    Id: '',
                     AttendanceStatusId: '',
                     StudentId: ''
                 };
-                for (var j = 0; j < $scope.AttendanceStatusList.length; j++) {
-                    if ($scope.AttendanceStatusList[j].Status == 'Present') {
-                        studentAttendanceDetailModel.AttendanceStatusId = $scope.AttendanceStatusList[j].Id;
-                        break;
-                    }
-                }
-                studentAttendanceDetailModel.StudentId = response.data.Students[i].Id;
+                studentAttendanceDetailModel.Id = response.data.StudentAttendanceDetail[i].Id;
+                studentAttendanceDetailModel.AttendanceStatusId = response.data.StudentAttendanceDetail[i].AttendanceStatus.Id;
+                studentAttendanceDetailModel.StudentId = response.data.StudentAttendanceDetail[i].StudentId;
                 $scope.StudentAttendanceModel.StudentAttendanceDetail.push(studentAttendanceDetailModel);
             }
         },
@@ -64,7 +58,7 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
             $scope.Class = $scope.Classes[0];
-            $scope.GetStudents();
+            $scope.GetAttendance();
             $scope.GetAttendanceStatus();
             $scope.StudentAttendanceModel.AttendanceDate = new Date();
         },
@@ -89,23 +83,24 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
                 for (var j = 0; j < $scope.AttendanceStatusList.length; j++) {
                     if ($scope.AttendanceStatusList[j].Status == status) {
                         $scope.StudentAttendanceModel.StudentAttendanceDetail[i].AttendanceStatusId = $scope.AttendanceStatusList[j].Id;
+                        break;
                     }
                 }
             }
         }
     };
-    $scope.SubmitAttendance = function () {
+    $scope.UpdateAttendance = function () {
         var data = $scope.StudentAttendanceModel;
         var formData = new FormData();
         formData.append('studentAttendanceModel', JSON.stringify(data));
-        var responsedata = apiService.post('api/v1/StudentAttendance/Create', formData);
+        var responsedata = apiService.masterput('api/v1/StudentAttendance/Update', formData);
         responsedata.then(function mySucces(response) {
             $scope.attendanceCreationResponse = response.data;
             if ($scope.attendanceCreationResponse.StatusCode == '200') {
                 //$scope.growltext($scope.attendanceCreationResponse.Description, false);
                 $scope.showSuccessInfo = true;
                 $scope.showfailureInfo = false;
-                $scope.growltext("Attendance marked successfully.", false);
+                $scope.growltext("Attendance updated successfully.", false);
                 window.location = "#!/dashboard";
             }
             if ($scope.attendanceCreationResponse.StatusCode == '400') {
@@ -116,9 +111,8 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("Attendance marking failed.", true);
+                $scope.growltext("Attendance updation failed.", true);
             });
     };
     $scope.GetSchools();
 }]);
-

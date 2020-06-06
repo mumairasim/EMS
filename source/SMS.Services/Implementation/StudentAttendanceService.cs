@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
@@ -45,13 +46,31 @@ namespace SMS.Services.Implementation
             if (id == null) return null;
             var studentAttendanceRecord = _repository.Get().FirstOrDefault(ar => ar.IsDeleted == false && ar.Id == id);
             if (studentAttendanceRecord == null) return null;
-
-            return _mapper.Map<StudentAttendance, DTOStudentAttendance>(studentAttendanceRecord);
+            var result = _mapper.Map<StudentAttendance, DTOStudentAttendance>(studentAttendanceRecord);
+            result.StudentAttendanceDetail = _studentAttendanceDetailService.GetByStudentAttendanceId(studentAttendanceRecord.Id);
+            return result;
         }
         public StudentsAttendanceList Get(Guid? classId, Guid? schoolId, int pageNumber, int pageSize)
         {
             var attendanceRecords = _repository.Get().Where(ar => ar.IsDeleted == false && ar.ClassId == classId && ar.SchoolId == schoolId).OrderByDescending(ar => ar.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             var attendanceCount = _repository.Get().Count(st => st.IsDeleted == false);
+            var studentAttendanceList = new List<DTOStudentAttendance>();
+            foreach (var studentAttendance in attendanceRecords)
+            {
+                studentAttendanceList.Add(_mapper.Map<StudentAttendance, DTOStudentAttendance>(studentAttendance));
+            }
+            var studentsAttendanceList = new StudentsAttendanceList()
+            {
+                StudentsAttendances = studentAttendanceList,
+                StudentsAttendanceCount = attendanceCount
+            };
+
+            return studentsAttendanceList;
+        }
+        public StudentsAttendanceList Search(Expression<Func<StudentAttendance, bool>> predicate, int pageNumber, int pageSize)
+        {
+            var attendanceRecords = _repository.Get().Where(predicate).OrderByDescending(ar => ar.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var attendanceCount = _repository.Get().Count(predicate);
             var studentAttendanceList = new List<DTOStudentAttendance>();
             foreach (var studentAttendance in attendanceRecords)
             {
@@ -74,7 +93,7 @@ namespace SMS.Services.Implementation
                         dtoStudentAttendance.Id,
                         "AttendanceAlreadyExist",
                         "Attendance Record for Date: " + dtoStudentAttendance.AttendanceDate.Value.ToShortDateString() + " already exist and can not be created. Please Update if you want to edit attendance.");
-                dtoStudentAttendance.CreatedDate = DateTime.Now;
+                dtoStudentAttendance.CreatedDate = DateTime.UtcNow;
                 dtoStudentAttendance.IsDeleted = false;
                 dtoStudentAttendance.Id = Guid.NewGuid();
                 _repository.Add(_mapper.Map<DTOStudentAttendance, StudentAttendance>(dtoStudentAttendance));
@@ -91,7 +110,13 @@ namespace SMS.Services.Implementation
         public void Update(DTOStudentAttendance dtoStudentAttendance)
         {
             var studentAttendance = Get(dtoStudentAttendance.Id);
-            dtoStudentAttendance.UpdateDate = DateTime.Now;
+            dtoStudentAttendance.UpdateDate = DateTime.UtcNow;
+            foreach (var studentAttendanceItem in dtoStudentAttendance.StudentAttendanceDetail)
+            {
+                studentAttendanceItem.UpdateBy = dtoStudentAttendance.UpdateBy;
+                _studentAttendanceDetailService.Update(studentAttendanceItem);
+            }
+            dtoStudentAttendance.StudentAttendanceDetail = null;
             var mergedStudentAttendance = _mapper.Map(dtoStudentAttendance, studentAttendance);
             _repository.Update(_mapper.Map<DTOStudentAttendance, StudentAttendance>(mergedStudentAttendance));
         }
@@ -102,7 +127,7 @@ namespace SMS.Services.Implementation
             var studentAttendance = Get(id);
             studentAttendance.IsDeleted = true;
             studentAttendance.DeletedBy = deletedBy;
-            studentAttendance.DeletedDate = DateTime.Now;
+            studentAttendance.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOStudentAttendance, StudentAttendance>(studentAttendance));
         }
 

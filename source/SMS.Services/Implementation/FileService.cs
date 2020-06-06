@@ -38,7 +38,7 @@ namespace SMS.Services.Implementation
         /// <param name="dToFile"></param>
         public Guid Create(DTOFile dToFile)
         {
-            dToFile.CreatedDate = DateTime.Now;
+            dToFile.CreatedDate = DateTime.UtcNow;
             dToFile.IsDeleted = false;
             dToFile.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOFile, DBFile>(dToFile));
@@ -91,7 +91,7 @@ namespace SMS.Services.Implementation
             if (file != null)
             {
                 file.IsDeleted = true;
-                file.DeletedDate = DateTime.Now;
+                file.DeletedDate = DateTime.UtcNow;
                 _repository.Update(_mapper.Map<DTOFile, DBFile>(file));
             }
 
@@ -122,7 +122,7 @@ namespace SMS.Services.Implementation
         /// <param name="dtoFile"></param>
         private void Update(DTOFile dtoFile)
         {
-            dtoFile.UpdateDate = DateTime.Now;
+            dtoFile.UpdateDate = DateTime.UtcNow;
             dtoFile.IsDeleted = false;
             _repository.Update(_mapper.Map<DTOFile, DBFile>(dtoFile));
         }

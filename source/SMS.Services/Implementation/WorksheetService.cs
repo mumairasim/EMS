@@ -34,7 +34,7 @@ namespace SMS.Services.Implementation
         /// <param name="dTOWorksheet"></param>
         public void Create(DTOWorksheet dTOWorksheet)
         {
-            dTOWorksheet.CreatedDate = DateTime.Now;
+            dTOWorksheet.CreatedDate = DateTime.UtcNow;
             dTOWorksheet.IsDeleted = false;
             dTOWorksheet.Id = Guid.NewGuid();
 
@@ -53,7 +53,7 @@ namespace SMS.Services.Implementation
             if (worksheet != null)
             {
                 worksheet.IsDeleted = true;
-                worksheet.DeletedDate = DateTime.Now;
+                worksheet.DeletedDate = DateTime.UtcNow;
                 _repository.Update(_mapper.Map<DTOWorksheet, DBWorksheet>(worksheet));
             }
 
@@ -86,7 +86,7 @@ namespace SMS.Services.Implementation
             var worksheet = Get(dtoWorksheet.Id);
             if (worksheet != null)
             {
-                dtoWorksheet.UpdateDate = DateTime.Now;
+                dtoWorksheet.UpdateDate = DateTime.UtcNow;
                 dtoWorksheet.IsDeleted = false;
                 var updated = _mapper.Map(dtoWorksheet, worksheet);
                 var updatedDbRec = _mapper.Map<DTOWorksheet, DBWorksheet>(updated);

@@ -34,7 +34,7 @@ namespace SMS.Services.Implementation
         /// <param name="dtoCourse"></param>
         public void Create(DTOCourse dtoCourse)
         {
-            dtoCourse.CreatedDate = DateTime.Now;
+            dtoCourse.CreatedDate = DateTime.UtcNow;
             dtoCourse.IsDeleted = false;
             dtoCourse.Id = Guid.NewGuid();
             _repository.Add(_mapper.Map<DTOCourse, DBCourse>(dtoCourse));
@@ -52,7 +52,7 @@ namespace SMS.Services.Implementation
             if (course != null)
             {
                 course.IsDeleted = true;
-                course.DeletedDate = DateTime.Now;
+                course.DeletedDate = DateTime.UtcNow;
 
                 _repository.Update(_mapper.Map<DTOCourse, DBCourse>(course));
             }
@@ -85,7 +85,7 @@ namespace SMS.Services.Implementation
             var course = Get(dtoCourse.Id);
             if (course != null)
             {
-                dtoCourse.UpdateDate = DateTime.Now;
+                dtoCourse.UpdateDate = DateTime.UtcNow;
                 var updated = _mapper.Map(dtoCourse, course);
                 dtoCourse.IsDeleted = false;
 

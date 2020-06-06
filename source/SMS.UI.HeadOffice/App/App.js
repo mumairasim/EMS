@@ -1,5 +1,5 @@
 ﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate', 'ngFileUpload']);
-SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($routeProvider, $locationProvider, localStorageServiceProvider) {
+SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('SMSHOLocalStorage');
 
@@ -115,6 +115,16 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "FinanceType Update",
             templateUrl: "App/Controllers/Modules/FinanceType/FinanceTypeUpdate.html",
             controller: "financeTypeUpdateCtrl"
+        })
+        .when("/studentAttendanceSheetBase", {
+            title: "Student Attendance Search",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetBase.html",
+            controller: "studentAttendanceSheetBaseCtrl"
+        })
+        .when("/studentAttendanceSheetUpdate", {
+            title: "Student Attendance Update",
+            templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetUpdate.html",
+            controller: "studentAttendanceSheetUpdateCtrl"
         })
         .otherwise({
             redirectTo: '/'
