@@ -43,6 +43,7 @@ namespace SMS.DATA.Implementation
                     ImageExtension = rdr["ImageExtension"].ToString()
                 };
             }
+            _connection.Close();
             return null;
         }
     }
