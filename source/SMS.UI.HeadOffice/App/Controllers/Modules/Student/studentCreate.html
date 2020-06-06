@@ -3,7 +3,7 @@
     <form class="">
         <div class="position-relative row form-group">
             <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
-            </div>-->
+        </div>-->
             <div class="col-sm-9">
                 <h3 class="card-title fs-20 text-center">Student Information</h3>
                 <div class="position-relative row form-group">
@@ -45,21 +45,22 @@
             </div>
         </div>
         <div class="position-relative row form-group">
+
             <div class="col-sm-4">
                 <label for="age" class="col-form-label">Age</label>
-                <input name="age" id="age" placeholder="age" type="text" class="form-control" ng-Model="StudentModel.Person.Age">
+                <input name="age" id="age" placeholder="age" type="text" disabled class="form-control" ng-Model="StudentModel.Person.Age">
             </div>
             <div class="col-sm-4">
                 <label for="dob" class="col-form-label">Date of Birth</label>
-                <input name="dob" id="dob" placeholder="dob" type="text" class="form-control" ng-Model="StudentModel.Person.DOB">
+                <input name="dob" id="dob" placeholder="dob" type="date" class="form-control" ng-Model="StudentModel.Person.DOB">
             </div>
             <div class="col-sm-4">
                 <label for="gender" class="col-form-label">Gender:</label><br>
-                <input type="radio" id="male" name="gender" value="male">
+                <input type="radio" id="male" name="gender" value="male" disabled>
                 <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female">
+                <input type="radio" id="female" name="gender" value="female" disabled>
                 <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other">
+                <input type="radio" id="other" name="gender" value="other" disabled>
                 <label for="other">Other</label>
                 <!--<input name="gender" id="gender" placeholder="gender" type="text" class="form-control" ng-Model="StudentModel.Person.Gender">-->
             </div>
@@ -79,7 +80,7 @@
             </div>
             <div class="col-sm-4">
                 <label for="city" class="col-form-label">City</label>
-                <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="StudentModel.Person.City">
+                <input name="city" id="city" placeholder="city" type="text" disabled class="form-control" ng-Model="StudentModel.Person.City">
             </div>
         </div>
         <div class="position-relative row form-group">
@@ -153,16 +154,17 @@
                 <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="StudentModel.Person.ParentCity">
             </div>
             <div class="col-sm-4">
-                <label for="mobile1" class="col-form-label">Mobile</label>
+                <label for="mobile1" class="col-form-label">Mobile 1</label>
                 <input name="mobile1" id="mobile1" placeholder="mobile 1" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile1">
             </div>
             <div class="col-sm-4">
-                <label for="mobile2" class="col-form-label">Mobile</label>
+                <label for="mobile2" class="col-form-label">Mobile 2</label>
                 <input name="mobile2" id="mobile2" placeholder="mobile 2" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile2">
             </div>
         </div>
         <div class="position-relative row form-group">
-            <div class="col-sm-3"><br>
+            <div class="col-sm-3">
+                <br>
                 <h1 class="card-title fs-15 text-center">Emergency <br> Contact</h1>
             </div>
             <div class="col-sm-9">
@@ -182,12 +184,13 @@
                 </div>
             </div>
         </div>
+        <div class="position-relative row form-group">
+            <div class="col-sm-12">
+                <button class="btn btn-primary align-content-center" ng-click="StudentCreate()">Submit</button>
+                <button class="btn btn-secondary align-items-center" ng-click="Cancel()">Cancel</button>
+            </div>
+        </div>
     </form>
 </div>
-<div class="position-relative row form-group">
-    <div class="col-sm-12">
-        <button class="btn btn-primary text-center" ng-click="StudentCreate()">Submit</button>
-        <button class="btn btn-secondary text-center" ng-click="Cancel()">Cancel</button>
-    </div>
-</div>
+
 
