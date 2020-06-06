@@ -22,7 +22,7 @@ namespace SMS.Services.Implementation
         }
         public SchoolsList Get(int pageNumber, int pageSize)
         {
-             var schools = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var schools = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             var SchoolCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
             var schoolTempList = new List<DTOSchool>();
             foreach (var Schools in schools)

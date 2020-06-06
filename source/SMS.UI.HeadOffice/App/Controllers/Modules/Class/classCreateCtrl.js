@@ -1,18 +1,23 @@
 ﻿SMSHO.controller('classCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-    $scope.ClassModel = {
+    $scope.Class = {
         Name: '',
         Id: '',
     };
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
+    };
 
-   
-    
+
+
     $scope.GetSchools = function () {
-        var responsedata = apiService.masterget('/api/v1/Schools/Get');
+        var responsedata = apiService.masterget('/api/v1/School/Get');
 
         responsedata.then(function mySucces(response) {
 
-            $scope.Schools = response.data.Employees;
+            $scope.Schools = response.data.SchoolsList;
             $scope.ClassModel.School = $scope.Schools[0];
         },
             function myError(response) {
