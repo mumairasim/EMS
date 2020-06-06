@@ -14,5 +14,9 @@ namespace SMS.DTOs.DTOs
         public File Image { get; set; }
         public Class Class { get; set; }
         public School School { get; set; }
+        public string PreviousSchoolName { get; set; }
+        public string ReasonForLeaving { get; set; }
+
+        
     }
 }
