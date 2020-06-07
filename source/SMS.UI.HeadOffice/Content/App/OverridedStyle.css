@@ -143,6 +143,9 @@
         margin: 55px 55px 55px 45px;
     }
 }
+.mendatory {
+    color: red;
+}
 
 @media (max-width: 992px) {
     .containerCreate {

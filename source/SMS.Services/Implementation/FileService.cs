@@ -110,10 +110,14 @@ namespace SMS.Services.Implementation
             }
 
             var file = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
-            var fileDto = _mapper.Map<DBFile, DTOFile>(file);
-            fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
-            fileDto.Extension = Path.GetExtension(fileDto.Path);
-            return fileDto;
+            if (file != null)
+            {
+                var fileDto = _mapper.Map<DBFile, DTOFile>(file);
+                fileDto.ImageFile = File.ReadAllBytes(fileDto.Path);
+                fileDto.Extension = Path.GetExtension(fileDto.Path);
+                return fileDto;
+            }
+            return null;
         }
 
         /// <summary>
@@ -126,18 +130,24 @@ namespace SMS.Services.Implementation
             dtoFile.IsDeleted = false;
             _repository.Update(_mapper.Map<DTOFile, DBFile>(dtoFile));
         }
-        public void Update(HttpPostedFile file, Guid fileId)
+        public Guid? Update(HttpPostedFile file, Guid fileId)
         {
             try
             {
                 var dbFile = Get(fileId);
-                File.Delete(dbFile.Path);
-                file.SaveAs(dbFile.Path);
-                Update(dbFile);
+                if (dbFile != null)
+                {
+                    File.Delete(dbFile.Path);
+                    file.SaveAs(dbFile.Path);
+                    Update(dbFile);
+                    return fileId;
+                }
+                return Create(file);
             }
             catch
             {
                 // ignored
+                return null;
             }
         }
 

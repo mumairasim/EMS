@@ -37,7 +37,7 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <param name="file"></param>
         /// <param name="fileId"></param>
-        void Update(HttpPostedFile file, Guid fileId);
+        Guid? Update(HttpPostedFile file, Guid fileId);
 
         /// <summary>
         /// Service level call : Delete a single record of a File

@@ -3,30 +3,30 @@
     <form class="">
         <div class="position-relative row form-group">
             <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
-        </div>-->
+            </div>-->
             <div class="col-sm-9">
                 <h3 class="card-title fs-20 text-center">Student Information</h3>
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="firstname" class="col-form-label">Firstname</label>
+                        <label for="firstname" class="col-form-label"> <span class="mendatory">* </span>Firstname</label>
                         <input name="firstname" id="firstname" placeholder="firstname" type="text" class="form-control" ng-Model="StudentModel.Person.FirstName">
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastname" class="col-form-label">Lastname</label>
+                        <label for="lastname" class="col-form-label"> <span class="mendatory">* </span>Lastname</label>
                         <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-Model="StudentModel.Person.LastName">
                     </div>
                 </div>
                 <div class="position-relative row form-group">
                     <div class="col-sm-3">
-                        <label for="cnic" class="col-form-label">CNIC/B.Form</label>
+                        <label for="cnic" class="col-form-label"> <span class="mendatory">* </span>CNIC/B.Form</label>
                         <input name="cnic" id="cnic" placeholder="cnic/b.form" type="text" class="form-control" ng-Model="StudentModel.Person.Cnic">
                     </div>
                     <div class="col-sm-3">
-                        <label for="phone" class="col-form-label">Phone</label>
+                        <label for="phone" class="col-form-label"> <span class="mendatory">* </span>Phone</label>
                         <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-Model="StudentModel.Person.Phone">
                     </div>
                     <div class="col-sm-3">
-                        <label for="nationality" class="col-form-label">Nationality</label>
+                        <label for="nationality" class="col-form-label"> <span class="mendatory">* </span>Nationality</label>
                         <input name="nationality" id="nationality" placeholder="Nationality" type="text" class="form-control" ng-Model="StudentModel.Person.Nationality">
                     </div>
                     <div class="col-sm-3">
@@ -67,13 +67,13 @@
         </div>
         <div class="position-relative row form-group">
             <div class="col-sm-4">
-                <label for="school" class="col-form-label">School</label>
+                <label for="school" class="col-form-label"> <span class="mendatory">* </span>School</label>
                 <select name="school" id="school" class="form-control" ng-Model="StudentModel.School"
                         ng-options="School.Name for School in Schools  track by School.Id">
                 </select>
             </div>
             <div class="col-sm-4">
-                <label for="class" class="col-form-label">Class Applying For</label>
+                <label for="class" class="col-form-label"> <span class="mendatory">* </span>Class Applying For</label>
                 <select name="class" id="class" class="form-control" ng-Model="StudentModel.Class"
                         ng-options="Class.ClassName for Class in Classes  track by Class.Id">
                 </select>

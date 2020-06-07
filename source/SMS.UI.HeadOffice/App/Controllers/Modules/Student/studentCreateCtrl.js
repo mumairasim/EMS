@@ -6,8 +6,8 @@
         Class: $scope.Class,
         School: $scope.School,
         Image: $scope.Image,
-        PreviousSchoolName:'',
-        ReasonForLeaving:''
+        PreviousSchoolName: '',
+        ReasonForLeaving: ''
     };
     $scope.Image = {
         Id: '',
@@ -75,13 +75,17 @@
     $scope.StudentCreate = function () {
         var data = $scope.StudentModel;
         var formData = new FormData();
-        formData.append('studentModel', JSON.stringify(data));
-        $scope.CheckIsFileValid($scope.SelectedFileForUpload);
-        if ($scope.IsFileValid) {
-            formData.append("file", $scope.StudentModel.Image.ImageFile);
-        } else {
-            $scope.growltext("Invalid Image file", true);
+        if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
+            $scope.CheckIsFileValid($scope.StudentModel.Image.ImageFile[0]);
+            if ($scope.IsFileValid) {
+                $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
+                formData.append("file", $scope.NewImageFile[0]);
+                data.Image.ImageFile = null;
+            } else {
+                $scope.growltext("Invalid Image file", true);
+            }
         }
+        formData.append('studentModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/Student/Create', formData);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
@@ -95,13 +99,11 @@
     };
 
     $scope.CheckIsFileValid = function (file) {
-        if ($scope.SelectedFileForUpload != null) {
-            if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
-                file.size <= (512 * 1024)) {
-                $scope.IsFileValid = true;
-            } else {
-                $scope.IsFileValid = false;
-            }
+        if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
+            file.size <= (512 * 1024)) {
+            $scope.IsFileValid = true;
+        } else {
+            $scope.IsFileValid = false;
         }
     };
 
