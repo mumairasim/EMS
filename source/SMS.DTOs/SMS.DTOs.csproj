@@ -63,6 +63,7 @@
     <Compile Include="DTOs\School.cs" />
     <Compile Include="DTOs\StudentsAttendanceList.cs" />
     <Compile Include="DTOs\StudentsList.cs" />
+    <Compile Include="DTOs\TeacherDiariesList.cs" />
     <Compile Include="DTOs\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTOs\Student.cs" />
