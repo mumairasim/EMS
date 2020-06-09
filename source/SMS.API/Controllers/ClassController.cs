@@ -54,7 +54,9 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
             classDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            classDetail.SchoolId = classDetail.School.Id;
             _classService.Update(classDetail);
+           
             return Ok();
         }
         [HttpDelete]

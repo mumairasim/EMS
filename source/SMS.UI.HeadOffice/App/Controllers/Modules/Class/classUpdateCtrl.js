@@ -11,11 +11,13 @@
         Location: ''
     };
 
+
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
-            $scope.GetClasses();
+
+            $scope.FetchClass();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -49,8 +51,6 @@
     };
     $scope.Cancel = function () {
         window.location = "#!/classBase";
-    };
-
-    $scope.FetchClass();
+    }; 
     $scope.GetSchools();
 }]);

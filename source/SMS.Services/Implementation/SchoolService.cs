@@ -41,7 +41,6 @@ namespace SMS.Services.Implementation
             if (id == null) return null;
             var schoolRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
             var schools = _mapper.Map<School, DTOSchool>(schoolRecord);
-
             return schools;
         }
         public void Create(DTOSchool dtoSchool)

@@ -27,9 +27,9 @@
             <tr class="odd" ng-repeat="school in SchoolsList">
 
                 <td>{{school.Name}} </td>
-                <td>{{School.Location}} </td>
+                <td>{{school.Location}} </td>
                 <td>
-                    <a href="#!/classUpdate?Id={{school.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
+                    <a href="#!/schoolUpdate?Id={{school.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(school.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>
                 </td>
             </tr>

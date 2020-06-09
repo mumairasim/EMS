@@ -2,31 +2,26 @@
     'use strict';
     $scope.Class = {
         Name: '',
-        Id: '',
+        School: $scope.School
     };
     $scope.School = {
         Id: '',
         Name: '',
         Location: ''
     };
-
-
-
+    
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
-
         responsedata.then(function mySucces(response) {
-
-            $scope.Schools = response.data.SchoolsList;
-            $scope.ClassModel.School = $scope.Schools[0];
+            $scope.Schools = response.data;
+            $scope.ClassModel.School = $scope.Schools.Schools[0];
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
     $scope.ClassCreate = function () {
-        var data = $scope.ClassModel;
-        data.Id = $scope.ClassModel.School.Id;
+        var data = $scope.ClassModel;       
         var formData = new FormData();
         formData.append('classModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/Class/Create', formData);

@@ -27,13 +27,14 @@ using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
 using DBStudentDiary = SMS.DATA.Models.StudentDiary;
-using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
+
 
 
 
