@@ -30,7 +30,7 @@ namespace SMS.API.Controllers
         [Route("GetDesignationTeacher")]
         public IHttpActionResult GetDesignationTeacher()
         {
-            return Ok(EmployeeService.GetDesignationTeacher());
+            return Ok(EmployeeService.GetEmployeeByDesignation());
         }
 
         [HttpGet]

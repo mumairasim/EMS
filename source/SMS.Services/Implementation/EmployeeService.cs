@@ -40,7 +40,7 @@ namespace SMS.Services.Implementation
             return employeesList;
         }
 
-        public List<DTOEmployee> GetDesignationTeacher()
+        public List<DTOEmployee> GetEmployeeByDesignation()
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false && em.Designation.Name == "Teacher").ToList();
 

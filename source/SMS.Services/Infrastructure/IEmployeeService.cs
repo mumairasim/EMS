@@ -10,7 +10,7 @@ namespace SMS.Services.Infrastructure
     {
         EmployeesList Get(int pageNumber, int pageSize);  
         DTOEmployee Get(Guid? id);
-        List<DTOEmployee> GetDesignationTeacher();
+        List<DTOEmployee> GetEmployeeByDesignation();
         void Create(DTOEmployee employee);
         void Update(DTOEmployee dtoEmployee);
         void Delete(Guid? id, string DeletedBy);
