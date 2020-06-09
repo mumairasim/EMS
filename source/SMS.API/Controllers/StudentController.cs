@@ -43,10 +43,10 @@ namespace SMS.API.Controllers
         [Route("Create")]
         public IHttpActionResult Create()
         {
-                var httpRequest = HttpContext.Current.Request;
-                var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
-                studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-                studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
@@ -66,7 +66,7 @@ namespace SMS.API.Controllers
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                _fileService.Update(file, studentDetail.Image.Id);
+                studentDetail.ImageId = _fileService.Update(file, studentDetail.Image.Id);
             }
             _studentService.Update(studentDetail);
             return Ok();

@@ -1,47 +1,57 @@
 ﻿using System;
-using SMS.Services.Infrastructure;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/TeacherDiary")]
-
+    [EnableCors("*", "*", "*")]
     public class TeacherDiaryController : ApiController
     {
-        public ITeacherDiaryService _teacherDiaryService;
+        public ITeacherDiaryService TeacherDiaryService;
         public TeacherDiaryController(ITeacherDiaryService teacherDiaryService)
         {
-            _teacherDiaryService = teacherDiaryService;
+            TeacherDiaryService = teacherDiaryService;
         }
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_teacherDiaryService.Get());
+            return Ok(TeacherDiaryService.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_teacherDiaryService.Get(id));
+            return Ok(TeacherDiaryService.Get(id));
         }
-
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOTeacherDiary dtoTeacherDiary)
+        public IHttpActionResult Create()
         {
-            _teacherDiaryService.Create(dtoTeacherDiary);
+
+            var httpRequest = HttpContext.Current.Request;
+            var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
+            teacherDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //teacherDiaryDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TeacherDiaryService.Create(teacherDiaryDetail);
             return Ok();
         }
-
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOTeacherDiary dtoTeacherDiary)
+        public IHttpActionResult Update()
         {
-            _teacherDiaryService.Update(dtoTeacherDiary);
+            var httpRequest = HttpContext.Current.Request;
+            var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
+            teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TeacherDiaryService.Update(teacherDiaryDetail);
             return Ok();
         }
 
@@ -49,8 +59,11 @@ namespace SMS.API.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            _teacherDiaryService.Delete(id);
+            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TeacherDiaryService.Delete(id, deletedBy);
             return Ok();
         }
+
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate', 'ngFileUpload']);
-SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, localStorageServiceProvider) {
+SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($routeProvider, $locationProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('SMSHOLocalStorage');
 
@@ -31,7 +31,25 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Student Search",
         templateUrl: "App/Controllers/Modules/Student/studentBase.html",
         controller: "studentBaseCtrl"
-    }).when("/employeeSearch", {
+    })
+        .when("/teacherDiarySearch", {
+        title: "TeacherDiary Search",
+        templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiarySearch.html",
+        controller: "teacherDiarySearchCtrl"
+    }).when("/teacherDiaryCreate", {
+        title: "TeacherDiary Create",
+        templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryCreate.html",
+        controller: "teacherDiaryCreateCtrl"
+    }).when("/teacherDiaryUpdate", {
+        title: "TeacherDiary Update",
+        templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryUpdate.html",
+        controller: "teacherDiaryUpdateCtrl"
+    }).when("/teacherDiaryBase", {
+        title: "TeacherDiary Search",
+        templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",
+        controller: "teacherDiaryBaseCtrl"
+    })
+        .when("/employeeSearch", {
         title: "Employee Search",
         templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",
         controller: "employeeSearchCtrl"
@@ -47,7 +65,8 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Employee Search",
         templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
         controller: "employeeBaseCtrl"
-    }).when("/lessonPlanBase", {
+    })
+        .when("/lessonPlanBase", {
         title: "LessonPlan Search",
         templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
         controller: "lessonPlanBaseCtrl"
