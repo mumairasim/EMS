@@ -144,6 +144,12 @@
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdate.html" />
     <Content Include="App\Controllers\Modules\LessonPlan\lessonPlanUpdateCtrl.js" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBase.html" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryCreate.html" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryUpdate.html" />
+    <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryUpdateCtrl.js" />
     <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
     <Content Include="App\Controllers\UserProfile\UserProfile.html" />
     <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />

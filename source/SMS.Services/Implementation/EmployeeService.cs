@@ -10,7 +10,7 @@ using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.Services.Implementation
 {
-    public class EmployeeService: IEmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _repository;
         private readonly IPersonService _personService;
@@ -21,7 +21,7 @@ namespace SMS.Services.Implementation
             _personService = personService;
             _mapper = mapper;
         }
-        
+
         public EmployeesList Get(int pageNumber, int pageSize)
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
@@ -40,6 +40,17 @@ namespace SMS.Services.Implementation
             return employeesList;
         }
 
+        public List<DTOEmployee> GetEmployeeByDesignation()
+        {
+            var employees = _repository.Get().Where(em => em.IsDeleted == false && em.Designation.Name == "Teacher").ToList();
+
+            var employeeTempList = new List<DTOEmployee>();
+            foreach (var employee in employees)
+            {
+                employeeTempList.Add(_mapper.Map<Employee, DTOEmployee>(employee));
+            }
+            return employeeTempList;
+        }
         public DTOEmployee Get(Guid? id)
         {
             if (id == null) return null;
@@ -47,6 +58,8 @@ namespace SMS.Services.Implementation
             var employee = _mapper.Map<Employee, DTOEmployee>(employeeRecord);
             return employee;
         }
+
+
 
         public void Create(DTOEmployee dtoEmployee)
         {
