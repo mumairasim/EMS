@@ -44,7 +44,6 @@ namespace SMS.API.Controllers
             TeacherDiaryService.Create(teacherDiaryDetail);
             return Ok();
         }
-
         [HttpPut]
         [Route("Update")]
         public IHttpActionResult Update()

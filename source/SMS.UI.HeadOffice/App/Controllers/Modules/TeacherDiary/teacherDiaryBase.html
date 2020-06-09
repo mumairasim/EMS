@@ -30,7 +30,7 @@
                 <td>{{teacherDiary.DairyText}}</td>
                 <td>{{teacherDiary.DairyDate}}</td>
                 <td>{{teacherDiary.School.Name}}</td>
-                <td>{{teacherDiary.Employee.Name}}</td>
+                <td>{{teacherDiary.Employee.Person.FirstName + ' '+ teacherDiary.Employee.Person.LastName}}</td>
                 <td>
                     <a href="#!/teacherDiaryUpdate?Id={{teacherDiary.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(teacherDiary.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>

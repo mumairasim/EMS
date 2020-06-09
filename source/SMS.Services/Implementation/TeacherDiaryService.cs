@@ -59,6 +59,7 @@ namespace SMS.Services.Implementation
             dtoteacherDiary.Employee = null;
         }
 
+        
         public void Update(DTOTeacherDiary dtoTeacherDiary)
         {
             var teacherDiary = Get(dtoTeacherDiary.Id);
