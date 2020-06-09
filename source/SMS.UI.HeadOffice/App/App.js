@@ -1,5 +1,5 @@
 ﻿var SMSHO = angular.module("SMSHO", ['ngRoute', 'ngCookies', 'LocalStorageModule', 'checklist-model', 'growlNotifications', 'ngAnimate', 'ngFileUpload']);
-SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function($routeProvider, $locationProvider, localStorageServiceProvider) {
+SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($routeProvider, $locationProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('SMSHOLocalStorage');
 
@@ -98,7 +98,8 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Employee Search",
         templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
         controller: "employeeBaseCtrl"
-    }).when("/lessonPlanBase", {
+    })
+        .when("/lessonPlanBase", {
         title: "LessonPlan Search",
         templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
         controller: "lessonPlanBaseCtrl"

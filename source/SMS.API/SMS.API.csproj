@@ -255,6 +255,7 @@
     <Compile Include="Controllers\StudentDiaryController.cs" />
     <Compile Include="Controllers\StudentFinanceController.cs" />
     <Compile Include="Controllers\StudentFinanceDetailsController.cs" />
+    <Compile Include="Controllers\TeacherDiaryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WorksheetController.cs" />
     <Compile Include="Global.asax.cs">
@@ -334,6 +335,7 @@
     <Folder Include="Views\Employee\" />
     <Folder Include="Views\LessonPlan\" />
     <Folder Include="Views\Student\" />
+    <Folder Include="Views\TeacherDiary\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
