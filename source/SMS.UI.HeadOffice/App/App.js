@@ -116,6 +116,20 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/FinanceType/FinanceTypeUpdate.html",
             controller: "financeTypeUpdateCtrl"
         })
+
+        .when("/studentFinanceBase", {
+            title: "Student Finance Search",
+            templateUrl: "App/Controllers/Modules/StudentFinance/studentFinanceBase.html",
+            controller: "studentFinanceBaseCtrl"
+        })
+        .when("/employeeFinanceBase", {
+            title: "Employee Finance Search",
+            templateUrl: "App/Controllers/Modules/EmployeeFinance/employeeFinanceBase.html",
+            controller: "employeeFinanceBaseCtrl"
+        })
+    
+
+
         .when("/studentAttendanceSheetBase", {
             title: "Student Attendance Search",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetBase.html",

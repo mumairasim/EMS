@@ -1,11 +1,13 @@
-﻿using System;
-using SMS.Services.Infrastructure;
+﻿using SMS.Services.Infrastructure;
+using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/School")]
+    [EnableCors("*", "*", "*")]
     public class SchoolController : ApiController
     {
         public ISchoolService _schoolService;

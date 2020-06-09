@@ -3,6 +3,10 @@
 
 SMSHO.controller('studentFinanceBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
+
+    $scope.classLoaded = false;
+    $scope.Month = "0";
+    $scope.Class = ""
     $scope.GetStudentFinances = function () {
         var responsedata = apiService.masterget('/api/v1/StudentFinance/GetAll');
         responsedata.then(function mySucces(response) {
@@ -33,6 +37,62 @@ SMSHO.controller('studentFinanceBaseCtrl', ['$scope', 'apiService', '$cookies', 
         $scope.StudentFinanceToDelete = id;
     };
 
-    $scope.GetStudentFinances();
+
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
+            var temp = {
+                Name: '-- Choose --',
+                Id: '0'
+            }
+            $scope.Schools.unshift(temp);
+            $scope.School = $scope.Schools[0];
+            $scope.GetClasses();
+        },
+            function myError(response) {
+
+                $scope.response = response.data;
+            });
+    };
+
+    $scope.GetClasses = function () {
+        var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.School.Id);
+        responsedata.then(function mySucces(response) {
+            var temp = {
+                ClassName: '-- Choose --',
+                Id: '0'
+            }
+            $scope.Classes = response.data;
+            $scope.Classes.unshift(temp);
+            $scope.Class = $scope.Classes[0];
+            $scope.classLoaded = true;
+        },
+            function myError(response) {
+                $scope.classLoaded = false;
+                $scope.response = response.data;
+            });
+    };
+    $scope.test = function (e) {
+        debugger;
+    }
+    $scope.GetFinances = function () {
+        var responsedata = apiService.masterget('/api/v1/StudentFinance/GetByFilter/' + $scope.School.Id +
+            '/' + $scope.Class.Id + '/' + $scope.Month);
+        responsedata.then(function mySucces(response) {
+            $scope.FinanceList = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+
+
+    $scope.GetSchools();
+
+
+
+
+
 }]);
 

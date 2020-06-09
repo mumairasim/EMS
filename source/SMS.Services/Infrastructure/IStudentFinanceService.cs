@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
+using DTOStudentFinanceCustom = SMS.DTOs.DTOs.StudentFinanceInfo;
 
 namespace SMS.Services.Infrastructure
 {
@@ -11,6 +12,12 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <returns></returns>
         List<DTOStudentFinances> GetAll();
+
+        /// <summary>
+        /// Service level call : Return filtered records of a StudentFinances, pass null to ignore filters
+        /// </summary>
+        /// <returns></returns>
+        List<DTOStudentFinanceCustom> GetByFilter(Guid? schoolId, Guid? classId, Guid? studentId, string feeMonth);
 
         /// <summary>
         /// Retruns a Single Record of a StudentFinances

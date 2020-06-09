@@ -244,6 +244,7 @@
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\AttendanceStatusController.cs" />
+    <Compile Include="Controllers\EmployeeFinanceController.cs" />
     <Compile Include="Controllers\FinanceTypeController.cs" />
     <Compile Include="Controllers\StudentAttendanceController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />

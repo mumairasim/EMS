@@ -6,22 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using DBStudentFinances = SMS.DATA.Models.Student_Finances;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
-
+using DTOStudentFinanceCustom = SMS.DTOs.DTOs.StudentFinanceInfo;
+using DBStudentFinanceCustom = SMS.DATA.Models.NonDbContextModels.StudentFinanceInfo;
 namespace SMS.Services.Implementation
 {
     public class StudentFinanceService : IStudentFinanceService
     {
         #region Properties
         private readonly IRepository<DBStudentFinances> _repository;
+        private readonly IStoredProcCaller _storedProcCaller;
+
         private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public StudentFinanceService(IRepository<DBStudentFinances> repository, IMapper mapper)
+        public StudentFinanceService(IRepository<DBStudentFinances> repository, IMapper mapper, IStoredProcCaller storedProcCaller)
         {
             _repository = repository;
             _mapper = mapper;
+            _storedProcCaller = storedProcCaller;
         }
 
         #endregion
@@ -77,6 +81,12 @@ namespace SMS.Services.Implementation
             return StudentFinancesDto;
         }
 
+        public List<DTOStudentFinanceCustom> GetByFilter(Guid? schoolId, Guid? classId, Guid? studentId, string feeMonth)
+        {
+            var rs = _storedProcCaller.GetStudentFinance(schoolId, classId, studentId, feeMonth);
+            return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
+        }
+
         /// <summary>
         /// Service level call : Updates the Single Record of a StudentFinances 
         /// </summary>
@@ -108,6 +118,8 @@ namespace SMS.Services.Implementation
             }
             return StudentFinancesList;
         }
+
+
 
         #endregion
 

@@ -56,6 +56,25 @@ namespace SMS.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetByFilter/{schoolId}/{classId}/{feeMonth}")]
+        public IHttpActionResult GetByFilter(Guid? schoolId = null, Guid? classId = null, Guid? studentId = null, string feeMonth = "0")
+        {
+            if (feeMonth == "0")
+            {
+                feeMonth = null;
+            }
+            try
+            {
+                var result = _studentFinanceService.GetByFilter(schoolId, classId, studentId, feeMonth);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
