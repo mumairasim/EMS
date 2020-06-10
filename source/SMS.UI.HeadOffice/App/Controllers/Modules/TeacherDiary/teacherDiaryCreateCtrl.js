@@ -1,6 +1,7 @@
 ﻿SMSHO.controller('teacherDiaryCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.TeacherDiaryModel = {
+        Name: '',
         DairyText: '',
         DairyDate:'',
         School: $scope.School,

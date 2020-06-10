@@ -18,7 +18,9 @@ namespace SMS.DATA.Models
             Worksheets = new HashSet<Worksheet>();
         }
 
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? EmployeeNumber { get; set; }
+
         public Guid? PersonId { get; set; }
 
         public Guid? DesignationId { get; set; }
