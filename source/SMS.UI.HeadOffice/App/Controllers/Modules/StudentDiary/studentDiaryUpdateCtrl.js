@@ -9,7 +9,7 @@
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
         responsedata.then(function mySucces(response) {
             $scope.Employees = response.data;
-            
+            $scope.FetchStudentDiary();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -17,7 +17,6 @@
     };
     $scope.StudentDiaryUpdate = function () {
         var data = $scope.StudentDiaryModel;
-        $scope.StudentDiaryModel.InstructorId = $scope.StudentDiaryModel.Employee.Id;
         var formData = new FormData();
         formData.append('studentDiaryModel', JSON.stringify(data));
         var responsedata = apiService.masterput('/api/v1/StudentDiary/Update', formData);
@@ -46,5 +45,4 @@
         window.location = "#!/studentDiaryBase";
     };
     $scope.FetchStudentDiary();
-    $scope.GetEmployees();
 }]);

@@ -7,11 +7,10 @@
     };
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
-
         responsedata.then(function mySucces(response) {
 
-            $scope.Employees = response.data.Employees;
-            $scope.StudentDiaryModel.Employee = $scope.Employees[0];
+            $scope.Employees = response.data;
+            $scope.StudentDiaryModel.Employee = $scope.Employees.Employees[0];
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -19,7 +18,6 @@
     };
     $scope.StudentDiaryCreate = function () {
         var data = $scope.StudentDiaryModel;
-        data.InstructorId = $scope.StudentDiaryModel.Employee.Id;
         var formData = new FormData();
         formData.append('studentDiaryModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/StudentDiary/Create', formData);
