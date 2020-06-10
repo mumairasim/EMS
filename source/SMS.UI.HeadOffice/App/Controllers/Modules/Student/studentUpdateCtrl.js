@@ -5,7 +5,9 @@
         Person: $scope.Person,
         Class: $scope.Class,
         School: $scope.School,
-        Image: $scope.Image
+        Image: $scope.Image,
+        PreviousSchoolName: '',
+        ReasonForLeaving: ''
     };
     $scope.Image = {
         Id: '',
@@ -18,7 +20,23 @@
     $scope.Person = {
         FirstName: '',
         LastName: '',
+        ParentName: '',
+        Age: '',
+        DOB: '',
         Cnic: '',
+        ParentCnic: '',
+        ParentCity: '',
+        ParentEmail: '',
+        ParentRelation: '',
+        ParentOccupation: '',
+        ParentHighestEducation: '',
+        ParentNationality: '',
+        ParentOfficeAddress: '',
+        ParentMobile1: '',
+        ParentMobile2: '',
+        ParentEmergencyName: '',
+        ParentEmergencyRelation: '',
+        ParentEmergencyMobile: '',
         Nationality: '',
         Religion: '',
         PresentAddress: '',
@@ -84,6 +102,7 @@
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
             $scope.StudentModel = response.data;
+            $scope.StudentModel.Person.DOB = new Date(response.data.Person.DOB);
             if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
                 $scope.FetchImage();
             }
@@ -120,9 +139,8 @@
             } else {
                 $scope.growltext("Invalid Image file please select image of size less than 1MB", true);
             }
-
-
         }
+        
     };
     $scope.Cancel = function () {
         window.location = "#!/studentBase";
