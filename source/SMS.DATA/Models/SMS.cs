@@ -48,6 +48,10 @@ namespace SMS.DATA.Models
         {
             modelBuilder.Entity<Student>()
                 .Property(s => s.RegistrationNumber).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.EmployeeNumber).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+
             modelBuilder.Entity<Employee>()
                 .HasMany(e => e.Assignments)
                 .WithOptional(e => e.Employee)

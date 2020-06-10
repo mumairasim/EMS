@@ -1,6 +1,7 @@
 ﻿SMSHO.controller('lessonPlanUpdateCtrl', ['$scope', 'apiService', '$cookies', '$routeParams', function ($scope, apiService, $cookies, $routeParams) {
     'use strict';
     $scope.LessonPlanModel = {
+        Name: '',
         Text: '',
         FromDate: '',
         ToDate: '',
