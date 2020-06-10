@@ -5,6 +5,7 @@ namespace SMS.DTOs.DTOs
 {
     public class Employee : DtoBaseEntity
     {
+        public int? EmployeeNumber { get; set; }
         public Guid? SchoolId { get; set; }
 
         public School School { get; set; }
