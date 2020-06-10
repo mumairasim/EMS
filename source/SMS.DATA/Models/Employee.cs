@@ -19,7 +19,7 @@ namespace SMS.DATA.Models
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EmployeeNumber { get; set; }
+        public int? EmployeeNumber { get; set; }
 
         public Guid? PersonId { get; set; }
 
