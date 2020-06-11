@@ -75,6 +75,7 @@
     <Compile Include="DTOs\TimeTableDetail.cs" />
     <Compile Include="DTOs\Worksheet.cs" />
     <Compile Include="ReponseDTOs\GenericApiResponse.cs" />
+    <Compile Include="ReponseDTOs\StudentResponse.cs" />
     <Compile Include="ReponseDTOs\StudentAttendanceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
