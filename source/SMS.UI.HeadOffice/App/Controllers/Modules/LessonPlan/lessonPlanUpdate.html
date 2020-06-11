@@ -2,6 +2,12 @@
     <h5 class="card-title fs-50 text-center">Update Lesson PLan</h5>
     <form class="">
         <div class="position-relative row form-group">
+            <div class="col-sm-4">
+                <label for="name" class="col-form-label">Lesson Plan Name</label>
+                <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-model="LessonPlanModel.Name">
+            </div>
+        </div>
+        <div class="position-relative row form-group">
             <div class="col-sm-12">
                 <label for="text" class="col-form-label">Lesson Plan Text</label>
                 <textarea name="text" id="text" placeholder="enter yor text here" type="text" rows="5" class="form-control" ng-model="LessonPlanModel.Text"></textarea>
