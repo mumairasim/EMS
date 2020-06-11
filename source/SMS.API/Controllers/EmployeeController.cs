@@ -27,6 +27,13 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetDesignationTeacher")]
+        public IHttpActionResult GetDesignationTeacher()
+        {
+            return Ok(EmployeeService.GetEmployeeByDesignation());
+        }
+
+        [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {

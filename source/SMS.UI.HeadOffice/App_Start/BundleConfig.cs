@@ -39,6 +39,7 @@ namespace SMS.UI.HeadOffice
                        "~/App/Controllers/UserProfile/*.js",
                        "~/App/Controllers/Modules/Worksheet/*.js",
                        "~/App/Controllers/Modules/LessonPlan/*.js",
+                        "~/App/Controllers/Modules/TeacherDiary/*.js",
                        "~/App/Controllers/Modules/Attendance/*.js",
                        "~/App/Controllers/Modules/TimeTable/*.js"
                         ));
