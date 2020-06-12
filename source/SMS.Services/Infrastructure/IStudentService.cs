@@ -11,7 +11,7 @@ namespace SMS.Services.Infrastructure
         DTOStudent Get(Guid? id);
         StudentsList Get(Guid classId, Guid schoolId);
         StudentResponse Create(DTOStudent student);
-        void Update(DTOStudent dtoStudent);
+        StudentResponse Update(DTOStudent dtoStudent);
         void Delete(Guid? id, string DeletedBy);
     }
 }

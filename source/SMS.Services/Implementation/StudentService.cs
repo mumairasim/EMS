@@ -8,6 +8,7 @@ using SMS.Services.Infrastructure;
 using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using SMS.DTOs.ReponseDTOs;
+using System.Text.RegularExpressions;
 
 namespace SMS.Services.Implementation
 {
@@ -83,13 +84,19 @@ namespace SMS.Services.Implementation
             return validationResult;
         }
 
-        public void Update(DTOStudent dtoStudent)
+        public StudentResponse Update(DTOStudent dtoStudent)
         {
+            var validationResult = Validation(dtoStudent);
+            if (validationResult.IsError)
+            {
+                return validationResult;
+            }
             var student = Get(dtoStudent.Id);
             dtoStudent.UpdateDate = DateTime.UtcNow;
             var mergedStudent = _mapper.Map(dtoStudent, student);
             _personService.Update(mergedStudent.Person);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
+            return validationResult;
         }
         public void Delete(Guid? id, string deletedBy)
         {
@@ -114,12 +121,22 @@ namespace SMS.Services.Implementation
         }
         private StudentResponse Validation(DTOStudent dtoStudent)
         {
+            //var alphaRegex = new Regex(" ^[a - zA - Z][a - zA - Z\\s] +$");
+            var alphaRegex = new Regex("^[a-zA-Z ]+$");
+            var numericRegex = new Regex("^[0-9]*$");
             if (dtoStudent.Person.FirstName == null || dtoStudent.Person.FirstName.Length>100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
                     "Name may null or exceed than 100 characters"
                     );
+            }
+            if(!alphaRegex.IsMatch(dtoStudent.Person.FirstName))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
             }
             if (dtoStudent.Person.LastName == null || dtoStudent.Person.LastName.Length > 100)
             {
@@ -128,12 +145,12 @@ namespace SMS.Services.Implementation
                     "Name may null or exceed than 100 characters"
                     );
             }
-            if (dtoStudent.Person.Phone == null || dtoStudent.Person.Phone.Length > 15)
+            if (!alphaRegex.IsMatch(dtoStudent.Person.LastName))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
-                    "PhoneLimitError",
-                    "Phone cannot exceed from 15 digits"
-                    );
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
             }
             if (dtoStudent.Person.Cnic == null || dtoStudent.Person.Cnic.Length!=13)
             {
@@ -142,12 +159,47 @@ namespace SMS.Services.Implementation
                     "Cnic must be of 13 digits"
                     );
             }
+            if (!numericRegex.IsMatch(dtoStudent.Person.Cnic))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidInput",
+                   "This field contains only digits"
+                   );
+            }
+            if (dtoStudent.Person.Phone == null || dtoStudent.Person.Phone.Length > 15)
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                    "PhoneLimitError",
+                    "Phone cannot exceed from 15 digits"
+                    );
+            }
+            if (!numericRegex.IsMatch(dtoStudent.Person.Phone))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidInput",
+                   "This field contains only digits"
+                   );
+            }
             if (dtoStudent.Person.Nationality == null )
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNationality",
                     "Nationality cannot be null"
                     );
+            }
+            if (!alphaRegex.IsMatch(dtoStudent.Person.Nationality))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidText",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
+            if (dtoStudent.Person.Religion != null && !alphaRegex.IsMatch(dtoStudent.Person.Religion))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidText",
+                   "Text Field doesn't contain any numbers"
+                   );
             }
             if (dtoStudent.School == null )
             {
@@ -170,7 +222,14 @@ namespace SMS.Services.Implementation
                     "Name may null or exceed than 100 characters"
                     );
             }
-            if (dtoStudent.Person.ParentCnic != null && dtoStudent.Person.ParentCnic.Length != 13)
+            if (!alphaRegex.IsMatch(dtoStudent.Person.ParentName))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
+            if (dtoStudent.Person.ParentCnic != null && dtoStudent.Person.ParentCnic.Length != 13 && !numericRegex.IsMatch(dtoStudent.Person.ParentCnic))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "CnicLimitError",
@@ -184,12 +243,40 @@ namespace SMS.Services.Implementation
                     "Relation cannot be null"
                     );
             }
+            if (!alphaRegex.IsMatch(dtoStudent.Person.ParentRelation))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidText",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
+            if (dtoStudent.Person.ParentOccupation != null && dtoStudent.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoStudent.Person.ParentOccupation))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                    "InvalidText",
+                    "Text Field doesn't contain any numbers"
+                    );
+            }
+            if (dtoStudent.Person.ParentNationality != null  && !alphaRegex.IsMatch(dtoStudent.Person.ParentNationality))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                    "InvalidText",
+                    "Text Field doesn't contain any numbers"
+                    );
+            }
             if (dtoStudent.Person.ParentMobile1 == null || dtoStudent.Person.ParentMobile1.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
                     "Number cannot be null"
                     );
+            }
+            if (!numericRegex.IsMatch(dtoStudent.Person.ParentMobile1))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidInput",
+                   "This field contains only digits"
+                   );
             }
             if (dtoStudent.Person.ParentEmergencyName == null || dtoStudent.Person.ParentEmergencyName.Length > 100)
             {
@@ -198,6 +285,13 @@ namespace SMS.Services.Implementation
                     "Name may null or exceed than 100 characters"
                     );
             }
+            if (!alphaRegex.IsMatch(dtoStudent.Person.ParentEmergencyName))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
             if (dtoStudent.Person.ParentEmergencyRelation == null)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
@@ -205,12 +299,26 @@ namespace SMS.Services.Implementation
                     "Relation cannot be null"
                     );
             }
+            if (!alphaRegex.IsMatch(dtoStudent.Person.ParentEmergencyRelation))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidText",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
             if (dtoStudent.Person.ParentEmergencyMobile == null || dtoStudent.Person.ParentEmergencyMobile.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
                     "Number cannot be null"
                     );
+            }
+            if (!numericRegex.IsMatch(dtoStudent.Person.ParentEmergencyMobile))
+            {
+                return PrepareFailureResponse(dtoStudent.Id,
+                   "InvalidInput",
+                   "This field contains only digits"
+                   );
             }
             return PrepareSuccessResponse(dtoStudent.Id,
                     "NoError",
