@@ -121,6 +121,16 @@
     height: 20px;
     width: 20px;
 }
+.checkboxSize {
+    height: 20px;
+    width: 20px;
+    margin: 6px;
+}
+.block {
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+
+}
 
 .infoMessage {
     border-radius: 5px;

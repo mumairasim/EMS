@@ -36,5 +36,7 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <param name="id"></param>
         void Delete(Guid? id);
+
+        List<DTOCourse> GetAllBySchool(Guid? schoolId);
     }
 }
