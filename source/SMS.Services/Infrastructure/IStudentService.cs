@@ -1,5 +1,6 @@
 ﻿using System;
 using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 
 namespace SMS.Services.Infrastructure
@@ -9,8 +10,8 @@ namespace SMS.Services.Infrastructure
         StudentsList Get(int pageNumber, int pageSize);
         DTOStudent Get(Guid? id);
         StudentsList Get(Guid classId, Guid schoolId);
-        void Create(DTOStudent student);
-        void Update(DTOStudent dtoStudent);
+        StudentResponse Create(DTOStudent student);
+        StudentResponse Update(DTOStudent dtoStudent);
         void Delete(Guid? id, string DeletedBy);
     }
 }
