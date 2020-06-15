@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
+
     [Table("Assignment")]
     public partial class Assignment : BaseEntity
     {
@@ -19,15 +20,11 @@ namespace SMS.REQUESTDATA.RequestModels
         public DateTime? LastDateOfSubmission { get; set; }
 
         public Guid? InstructorId { get; set; }
-
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
+        public virtual School School { get; set; }
 
         public virtual Employee Employee { get; set; }
-
-        public virtual School School { get; set; }
-        public virtual RequestType RequestType { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassAssignement> ClassAssignements { get; set; }

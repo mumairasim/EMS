@@ -123,6 +123,10 @@ namespace SMS.MAP
             CreateMap<StudentAttendanceDetail, DTOStudentAttendanceDetail>();
             CreateMap<DTOStudentAttendanceDetail, DTOStudentAttendanceDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DBFinanceType, DTOFinanceType>();
+            CreateMap<DTOFinanceType, DTOFinanceType>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             #endregion
 
             #region DTO to DB

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
-    public partial class Student_Finances:BaseEntity
+    public partial class Student_Finances : BaseEntity
     {
         public Guid? StudentFinanceDetailsId { get; set; }
 

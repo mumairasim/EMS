@@ -5,6 +5,7 @@ namespace SMS.REQUESTDATA.RequestModels
 {
     public partial class EmployeeFinance : BaseEntity
     {
+
         public Guid? EmployeeFinanceDetailsId { get; set; }
 
         public bool? SalaryTransfered { get; set; }

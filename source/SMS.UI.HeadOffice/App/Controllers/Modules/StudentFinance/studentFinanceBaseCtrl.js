@@ -43,7 +43,7 @@ SMSHO.controller('studentFinanceBaseCtrl', ['$scope', 'apiService', '$cookies', 
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
             var temp = {
-                Name: '-- Choose --',
+                Name: '-- Ignore --',
                 Id: '0'
             }
             $scope.Schools.unshift(temp);
@@ -60,7 +60,7 @@ SMSHO.controller('studentFinanceBaseCtrl', ['$scope', 'apiService', '$cookies', 
         var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.School.Id);
         responsedata.then(function mySucces(response) {
             var temp = {
-                ClassName: '-- Choose --',
+                ClassName: '-- Ignore --',
                 Id: '0'
             }
             $scope.Classes = response.data;

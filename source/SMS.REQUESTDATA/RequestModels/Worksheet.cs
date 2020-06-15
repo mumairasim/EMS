@@ -11,14 +11,9 @@ namespace SMS.REQUESTDATA.RequestModels
         public DateTime? ForDate { get; set; }
 
         public Guid? InstructorId { get; set; }
-
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
-
-        public virtual RequestType RequestType { get; set; }
-        public virtual Employee Employee { get; set; }
-
         public virtual School School { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

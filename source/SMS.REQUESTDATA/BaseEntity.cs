@@ -18,5 +18,7 @@ namespace SMS.REQUESTDATA
         public Guid? DeletedBy { get; set; }
 
         public bool? IsDeleted { get; set; }
+
+        public bool? IsSynced { get; set; }
     }
 }

@@ -57,9 +57,14 @@
     <Compile Include="Infrastructure\IRequestDbContext.cs" />
     <Compile Include="Infrastructure\IRequestRepository.cs" />
     <Compile Include="Infrastructure\IRequestUnitOfWork.cs" />
+    <Compile Include="Migrations\202006152047076_CreateDevDBRequest.cs" />
+    <Compile Include="Migrations\202006152047076_CreateDevDBRequest.designer.cs">
+      <DependentUpon>202006152047076_CreateDevDBRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\Assignment.cs" />
+    <Compile Include="RequestModels\AttendanceStatus.cs" />
     <Compile Include="RequestModels\Class.cs" />
     <Compile Include="RequestModels\ClassAssignement.cs" />
     <Compile Include="RequestModels\ClassStudentDiary.cs" />
@@ -70,19 +75,24 @@
     <Compile Include="RequestModels\Employee.cs" />
     <Compile Include="RequestModels\EmployeeFinance.cs" />
     <Compile Include="RequestModels\EmployeeFinanceDetail.cs" />
+    <Compile Include="RequestModels\File.cs" />
     <Compile Include="RequestModels\FinanceType.cs" />
     <Compile Include="RequestModels\LessonPlan.cs" />
     <Compile Include="RequestModels\Period.cs" />
     <Compile Include="RequestModels\Person.cs" />
     <Compile Include="RequestModels\RequestType.cs" />
     <Compile Include="RequestModels\School.cs" />
+    <Compile Include="RequestModels\SMS.cs" />
     <Compile Include="RequestModels\SMSRequest.cs" />
     <Compile Include="RequestModels\Student.cs" />
     <Compile Include="RequestModels\StudentAssignment.cs" />
+    <Compile Include="RequestModels\StudentAttendance.cs" />
+    <Compile Include="RequestModels\StudentAttendanceDetail.cs" />
     <Compile Include="RequestModels\StudentDiary.cs" />
     <Compile Include="RequestModels\StudentFinanceDetail.cs" />
     <Compile Include="RequestModels\StudentStudentDiary.cs" />
     <Compile Include="RequestModels\Student_Finances.cs" />
+    <Compile Include="RequestModels\sysdiagram.cs" />
     <Compile Include="RequestModels\TeacherDiary.cs" />
     <Compile Include="RequestModels\TimeTable.cs" />
     <Compile Include="RequestModels\TimeTableDetail.cs" />
@@ -91,6 +101,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006152047076_CreateDevDBRequest.resx">
+      <DependentUpon>202006152047076_CreateDevDBRequest.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
