@@ -2,7 +2,7 @@
 
 namespace SMS.DTOs.DTOs
 {
-    public class StudentFinanceInfo
+    public class StudentFinanceInfo : DtoBaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

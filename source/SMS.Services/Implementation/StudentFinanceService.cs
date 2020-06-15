@@ -36,13 +36,25 @@ namespace SMS.Services.Implementation
         /// Service level call : Creates a single record of a StudentFinances
         /// </summary>
         /// <param name="DTOStudentFinances"></param>
-        public void Create(DTOStudentFinances DTOStudentFinances)
+        public void Create(DTOStudentFinanceCustom DTOStudentFinances)
         {
-            DTOStudentFinances.CreatedDate = DateTime.UtcNow;
-            DTOStudentFinances.IsDeleted = false;
-            DTOStudentFinances.Id = Guid.NewGuid();
+            var newFinance = new DBStudentFinances
+            {
+                Id = Guid.NewGuid(),
+                StudentFinanceDetailsId = DTOStudentFinances.StudentFinanceDetailsId,
+                FeeSubmitted = DTOStudentFinances.FeeSubmitted,
+                FeeMonth = DTOStudentFinances.FeeMonth,
+                CreatedDate = DateTime.UtcNow,
+                FeeYear = DTOStudentFinances.FeeYear,
+                IsDeleted = false,
+                CreatedBy = DTOStudentFinances.CreatedBy
+            };
 
-            _repository.Add(_mapper.Map<DTOStudentFinances, DBStudentFinances>(DTOStudentFinances));
+            if (newFinance.FeeSubmitted ?? false)
+            {
+                _repository.Add(newFinance);
+            }
+
         }
 
         /// <summary>
@@ -86,6 +98,13 @@ namespace SMS.Services.Implementation
             var rs = _storedProcCaller.GetStudentFinance(schoolId, classId, studentId, feeMonth);
             return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
         }
+
+        public List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, Guid? StudentId)
+        {
+            var rs = _storedProcCaller.GetStudentFinanceDetail(schoolId, ClassId, StudentId);
+            return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
+        }
+
 
         /// <summary>
         /// Service level call : Updates the Single Record of a StudentFinances 

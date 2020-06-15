@@ -63,14 +63,6 @@
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IStoredProcCaller.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202006100920570_Add_field_in_different_tables.cs" />
-    <Compile Include="Migrations\202006100920570_Add_field_in_different_tables.designer.cs">
-      <DependentUpon>202006100920570_Add_field_in_different_tables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006100929502_Add_field_in_different_modules.cs" />
-    <Compile Include="Migrations\202006100929502_Add_field_in_different_modules.designer.cs">
-      <DependentUpon>202006100929502_Add_field_in_different_modules.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -115,14 +107,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006100920570_Add_field_in_different_tables.resx">
-      <DependentUpon>202006100920570_Add_field_in_different_tables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006100929502_Add_field_in_different_modules.resx">
-      <DependentUpon>202006100929502_Add_field_in_different_modules.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

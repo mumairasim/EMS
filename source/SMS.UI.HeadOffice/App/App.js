@@ -141,14 +141,22 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/StudentFinance/studentFinanceBase.html",
             controller: "studentFinanceBaseCtrl"
         })
+        .when("/studentFinanceCreate", {
+            title: "Student Finance Create",
+            templateUrl: "App/Controllers/Modules/StudentFinance/studentFinanceCreate.html",
+            controller: "studentFinanceCreateCtrl"
+                })
         .when("/employeeFinanceBase", {
             title: "Employee Finance Search",
             templateUrl: "App/Controllers/Modules/EmployeeFinance/employeeFinanceBase.html",
             controller: "employeeFinanceBaseCtrl"
         })
+        .when("/employeeFinanceCreate", {
+            title: "Employee Finance Create",
+            templateUrl: "App/Controllers/Modules/EmployeeFinance/employeeFinanceCreate.html",
+            controller: "employeeFinanceCreateCtrl"
+        })
     
-
-
         .when("/studentAttendanceSheetBase", {
             title: "Student Attendance Search",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetBase.html",

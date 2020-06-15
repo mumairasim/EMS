@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SMS.DTOs.DTOs
 {
-    public class EmployeeFinanceInfo
+    public class EmployeeFinanceInfo : DtoBaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

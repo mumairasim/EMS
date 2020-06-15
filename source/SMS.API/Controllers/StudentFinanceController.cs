@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using SMS.Services.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
+using DTOStudentFinancesInfo = SMS.DTOs.DTOs.StudentFinanceInfo;
 
 namespace SMS.API.Controllers
 {
@@ -75,22 +77,35 @@ namespace SMS.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetDetailByFilter/{schoolId}")]
+        public IHttpActionResult GetDetailByFilter(Guid? schoolId = null, Guid? classId = null, Guid? studentId = null)
+        {
+            try
+            {
+                var result = _studentFinanceService.GetDetailByFilter(schoolId, classId, studentId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
         {
             var httpRequest = HttpContext.Current.Request;
-            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
-            dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            var financeInfoList = JsonConvert.DeserializeObject<List<DTOStudentFinancesInfo>>(httpRequest.Params["form"]);
 
-            try
+            foreach (var item in financeInfoList)
             {
-                _studentFinanceService.Create(dTOStudentFinances);
+                item.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+                _studentFinanceService.Create(item);
             }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
+
             return Ok();
         }
 

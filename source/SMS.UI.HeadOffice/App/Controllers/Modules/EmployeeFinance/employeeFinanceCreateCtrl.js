@@ -1,11 +1,16 @@
 ﻿//(function (app) {
 //    'use strict';
 
-SMSHO.controller('employeeFinanceBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+SMSHO.controller('employeeFinanceCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
+    var fullDate = new Date();
+    $scope.Year = fullDate.getFullYear();
 
-    $scope.Month = "0";
-    $scope.Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    $scope.Months = [{ value: '0', text: 'January' }, { value: '1', text: 'February' }, { value: '2', text: 'March' },
+    { value: '3', text: 'April' }, { value: '4', text: 'May' }, { value: '5', text: 'June' }, { value: '6', text: 'July' },
+    { value: '7', text: 'August' }, { value: '8', text: 'September' }, { value: '9', text: 'October' }, { value: '10', text: 'November' }, { value: '11', text: 'December' }];
+
+    $scope.Month = $scope.Months[fullDate.getMonth()];
 
     $scope.EmployeeFinanceDelete = function () {
         var url = '/api/v1/EmployeeFinance/Delete?id=' + $scope.EmployeeFinanceToDelete;
@@ -45,8 +50,10 @@ SMSHO.controller('employeeFinanceBaseCtrl', ['$scope', 'apiService', '$cookies',
             });
     };
 
+
+
     $scope.GetFinances = function () {
-        var responsedata = apiService.masterget('/api/v1/EmployeeFinance/GetByFilter/' + $scope.School.Id + '/' + $scope.Month);
+        var responsedata = apiService.masterget('/api/v1/EmployeeFinance/GetDetailByFilter/' + $scope.School.Id);
         responsedata.then(function mySucces(response) {
             $scope.FinanceList = response.data;
         },
@@ -54,6 +61,26 @@ SMSHO.controller('employeeFinanceBaseCtrl', ['$scope', 'apiService', '$cookies',
                 $scope.response = response.data;
             });
     };
+
+    $scope.SaveFinances = function () {
+        var data = $scope.FinanceList;
+        for (var i = 0; i < data.length; i++) {
+            data[i].SalaryMonth = $scope.Months[$scope.Month.value].text;
+            data[i].SalaryYear = $scope.Year;
+        }
+        var formData = new FormData();
+        formData.append('form', JSON.stringify(data));
+        var responsedata = apiService.post('/api/v1/EmployeeFinance/Create', formData);
+        responsedata.then(function mySucces(response) {
+            $scope.FinanceList = response.data;
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+
+
+
 
     $scope.GetSchools();
 

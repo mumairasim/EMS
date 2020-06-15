@@ -5,7 +5,7 @@
     <div class="col-sm-4">
         <label for="school" class="col-form-label">Month</label>
         <select name="school" id="school" class="form-control" ng-Model="Month">
-            <option value="0">-- Choose --</option>
+            <option value="0">-- Ignore --</option>
             <option value="Jan">January</option>
             <option value="Feb">February</option>
             <option value="Mar">March</option>
@@ -20,6 +20,7 @@
             <option value="Dec">December</option>
         </select>
     </div>
+
     <div class="col-sm-4">
         <label for="school" class="col-form-label">School</label>
         <select name="school" id="school" class="form-control" ng-change="GetClasses()" ng-Model="School"
@@ -27,11 +28,16 @@
             <option value="?">Choose</option>
         </select>
     </div>
-    <div class="col-sm-4">
-        <br />
-        <button class="btn btn-primary" ng-click="GetFinances()">Get Finances</button>
-        <br /> <br />
+
+    <div class="row">
+        <div class="col-sm-4">
+            <br />
+            <button class="btn btn-primary" ng-click="GetFinances()">Get Finances</button>
+            <a class="btn btn-primary" href="#!/employeeFinanceCreate">Transfer Salary</a>
+            <br /> <br />
+        </div>
     </div>
+
     <!--filters end-->
     <table ng-if="FinanceList.length > 0" class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
@@ -42,7 +48,6 @@
                 <th>School</th>
                 <th>Month</th>
                 <th>Year</th>
-                <th>Is Salary Transferred</th>
                 <!--<th>Actions</th>-->
 
             </tr>
@@ -56,7 +61,6 @@
                 <td>{{employeeFinance.SchoolName}}</td>
                 <td>{{employeeFinance.SalaryMonth}}</td>
                 <td>{{employeeFinance.SalaryYear}}</td>
-                <td> <input ng-model="employeeFinance.IsSalaryTransferred" type="checkbox" class="input-sm" /></td>
                 <!--<td>
                     <a href="#!/employeeFinanceUpdate?Id={{employeeFinance.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
                     <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(employeeFinance.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>

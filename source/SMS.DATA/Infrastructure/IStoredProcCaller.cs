@@ -9,5 +9,7 @@ namespace SMS.DATA.Infrastructure
         UserInfo GetUserInfo(string UserName);
         List<StudentFinanceInfo> GetStudentFinance(Guid? schoolId, Guid? ClassId, Guid? StudentId, string FeeMonth);
         List<EmployeeFinanceInfo> GetEmployeeFinance(Guid? schoolId, Guid? DesignationId, string SalaryMonth);
+        List<EmployeeFinanceInfo> GetEmployeeFinanceDetail(Guid? schoolId, Guid? DesignationId);
+        List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, Guid? StudentId);
     }
 }

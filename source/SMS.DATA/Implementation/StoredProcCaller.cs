@@ -49,6 +49,62 @@ namespace SMS.DATA.Implementation
             return empFinanceList;
         }
 
+        public List<EmployeeFinanceInfo> GetEmployeeFinanceDetail(Guid? schoolId, Guid? DesignationId)
+        {
+            _connection.Open();
+            SqlCommand cmd = new SqlCommand("GetEmployeeFinancesDetail", _connection);
+            cmd.Parameters.AddWithValue("@School", schoolId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Designation", DesignationId ?? (object)DBNull.Value);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            var rdr = cmd.ExecuteReader();
+            var empFinanceList = new List<EmployeeFinanceInfo>();
+            while (rdr.Read())
+            {
+                var empfDetailsId = rdr["EmpFinanceDetailsId"].ToString() == "" ? Guid.Empty : Guid.Parse(rdr["EmpFinanceDetailsId"].ToString());
+                var studentFinance = new EmployeeFinanceInfo
+                {
+                    FirstName = rdr["FirstName"].ToString(),
+                    LastName = rdr["LastName"].ToString(),
+                    Designation = rdr["designation"].ToString(),
+                    SchoolName = rdr["SchoolName"].ToString(),
+                    EmpFinanceDetailsId = empfDetailsId,
+                    EmployeeId = Guid.Parse(rdr["EmployeeId"].ToString()),
+                };
+                empFinanceList.Add(studentFinance);
+            }
+            _connection.Close();
+            return empFinanceList;
+        }
+
+        public List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, Guid? StudentId)
+        {
+            _connection.Open();
+            SqlCommand cmd = new SqlCommand("GetStudentFinancesDetail", _connection);
+            cmd.Parameters.AddWithValue("@SchoolId", schoolId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@ClassId", ClassId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@StudentId", StudentId ?? (object)DBNull.Value);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            var rdr = cmd.ExecuteReader();
+            var stdFinanceList = new List<StudentFinanceInfo>();
+            while (rdr.Read())
+            {
+                var stdfDetailsId = rdr["StudentFinanceDetailsId"].ToString() == "" ? Guid.Empty : Guid.Parse(rdr["StudentFinanceDetailsId"].ToString());
+                var studentFinance = new StudentFinanceInfo
+                {
+                    FirstName = rdr["FirstName"].ToString(),
+                    LastName = rdr["LastName"].ToString(),
+                    ClassName = rdr["ClassName"].ToString(),
+                    SchoolName = rdr["SchoolName"].ToString(),
+                    StudentFinanceDetailsId = stdfDetailsId,
+                    StudentId = Guid.Parse(rdr["StudentId"].ToString()),
+                    Type = rdr["Type"].ToString()
+                };
+                stdFinanceList.Add(studentFinance);
+            }
+            _connection.Close();
+            return stdFinanceList;
+        }
+
         public List<StudentFinanceInfo> GetStudentFinance(Guid? School, Guid? Class, Guid? StudentId, string FeeMonth)
         {
             _connection.Open();
