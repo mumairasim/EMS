@@ -7,61 +7,53 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Login",
         templateUrl: "App/Controllers/Authentication/login.html",
         controller: "loginCtrl"
-    }).when("/register", {
-        title: "Register",
-        templateUrl: "App/Controllers/Authentication/register.html",
-        controller: "registerCtrl"
-    }).when("/dashboard", {
-        title: "Dashboard",
-        templateUrl: "App/Controllers/Dashboard/dashboard.html",
-        controller: "dashboardCtrl"
-    }).when("/studentSearch", {
-        title: "Student Search",
-        templateUrl: "App/Controllers/Modules/Student/studentSearch.html",
-        controller: "studentSearchCtrl"
-    }).when("/studentCreate", {
-        title: "Student Create",
-        templateUrl: "App/Controllers/Modules/Student/studentCreate.html",
-        controller: "studentCreateCtrl"
-    }).when("/studentUpdate", {
-        title: "Student Update",
-        templateUrl: "App/Controllers/Modules/Student/studentUpdate.html",
-        controller: "studentUpdateCtrl"
-    }).when("/studentBase", {
-        title: "Student Search",
-        templateUrl: "App/Controllers/Modules/Student/studentBase.html",
-        controller: "studentBaseCtrl"
     })
-        .when("/teacherDiarySearch", {
-            title: "TeacherDiary Search",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiarySearch.html",
-            controller: "teacherDiarySearchCtrl"
-        }).when("/teacherDiaryCreate", {
-            title: "TeacherDiary Create",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryCreate.html",
-            controller: "teacherDiaryCreateCtrl"
-        }).when("/teacherDiaryUpdate", {
-            title: "TeacherDiary Update",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryUpdate.html",
-            controller: "teacherDiaryUpdateCtrl"
-        }).when("/teacherDiaryBase", {
-            title: "TeacherDiary Search",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",
-            controller: "teacherDiaryBaseCtrl"
+        .when("/register", {
+            title: "Register",
+            templateUrl: "App/Controllers/Authentication/register.html",
+            controller: "registerCtrl"
+        })
+        .when("/dashboard", {
+            title: "Dashboard",
+            templateUrl: "App/Controllers/Dashboard/dashboard.html",
+            controller: "dashboardCtrl"
+        })
+        .when("/studentSearch", {
+            title: "Student Search",
+            templateUrl: "App/Controllers/Modules/Student/studentSearch.html",
+            controller: "studentSearchCtrl"
+        })
+        .when("/studentCreate", {
+            title: "Student Create",
+            templateUrl: "App/Controllers/Modules/Student/studentCreate.html",
+            controller: "studentCreateCtrl"
+        })
+        .when("/studentUpdate", {
+            title: "Student Update",
+            templateUrl: "App/Controllers/Modules/Student/studentUpdate.html",
+            controller: "studentUpdateCtrl"
+        })
+        .when("/studentBase", {
+            title: "Student Search",
+            templateUrl: "App/Controllers/Modules/Student/studentBase.html",
+            controller: "studentBaseCtrl"
         })
         .when("/employeeSearch", {
             title: "Employee Search",
             templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",
             controller: "employeeSearchCtrl"
-        }).when("/employeeCreate", {
+        })
+        .when("/employeeCreate", {
             title: "Employee Create",
             templateUrl: "App/Controllers/Modules/Employee/employeeCreate.html",
             controller: "employeeCreateCtrl"
-        }).when("/employeeUpdate", {
+        })
+        .when("/employeeUpdate", {
             title: "Employee Update",
             templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
             controller: "employeeUpdateCtrl"
-        }).when("/employeeBase", {
+        })
+        .when("/employeeBase", {
             title: "Employee Search",
             templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
             controller: "employeeBaseCtrl"
@@ -70,23 +62,26 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "LessonPlan Search",
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
             controller: "lessonPlanBaseCtrl"
-        }).when("/lessonPlanCreate", {
+        })
+        .when("/lessonPlanCreate", {
             title: "LessonPlan Create",
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanCreate.html",
             controller: "lessonPlanCreateCtrl"
-        }).when("/lessonPlanUpdate", {
+        })
+        .when("/lessonPlanUpdate", {
             title: "LessonPlan Update",
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
             controller: "lessonPlanUpdateCtrl"
-        }).when("/userProfile", {
+        })
+        .when("/userProfile", {
             title: "User Profile View",
             templateUrl: "App/Controllers/UserProfile/UserProfile.html",
             controller: "UserProfileCtrl"
-        }).when("/changePassword", {
+        })
+        .when("/changePassword", {
             title: "Change Pasword",
             templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
             controller: "ChangePasswordCtrl"
-
         })
         .when("/worksheetBase", {
             title: "Worksheet Search",
@@ -166,6 +161,11 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "Student Attendance Update",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetUpdate.html",
             controller: "studentAttendanceSheetUpdateCtrl"
+        })
+        .when("/timeTableCreate", {
+            title: "Time Table Create",
+            templateUrl: "App/Controllers/Modules/TimeTable/timeTableCreate.html",
+            controller: "timeTableCreateCtrl"
         })
         .otherwise({
             redirectTo: '/'

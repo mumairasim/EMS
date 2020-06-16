@@ -7,20 +7,18 @@ namespace SMS.DATA.Models
     {
         [StringLength(50)]
         public string Day { get; set; }
+        public TimeSpan? StartTime { get; set; }
 
-        public Guid? ClassId { get; set; }
-
-        public Guid? PeriodId { get; set; }
-
+        public TimeSpan? EndTime { get; set; }
         public Guid? TeacherId { get; set; }
 
         public Guid? TimeTableId { get; set; }
 
-        public virtual Class Class { get; set; }
+        public Guid? CourseId { get; set; }
 
+        public virtual Course Course { get; set; }
         public virtual Employee Employee { get; set; }
 
-        public virtual Period Period { get; set; }
 
         public virtual TimeTable TimeTable { get; set; }
     }
