@@ -1,5 +1,4 @@
-﻿//(function (app) {
-//    'use strict';
+﻿
 
 SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';

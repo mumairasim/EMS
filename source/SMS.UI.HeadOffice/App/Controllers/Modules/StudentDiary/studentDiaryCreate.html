@@ -11,8 +11,8 @@
                         <input name="diarytext" id="diarytext" placeholder="Diary text" type="text" class="form-control" ng-Model="StudentDiaryModel.DiaryText">
                     </div>
                     <div class="col-sm-6">
-                        <label for="diarydate" class="col-form-label">Diary Date</label>
-                        <input name="diarydate" id="diarydate" placeholder="Diary Date" type="date" class="form-control" ng-Model="StudentDiaryModel.DiaryDate">
+                        <label for="dairydate" class="col-form-label">Diary Date</label>
+                        <input name="dairydate" id="dairydate" placeholder="Diary Date" type="date" class="form-control" ng-Model="StudentDiaryModel.DairyDate">
                     </div>
                 </div>
                 <div class="position-relative row form-group">
@@ -22,14 +22,21 @@
                                 ng-options="Employee.Person.FirstName for Employee in Employees.Employees track by Employee.Id">
                         </select>
                     </div>
-                    
+                    <div class="col-sm-6">
+                        <label for="school" class="col-form-label">School</label>
+                        <select name="school" id="school" class="form-control" ng-Model="StudentDiaryModel.School"
+                                ng-options="School.Name for School in Schools.Schools  track by School.Id">
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="position-relative row form-group">
-                <div class="col-sm-6 offset-sm-2">
-                    <button class="btn btn-primary" ng-click="StudentDiaryCreate()">Submit</button>
-                    <button class="btn btn-secondary" ng-click="Cancel()">Cancel</button>
-                </div>
+        </div>
+        <div class="position-relative row form-group">
+            <div class="col-sm-6">
+                <button class="btn btn-primary" ng-click="StudentDiaryCreate()">Submit</button>
+                <button class="btn btn-secondary" ng-click="Cancel()">Cancel</button>
             </div>
-        </form>
-    </div>
+        </div>
+
+    </form>
+</div>

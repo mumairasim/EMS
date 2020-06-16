@@ -4,11 +4,22 @@
         Diarytext: '',
         DairyDate: '',
         InstructorId: '',
+        Employee: '',
+        School: ''
+    };
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
+            $scope.StudentDiaryModel.School = $scope.Schools.Schools[0];
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
     };
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
         responsedata.then(function mySucces(response) {
-
             $scope.Employees = response.data;
             $scope.StudentDiaryModel.Employee = $scope.Employees.Employees[0];
         },
@@ -35,4 +46,5 @@
         window.location = "#!/studentDiaryBase";
     };
     $scope.GetEmployees();
+    $scope.GetSchools();
 }]);

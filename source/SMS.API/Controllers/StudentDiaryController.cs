@@ -25,13 +25,15 @@ namespace SMS.API.Controllers
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_studentDiaryService.Get(pageNumber, pageSize));
+            var studentList = _studentDiaryService.Get(pageNumber, pageSize);
+            return Ok(studentList);
         }
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(_studentDiaryService.Get(id));
+            var studentGet = _studentDiaryService.Get(id);
+            return Ok(studentGet);
         }
         [HttpPost]
         [Route("Create")]
@@ -42,6 +44,8 @@ namespace SMS.API.Controllers
             var studentDiaryDetail = JsonConvert.DeserializeObject<DTOStudentDiary>(httpRequest.Params["studentDiaryModel"]);
             studentDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             studentDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDiaryDetail.InstructorId = studentDiaryDetail.Employee.Id;
+            studentDiaryDetail.SchoolId = studentDiaryDetail.School.Id;
             _studentDiaryService.Create(studentDiaryDetail);
             return Ok();
         }
@@ -52,6 +56,9 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentDiaryDetail = JsonConvert.DeserializeObject<DTOStudentDiary>(httpRequest.Params["studentDiaryModel"]);
             studentDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDiaryDetail.InstructorId = studentDiaryDetail.Employee.Id;
+            studentDiaryDetail.SchoolId = studentDiaryDetail.School.Id;
             _studentDiaryService.Update(studentDiaryDetail);
             return Ok();
         }

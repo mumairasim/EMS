@@ -1,14 +1,28 @@
-﻿SMSHO.controller('studentDiaryUpdateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('studentDiaryUpdateCtrl', ['$scope', 'apiService', '$routeParams', '$cookies', function ($scope, apiService, $routeParams,$cookies ) {
     'use strict';
-    $scope.StudentDiaryDiaryModel = {
+    $scope.StudentDiaryModel = {
         Diarytext: '',
         DairyDate: '',
         InstructorId: '',
+        SchoolId: '',
+        Employee: '',
+        School:''
     };
+   
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
         responsedata.then(function mySucces(response) {
             $scope.Employees = response.data;
+            $scope.FetchStudentDiary();
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
             $scope.FetchStudentDiary();
         },
             function myError(response) {
@@ -44,5 +58,6 @@
     $scope.Cancel = function () {
         window.location = "#!/studentDiaryBase";
     };
-    $scope.FetchStudentDiary();
+    $scope.GetEmployees();
+    $scope.GetSchools();
 }]);

@@ -83,7 +83,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         }).when("/studentDiaryBase", {
             title: "StudentDiary Search",
             templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryBase.html",
-            controller: "studentDiarylBaseCtrl"
+            controller: "studentDiaryBaseCtrl"
         })
         .when("/classSearch", {
             title: "Class Search",
