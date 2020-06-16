@@ -254,6 +254,7 @@
     <Content Include="Scripts\App\checklist-model.js" />
     <Content Include="Scripts\App\main.js" />
     <Content Include="Scripts\App\ng-file-upload-all.js" />
+    <Content Include="Scripts\App\ng-pattern-restrict.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\errors.json" />
