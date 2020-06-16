@@ -24,6 +24,7 @@ namespace SMS.UI.HeadOffice
                        "~/Scripts/App/angular-growl-notifications.js",
                        "~/Scripts/App/angular-ui-router.min.js",
                        "~/Scripts/App/ng-file-upload-all.js",
+                       "~/Scripts/App/ng-pattern-restrict.min.js",
                        "~/Scripts/angular-local-storage.min.js",
                        //External Scripts
                        "~/Scripts/App/js/main.js",

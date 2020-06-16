@@ -140,7 +140,7 @@
         }
         if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone.length > 15) {
             $scope.IsError = "Phone cannot exceed from 15 digits";
-            $scope.growltext("Phone cannot exceed from 15 digits", true);
+            $scope.growltext("Phone cannot be null or cannot exceed from 15 digits", true);
             return false;
         }
         if ($scope.StudentModel.Person.Nationality == null) {
@@ -148,6 +148,7 @@
             $scope.growltext("Nationality cannot be null", true);
             return false;
         }
+        
         if ($scope.StudentModel.School == null) {
             $scope.IsError = "School cannot be null";
             $scope.growltext("School cannot be null", true);
@@ -161,11 +162,6 @@
         if ($scope.StudentModel.Person.ParentName == null || $scope.StudentModel.Person.ParentName.length > 100) {
             $scope.IsError = "Name may null or exceed than 100 characters";
             $scope.growltext("ParentName may null or exceed than 100 characters", true);
-            return false;
-        }
-        if ($scope.StudentModel.Person.ParentCnic != null && $scope.StudentModel.Person.ParentCnic.length != 13) {
-            $scope.IsError = "Cnic must be of 13 digits";
-            $scope.growltext("ParentCnic must be of 13 digits", true);
             return false;
         }
         if ($scope.StudentModel.Person.ParentRelation == null) {
