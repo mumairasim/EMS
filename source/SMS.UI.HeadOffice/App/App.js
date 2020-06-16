@@ -113,6 +113,50 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",
             controller: "studentAttendanceSheetCtrl"
         })
+
+
+        .when("/financeTypeBase", {
+            title: "FinanceType Search",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeBase.html",
+            controller: "financeTypeBaseCtrl"
+        })
+        .when("/financeTypeSearch", {
+            title: "FinanceType Search",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeSearch.html",
+            controller: "financeTypeSearchCtrl"
+        })
+        .when("/financeTypeCreate", {
+            title: "FinanceType Create",
+            templateUrl: "App/Controllers/Modules/FinanceType/financeTypeCreate.html",
+            controller: "financeTypeCreateCtrl"
+        })
+        .when("/financeTypeUpdate", {
+            title: "FinanceType Update",
+            templateUrl: "App/Controllers/Modules/FinanceType/FinanceTypeUpdate.html",
+            controller: "financeTypeUpdateCtrl"
+        })
+
+        .when("/studentFinanceBase", {
+            title: "Student Finance Search",
+            templateUrl: "App/Controllers/Modules/StudentFinance/studentFinanceBase.html",
+            controller: "studentFinanceBaseCtrl"
+        })
+        .when("/studentFinanceCreate", {
+            title: "Student Finance Create",
+            templateUrl: "App/Controllers/Modules/StudentFinance/studentFinanceCreate.html",
+            controller: "studentFinanceCreateCtrl"
+                })
+        .when("/employeeFinanceBase", {
+            title: "Employee Finance Search",
+            templateUrl: "App/Controllers/Modules/EmployeeFinance/employeeFinanceBase.html",
+            controller: "employeeFinanceBaseCtrl"
+        })
+        .when("/employeeFinanceCreate", {
+            title: "Employee Finance Create",
+            templateUrl: "App/Controllers/Modules/EmployeeFinance/employeeFinanceCreate.html",
+            controller: "employeeFinanceCreateCtrl"
+        })
+    
         .when("/studentAttendanceSheetBase", {
             title: "Student Attendance Search",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetBase.html",

@@ -9,6 +9,7 @@ using Student = SMS.DATA.Models.Student;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
+using DTOStudentFinanceDetail = SMS.DTOs.DTOs.StudentFinanceDetail;
 
 namespace SMS.Services.Implementation
 {
@@ -16,11 +17,13 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<Student> _repository;
         private readonly IPersonService _personService;
+        private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
         private readonly IMapper _mapper;
-        public StudentService(IRepository<Student> repository, IPersonService personService, IMapper mapper)
+        public StudentService(IRepository<Student> repository, IPersonService personService, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper)
         {
             _repository = repository;
             _personService = personService;
+            _studentFinanceDetailsService = studentFinanceDetailsService;
             _mapper = mapper;
         }
         public StudentsList Get(int pageNumber, int pageSize)
@@ -80,6 +83,7 @@ namespace SMS.Services.Implementation
             dtoStudent.Id = Guid.NewGuid();
             dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
             HelpingMethodForRelationship(dtoStudent);
+            InsertStudentFinanceDetail(dtoStudent);
             _repository.Add(_mapper.Map<DTOStudent, Student>(dtoStudent));
             return validationResult;
         }
@@ -108,6 +112,20 @@ namespace SMS.Services.Implementation
             student.DeletedDate = DateTime.UtcNow;
             _personService.Delete(student.PersonId);
             _repository.Update(_mapper.Map<DTOStudent, Student>(student));
+        }
+        private void InsertStudentFinanceDetail(DTOStudent dtoStudent)
+        {
+            var stdFinance = new DTOStudentFinanceDetail
+            {
+                Id = Guid.NewGuid(),
+                StudentId = dtoStudent.Id,
+                IsDeleted = false,
+                CreatedDate = dtoStudent.CreatedDate,
+                CreatedBy = dtoStudent.CreatedBy,
+                FinanceTypeId = Guid.Parse("8B50E73B-11BF-44B9-8DA1-EF1602F4479E") // need to replace by dropdown
+            };
+            _studentFinanceDetailsService.Create(stdFinance);
+
         }
 
         private void HelpingMethodForRelationship(DTOStudent dtoStudent)
