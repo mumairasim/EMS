@@ -1,9 +1,20 @@
 ﻿SMSHO.controller('timeTableCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
-    $scope.Days = [];
+    $scope.TimeTable = {
+        Days: [{
+            Id: "",
+            DayName: "",
+            Periods: [{
+                Course: "",
+                Employee: "",
+                StartTime: "",
+                EndTime: ""
+            }]
+        }]
+    };
     $scope.Day = {
         Id: "",
-        Day: "",
+        DayName: "",
         Periods: []
     };
     $scope.Period = {
@@ -62,19 +73,20 @@
         responsedata.then(function mySucces(response) {
             $scope.Employees = response.data;
             $scope.Employee = $scope.Employees[0];
+            $scope.Initializer();
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
     $scope.AddPeriod = function () {
-        for (var i = 0; i < $scope.Days.length; i++) {
-            if (($scope.Days[i] !== null) && ($scope.Days[i] !== undefined)) {
-                if ($scope.Days[i].Day == $scope.Day.Day) {
-                    if ($scope.Days[i].Periods == undefined) {
-                        $scope.Days[i].Periods = [];
+        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
+            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
+                if ($scope.TimeTable.Days[i].DayName == $scope.SelectedDay) {
+                    if ($scope.TimeTable.Days[i].Periods == undefined) {
+                        $scope.TimeTable.Days[i].Periods = [];
                     }
-                    $scope.Days[i].Periods.push({
+                    $scope.TimeTable.Days[i].Periods.push({
                         Course: $scope.Course,
                         Employee: $scope.Employee,
                         StartTime: $scope.StartTime,
@@ -88,9 +100,10 @@
 
         if ($scope.monday) {
             if (!$scope.IsAlreadyExist("Monday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Monday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Monday"
                     });
             }
         } else {
@@ -98,9 +111,10 @@
         }
         if ($scope.tuesday) {
             if (!$scope.IsAlreadyExist("Tuesday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Tuesday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Tuesday"
                     });
             }
         } else {
@@ -108,9 +122,10 @@
         }
         if ($scope.wednesday) {
             if (!$scope.IsAlreadyExist("Wednesday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Wednesday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Wednesday"
                     });
             }
         } else {
@@ -118,9 +133,10 @@
         }
         if ($scope.thursday) {
             if (!$scope.IsAlreadyExist("Thursday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Thursday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Thursday"
                     });
             }
         } else {
@@ -128,9 +144,10 @@
         }
         if ($scope.friday) {
             if (!$scope.IsAlreadyExist("Friday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Friday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Friday"
                     });
             }
         } else {
@@ -138,9 +155,10 @@
         }
         if ($scope.saturday) {
             if (!$scope.IsAlreadyExist("Saturday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Saturday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Saturday"
                     });
             }
         } else {
@@ -148,35 +166,49 @@
         }
         if ($scope.sunday) {
             if (!$scope.IsAlreadyExist("Sunday")) {
-                $scope.Days.push(
+                $scope.TimeTable.Days.push(
                     {
-                        Day: "Sunday"
+                        Id: $scope.GuidGenerator(),
+                        DayName: "Sunday"
                     });
             }
         } else {
             $scope.remove("Sunday");
         }
+        $scope.PreparePeriodDaysList();
     };
     $scope.remove = function (item) {
-        for (var i = 0; i < $scope.Days.length; i++) {
-            if (($scope.Days[i] !== null) && ($scope.Days[i] !== undefined)) {
-                if ($scope.Days[i].Day == item) {
-                    $scope.Days.splice(i, 1);
+        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
+            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
+                if ($scope.TimeTable.Days[i].DayName == item) {
+                    $scope.TimeTable.Days.splice(i, 1);
                 }
             }
         }
     };
     $scope.IsAlreadyExist = function (item) {
-        for (var i = 0; i < $scope.Days.length; i++) {
-            if (($scope.Days[i] !== null) && ($scope.Days[i] !== undefined)) {
-                if ($scope.Days[i].Day == item) {
+        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
+            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
+                if ($scope.TimeTable.Days[i].DayName == item) {
                     return true;
                 }
             }
         }
         return false;
     };
-
-    $scope.Initializer();
+    $scope.PreparePeriodDaysList = function () {
+        $scope.Day = $scope.TimeTable.Days[0];
+    };
+    $scope.test = function (x, index) {
+        console.log(x);
+        console.log(index);
+        $scope.head = x.DayName;
+    };
+    $scope.GuidGenerator = function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
     $scope.GetSchools();
 }]);

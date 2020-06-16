@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-4">
             <label for="class" class="col-form-label">Class</label>
-            <select name="class" id="class" class="form-control" ng-change="GetStudents()" ng-Model="Class"
+            <select name="class" id="class" class="form-control" ng-Model="Class"
                     ng-options="Class.ClassName for Class in Classes  track by Class.Id">
             </select>
         </div>
@@ -61,55 +61,58 @@
             </div>
         </div>
     </div>
-    <div class="position-relative row form-group">
-        <div class="col-sm-12">
+    <form>
+        <div class="position-relative row form-group">
             <div class="col-sm-12">
-                <h5 class="card-title fs-15 text-center">Add Periods</h5>
-            </div>
-            <div class="position-relative row form-group">
-                <div class="col-sm-6">
-                    <label for="course" class="col-form-label">Course</label>
-                    <select name="course" id="course" class="form-control" ng-Model="Course"
-                            ng-options="Course.CourseName for Course in Courses  track by Course.Id">
-                    </select>
+                <div class="col-sm-12">
+                    <h5 class="card-title fs-15 text-center">Add Periods</h5>
                 </div>
-                <div class="col-sm-6">
-                    <label for="teacher" class="col-form-label">Teacher</label>
-                    <select name="teacher" id="teacher" class="form-control" ng-Model="Employee"
-                            ng-options="Employee.Person.FirstName +' '+ Employee.Person.LastName for Employee in Employees  track by Employee.Id">
-                    </select>
+                <div class="position-relative row form-group">
+                    <div class="col-sm-6">
+                        <label for="course" class="col-form-label">Course</label>
+                        <select name="course" id="course" class="form-control" ng-Model="Course"
+                                ng-options="Course.CourseName for Course in Courses  track by Course.Id">
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="teacher" class="col-form-label">Teacher</label>
+                        <select name="teacher" id="teacher" class="form-control" ng-Model="Employee"
+                                ng-options="Employee.Person.FirstName +' '+ Employee.Person.LastName for Employee in Employees  track by Employee.Id">
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="position-relative row form-group">
-                <div class="col-sm-3">
-                    <label for="startTime" class="col-form-label">Start Time</label>
-                    <input name="startTime" id="startTime" placeholder="name" type="time" class="form-control" ng-model="StartTime">
-                </div>
-                <div class="col-sm-3">
-                    <label for="endTime" class="col-form-label">End Time</label>
-                    <input name="endTime" id="endTime" placeholder="name" type="time" class="form-control" ng-model="EndTime">
-                </div>
-                <div class="col-sm-3">
-                    <label for="day" class="col-form-label">Day</label>
-                    <select name="day" id="day" class="form-control" ng-Model="Day"
-                            ng-options="Day.Day for Day in Days  track by Day.Id">
-                    </select>
-                </div>
-                <div class="col-sm-3">
-                    <button class="btn btn-primary" ng-click="AddPeriod()">Add Period</button>
+                <div class="position-relative row form-group">
+                    <div class="col-sm-3">
+                        <label for="startTime" class="col-form-label">Start Time</label>
+                        <input name="startTime" id="startTime" placeholder="name" type="time" class="form-control" ng-model="StartTime">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="endTime" class="col-form-label">End Time</label>
+                        <input name="endTime" id="endTime" placeholder="name" type="time" class="form-control" ng-model="EndTime">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="periodDay" class="col-form-label">Day</label>
+                        <select ng-change="test(SelectedDay,$index)" name="periodDay" id="periodDay" class="form-control" ng-model="SelectedDay"
+                                ng-options="Day.DayName for Day in TimeTable.Days  track by $index">
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="periodDay" class="col-form-label">{{SelectedDay.DayName}}</label>
+                        <button class="btn btn-primary" ng-click="AddPeriod()">Add Period</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <div class="position-relative row form-group">
         <div class="col-sm-12">
             <h5 class="card-title fs-25 text-center">Time Table View</h5>
         </div>
         <div class="col-sm-12">
-            <div ng-repeat="(key, value) in Days">
+            <div ng-repeat="(key, value) in TimeTable.Days">
                 <table class="table table-bordered">
                     <tr>
-                        <th>{{value.Day}}</th>
+                        <th>{{value.DayName}}</th>
                         <td ng-repeat="col in value.Periods">
                             <span><b>Course: </b></span><label>{{ col.Course.CourseName }}</label><hr />
                             <span><b>Time: </b></span><label>{{ col.StartTime | date:'hh:mm' }} - {{col.EndTime | date:'hh:mm'  }}</label><hr />
