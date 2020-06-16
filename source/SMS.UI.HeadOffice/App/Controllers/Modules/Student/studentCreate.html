@@ -40,7 +40,6 @@
 
                 <!--<img class=" img-circle img-thumbnail" ng-src="data:image/JPEG;base64,{{StudentModel.Image.ImageFile}}" alt="avatar">-->
                 <img class=" img-circle img-thumbnail" ngf-src="StudentModel.Image.ImageFile" alt="avatar" onerror="this.onerror=null;this.src='../../images/avatar_2x.png';">
-                av
                 <div style="margin-top: 10px;">
                     <input type="file" id="file" class="text-center center-block" ngf-change="SelectFileForUpload($files)" ngf-select ng-model="StudentModel.Image.ImageFile" name="attachement" accept="image/png, image/jpeg, image/jpg, application/msword, application/vnd.ms-excel, application/pdf " />
                     <!--<input type="file" class="text-center center-block" onchange="angular.element(this).scope().SelectFileForUpload(this.files)">-->

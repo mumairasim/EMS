@@ -139,7 +139,6 @@ namespace SMS.Services.Implementation
         }
         private StudentResponse Validation(DTOStudent dtoStudent)
         {
-            //var alphaRegex = new Regex(" ^[a - zA - Z][a - zA - Z\\s] +$");
             var alphaRegex = new Regex("^[a-zA-Z ]+$");
             var numericRegex = new Regex("^[0-9]*$");
             if (dtoStudent.Person.FirstName == null || dtoStudent.Person.FirstName.Length>100)
