@@ -70,7 +70,6 @@
     <Compile Include="Models\ClassStudentDiary.cs" />
     <Compile Include="Models\ClassTeacherDiary.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\CourseClass.cs" />
     <Compile Include="Models\AttendanceStatus.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -80,7 +79,6 @@
     <Compile Include="Models\FinanceType.cs" />
     <Compile Include="Models\LessonPlan.cs" />
     <Compile Include="Models\NonDbContextModels\UserInfo.cs" />
-    <Compile Include="Models\Period.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\SMS.cs" />

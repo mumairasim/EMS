@@ -15,7 +15,6 @@ namespace SMS.DATA.Models
             ClassAssignements = new HashSet<ClassAssignement>();
             ClassStudentDiaries = new HashSet<ClassStudentDiary>();
             ClassTeacherDiaries = new HashSet<ClassTeacherDiary>();
-            CourseClasses = new HashSet<CourseClass>();
             Students = new HashSet<Student>();
             TimeTableDetails = new HashSet<TimeTableDetail>();
         }
@@ -35,9 +34,6 @@ namespace SMS.DATA.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassTeacherDiary> ClassTeacherDiaries { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseClass> CourseClasses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
