@@ -3,9 +3,16 @@
     $scope.StudentDiaryDiaryModel = {
         Diarytext: '',
         DairyDate: '',
-        InstructorId: '',
-        Employee: '',
-        School: ''
+        Employee: $scope.Employee,
+        School: $scope.School
+    };
+    $scope.Employee = {
+        Name: ''
+    };
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
     };
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');

@@ -3,10 +3,16 @@
     $scope.StudentDiaryModel = {
         Diarytext: '',
         DairyDate: '',
-        InstructorId: '',
-        SchoolId: '',
-        Employee: '',
-        School:''
+        Employee: $scope.Employee,
+        School: $scope.School
+    };
+    $scope.Employee = {
+        Name: ''
+    };
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
     };
    
     $scope.GetEmployees = function () {
