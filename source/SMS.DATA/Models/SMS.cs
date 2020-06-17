@@ -18,14 +18,12 @@ namespace SMS.DATA.Models
         public virtual DbSet<ClassStudentDiary> ClassStudentDiaries { get; set; }
         public virtual DbSet<ClassTeacherDiary> ClassTeacherDiaries { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<CourseClass> CourseClasses { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeFinanceDetail> EmployeeFinanceDetails { get; set; }
         public virtual DbSet<EmployeeFinance> EmployeeFinances { get; set; }
         public virtual DbSet<FinanceType> FinanceTypes { get; set; }
         public virtual DbSet<LessonPlan> LessonPlans { get; set; }
-        public virtual DbSet<Period> Periods { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Student_Finances> Student_Finances { get; set; }

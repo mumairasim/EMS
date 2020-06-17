@@ -1,16 +1,15 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace SMS.DTOs.DTOs
 {
     public class Course : DtoBaseEntity
     {
 
-        [Required]
-        [StringLength(50)]
         public string CourseCode { get; set; }
 
-        [Required]
-        [StringLength(250)]
         public string CourseName { get; set; }
+        public Guid? SchoolId { get; set; }
+
+        public virtual School School { get; set; }
     }
 }
