@@ -191,6 +191,7 @@
         }
         return true;
     }
+    
         
 $scope.GetSchools();
 $scope.GetClasses();
