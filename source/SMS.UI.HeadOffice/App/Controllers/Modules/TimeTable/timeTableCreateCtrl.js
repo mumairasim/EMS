@@ -3,7 +3,7 @@
     $scope.TimeTable = {
         Days: [{
             Id: "",
-            DayName: "",
+            Day: "",
             Periods: [{
                 Course: "",
                 Employee: "",
@@ -14,7 +14,7 @@
     };
     $scope.Day = {
         Id: "",
-        DayName: "",
+        Day: "",
         Periods: []
     };
     $scope.Period = {
@@ -85,10 +85,10 @@
         formData.append('timeTableModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/TimeTable/Create', formData);
         responsedata.then(function mySucces(response) {
-                $scope.response = response.data;
-                $scope.growltext("TimeTable created successfully.", false);
-                //window.location = "#!/lessonPlanBase";
-            },
+            $scope.response = response.data;
+            $scope.growltext("TimeTable created successfully.", false);
+            //window.location = "#!/lessonPlanBase";
+        },
             function myError(response) {
                 $scope.response = response.data;
                 $scope.growltext("Lesson Plan creation failed", true);
@@ -97,7 +97,7 @@
     $scope.AddPeriod = function () {
         for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
             if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].DayName == $scope.SelectedDay) {
+                if ($scope.TimeTable.Days[i].Day == $scope.SelectedDay) {
                     if ($scope.TimeTable.Days[i].Periods == undefined) {
                         $scope.TimeTable.Days[i].Periods = [];
                     }
@@ -118,7 +118,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Monday"
+                        Day: "Monday"
                     });
             }
         } else {
@@ -129,7 +129,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Tuesday"
+                        Day: "Tuesday"
                     });
             }
         } else {
@@ -140,7 +140,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Wednesday"
+                        Day: "Wednesday"
                     });
             }
         } else {
@@ -151,7 +151,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Thursday"
+                        Day: "Thursday"
                     });
             }
         } else {
@@ -162,7 +162,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Friday"
+                        Day: "Friday"
                     });
             }
         } else {
@@ -173,7 +173,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Saturday"
+                        Day: "Saturday"
                     });
             }
         } else {
@@ -184,7 +184,7 @@
                 $scope.TimeTable.Days.push(
                     {
                         Id: $scope.GuidGenerator(),
-                        DayName: "Sunday"
+                        Day: "Sunday"
                     });
             }
         } else {
@@ -195,7 +195,7 @@
     $scope.remove = function (item) {
         for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
             if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].DayName == item) {
+                if ($scope.TimeTable.Days[i].Day == item) {
                     $scope.TimeTable.Days.splice(i, 1);
                 }
             }
@@ -204,7 +204,7 @@
     $scope.IsAlreadyExist = function (item) {
         for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
             if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].DayName == item) {
+                if ($scope.TimeTable.Days[i].Day == item) {
                     return true;
                 }
             }
@@ -217,7 +217,7 @@
     $scope.test = function (x, index) {
         console.log(x);
         console.log(index);
-        $scope.head = x.DayName;
+        $scope.head = x.Day;
     };
     $scope.GuidGenerator = function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

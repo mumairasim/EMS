@@ -24,11 +24,9 @@ namespace SMS.API.Controllers
         [Route("Create")]
         public IHttpActionResult Create()
         {
-
             var httpRequest = HttpContext.Current.Request;
             var timeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
             timeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            //teacherDiaryDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             TimeTableService.Create(timeTable);
             return Ok();
         }

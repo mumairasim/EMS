@@ -93,11 +93,11 @@
                     <div class="col-sm-3">
                         <label for="periodDay" class="col-form-label">Day</label>
                         <select ng-change="test(SelectedDay,$index)" name="periodDay" id="periodDay" class="form-control" ng-model="SelectedDay"
-                                ng-options="Day.DayName for Day in TimeTable.Days  track by $index">
+                                ng-options="Day.Day for Day in TimeTable.Days  track by $index">
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <label for="periodDay" class="col-form-label">{{SelectedDay.DayName}}</label>
+                        <label for="periodDay" class="col-form-label">{{SelectedDay.Day}}</label>
                         <button class="btn btn-primary" ng-click="AddPeriod()">Add Period</button>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
             <div ng-repeat="(key, value) in TimeTable.Days">
                 <table class="table table-bordered">
                     <tr>
-                        <th>{{value.DayName}}</th>
+                        <th>{{value.Day}}</th>
                         <td ng-repeat="col in value.Periods">
                             <span><b>Course: </b></span><label>{{ col.Course.CourseName }}</label><hr />
                             <span><b>Time: </b></span><label>{{ col.StartTime | date:'hh:mm' }} - {{col.EndTime | date:'hh:mm'  }}</label><hr />
