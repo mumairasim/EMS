@@ -74,6 +74,9 @@
     <Compile Include="Implementation\StudentFinanceDetailsService.cs" />
     <Compile Include="Implementation\StudentFinanceService.cs" />
     <Compile Include="Implementation\StudentService.cs" />
+    <Compile Include="Implementation\PeriodService.cs" />
+    <Compile Include="Implementation\TimeTableDetailService.cs" />
+    <Compile Include="Implementation\TimeTableService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\IAccountService.cs" />
@@ -94,6 +97,9 @@
     <Compile Include="Infrastructure\IStudentFinanceDetailsService.cs" />
     <Compile Include="Infrastructure\IStudentFinanceService.cs" />
     <Compile Include="Infrastructure\IStudentService.cs" />
+    <Compile Include="Infrastructure\IPeriodService.cs" />
+    <Compile Include="Infrastructure\ITimeTableDetailService.cs" />
+    <Compile Include="Infrastructure\ITimeTableService.cs" />
     <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

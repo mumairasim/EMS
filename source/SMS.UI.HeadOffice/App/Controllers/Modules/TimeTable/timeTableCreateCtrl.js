@@ -39,7 +39,7 @@
         var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.School.Id);
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
-            $scope.Class = $scope.Classes[0];
+            $scope.TimeTable.Class = $scope.Classes[0];
             $scope.GetCourses();
         },
             function myError(response) {
@@ -50,7 +50,7 @@
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data;
-            $scope.School = $scope.Schools[0];
+            $scope.TimeTable.School = $scope.Schools[0];
             $scope.GetClasses();
         },
             function myError(response) {
@@ -77,6 +77,21 @@
         },
             function myError(response) {
                 $scope.response = response.data;
+            });
+    };
+    $scope.TimeTableCreate = function () {
+        var data = $scope.TimeTable;
+        var formData = new FormData();
+        formData.append('timeTableModel', JSON.stringify(data));
+        var responsedata = apiService.post('/api/v1/TimeTable/Create', formData);
+        responsedata.then(function mySucces(response) {
+                $scope.response = response.data;
+                $scope.growltext("TimeTable created successfully.", false);
+                //window.location = "#!/lessonPlanBase";
+            },
+            function myError(response) {
+                $scope.response = response.data;
+                $scope.growltext("Lesson Plan creation failed", true);
             });
     };
     $scope.AddPeriod = function () {
