@@ -35,6 +35,7 @@ namespace SMS.DATA.Models
         public virtual DbSet<TeacherDiary> TeacherDiaries { get; set; }
         public virtual DbSet<TimeTable> TimeTables { get; set; }
         public virtual DbSet<TimeTableDetail> TimeTableDetails { get; set; }
+        public virtual DbSet<Period> Periods { get; set; }
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<File> Files { get; set; }
@@ -66,7 +67,7 @@ namespace SMS.DATA.Models
                 .HasForeignKey(e => e.InstructorId);
 
             modelBuilder.Entity<Employee>()
-                .HasMany(e => e.TimeTableDetails)
+                .HasMany(e => e.Periods)
                 .WithOptional(e => e.Employee)
                 .HasForeignKey(e => e.TeacherId);
 

@@ -1,16 +1,22 @@
 using System;
 
-namespace SMS.DTOs.DTOs
+namespace SMS.DATA.Models
 {
-    public class Period : DtoBaseEntity
+    public partial class Period : BaseEntity
     {
         public TimeSpan? StartTime { get; set; }
+
         public TimeSpan? EndTime { get; set; }
         public Guid? TeacherId { get; set; }
+
         public Guid? TimeTableDetailId { get; set; }
+
         public Guid? CourseId { get; set; }
-        public Course Course { get; set; }
-        public Employee Employee { get; set; }
-        public TimeTableDetail TimeTableDetail { get; set; }
+
+        public virtual Course Course { get; set; }
+        public virtual Employee Employee { get; set; }
+
+
+        public virtual TimeTableDetail TimeTableDetail { get; set; }
     }
 }

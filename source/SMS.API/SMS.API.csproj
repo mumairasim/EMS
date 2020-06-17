@@ -257,6 +257,7 @@
     <Compile Include="Controllers\StudentDiaryController.cs" />
     <Compile Include="Controllers\StudentFinanceController.cs" />
     <Compile Include="Controllers\StudentFinanceDetailsController.cs" />
+    <Compile Include="Controllers\TimeTableController.cs" />
     <Compile Include="Controllers\TeacherDiaryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WorksheetController.cs" />
