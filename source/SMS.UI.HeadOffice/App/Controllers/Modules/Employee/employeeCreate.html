@@ -16,11 +16,15 @@
                 </div>
                 <div class="position-relative row form-group">
                     <div class="col-sm-3">
-                        <label for="cnic" class="col-form-label"><span class="mendatory">* </span>CNIC/B.Form</label>
+                        <label for="cnic" class="col-form-label required">B.Form
+                        <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
                         <input name="cnic" id="cnic" placeholder="cnic/b.form" type="text" class="form-control" ng-model="EmployeeModel.Person.Cnic" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
-                        <label for="phone" class="col-form-label"><span class="mendatory">* </span>Phone</label>
+                        <label for="phone" class="col-form-label required">Phone
+                        <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
                         <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-model="EmployeeModel.Person.Phone" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
@@ -100,7 +104,9 @@
                         <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
-                        <label for="cnic" class="col-form-label">CNIC</label>
+                        <label for="cnic" class="col-form-label">CNIC
+                        <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
                         <input name="cnic" id="cnic" placeholder="cnic" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentCnic" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                 </div>
@@ -142,11 +148,15 @@
                 <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentCity">
             </div>
             <div class="col-sm-4">
-                <label for="mobile1" class="col-form-label"><span class="mendatory">* </span>Mobile 1</label>
+                <label for="mobile1" class="col-form-label required">Mobile 1
+                <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                </label>
                 <input name="mobile1" id="mobile1" placeholder="mobile 1" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentMobile1" pattern="^[0-9]*$" ng-pattern-restrict>
             </div>
             <div class="col-sm-4">
-                <label for="mobile2" class="col-form-label">Mobile 2</label>
+                <label for="mobile2" class="col-form-label">Mobile 2
+                <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                </label>
                 <input name="mobile2" id="mobile2" placeholder="mobile 2" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentMobile2" pattern="^[0-9]*$" ng-pattern-restrict>
             </div>
         </div>
@@ -166,7 +176,9 @@
                         <input name="relation" id="relation" placeholder="relation" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentEmergencyRelation" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-4">
-                        <label for="mobile" class="col-form-label"><span class="mendatory">* </span>Mobile</label>
+                        <label for="mobile" class="col-form-label required">Mobile
+                        <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
                         <input name="mobile" id="mobile" placeholder="mobile" type="text" class="form-control" ng-Model="EmployeeModel.Person.ParentEmergencyMobile" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                 </div>
