@@ -21,18 +21,24 @@ namespace SMS.Services.Implementation
         {
             try
             {
-                dtoPeriod.CreatedDate = DateTime.Now;
-                dtoPeriod.IsDeleted = false;
-                dtoPeriod.Id = Guid.NewGuid();
-                HelpingMethodForRelationship(dtoPeriod);
-                _repository.Add(_mapper.Map<DTOPeriod, Period>(dtoPeriod));
-                return PrepareSuccessResponse("success", "");
+                if (dtoPeriod.StartTime != null && dtoPeriod.EndTime != null && dtoPeriod.CourseId != null &&
+                    dtoPeriod.TeacherId != null)
+                {
+                    dtoPeriod.CreatedDate = DateTime.Now;
+                    dtoPeriod.IsDeleted = false;
+                    dtoPeriod.Id = Guid.NewGuid();
+                    HelpingMethodForRelationship(dtoPeriod);
+                    _repository.Add(_mapper.Map<DTOPeriod, Period>(dtoPeriod));
+                    return PrepareSuccessResponse("success", "");
+                }
+
+                return PrepareFailureResponse("Error", "Incomplete Data");
             }
             catch (Exception e)
             {
                 return PrepareFailureResponse("error", e.Message);
             }
-            
+
         }
         private void HelpingMethodForRelationship(DTOPeriod dtoTimeTableDetail)
         {

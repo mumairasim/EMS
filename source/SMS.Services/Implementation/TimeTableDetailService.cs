@@ -27,11 +27,12 @@ namespace SMS.Services.Implementation
                 dtoTimeTableDetail.IsDeleted = false;
                 dtoTimeTableDetail.Id = Guid.NewGuid();
                 var timeTableDetail = _repository.Add(_mapper.Map<DTOTimeTableDetail, TimeTableDetail>(dtoTimeTableDetail));
-                foreach (var period in dtoTimeTableDetail.Periods)
-                {
-                    period.TimeTableDetailId = timeTableDetail.Id;
-                    _periodService.Create(period);
-                }
+                if (dtoTimeTableDetail.Periods != null)
+                    foreach (var period in dtoTimeTableDetail.Periods)
+                    {
+                        period.TimeTableDetailId = timeTableDetail.Id;
+                        _periodService.Create(period);
+                    }
 
                 return PrepareSuccessResponse("success", "");
             }

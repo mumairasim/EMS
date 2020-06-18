@@ -28,12 +28,13 @@ namespace SMS.Services.Implementation
                 dtoTimeTable.Id = Guid.NewGuid();
                 HelpingMethodForRelationship(dtoTimeTable);
                 var timeTable = _repository.Add(_mapper.Map<DTOTimeTable, TimeTable>(dtoTimeTable));
-                foreach (var timeTableDetail in dtoTimeTable.TimeTableDetails)
-                {
-                    timeTableDetail.TimeTableId = timeTable.Id;
-                    timeTableDetail.CreatedBy = dtoTimeTable.CreatedBy;
-                    _timeTableDetailService.Create(timeTableDetail);
-                }
+                if (dtoTimeTable.TimeTableDetails != null)
+                    foreach (var timeTableDetail in dtoTimeTable.TimeTableDetails)
+                    {
+                        timeTableDetail.TimeTableId = timeTable.Id;
+                        timeTableDetail.CreatedBy = dtoTimeTable.CreatedBy;
+                        _timeTableDetailService.Create(timeTableDetail);
+                    }
                 return PrepareSuccessResponse("success", "");
             }
             catch (Exception e)
