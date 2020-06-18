@@ -24,6 +24,7 @@ namespace SMS.UI.HeadOffice
                        "~/Scripts/App/angular-growl-notifications.js",
                        "~/Scripts/App/angular-ui-router.min.js",
                        "~/Scripts/App/ng-file-upload-all.js",
+                       "~/Scripts/App/ng-pattern-restrict.min.js",
                        "~/Scripts/angular-local-storage.min.js",
                        //External Scripts
                        "~/Scripts/App/js/main.js",
@@ -40,10 +41,16 @@ namespace SMS.UI.HeadOffice
                        "~/App/Controllers/Modules/Employee/*.js",
                        "~/App/Controllers/Modules/Class/*.js",
                        "~/App/Controllers/UserProfile/*.js",
+                       "~/App/Controllers/UserProfile/*.js",
                        "~/App/Controllers/Modules/Worksheet/*.js",
                        "~/App/Controllers/Modules/LessonPlan/*.js",
+                       "~/App/Controllers/Modules/Attendance/*.js",
+                       "~/App/Controllers/Modules/FinanceType/*.js",
+                       "~/App/Controllers/Modules/StudentFinance/*.js",
+                       "~/App/Controllers/Modules/EmployeeFinance/*.js",
                         "~/App/Controllers/Modules/TeacherDiary/*.js",
-                       "~/App/Controllers/Modules/Attendance/*.js"
+                       "~/App/Controllers/Modules/Attendance/*.js",
+                       "~/App/Controllers/Modules/TimeTable/*.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

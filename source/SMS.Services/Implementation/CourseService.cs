@@ -107,6 +107,16 @@ namespace SMS.Services.Implementation
             }
             return courseList;
         }
+        public List<DTOCourse> GetAllBySchool(Guid? schoolId)
+        {
+            var courses = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null) && x.SchoolId == schoolId).ToList();
+            var courseList = new List<DTOCourse>();
+            foreach (var course in courses)
+            {
+                courseList.Add(_mapper.Map<DBCourse, DTOCourse>(course));
+            }
+            return courseList;
+        }
 
         #endregion
     }

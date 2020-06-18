@@ -11,15 +11,14 @@ namespace SMS.DATA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TimeTable()
         {
-            TimeTableDetails = new HashSet<TimeTableDetail>();
         }
 
         [StringLength(500)]
         public string TimeTableName { get; set; }
         public Guid? SchoolId { get; set; }
+        public Guid? ÇlassId { get; set; }
 
         public virtual School School { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableDetail> TimeTableDetails { get; set; }
+        public virtual Class Class { get; set; }
     }
 }

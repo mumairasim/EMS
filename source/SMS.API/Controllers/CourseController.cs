@@ -23,7 +23,7 @@ namespace SMS.API.Controllers
         #region API Calls
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get(Guid id)
+        public IHttpActionResult Get(Guid? id)
         {
             if (id == null)
             {
@@ -48,6 +48,20 @@ namespace SMS.API.Controllers
             try
             {
                 var result = _courseService.GetAll();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+        [HttpGet]
+        [Route("GetAllBySchool")]
+        public IHttpActionResult GetAllBySchool(Guid? schoolId)
+        {
+            try
+            {
+                var result = _courseService.GetAllBySchool(schoolId);
                 return Ok(result);
             }
             catch (Exception)
