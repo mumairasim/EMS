@@ -7,9 +7,12 @@ using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
+using SMS.DTOs.ReponseDTOs;
+using System.Text.RegularExpressions;
+
 namespace SMS.Services.Implementation
 {
-    
+
     public class LessonPlanService : ILessonPlanService
     {
         private readonly IRepository<LessonPlan> _repository;
@@ -19,7 +22,7 @@ namespace SMS.Services.Implementation
             _repository = repository;
             _mapper = mapper;
         }
-        
+
         public LessonPlansList Get(int pageNumber, int pageSize)
         {
             var lessonPlans = _repository.Get().Where(lp => lp.IsDeleted == false).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
@@ -39,38 +42,129 @@ namespace SMS.Services.Implementation
         public DTOLessonPlan Get(Guid? id)
         {
             if (id == null) return null;
-            var lessonplanRecord = _repository.Get().FirstOrDefault(lp=>lp.Id==id && lp.IsDeleted == false);
-            var lessonplan= _mapper.Map<LessonPlan, DTOLessonPlan>(lessonplanRecord);
+            var lessonplanRecord = _repository.Get().FirstOrDefault(lp => lp.Id == id && lp.IsDeleted == false);
+            var lessonplan = _mapper.Map<LessonPlan, DTOLessonPlan>(lessonplanRecord);
             return lessonplan;
         }
-        
-        public void Create(DTOLessonPlan lessonPlan)
+        public LessonPlanResponse Create(DTOLessonPlan lessonPlan)
         {
+            var validationResult = Validation(lessonPlan);
+            if (validationResult.IsError)
+            {
+                return validationResult;
+            }
             lessonPlan.CreatedDate = DateTime.UtcNow;
             lessonPlan.IsDeleted = false;
             lessonPlan.Id = Guid.NewGuid();
             lessonPlan.SchoolId = lessonPlan.School.Id;
             lessonPlan.School = null;
             _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonPlan));
+            return validationResult;
         }
 
-        public void Update(DTOLessonPlan dtoLessonplan)
+        public LessonPlanResponse Update(DTOLessonPlan dtoLessonplan)
         {
+            var validationResult = Validation(dtoLessonplan);
+            if (validationResult.IsError)
+            {
+                return validationResult;
+            }
             var lessonplan = Get(dtoLessonplan.Id);
             dtoLessonplan.UpdateDate = DateTime.UtcNow;
             var mergedLessonPlan = _mapper.Map(dtoLessonplan, lessonplan);
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(mergedLessonPlan));
+            return validationResult;
         }
 
         public void Delete(Guid? id, string deletedBy)
         {
             if (id == null)
                 return;
-            var lessonplan= Get(id);
+            var lessonplan = Get(id);
             lessonplan.DeletedBy = deletedBy;
             lessonplan.IsDeleted = true;
             lessonplan.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonplan));
+        }
+        private LessonPlanResponse Validation(DTOLessonPlan dtoLessonplan)
+        {
+            var alphaRegex = new Regex("^[a-zA-Z ]+$");
+            //var numericRegex = new Regex("^[0-9]*$");
+            if (dtoLessonplan == null) 
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "Invalid",
+                    "Object cannot be null"
+                    );
+            }
+            if (dtoLessonplan.Name == null || dtoLessonplan.Name.Length > 100)
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "InvalidName",
+                    "Name may null or exceed than 100 characters"
+                    );
+            }
+            if (!alphaRegex.IsMatch(dtoLessonplan.Name))
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
+            }
+            if (dtoLessonplan.Text == null)
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "InvalidText",
+                    "This field cannot be null"
+                    );
+            }
+            if (dtoLessonplan.FromDate == null)
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "InvalidField",
+                    "This field cannot be null"
+                    );
+            }
+            if (dtoLessonplan.ToDate == null)
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "InvalidField",
+                    "This field cannot be null"
+                    );
+            }
+            if (dtoLessonplan.School == null)
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                    "InvalidField",
+                    "This field cannot be null"
+                    );
+            }
+            return PrepareSuccessResponse(dtoLessonplan.Id,
+                    "NoError",
+                    "No Error Found"
+                    );
+        }
+        private LessonPlanResponse PrepareFailureResponse(Guid id, string errorMessage, string descriptionMessage)
+        {
+            return new LessonPlanResponse
+            {
+                Id = id,
+                IsError = true,
+                StatusCode = "400",
+                Message = errorMessage,
+                Description = descriptionMessage
+            };
+        }
+        private LessonPlanResponse PrepareSuccessResponse(Guid id, string message, string descriptionMessage)
+        {
+            return new LessonPlanResponse
+            {
+                Id = id,
+                IsError = false,
+                StatusCode = "200",
+                Message = message,
+                Description = descriptionMessage
+            };
         }
     }
 }
