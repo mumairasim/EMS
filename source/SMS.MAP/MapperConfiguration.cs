@@ -46,6 +46,11 @@ using DBEmployeeFinanceInfo = SMS.DATA.Models.NonDbContextModels.EmployeeFinance
 using DTOEmployeeFinanceInfo = SMS.DTOs.DTOs.EmployeeFinanceInfo;
 
 
+using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
+using DTOTimeTableDetail = SMS.DTOs.DTOs.TimeTableDetail;
+using DTOPeriod = SMS.DTOs.DTOs.Period;
+
+
 
 namespace SMS.MAP
 {
@@ -127,6 +132,19 @@ namespace SMS.MAP
             CreateMap<DBFinanceType, DTOFinanceType>();
             CreateMap<DTOFinanceType, DTOFinanceType>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<TimeTable, DTOTimeTable>();
+            CreateMap<DTOTimeTable, DTOTimeTable>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<TimeTableDetail, DTOTimeTableDetail>();
+            CreateMap<DTOTimeTableDetail, DTOTimeTableDetail>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<Period, DTOPeriod>();
+            CreateMap<DTOPeriod, DTOPeriod>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
 
             #region DTO to DB
@@ -154,6 +172,9 @@ namespace SMS.MAP
             CreateMap<DTOEmployeeFinance, DBEmployeeFinance>();
             CreateMap<DTOEmployeeFinanceDetail, DBEmployeeFinanceDetail>();
             CreateMap<DTOFinanceType, DBFinanceType>();
+            CreateMap<DTOTimeTable, TimeTable>();
+            CreateMap<DTOTimeTableDetail, TimeTableDetail>();
+            CreateMap<DTOPeriod, Period>();
 
             #endregion
 

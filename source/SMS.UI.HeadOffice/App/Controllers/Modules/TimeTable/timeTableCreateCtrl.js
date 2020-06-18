@@ -1,8 +1,7 @@
-﻿SMSHO.controller('timeTableCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+﻿SMSHO.controller('timeTableCreateCtrl', ['$scope', 'apiService', '$cookies','$filter', function ($scope, apiService, $cookies, $filter) {
     'use strict';
     $scope.TimeTable = {
-        Days: [{
-            Id: "",
+        TimeTableDetails: [{
             Day: "",
             Periods: [{
                 Course: "",
@@ -11,11 +10,6 @@
                 EndTime: ""
             }]
         }]
-    };
-    $scope.Day = {
-        Id: "",
-        Day: "",
-        Periods: []
     };
     $scope.Period = {
         Course: "",
@@ -36,7 +30,7 @@
 
     };
     $scope.GetClasses = function () {
-        var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.School.Id);
+        var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.TimeTable.School.Id);
         responsedata.then(function mySucces(response) {
             $scope.Classes = response.data;
             $scope.TimeTable.Class = $scope.Classes[0];
@@ -58,7 +52,7 @@
             });
     };
     $scope.GetCourses = function () {
-        var responsedata = apiService.masterget('/api/v1/Course/GetAllBySchool?schoolId=' + $scope.School.Id);
+        var responsedata = apiService.masterget('/api/v1/Course/GetAllBySchool?schoolId=' + $scope.TimeTable.School.Id);
         responsedata.then(function mySucces(response) {
             $scope.Courses = response.data;
             $scope.Course = $scope.Courses[0];
@@ -95,17 +89,18 @@
             });
     };
     $scope.AddPeriod = function () {
-        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
-            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].Day == $scope.SelectedDay) {
-                    if ($scope.TimeTable.Days[i].Periods == undefined) {
-                        $scope.TimeTable.Days[i].Periods = [];
+        for (var i = 0; i < $scope.TimeTable.TimeTableDetails.length; i++) {
+            if (($scope.TimeTable.TimeTableDetails[i] !== null) && ($scope.TimeTable.TimeTableDetails[i] !== undefined)) {
+                if ($scope.TimeTable.TimeTableDetails[i].Day == $scope.SelectedDay.Day) {
+                    if ($scope.TimeTable.TimeTableDetails[i].Periods == undefined) {
+                        $scope.TimeTable.TimeTableDetails[i].Periods = [];
                     }
-                    $scope.TimeTable.Days[i].Periods.push({
+
+                    $scope.TimeTable.TimeTableDetails[i].Periods.push({
                         Course: $scope.Course,
                         Employee: $scope.Employee,
-                        StartTime: $scope.StartTime,
-                        EndTime: $scope.EndTime
+                        StartTime: $filter('date')($scope.StartTime, 'HH:mm'),
+                        EndTime: $filter('date')($scope.EndTime, 'HH:mm')
                     });
                 }
             }
@@ -115,9 +110,8 @@
 
         if ($scope.monday) {
             if (!$scope.IsAlreadyExist("Monday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Monday"
                     });
             }
@@ -126,9 +120,8 @@
         }
         if ($scope.tuesday) {
             if (!$scope.IsAlreadyExist("Tuesday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Tuesday"
                     });
             }
@@ -137,9 +130,8 @@
         }
         if ($scope.wednesday) {
             if (!$scope.IsAlreadyExist("Wednesday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Wednesday"
                     });
             }
@@ -148,9 +140,8 @@
         }
         if ($scope.thursday) {
             if (!$scope.IsAlreadyExist("Thursday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Thursday"
                     });
             }
@@ -159,9 +150,8 @@
         }
         if ($scope.friday) {
             if (!$scope.IsAlreadyExist("Friday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Friday"
                     });
             }
@@ -170,9 +160,8 @@
         }
         if ($scope.saturday) {
             if (!$scope.IsAlreadyExist("Saturday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Saturday"
                     });
             }
@@ -181,38 +170,37 @@
         }
         if ($scope.sunday) {
             if (!$scope.IsAlreadyExist("Sunday")) {
-                $scope.TimeTable.Days.push(
+                $scope.TimeTable.TimeTableDetails.push(
                     {
-                        Id: $scope.GuidGenerator(),
                         Day: "Sunday"
                     });
             }
         } else {
             $scope.remove("Sunday");
         }
-        $scope.PreparePeriodDaysList();
+        $scope.PreparePeriodTimeTableDetailsList();
     };
     $scope.remove = function (item) {
-        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
-            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].Day == item) {
-                    $scope.TimeTable.Days.splice(i, 1);
+        for (var i = 0; i < $scope.TimeTable.TimeTableDetails.length; i++) {
+            if (($scope.TimeTable.TimeTableDetails[i] !== null) && ($scope.TimeTable.TimeTableDetails[i] !== undefined)) {
+                if ($scope.TimeTable.TimeTableDetails[i].Day == item) {
+                    $scope.TimeTable.TimeTableDetails.splice(i, 1);
                 }
             }
         }
     };
     $scope.IsAlreadyExist = function (item) {
-        for (var i = 0; i < $scope.TimeTable.Days.length; i++) {
-            if (($scope.TimeTable.Days[i] !== null) && ($scope.TimeTable.Days[i] !== undefined)) {
-                if ($scope.TimeTable.Days[i].Day == item) {
+        for (var i = 0; i < $scope.TimeTable.TimeTableDetails.length; i++) {
+            if (($scope.TimeTable.TimeTableDetails[i] !== null) && ($scope.TimeTable.TimeTableDetails[i] !== undefined)) {
+                if ($scope.TimeTable.TimeTableDetails[i].Day == item) {
                     return true;
                 }
             }
         }
         return false;
     };
-    $scope.PreparePeriodDaysList = function () {
-        $scope.Day = $scope.TimeTable.Days[0];
+    $scope.PreparePeriodTimeTableDetailsList = function () {
+        $scope.Day = $scope.TimeTable.TimeTableDetails[0];
     };
     $scope.test = function (x, index) {
         console.log(x);
