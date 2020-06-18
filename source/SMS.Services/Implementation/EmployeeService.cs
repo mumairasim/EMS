@@ -84,6 +84,7 @@ namespace SMS.Services.Implementation
             }
             var employee = Get(dtoEmployee.PersonId);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, employee);
             _personService.Update(mergedEmployee.Person);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));

@@ -60,11 +60,12 @@ namespace SMS.Services.Implementation
         }
 
         
-        public void Update(DTOTeacherDiary dtoTeacherDiary)
+        public void Update(DTOTeacherDiary dtoteacherDiary)
         {
-            var teacherDiary = Get(dtoTeacherDiary.Id);
-            dtoTeacherDiary.UpdateDate = DateTime.UtcNow;
-            var mergedTeacherDiary = _mapper.Map(dtoTeacherDiary, teacherDiary);
+            var teacherDiary = Get(dtoteacherDiary.Id);
+            dtoteacherDiary.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoteacherDiary);
+            var mergedTeacherDiary = _mapper.Map(dtoteacherDiary, teacherDiary);
             _repository.Update(_mapper.Map<DTOTeacherDiary, TeacherDiary>(mergedTeacherDiary));
         }
 

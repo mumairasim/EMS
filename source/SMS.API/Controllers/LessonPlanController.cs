@@ -43,8 +43,8 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var lessonPlanDetail = JsonConvert.DeserializeObject<DTOLessonPlan>(httpRequest.Params["lessonPlanModel"]);
             lessonPlanDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _lessonplanService.Create(lessonPlanDetail);
-            return Ok();
+            return Ok(_lessonplanService.Create(lessonPlanDetail));
+           
         }
 
         [HttpPut]
@@ -54,8 +54,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var lessonPlanDetail = JsonConvert.DeserializeObject<DTOLessonPlan>(httpRequest.Params["lessonPlanModel"]);
             lessonPlanDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _lessonplanService.Update(lessonPlanDetail);
-            return Ok();
+            return Ok(_lessonplanService.Update(lessonPlanDetail));
         }
 
         [HttpDelete]

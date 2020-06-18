@@ -97,6 +97,7 @@ namespace SMS.Services.Implementation
             }
             var student = Get(dtoStudent.Id);
             dtoStudent.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoStudent);
             var mergedStudent = _mapper.Map(dtoStudent, student);
             _personService.Update(mergedStudent.Person);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));

@@ -46,19 +46,19 @@ namespace SMS.Services.Implementation
             var lessonplan = _mapper.Map<LessonPlan, DTOLessonPlan>(lessonplanRecord);
             return lessonplan;
         }
-        public LessonPlanResponse Create(DTOLessonPlan lessonPlan)
+        public LessonPlanResponse Create(DTOLessonPlan dtoLessonplan)
         {
-            var validationResult = Validation(lessonPlan);
+            var validationResult = Validation(dtoLessonplan);
             if (validationResult.IsError)
             {
                 return validationResult;
             }
-            lessonPlan.CreatedDate = DateTime.UtcNow;
-            lessonPlan.IsDeleted = false;
-            lessonPlan.Id = Guid.NewGuid();
-            lessonPlan.SchoolId = lessonPlan.School.Id;
-            lessonPlan.School = null;
-            _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(lessonPlan));
+            dtoLessonplan.CreatedDate = DateTime.UtcNow;
+            dtoLessonplan.IsDeleted = false;
+            dtoLessonplan.Id = Guid.NewGuid();
+            dtoLessonplan.SchoolId = dtoLessonplan.School.Id;
+            dtoLessonplan.School = null;
+            _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(dtoLessonplan));
             return validationResult;
         }
 
@@ -71,6 +71,8 @@ namespace SMS.Services.Implementation
             }
             var lessonplan = Get(dtoLessonplan.Id);
             dtoLessonplan.UpdateDate = DateTime.UtcNow;
+            dtoLessonplan.SchoolId = dtoLessonplan.School.Id;
+            dtoLessonplan.School = null;
             var mergedLessonPlan = _mapper.Map(dtoLessonplan, lessonplan);
             _repository.Update(_mapper.Map<DTOLessonPlan, LessonPlan>(mergedLessonPlan));
             return validationResult;
@@ -88,35 +90,43 @@ namespace SMS.Services.Implementation
         }
         private LessonPlanResponse Validation(DTOLessonPlan dtoLessonplan)
         {
-            var alphaRegex = new Regex("^[a-zA-Z ]+$");
+            //var alphaRegex = new Regex("^[a-zA-Z ]+$");
             //var numericRegex = new Regex("^[0-9]*$");
-            if (dtoLessonplan == null) 
+            var alphanumericRegex = new Regex("^[a-zA-Z0-9 ]*$");
+            if (dtoLessonplan == null)
             {
                 return PrepareFailureResponse(dtoLessonplan.Id,
                     "Invalid",
                     "Object cannot be null"
                     );
             }
-            if (dtoLessonplan.Name == null || dtoLessonplan.Name.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoLessonplan.Name) || dtoLessonplan.Name.Length > 100)
             {
                 return PrepareFailureResponse(dtoLessonplan.Id,
                     "InvalidName",
                     "Name may null or exceed than 100 characters"
                     );
             }
-            if (!alphaRegex.IsMatch(dtoLessonplan.Name))
+            if (!alphanumericRegex.IsMatch(dtoLessonplan.Name))
             {
                 return PrepareFailureResponse(dtoLessonplan.Id,
                    "InvalidName",
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoLessonplan.Text == null)
+            if (string.IsNullOrWhiteSpace(dtoLessonplan.Text))
             {
                 return PrepareFailureResponse(dtoLessonplan.Id,
                     "InvalidText",
                     "This field cannot be null"
                     );
+            }
+            if (!alphanumericRegex.IsMatch(dtoLessonplan.Text))
+            {
+                return PrepareFailureResponse(dtoLessonplan.Id,
+                   "InvalidName",
+                   "Text Field doesn't contain any numbers"
+                   );
             }
             if (dtoLessonplan.FromDate == null)
             {
