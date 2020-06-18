@@ -40,6 +40,7 @@ namespace SMS.REQUESTDATA.RequestModels
         public virtual DbSet<TimeTableDetail> TimeTableDetails { get; set; }
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
+        public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

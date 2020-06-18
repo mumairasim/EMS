@@ -76,6 +76,7 @@
     <Compile Include="RequestModels\LessonPlan.cs" />
     <Compile Include="RequestModels\Period.cs" />
     <Compile Include="RequestModels\Person.cs" />
+    <Compile Include="RequestModels\RequestStatus.cs" />
     <Compile Include="RequestModels\RequestType.cs" />
     <Compile Include="RequestModels\School.cs" />
     <Compile Include="RequestModels\SMS.cs" />

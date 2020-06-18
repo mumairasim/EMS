@@ -1,11 +1,14 @@
-﻿using SMS.REQUESTDATA.RequestModels;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SMS.REQUESTDATA
+namespace SMS.REQUESTDATA.RequestModels
 {
-    public class BaseEntity
+    [Table("RequestStatuses")]
+    public class RequestStatus
     {
         public Guid Id { get; set; }
+        public string Type { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public Guid? CreatedBy { get; set; }
@@ -20,6 +23,5 @@ namespace SMS.REQUESTDATA
 
         public bool? IsDeleted { get; set; }
 
-        public Guid? RequestStatusId { get; set; }
     }
 }

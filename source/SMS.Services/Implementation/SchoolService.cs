@@ -6,18 +6,24 @@ using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
 using SMS.Services.Infrastructure;
 using DTOSchool = SMS.DTOs.DTOs.School;
+using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
+
 
 namespace SMS.Services.Implementation
 {
-    public class SchoolService :   ISchoolService
+    public class SchoolService : ISchoolService
     {
         private readonly IRepository<School> _repository;
+        private readonly IRepository<ReqSchool> _requestRepository;
         private IMapper _mapper;
-        public SchoolService(IRepository<School> repository, IMapper mapper)
+        public SchoolService(IRepository<School> repository, IMapper mapper, IRepository<ReqSchool> requestRepository)
         {
             _repository = repository;
+            _requestRepository = requestRepository;
             _mapper = mapper;
         }
+
+        #region SMS Section
         public List<DTOSchool> Get()
         {
             var schools = _repository.Get().ToList();
@@ -31,9 +37,9 @@ namespace SMS.Services.Implementation
         public DTOSchool Get(Guid? id)
         {
             if (id == null) return null;
-           var schoolRecord = _repository.Get().FirstOrDefault(s => s.Id == id);
+            var schoolRecord = _repository.Get().FirstOrDefault(s => s.Id == id);
             if (schoolRecord == null) return null;
-            
+
             return _mapper.Map<School, DTOSchool>(schoolRecord);
         }
         public Guid Create(DTOSchool dtoSchool)
@@ -48,7 +54,7 @@ namespace SMS.Services.Implementation
         {
             var school = Get(dtoSchool.Id);
             dtoSchool.UpdateDate = DateTime.UtcNow;
-            var mergedSchool = _mapper.Map(dtoSchool, school) ;
+            var mergedSchool = _mapper.Map(dtoSchool, school);
             _repository.Update(_mapper.Map<DTOSchool, School>(mergedSchool));
         }
         public void Delete(Guid? id)
@@ -60,5 +66,52 @@ namespace SMS.Services.Implementation
             school.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOSchool, School>(school));
         }
+        #endregion
+
+        #region SMS Request Section
+        public List<DTOSchool> RequestGet()
+        {
+            var schools = _requestRepository.Get().ToList();
+            var schoolList = new List<DTOSchool>();
+            foreach (var school in schools)
+            {
+                schoolList.Add(_mapper.Map<ReqSchool, DTOSchool>(school));
+            }
+            return schoolList;
+        }
+        public DTOSchool RequestGet(Guid? id)
+        {
+            if (id == null) return null;
+            var schoolRecord = _requestRepository.Get().FirstOrDefault(s => s.Id == id);
+            if (schoolRecord == null) return null;
+
+            return _mapper.Map<ReqSchool, DTOSchool>(schoolRecord);
+        }
+        public Guid RequestCreate(DTOSchool dtoSchool)
+        {
+            dtoSchool.CreatedDate = DateTime.UtcNow;
+            dtoSchool.IsDeleted = false;
+            dtoSchool.Id = Guid.NewGuid();
+            _requestRepository.Add(_mapper.Map<DTOSchool, ReqSchool>(dtoSchool));
+            return dtoSchool.Id;
+        }
+        public void RequestUpdate(DTOSchool dtoSchool)
+        {
+            var school = Get(dtoSchool.Id);
+            dtoSchool.UpdateDate = DateTime.UtcNow;
+            var mergedSchool = _mapper.Map(dtoSchool, school);
+            _requestRepository.Update(_mapper.Map<DTOSchool, ReqSchool>(mergedSchool));
+        }
+        public void RequestDelete(Guid? id)
+        {
+            if (id == null)
+                return;
+            var school = Get(id);
+            school.IsDeleted = true;
+            school.DeletedDate = DateTime.UtcNow;
+            _requestRepository.Update(_mapper.Map<DTOSchool, ReqSchool>(school));
+        }
+        #endregion
+
     }
 }

@@ -16,6 +16,7 @@ namespace SMS.API.Controllers
             _schoolService = schoolService;
         }
 
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get()
@@ -49,5 +50,52 @@ namespace SMS.API.Controllers
             _schoolService.Delete(id);
             return Ok();
         }
+        #endregion
+
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(_schoolService.Get());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_schoolService.Get(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOSchool dtoSchool)
+        {
+            _schoolService.Create(dtoSchool);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOSchool dtoSchool)
+        {
+            _schoolService.Update(dtoSchool);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            _schoolService.Delete(id);
+            return Ok();
+        }
+        #endregion
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
