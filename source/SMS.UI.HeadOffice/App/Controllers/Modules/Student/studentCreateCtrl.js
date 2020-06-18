@@ -74,7 +74,6 @@
     };
     $scope.StudentCreate = function () {
         if ($scope.IsValid()) {
-
             var data = $scope.StudentModel;
             var formData = new FormData();
             if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
@@ -131,7 +130,7 @@
         if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName.length > 100) {
             $scope.IsError = "Name may null or exceed than 100 characters";
             $scope.growltext("LastName may null or exceed than 100 characters", true);
-            return false;
+            return false; string.IsNullOrWhiteSpace
         }
         if ($scope.StudentModel.Person.Cnic == null || $scope.StudentModel.Person.Cnic.length != 13) {
             $scope.IsError = "Cnic must be of 13 digits";
@@ -148,7 +147,6 @@
             $scope.growltext("Nationality cannot be null", true);
             return false;
         }
-        
         if ($scope.StudentModel.School == null) {
             $scope.IsError = "School cannot be null";
             $scope.growltext("School cannot be null", true);

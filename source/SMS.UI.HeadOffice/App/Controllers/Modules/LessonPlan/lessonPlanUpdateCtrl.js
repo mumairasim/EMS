@@ -25,19 +25,21 @@
             });
     };
     $scope.LessonPlanUpdate = function () {
-        var data = $scope.LessonPlanModel;
-        var formData = new FormData();
-        formData.append('lessonPlanModel', JSON.stringify(data));
-        var responsedata = apiService.masterput('/api/v1/LessonPlan/Update', formData);
-        responsedata.then(function mySucces(response) {
-            $scope.response = response.data;
-            $scope.growltext("Lesson Plan updated successfully.", false);
-            window.location = "#!/lessonPlanBase";
-        },
-            function myError(response) {
+        if ($scope.IsValid()) {
+            var data = $scope.LessonPlanModel;
+            var formData = new FormData();
+            formData.append('lessonPlanModel', JSON.stringify(data));
+            var responsedata = apiService.masterput('/api/v1/LessonPlan/Update', formData);
+            responsedata.then(function mySucces(response) {
                 $scope.response = response.data;
-                $scope.growltext("Lesson Plan updation failed", true);
-            });
+                $scope.growltext("Lesson Plan updated successfully.", false);
+                window.location = "#!/lessonPlanBase";
+            },
+                function myError(response) {
+                    $scope.response = response.data;
+                    $scope.growltext("Lesson Plan updation failed", true);
+                });
+        }s
     };
     $scope.FetchLessonPlan = function () {
         var id = $routeParams.Id;
@@ -56,5 +58,39 @@
     $scope.Cancel = function () {
         window.location = "#!/lessonPlanBase";
     };
+
+    $scope.IsValid = function () {
+        if ($scope.LessonPlanModel == undefined) {
+            $scope.growltext("Invalid lessonPlan data", true);
+            return false;
+        }
+        if ($scope.LessonPlanModel.Name == null || $scope.LessonPlanModel.Name.length > 100) {
+            $scope.IsError = "Name may null or exceed than 100 characters";
+            $scope.growltext("Name may null or exceed than 100 characters", true);
+            return false;
+        }
+        if ($scope.LessonPlanModel.Text == null) {
+            $scope.IsError = "This field cannot be null";
+            $scope.growltext("This field cannot be null", true);
+            return false;
+        }
+        if ($scope.LessonPlanModel.FromDate == null) {
+            $scope.IsError = "This field cannot be null";
+            $scope.growltext("This field cannot be null", true);
+            return false;
+        }
+        if ($scope.LessonPlanModel.ToDate == null) {
+            $scope.IsError = "This field cannot be null";
+            $scope.growltext("This field cannot be null", true);
+            return false;
+        }
+        if ($scope.LessonPlanModel.School == null) {
+            $scope.IsError = "This field cannot be null";
+            $scope.growltext("This field cannot be null", true);
+            return false;
+        }
+        return true;
+    }
+
     $scope.GetSchools();
 }]);
