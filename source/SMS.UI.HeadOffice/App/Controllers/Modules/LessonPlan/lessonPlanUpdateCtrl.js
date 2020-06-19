@@ -64,29 +64,29 @@
             $scope.growltext("Invalid lessonPlan data", true);
             return false;
         }
-        if ($scope.LessonPlanModel.Name == null || $scope.LessonPlanModel.Name.length > 100) {
-            $scope.IsError = "Name may null or exceed than 100 characters";
-            $scope.growltext("Name may null or exceed than 100 characters", true);
+        if ($scope.LessonPlanModel.Name == null || $scope.LessonPlanModel.Name == "" || $scope.LessonPlanModel.Name.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("Name cannot be null", true);
             return false;
         }
-        if ($scope.LessonPlanModel.Text == null) {
-            $scope.IsError = "This field cannot be null";
-            $scope.growltext("This field cannot be null", true);
+        if ($scope.LessonPlanModel.Text == null || $scope.LessonPlanModel.Text == "") {
+            $scope.IsError = "Text field cannot be null";
+            $scope.growltext("Text field cannot be null", true);
             return false;
         }
         if ($scope.LessonPlanModel.FromDate == null) {
-            $scope.IsError = "This field cannot be null";
-            $scope.growltext("This field cannot be null", true);
+            $scope.IsError = "Date cannot be null";
+            $scope.growltext("Date cannot be null", true);
             return false;
         }
         if ($scope.LessonPlanModel.ToDate == null) {
-            $scope.IsError = "This field cannot be null";
-            $scope.growltext("This field cannot be null", true);
+            $scope.IsError = "Date cannot be null";
+            $scope.growltext("Date cannot be null", true);
             return false;
         }
         if ($scope.LessonPlanModel.School == null) {
-            $scope.IsError = "This field cannot be null";
-            $scope.growltext("This field cannot be null", true);
+            $scope.IsError = "School cannot be null";
+            $scope.growltext("School cannot be null", true);
             return false;
         }
         return true;

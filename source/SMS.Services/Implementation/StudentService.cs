@@ -142,7 +142,7 @@ namespace SMS.Services.Implementation
         {
             var alphaRegex = new Regex("^[a-zA-Z ]+$");
             var numericRegex = new Regex("^[0-9]*$");
-            if (dtoStudent.Person.FirstName == null || dtoStudent.Person.FirstName.Length>100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.FirstName) || dtoStudent.Person.FirstName.Length>100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -156,7 +156,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.LastName == null || dtoStudent.Person.LastName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.LastName) || dtoStudent.Person.LastName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -184,7 +184,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.Phone == null || dtoStudent.Person.Phone.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.Phone) || dtoStudent.Person.Phone.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "PhoneLimitError",
@@ -198,7 +198,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.Nationality == null )
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.Nationality))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNationality",
@@ -212,7 +212,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.Religion != null && !alphaRegex.IsMatch(dtoStudent.Person.Religion))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.Religion) && !alphaRegex.IsMatch(dtoStudent.Person.Religion))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                    "InvalidText",
@@ -233,7 +233,7 @@ namespace SMS.Services.Implementation
                     "Class cannot be null"
                     );
             }
-            if (dtoStudent.Person.ParentName == null || dtoStudent.Person.ParentName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentName) || dtoStudent.Person.ParentName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -254,7 +254,7 @@ namespace SMS.Services.Implementation
                     "Cnic must be of 13 digits"
                     );
             }
-            if (dtoStudent.Person.ParentRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentRelation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidRelation",
@@ -268,21 +268,21 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentOccupation != null && dtoStudent.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoStudent.Person.ParentOccupation))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.ParentOccupation) && dtoStudent.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoStudent.Person.ParentOccupation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoStudent.Person.ParentNationality != null  && !alphaRegex.IsMatch(dtoStudent.Person.ParentNationality))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.ParentNationality) && !alphaRegex.IsMatch(dtoStudent.Person.ParentNationality))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoStudent.Person.ParentMobile1 == null || dtoStudent.Person.ParentMobile1.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentMobile1) || dtoStudent.Person.ParentMobile1.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
@@ -296,7 +296,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyName == null || dtoStudent.Person.ParentEmergencyName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyName) || dtoStudent.Person.ParentEmergencyName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -310,7 +310,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyRelation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidRelation",
@@ -324,7 +324,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyMobile == null || dtoStudent.Person.ParentEmergencyMobile.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyMobile) || dtoStudent.Person.ParentEmergencyMobile.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
