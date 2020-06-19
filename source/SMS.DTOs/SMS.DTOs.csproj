@@ -78,6 +78,7 @@
     <Compile Include="DTOs\Worksheet.cs" />
     <Compile Include="ReponseDTOs\EmployeeResponse.cs" />
     <Compile Include="ReponseDTOs\GenericApiResponse.cs" />
+    <Compile Include="ReponseDTOs\LessonPlanResponse.cs" />
     <Compile Include="ReponseDTOs\StudentResponse.cs" />
     <Compile Include="ReponseDTOs\StudentAttendanceResponse.cs" />
   </ItemGroup>

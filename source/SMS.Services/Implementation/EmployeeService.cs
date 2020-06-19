@@ -84,6 +84,7 @@ namespace SMS.Services.Implementation
             }
             var employee = Get(dtoEmployee.PersonId);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, employee);
             _personService.Update(mergedEmployee.Person);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));
@@ -112,7 +113,7 @@ namespace SMS.Services.Implementation
         {
             var alphaRegex = new Regex("^[a-zA-Z ]+$");
             var numericRegex = new Regex("^[0-9]*$");
-            if (dtoEmployee.Person.FirstName == null || dtoEmployee.Person.FirstName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.FirstName) || dtoEmployee.Person.FirstName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -126,7 +127,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.LastName == null || dtoEmployee.Person.LastName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.LastName) || dtoEmployee.Person.LastName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -154,7 +155,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.Phone == null || dtoEmployee.Person.Phone.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.Phone) || dtoEmployee.Person.Phone.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "PhoneLimitError",
@@ -168,7 +169,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.Nationality == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.Nationality))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNationality",
@@ -182,7 +183,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.Religion != null && !alphaRegex.IsMatch(dtoEmployee.Person.Religion))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.Religion) && !alphaRegex.IsMatch(dtoEmployee.Person.Religion))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                    "InvalidText",
@@ -203,7 +204,7 @@ namespace SMS.Services.Implementation
                     "Class cannot be null"
                     );
             }
-            if (dtoEmployee.Person.ParentName == null || dtoEmployee.Person.ParentName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentName) || dtoEmployee.Person.ParentName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -224,7 +225,7 @@ namespace SMS.Services.Implementation
                     "Cnic must be of 13 digits"
                     );
             }
-            if (dtoEmployee.Person.ParentRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentRelation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidRelation",
@@ -238,21 +239,21 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentOccupation != null && dtoEmployee.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoEmployee.Person.ParentOccupation))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentOccupation) && dtoEmployee.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoEmployee.Person.ParentOccupation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoEmployee.Person.ParentNationality != null && !alphaRegex.IsMatch(dtoEmployee.Person.ParentNationality))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentNationality) && !alphaRegex.IsMatch(dtoEmployee.Person.ParentNationality))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoEmployee.Person.ParentMobile1 == null || dtoEmployee.Person.ParentMobile1.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentMobile1) || dtoEmployee.Person.ParentMobile1.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNumber",
@@ -266,7 +267,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyName == null || dtoEmployee.Person.ParentEmergencyName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyName) || dtoEmployee.Person.ParentEmergencyName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -280,7 +281,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyRelation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidRelation",
@@ -294,7 +295,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyMobile == null || dtoEmployee.Person.ParentEmergencyMobile.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyMobile) || dtoEmployee.Person.ParentEmergencyMobile.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNumber",
