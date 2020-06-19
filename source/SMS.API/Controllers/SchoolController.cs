@@ -57,33 +57,33 @@ namespace SMS.API.Controllers
         [Route("RequestGet")]
         public IHttpActionResult RequestGet()
         {
-            return Ok(_schoolService.Get());
+            return Ok(_schoolService.RequestGet());
         }
         [HttpGet]
         [Route("RequestGet")]
         public IHttpActionResult RequestGet(Guid id)
         {
-            return Ok(_schoolService.Get(id));
+            return Ok(_schoolService.RequestGet(id));
         }
         [HttpPost]
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOSchool dtoSchool)
         {
-            _schoolService.Create(dtoSchool);
+            _schoolService.RequestCreate(dtoSchool);
             return Ok();
         }
         [HttpPut]
         [Route("RequestUpdate")]
         public IHttpActionResult RequestUpdate(DTOSchool dtoSchool)
         {
-            _schoolService.Update(dtoSchool);
+            _schoolService.RequestUpdate(dtoSchool);
             return Ok();
         }
         [HttpDelete]
         [Route("RequestDelete")]
         public IHttpActionResult RequestDelete(Guid id)
         {
-            _schoolService.Delete(id);
+            _schoolService.RequestDelete(id);
             return Ok();
         }
         #endregion
