@@ -153,14 +153,14 @@
             $scope.growltext("Invalid student data", true);
             return false;
         }
-        if ($scope.StudentModel.Person.FirstName == null || $scope.StudentModel.Person.FirstName.length > 100) {
-            $scope.IsError = "Name may null or exceed than 100 characters";
-            $scope.growltext("FirstName may null or exceed than 100 characters", true);
+        if ($scope.StudentModel.Person.FirstName == null || $scope.StudentModel.Person.FirstName == "" || $scope.StudentModel.Person.FirstName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("FirstName cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName.length > 100) {
-            $scope.IsError = "Name may null or exceed than 100 characters";
-            $scope.growltext("LastName may null or exceed than 100 characters", true);
+        if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName == "" || $scope.StudentModel.Person.LastName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("LastName cannot be null", true);
             return false;
         }
         if ($scope.StudentModel.Person.Cnic == null || $scope.StudentModel.Person.Cnic.length != 13) {
@@ -168,12 +168,12 @@
             $scope.growltext("Cnic must be of 13 digits", true);
             return false;
         }
-        if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone.length > 15) {
+        if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone == "" || $scope.StudentModel.Person.Phone.length > 15) {
             $scope.IsError = "Phone cannot exceed from 15 digits";
             $scope.growltext("Phone cannot be null or cannot exceed from 15 digits", true);
             return false;
         }
-        if ($scope.StudentModel.Person.Nationality == null) {
+        if ($scope.StudentModel.Person.Nationality == null || $scope.StudentModel.Person.Nationality == "") {
             $scope.IsError = "Nationality cannot be null";
             $scope.growltext("Nationality cannot be null", true);
             return false;
@@ -189,34 +189,34 @@
             $scope.growltext("Class cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentName == null || $scope.StudentModel.Person.ParentName.length > 100) {
-            $scope.IsError = "Name may null or exceed than 100 characters";
-            $scope.growltext("ParentName may null or exceed than 100 characters", true);
+        if ($scope.StudentModel.Person.ParentName == null || $scope.StudentModel.Person.ParentName == "" || $scope.StudentModel.Person.ParentName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("ParentName cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentRelation == null) {
+        if ($scope.StudentModel.Person.ParentRelation == null || $scope.StudentModel.Person.ParentRelation == "") {
             $scope.IsError = "Relation cannot be null";
             $scope.growltext("ParentRelation cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentMobile1 == null || $scope.StudentModel.Person.ParentMobile1.length > 15) {
+        if ($scope.StudentModel.Person.ParentMobile1 == null || $scope.StudentModel.Person.ParentMobile1 == "" || $scope.StudentModel.Person.ParentMobile1.length > 15) {
             $scope.IsError = "Number cannot be null";
-            $scope.growltext("ParentNumber1 cannot be null", true);
+            $scope.growltext("ParentMobile1 cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentEmergencyName == null || $scope.StudentModel.Person.ParentEmergencyName.length > 100) {
-            $scope.IsError = "Name may null or exceed than 100 characters";
-            $scope.growltext("ParName may null or exceed than 100 characters", true);
+        if ($scope.StudentModel.Person.ParentEmergencyName == null || $scope.StudentModel.Person.ParentEmergencyName == "" || $scope.StudentModel.Person.ParentEmergencyName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("ParentName cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentEmergencyRelation == null) {
+        if ($scope.StudentModel.Person.ParentEmergencyRelation == null || $scope.StudentModel.Person.ParentEmergencyRelation == "") {
             $scope.IsError = "Relation cannot be null";
-            $scope.growltext("Relation cannot be null", true);
+            $scope.growltext("ParentRelation cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentEmergencyMobile == null || $scope.StudentModel.Person.ParentEmergencyMobile.length > 15) {
+        if ($scope.StudentModel.Person.ParentEmergencyMobile == null || $scope.StudentModel.Person.ParentEmergencyMobile == "" || $scope.StudentModel.Person.ParentEmergencyMobile.length > 15) {
             $scope.IsError = "Number cannot be null";
-            $scope.growltext("Number cannot be null", true);
+            $scope.growltext("ParentEmergencyMobile cannot be null", true);
             return false;
         }
         return true;
