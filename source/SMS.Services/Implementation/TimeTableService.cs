@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using TimeTable = SMS.DATA.Models.TimeTable;
 using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
@@ -18,6 +21,22 @@ namespace SMS.Services.Implementation
             _repository = repository;
             _mapper = mapper;
             _timeTableDetailService = timeTableDetailService;
+        }
+        public TimeTableList Get(Guid? schoolId, Guid? classId, int pageNumber, int pageSize)
+        {
+            var timeTables = _repository.Get().Where(tt => tt.IsDeleted == false && tt.SchoolId==schoolId).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var timeTableCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var timeTableList = new List<DTOTimeTable>();
+            foreach (var timeTable in timeTables)
+            {
+                timeTableList.Add(_mapper.Map<TimeTable, DTOTimeTable>(timeTable));
+            }
+            var timeTablesList = new TimeTableList()
+            {
+                TimeTables = timeTableList,
+                TimeTablesCount = timeTableCount
+            };
+            return timeTablesList;
         }
         public GenericApiResponse Create(DTOTimeTable dtoTimeTable)
         {

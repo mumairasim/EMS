@@ -162,6 +162,11 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetUpdate.html",
             controller: "studentAttendanceSheetUpdateCtrl"
         })
+        .when("/timeTableBase", {
+            title: "Time Table Base",
+            templateUrl: "App/Controllers/Modules/TimeTable/timeTableBase.html",
+            controller: "timeTableBaseCtrl"
+        })
         .when("/timeTableCreate", {
             title: "Time Table Create",
             templateUrl: "App/Controllers/Modules/TimeTable/timeTableCreate.html",

@@ -19,6 +19,12 @@ namespace SMS.API.Controllers
             TimeTableService = timeTableService;
         }
 
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult Get(Guid? schoolId, Guid? classId, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(TimeTableService.Get(schoolId, classId, pageNumber, pageSize));
+        }
 
         [HttpPost]
         [Route("Create")]
