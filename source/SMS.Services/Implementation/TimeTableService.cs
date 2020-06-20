@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
         public TimeTableList Get(Guid? schoolId, Guid? classId, int pageNumber, int pageSize)
         {
             var timeTables = _repository.Get().Where(tt => tt.IsDeleted == false && tt.SchoolId==schoolId).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var timeTableCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var timeTableCount = _repository.Get().Count(st => st.IsDeleted == false);
             var timeTableList = new List<DTOTimeTable>();
             foreach (var timeTable in timeTables)
             {

@@ -36,7 +36,7 @@
     $scope.GetTimeTables = function () {
         var responsedata = apiService.masterget('/api/v1/TimeTable/Get?schoolId=' + $scope.TimeTable.School.Id + '&&classId=' + $scope.TimeTable.Class.Id + '&&pageNumber=1&&pageSize=10');
         responsedata.then(function mySucces(response) {
-            $scope.TimeTables = response.data;
+            $scope.TimeTableList = response.data;
         },
             function myError(response) {
                 $scope.response = response.data;

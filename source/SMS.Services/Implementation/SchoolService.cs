@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
+using SMS.REQUESTDATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using DTOSchool = SMS.DTOs.DTOs.School;
 using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
@@ -14,9 +15,9 @@ namespace SMS.Services.Implementation
     public class SchoolService : ISchoolService
     {
         private readonly IRepository<School> _repository;
-        private readonly IRepository<ReqSchool> _requestRepository;
-        private IMapper _mapper;
-        public SchoolService(IRepository<School> repository, IMapper mapper, IRepository<ReqSchool> requestRepository)
+        private readonly IRequestRepository<ReqSchool> _requestRepository;
+        private readonly IMapper _mapper;
+        public SchoolService(IRepository<School> repository, IMapper mapper, IRequestRepository<ReqSchool> requestRepository)
         {
             _repository = repository;
             _requestRepository = requestRepository;
