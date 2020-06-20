@@ -19,6 +19,7 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
             _periodService = periodService;
         }
+
         public GenericApiResponse Create(DTOTimeTableDetail dtoTimeTableDetail)
         {
             try
