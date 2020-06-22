@@ -58,6 +58,29 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
             controller: "employeeBaseCtrl"
         })
+
+
+        .when("/teacherDiarySearch", {
+            title: "TeacherDiary Search",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiarySearch.html",
+            controller: "teacherDiarySearchCtrl"
+        })
+        .when("/teacherDiaryCreate", {
+            title: "TeacherDiary Create",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryCreate.html",
+            controller: "teacherDiaryCreateCtrl"
+        })
+        .when("/teacherDiaryUpdate", {
+            title: "TeacherDiary Update",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryUpdate.html",
+            controller: "teacherDiaryUpdateCtrl"
+        })
+        .when("/teacherDiaryBase", {
+            title: "TeacherDiary Search",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",
+            controller: "teacherDiaryBaseCtrl"
+        })
+
         .when("/lessonPlanBase", {
             title: "LessonPlan Search",
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
@@ -73,6 +96,8 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
             controller: "lessonPlanUpdateCtrl"
         })
+
+
         .when("/userProfile", {
             title: "User Profile View",
             templateUrl: "App/Controllers/UserProfile/UserProfile.html",

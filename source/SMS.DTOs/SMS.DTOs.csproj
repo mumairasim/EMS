@@ -82,6 +82,7 @@
     <Compile Include="ReponseDTOs\LessonPlanResponse.cs" />
     <Compile Include="ReponseDTOs\StudentResponse.cs" />
     <Compile Include="ReponseDTOs\StudentAttendanceResponse.cs" />
+    <Compile Include="ReponseDTOs\TeacherDiaryResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RequestDTOs\" />

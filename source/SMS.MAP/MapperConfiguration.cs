@@ -114,6 +114,10 @@ namespace SMS.MAP
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<TeacherDiary, DTOTeacherDiary>();
+            CreateMap<DTOTeacherDiary, DTOTeacherDiary>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<DBFile, DTOFile>();
             CreateMap<DTOFile, DTOFile>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -166,6 +170,7 @@ namespace SMS.MAP
             CreateMap<DTOCourse, Course>();
             CreateMap<DTOWorksheet, DBWorksheet>();
             CreateMap<DTOLessonPlan, LessonPlan>();
+            CreateMap<DTOTeacherDiary, TeacherDiary>();
             CreateMap<DTOEmployee, Employee>();
             CreateMap<DTODesignation, Designation>();
             CreateMap<DTOStudentFinances, DBStudentFinances>();
