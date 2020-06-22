@@ -38,19 +38,21 @@
     };
 
     $scope.TeacherDiaryUpdate = function () {
-        var data = $scope.TeacherDiaryModel;
-        var formData = new FormData();
-        formData.append('teacherDiaryModel', JSON.stringify(data));
-        var responsedata = apiService.masterput('/api/v1/TeacherDiary/Update', formData);
-        responsedata.then(function mySucces(response) {
-            $scope.response = response.data;
-            $scope.growltext("Teacher Diary updated successfully.", false);
-            window.location = "#!/teacherDiaryBase";
-        },
-            function myError(response) {
+        if ($scope.IsValid()) {
+            var data = $scope.TeacherDiaryModel;
+            var formData = new FormData();
+            formData.append('teacherDiaryModel', JSON.stringify(data));
+            var responsedata = apiService.masterput('/api/v1/TeacherDiary/Update', formData);
+            responsedata.then(function mySucces(response) {
                 $scope.response = response.data;
-                $scope.growltext("Teacher Diary updation failed", true);
-            });
+                $scope.growltext("Teacher Diary updated successfully.", false);
+                window.location = "#!/teacherDiaryBase";
+            },
+                function myError(response) {
+                    $scope.response = response.data;
+                    $scope.growltext("Teacher Diary updation failed", true);
+                });
+        }
     };
     $scope.FetchTeacherDiary = function () {
         var id = $routeParams.Id;
@@ -68,5 +70,39 @@
     $scope.Cancel = function () {
         window.location = "#!/teacherDiaryBase";
     };
+
+    $scope.IsValid = function () {
+        if ($scope.TeacherDiaryModel == undefined) {
+            $scope.growltext("Invalid Teacher Diary data", true);
+            return false;
+        }
+        if ($scope.TeacherDiaryModel.Name == null || $scope.TeacherDiaryModel.Name == "" || $scope.TeacherDiaryModel.Name.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("Name cannot be null", true);
+            return false;
+        }
+        if ($scope.TeacherDiaryModel.DairyText == null || $scope.TeacherDiaryModel.DairyText == "") {
+            $scope.IsError = "Text field cannot be null";
+            $scope.growltext("Text field cannot be null", true);
+            return false;
+        }
+        if ($scope.TeacherDiaryModel.DairyDate == null) {
+            $scope.IsError = "Date  cannot be null";
+            $scope.growltext("Date cannot be null", true);
+            return false;
+        }
+        if ($scope.TeacherDiaryModel.Employee == null) {
+            $scope.IsError = "Employee cannot be null";
+            $scope.growltext("Employee cannot be null", true);
+            return false;
+        }
+        if ($scope.TeacherDiaryModel.School == null) {
+            $scope.IsError = "School cannot be null";
+            $scope.growltext("School cannot be null", true);
+            return false;
+        }
+        return true; s
+    }
+
     $scope.GetSchools();
 }]);
