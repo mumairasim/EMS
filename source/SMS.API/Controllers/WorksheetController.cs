@@ -18,14 +18,10 @@ namespace SMS.API.Controllers
         {
             _worksheetService = worksheetService;
         }
-
         #endregion
 
-        #region API Calls
-
-
         #region SMS
-        
+
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
@@ -122,7 +118,7 @@ namespace SMS.API.Controllers
 
         #endregion
 
-        #region SMS 
+        #region SMS Request
         [HttpGet]
         [Route("RequestGet")]
         public IHttpActionResult RequestGet(Guid id)
@@ -210,9 +206,6 @@ namespace SMS.API.Controllers
             }
             return Ok();
         }
-
-        #endregion
-
         #endregion
     }
 }
