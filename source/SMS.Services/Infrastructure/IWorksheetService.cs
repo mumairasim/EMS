@@ -5,6 +5,7 @@ namespace SMS.Services.Infrastructure
 {
     public interface IWorksheetService
     {
+        #region SMS
         /// <summary>
         /// Service level call : Return all records of a Worksheet
         /// </summary>
@@ -35,5 +36,39 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <param name="id"></param>
         void Delete(Guid? id);
+        #endregion
+
+        #region SMS Request
+        /// <summary>
+        /// Service level call : Return all records of a Worksheet on SMS Request
+        /// </summary>
+        /// <returns></returns>
+        List<DTOWorksheet> RequestGetAll();
+
+        /// <summary>
+        /// Retruns a Single Record of a Worksheet on SMS Request
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DTOWorksheet RequestGet(Guid? id);
+
+        /// <summary>
+        /// Service level call : Creates a single record of a Worksheet on SMS Request
+        /// </summary>
+        /// <param name="dtoWorksheet"></param>
+        void RequestCreate(DTOWorksheet dTOWorksheet);
+
+        /// <summary>
+        /// Service level call : Updates the Single Record of a Worksheet  on SMS Request
+        /// </summary>
+        /// <param name="dtoWorksheet"></param>
+        void RequestUpdate(DTOWorksheet dTOWorksheet);
+
+        /// <summary>
+        /// Service level call : Delete a single record of a Worksheet on SMS Request
+        /// </summary>
+        /// <param name="id"></param>
+        void RequestDelete(Guid? id);
+        #endregion
     }
 }

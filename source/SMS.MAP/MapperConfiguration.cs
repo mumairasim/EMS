@@ -5,6 +5,8 @@ using Course = SMS.DATA.Models.Course;
 using DBStudentFinanceDetails = SMS.DATA.Models.StudentFinanceDetail;
 using DBStudentFinances = SMS.DATA.Models.Student_Finances;
 using DBWorksheet = SMS.DATA.Models.Worksheet;
+using ReqWorksheet = SMS.REQUESTDATA.RequestModels.Worksheet;
+using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using DTOCourse = SMS.DTOs.DTOs.Course;
 using DTOPerson = SMS.DTOs.DTOs.Person;
@@ -12,7 +14,7 @@ using DTOSchool = SMS.DTOs.DTOs.School;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using DTOStudentFinanceDetails = SMS.DTOs.DTOs.StudentFinanceDetail;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
-using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
+
 using Person = SMS.DATA.Models.Person;
 using School = SMS.DATA.Models.School;
 using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
@@ -109,6 +111,7 @@ namespace SMS.MAP
             CreateMap<Course, DTOCourse>();
 
             CreateMap<DBWorksheet, DTOWorksheet>();
+            CreateMap<ReqWorksheet, DTOWorksheet>();
 
             CreateMap<LessonPlan, DTOLessonPlan>();
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
@@ -169,6 +172,7 @@ namespace SMS.MAP
             CreateMap<DTOSchool, ReqSchool>();
             CreateMap<DTOCourse, Course>();
             CreateMap<DTOWorksheet, DBWorksheet>();
+            CreateMap<DTOWorksheet, ReqWorksheet>();
             CreateMap<DTOLessonPlan, LessonPlan>();
             CreateMap<DTOTeacherDiary, TeacherDiary>();
             CreateMap<DTOEmployee, Employee>();
