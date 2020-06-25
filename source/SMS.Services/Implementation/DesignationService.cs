@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
         #region SMS Section
         public List<DTODesignation> Get()
         {
-            var designations = _repository.Get().ToList();
+            var designations = _repository.Get().Where(d => d.IsDeleted == false).ToList();
             var designationList = new List<DTODesignation>();
             foreach (var designation in designations)
             {
@@ -36,7 +36,7 @@ namespace SMS.Services.Implementation
         public DTODesignation Get(Guid? id)
         {
             if (id == null) return null;
-            var designationRecord = _repository.Get().FirstOrDefault(d => d.Id == id);
+            var designationRecord = _repository.Get().FirstOrDefault(d => d.Id == id &&  d.IsDeleted == false);
             if (designationRecord == null) return null;
 
             return _mapper.Map<Designation, DTODesignation>(designationRecord);
@@ -71,7 +71,7 @@ namespace SMS.Services.Implementation
        
         public List<DTODesignation> RequestGet()
         {
-            var designations = _requestRepository.Get().ToList();
+            var designations = _requestRepository.Get().Where(d => d.IsDeleted == false).ToList();
             var designationList = new List<DTODesignation>();
             foreach (var designation in designations)
             {
@@ -82,7 +82,8 @@ namespace SMS.Services.Implementation
         public DTODesignation RequestGet(Guid? id)
         {
             if (id == null) return null;
-            var designationRecord = _requestRepository.Get().FirstOrDefault(d => d.Id == id);
+            
+            var designationRecord = _requestRepository.Get().FirstOrDefault(d => d.Id == id && d.IsDeleted == false);
             if (designationRecord == null) return null;
 
             return _mapper.Map<ReqDesignation, DTODesignation>(designationRecord);
@@ -97,7 +98,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTODesignation dtoDesignation)
         {
-            var designation = Get(dtoDesignation.Id);
+            var designation = RequestGet(dtoDesignation.Id);
             dtoDesignation.UpdateDate = DateTime.UtcNow;
             var mergedDesignation = _mapper.Map(dtoDesignation, designation);
             _requestRepository.Update(_mapper.Map<DTODesignation, ReqDesignation>(mergedDesignation));
