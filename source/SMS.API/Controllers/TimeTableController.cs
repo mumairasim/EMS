@@ -19,6 +19,8 @@ namespace SMS.API.Controllers
             TimeTableService = timeTableService;
         }
 
+        #region SMS Section
+
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid? schoolId, Guid? classId, int pageNumber = 1, int pageSize = 10)
@@ -37,6 +39,28 @@ namespace SMS.API.Controllers
             return Ok();
         }
 
+        #endregion
 
+        #region RequestSMS Section
+
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid? schoolId, Guid? classId, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(TimeTableService.RequestGet(schoolId, classId, pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var timeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
+            timeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TimeTableService.RequestCreate(timeTable);
+            return Ok();
+        }
+
+        #endregion
     }
 }

@@ -19,12 +19,14 @@ namespace SMS.API.Controllers
         {
             StudentAttendanceService = studentAttendanceService;
         }
+        #region SMS Section
         /// <summary>
         /// Fetch all the data
         /// </summary>
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
+
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
@@ -68,6 +70,10 @@ namespace SMS.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        
+
+
+        
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
@@ -101,5 +107,93 @@ namespace SMS.API.Controllers
             StudentAttendanceService.Delete(id, deletedBy);
             return Ok();
         }
+        #endregion
+
+        #region RequestSMS Section
+        /// <summary>
+        /// Fetch all the data
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(StudentAttendanceService.RequestGet(pageNumber, pageSize));
+        }
+        /// <summary>
+        /// Fetch data on the basis of class and school 
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <param name="schoolId"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid? classId, Guid? schoolId, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(StudentAttendanceService.RequestGet(classId, schoolId, pageNumber, pageSize));
+        }
+        /// <summary>
+        /// Fetch data on the basis of class and school 
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <param name="schoolId"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("RequestSearch")]
+        public IHttpActionResult RequestSearch(Guid? classId, Guid? schoolId, int pageNumber = 1, int pageSize = 10)
+        {
+            var predicate = PredicateBuilder.True<DATA.Models.StudentAttendance>();
+            predicate.And(sa => sa.IsDeleted == false);
+            predicate.And(sa => sa.ClassId == classId);
+            predicate.And(sa => sa.SchoolId == schoolId);
+            return Ok(StudentAttendanceService.RequestSearch(predicate, pageNumber, pageSize));
+        }
+        /// <summary>
+        /// Fetch by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(StudentAttendanceService.RequestGet(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
+            studentAttendanceDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            return Ok(StudentAttendanceService.RequestCreate(studentAttendanceDetail));
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
+            studentAttendanceDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            StudentAttendanceService.RequestUpdate(studentAttendanceDetail);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            StudentAttendanceService.RequestDelete(id, deletedBy);
+            return Ok();
+        }
+        #endregion
     }
 }

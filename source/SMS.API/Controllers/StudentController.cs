@@ -20,6 +20,7 @@ namespace SMS.API.Controllers
             _studentService = studentService;
             _fileService = fileService;
         }
+        #region SMS Section
 
         [HttpGet]
         [Route("Get")]
@@ -77,5 +78,66 @@ namespace SMS.API.Controllers
             _studentService.Delete(id, deletedBy);
             return Ok();
         }
+        #endregion
+
+        #region RequestSMS Section  
+
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult RequestGet(int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(_studentService.RequestGet(pageNumber, pageSize));
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_studentService.RequestGet(id));
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid classId, Guid schoolId)
+        {
+            return Ok(_studentService.RequestGet(classId, schoolId));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            if (httpRequest.Files.Count > 0)
+            {
+                var file = httpRequest.Files[0];
+                studentDetail.ImageId = _fileService.Create(file);
+            }
+            return Ok(_studentService.RequestCreate(studentDetail));
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            if (httpRequest.Files.Count > 0)
+            {
+                var file = httpRequest.Files[0];
+                studentDetail.ImageId = _fileService.Update(file, studentDetail.Image.Id);
+            }
+            return Ok(_studentService.RequestUpdate(studentDetail));
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentService.RequestDelete(id, deletedBy);
+            return Ok();
+        }
+        #endregion
     }
 }
