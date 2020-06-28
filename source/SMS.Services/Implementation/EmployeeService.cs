@@ -16,11 +16,13 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<Employee> _repository;
         private readonly IPersonService _personService;
+        private readonly IEmployeeFinanceService _employeeFinanceService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IMapper mapper)
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper)
         {
             _repository = repository;
             _personService = personService;
+            _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
         }
 
@@ -58,6 +60,11 @@ namespace SMS.Services.Implementation
             if (id == null) return null;
             var employeeRecord = _repository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
             var employee = _mapper.Map<Employee, DTOEmployee>(employeeRecord);
+            var fincanceDetails = _employeeFinanceService.GetFinanceDetailByEmployeeId(employee.Id);
+            if (fincanceDetails != null)
+            {
+                employee.MonthlySalary = _employeeFinanceService.GetFinanceDetailByEmployeeId(employee.Id).Salary;
+            }
             return employee;
         }
         public EmployeeResponse Create(DTOEmployee dtoEmployee)
@@ -73,8 +80,20 @@ namespace SMS.Services.Implementation
             dtoEmployee.PersonId = _personService.Create(dtoEmployee.Person);
             HelpingMethodForRelationship(dtoEmployee);
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
+            InsertFinanceDetails(dtoEmployee);
             return validationResult;
         }
+
+        private void InsertFinanceDetails(DTOEmployee dtoEmployee)
+        {
+            var financeDetail = new EmployeeFinanceDetail
+            {
+                EmployeeId = dtoEmployee.Id,
+                Salary = dtoEmployee.MonthlySalary
+            };
+            _employeeFinanceService.CreateFinanceDetails(financeDetail);
+        }
+
         public EmployeeResponse Update(DTOEmployee dtoEmployee)
         {
             var validationResult = Validation(dtoEmployee);
@@ -82,12 +101,22 @@ namespace SMS.Services.Implementation
             {
                 return validationResult;
             }
-            var employee = Get(dtoEmployee.PersonId);
+            var employee = Get(dtoEmployee.Id);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
             HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, employee);
             _personService.Update(mergedEmployee.Person);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));
+            var finance = _employeeFinanceService.GetFinanceDetailByEmployeeId(dtoEmployee.Id);
+            if (finance != null)
+            {
+                finance.Salary = dtoEmployee.MonthlySalary;
+                _employeeFinanceService.UpdateFinanceDetail(finance);
+            }
+            else
+            {
+                InsertFinanceDetails(dtoEmployee);
+            }
             return validationResult;
         }
         public void Delete(Guid? id, string DeletedBy)

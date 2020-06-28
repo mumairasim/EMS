@@ -75,6 +75,24 @@ namespace SMS.Services.Implementation
         }
 
         /// <summary>
+        ///  Retruns a Single Record of a FinanceType by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public DTOFinanceType GetByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            var financeType = _repository.Get().FirstOrDefault(x => x.Type == name && (x.IsDeleted == false || x.IsDeleted == null));
+            var financeTypeDto = _mapper.Map<DBFinanceType, DTOFinanceType>(financeType);
+
+            return financeTypeDto;
+        }
+
+        /// <summary>
         /// Service level call : Updates the Single Record of a FinanceType 
         /// </summary>
         /// <param name="dtoFinanceType"></param>
