@@ -66,7 +66,6 @@
                 <label for="female">Female</label>
                 <input type="radio" id="other" name="gender" value="other" disabled>
                 <label for="other">Other</label>
-                <!--<input name="gender" id="gender" placeholder="gender" type="text" class="form-control" ng-Model="StudentModel.Person.Gender">-->
             </div>
         </div>
         <div class="position-relative row form-group">
@@ -187,19 +186,17 @@
                 </div>
             </div>
         </div>
-
         <div class="position-relative row form-group">
             <div class="col-sm-12">
                 <h3 class="card-title fs-20 text-center">Finances</h3>
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="Salary" class="col-form-label"><span class="mendatory">* </span>Salary</label>
+                        <label for="Salary" class="col-form-label">Salary</label>
                         <input name="Salary" id="name" placeholder="Salary" type="text" class="form-control" ng-Model="EmployeeModel.MonthlySalary" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="position-relative row form-group">
             <div class="col-sm-6 offset-sm-4">
                 <button class="btn btn-primary" ng-click="EmployeeUpdate()">Submit</button>
