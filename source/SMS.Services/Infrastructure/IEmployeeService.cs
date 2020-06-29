@@ -15,6 +15,7 @@ namespace SMS.Services.Infrastructure
         EmployeeResponse Create(DTOEmployee employee);
         EmployeeResponse Update(DTOEmployee dtoEmployee);
         void Delete(Guid? id, string DeletedBy);
+
     }
 }
 
