@@ -20,6 +20,20 @@ namespace SMS.Services.Infrastructure
         DTOStudentFinanceDetails Get(Guid? id);
 
         /// <summary>
+        /// Retruns List of Record of a StudentFinanceDetails by Student Id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        List<DTOStudentFinanceDetails> GetByStudentId(Guid? studentId);
+
+        /// <summary>
+        /// Retruns List of Record of a StudentFinanceDetails by Fee type and student Id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        DTOStudentFinanceDetails GetByFeeType(Guid? studentId, string feeType);
+
+        /// <summary>
         /// Service level call : Creates a single record of a StudentFinanceDetails
         /// </summary>
         /// <param name="dtoStudentFinanceDetails"></param>

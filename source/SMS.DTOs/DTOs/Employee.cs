@@ -16,7 +16,9 @@ namespace SMS.DTOs.DTOs
 
         public Person Person { get; set; }
 
-        public Designation Designation  { get; set; }
+        public Designation Designation { get; set; }
+
+        public decimal? MonthlySalary { get; set; }
 
     }
 }
