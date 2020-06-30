@@ -215,7 +215,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTOLessonPlan dtoLessonPlan)
         {
-            var lessonPlan = RequestGet(dtoLessonPlan.Id);
+            var lessonPlan =RequestGet(dtoLessonPlan.Id);
             dtoLessonPlan.UpdateDate = DateTime.UtcNow;
             var mergedLessonPlan = _mapper.Map(dtoLessonPlan, lessonPlan);
             _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(mergedLessonPlan));
