@@ -376,7 +376,7 @@ namespace SMS.Services.Implementation
 
         public List<DTOEmployee> RequestGet()
         {
-            var employees = _requestRepository.Get().Where(d => d.IsDeleted == false).ToList();
+            var employees = _requestRepository.Get().Where(em => em.IsDeleted == false).ToList();
             var employeeList = new List<DTOEmployee>();
             foreach (var employee in employees)
             {
@@ -388,7 +388,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null) return null;
 
-            var employeeRecord = _requestRepository.Get().FirstOrDefault(d => d.Id == id && d.IsDeleted == false);
+            var employeeRecord = _requestRepository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
             if (employeeRecord == null) return null;
 
             return _mapper.Map<ReqEmployee, DTOEmployee>(employeeRecord);
@@ -398,23 +398,29 @@ namespace SMS.Services.Implementation
             dtoEmployee.CreatedDate = DateTime.UtcNow;
             dtoEmployee.IsDeleted = false;
             dtoEmployee.Id = Guid.NewGuid();
+            dtoEmployee.PersonId = _personService.RequestCreate(dtoEmployee.Person);
             _requestRepository.Add(_mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee));
             return dtoEmployee.Id;
         }
         public void RequestUpdate(DTOEmployee dtoEmployee)
         {
-            var employee = RequestGet(dtoEmployee.Id);
+            var reqemployee = RequestGet(dtoEmployee.Id);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
-            var mergedEmployee = _mapper.Map(dtoEmployee, employee);
+            HelpingMethodForRelationship(dtoEmployee);
+            var mergedEmployee = _mapper.Map(dtoEmployee, reqemployee);
+            _personService.RequestUpdate(mergedEmployee.Person);
             _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(mergedEmployee));
         }
         public void RequestDelete(Guid? id)
         {
+
             if (id == null)
                 return;
             var employee = RequestGet(id);
             employee.IsDeleted = true;
+            //employee.DeletedBy = DeletedBy;
             employee.DeletedDate = DateTime.UtcNow;
+            _personService.RequestDelete(employee.PersonId);
             _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(employee));
         }
 
