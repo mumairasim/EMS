@@ -116,6 +116,7 @@ namespace SMS.Services.Implementation
         {
             try
             {
+               
                 dtoTimeTable.CreatedDate = DateTime.Now;
                 dtoTimeTable.IsDeleted = false;
                 dtoTimeTable.Id = Guid.NewGuid();

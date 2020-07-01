@@ -42,7 +42,7 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create()
+        public IHttpActionResult Create(DTOStudent dtoStudent)
         {
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
@@ -53,7 +53,7 @@ namespace SMS.API.Controllers
                 var file = httpRequest.Files[0];
                 studentDetail.ImageId = _fileService.Create(file);
             }
-            return Ok(_studentService.Create(studentDetail));
+            return Ok(_studentService.Create(dtoStudent));
         }
         [HttpPut]
         [Route("Update")]
@@ -83,7 +83,7 @@ namespace SMS.API.Controllers
         #region RequestSMS Section  
 
         [HttpGet]
-        [Route("Get")]
+        [Route("RequestGet")]
         public IHttpActionResult RequestGet(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(_studentService.RequestGet(pageNumber, pageSize));
@@ -102,33 +102,33 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate()
+        public IHttpActionResult RequestCreate(DTOStudent dtoStudent)
         {
             var httpRequest = HttpContext.Current.Request;
-            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
-            studentDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            studentDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //var dtoStudent = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            //dtoStudent.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //dtoStudent.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                studentDetail.ImageId = _fileService.Create(file);
+                dtoStudent.ImageId = _fileService.Create(file);
             }
-            return Ok(_studentService.RequestCreate(studentDetail));
+            return Ok(_studentService.RequestCreate(dtoStudent));
         }
         [HttpPut]
         [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate()
+        public IHttpActionResult RequestUpdate(DTOStudent dtoStudent)
         {
             var httpRequest = HttpContext.Current.Request;
-            var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
-            studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+           // studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+           // studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (httpRequest.Files.Count > 0)
             {
                 var file = httpRequest.Files[0];
-                studentDetail.ImageId = _fileService.Update(file, studentDetail.Image.Id);
+                dtoStudent.ImageId = _fileService.Update(file, dtoStudent.Image.Id);
             }
-            return Ok(_studentService.RequestUpdate(studentDetail));
+            return Ok(_studentService.RequestUpdate(dtoStudent));
         }
         [HttpDelete]
         [Route("RequestDelete")]

@@ -429,7 +429,7 @@ namespace SMS.Services.Implementation
             dtoStudent.CreatedDate = DateTime.UtcNow;
             dtoStudent.IsDeleted = false;
             dtoStudent.Id = Guid.NewGuid();
-            dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
+            dtoStudent.PersonId = _personService.RequestCreate(dtoStudent.Person);
             RequestHelpingMethodForRelationship(dtoStudent);
             RequestInsertStudentFinanceDetail(dtoStudent);
             _requestRepository.Add(_mapper.Map<DTOStudent, RequestStudent>(dtoStudent));
@@ -443,11 +443,11 @@ namespace SMS.Services.Implementation
             {
                 return validationResult;
             }
-            var student = Get(dtoStudent.Id);
+            var student = RequestGet(dtoStudent.Id);
             dtoStudent.UpdateDate = DateTime.UtcNow;
             RequestHelpingMethodForRelationship(dtoStudent);
             var mergedStudent = _mapper.Map(dtoStudent, student);
-            _personService.Update(mergedStudent.Person);
+            _personService.RequestUpdate(mergedStudent.Person);
             _requestRepository.Update(_mapper.Map<DTOStudent, RequestStudent>(mergedStudent));
             return validationResult;
         }
@@ -455,11 +455,11 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var student = Get(id);
+            var student = RequestGet(id);
             student.IsDeleted = true;
             student.DeletedBy = deletedBy;
             student.DeletedDate = DateTime.UtcNow;
-            _personService.Delete(student.PersonId);
+            _personService.RequestDelete(student.PersonId);
             _requestRepository.Update(_mapper.Map<DTOStudent, RequestStudent>(student));
         }
         private void RequestInsertStudentFinanceDetail(DTOStudent dtoStudent)
@@ -585,7 +585,7 @@ namespace SMS.Services.Implementation
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
-                    "Name may null or exceed than 100 characters"
+                    "Parent Name may null or exceed than 100 characters"
                     );
             }
             if (!alphaRegex.IsMatch(dtoStudent.Person.ParentName))

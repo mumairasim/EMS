@@ -6,7 +6,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using SMS.Services.Configurations;
+using SMS.REQUESTDATA.Infrastructure;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using RequestStudentAttendance = SMS.REQUESTDATA.RequestModels.StudentAttendance;
 
 namespace SMS.API.Controllers
 {
@@ -153,7 +155,7 @@ namespace SMS.API.Controllers
             predicate.And(sa => sa.IsDeleted == false);
             predicate.And(sa => sa.ClassId == classId);
             predicate.And(sa => sa.SchoolId == schoolId);
-            return Ok(StudentAttendanceService.RequestSearch(predicate, pageNumber, pageSize));
+            return Ok(StudentAttendanceService.Search(predicate, pageNumber, pageSize)); ///Check Again
         }
         /// <summary>
         /// Fetch by Id
@@ -169,12 +171,12 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate()
+        public IHttpActionResult RequestCreate(DTOStudentAttendance dtoStudentAttendance)
         {
             var httpRequest = HttpContext.Current.Request;
-            var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
-            studentAttendanceDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(StudentAttendanceService.RequestCreate(studentAttendanceDetail));
+            dtoStudentAttendance = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
+           //dtoStudentAttendance.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            return Ok(StudentAttendanceService.RequestCreate(dtoStudentAttendance));
         }
         [HttpPut]
         [Route("RequestUpdate")]

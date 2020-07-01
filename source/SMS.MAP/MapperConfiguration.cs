@@ -223,7 +223,8 @@ namespace SMS.MAP
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PersonId));
 
             CreateMap<DTOTeacherDiary, TeacherDiary>();
-           
+            CreateMap<DTOStudentDiary, StudentDiary>();
+
             #endregion
         }
     }
