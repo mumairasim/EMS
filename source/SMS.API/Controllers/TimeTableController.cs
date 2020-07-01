@@ -52,13 +52,13 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate()
+        public IHttpActionResult RequestCreate(DTOTimeTable dtoTimeTable)
         {
             var httpRequest = HttpContext.Current.Request;
-            var timeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
-            timeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TimeTableService.RequestCreate(timeTable);
-            return Ok();
+            dtoTimeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
+            dtoTimeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //TimeTableService.RequestCreate(dtoTimeTable);
+            return Ok(TimeTableService.RequestCreate(dtoTimeTable));
         }
 
         #endregion
