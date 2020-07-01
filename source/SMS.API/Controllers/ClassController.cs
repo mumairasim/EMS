@@ -2,10 +2,12 @@
 using System.Web.Http;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using SMS.Services.Infrastructure;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Class")]
+    [EnableCors("*", "*", "*")]
     public class ClassController : ApiController
     {
         public IClassService ClassService;
@@ -14,6 +16,7 @@ namespace SMS.API.Controllers
             ClassService = classService;
         }
 
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get()
@@ -53,5 +56,18 @@ namespace SMS.API.Controllers
             ClassService.Delete(id);
             return Ok();
         }
+        #endregion
+
+
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

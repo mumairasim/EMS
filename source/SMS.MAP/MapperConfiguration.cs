@@ -21,8 +21,10 @@ using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
 using Student = SMS.DATA.Models.Student;
 using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
+using ReqLessonPlan = SMS.REQUESTDATA.RequestModels.LessonPlan;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using ReqEmployee = SMS.REQUESTDATA.RequestModels.Employee;
 using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
 using ReqDesignation = SMS.REQUESTDATA.RequestModels.Designation;
@@ -118,6 +120,10 @@ namespace SMS.MAP
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<ReqLessonPlan, DTOLessonPlan>();
+            CreateMap<DTOLessonPlan, DTOLessonPlan>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<DBEmployeeFinanceDetail, DTOEmployeeFinanceDetail>();
             CreateMap<DTOEmployeeFinanceDetail, DTOEmployeeFinanceDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -131,6 +137,10 @@ namespace SMS.MAP
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
             CreateMap<Employee, DTOEmployee>();
+            CreateMap<DTOEmployee, DTOEmployee>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<ReqEmployee, DTOEmployee>();
             CreateMap<DTOEmployee, DTOEmployee>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
@@ -183,8 +193,10 @@ namespace SMS.MAP
             CreateMap<DTOWorksheet, DBWorksheet>();
             CreateMap<DTOWorksheet, ReqWorksheet>();
             CreateMap<DTOLessonPlan, LessonPlan>();
+            CreateMap<DTOLessonPlan, ReqLessonPlan>();
             CreateMap<DTOTeacherDiary, TeacherDiary>();
             CreateMap<DTOEmployee, Employee>();
+            CreateMap<DTOEmployee, ReqEmployee>();
 
             CreateMap<DTODesignation, Designation>();
             CreateMap<DTODesignation, ReqDesignation>();

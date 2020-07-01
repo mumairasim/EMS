@@ -19,7 +19,7 @@ namespace SMS.API.Controllers
             EmployeeService = employeeService;
         }
 
-        [HttpGet]
+        #region SMS Section
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
@@ -71,6 +71,53 @@ namespace SMS.API.Controllers
             EmployeeService.Delete(id, deletedBy);
             return Ok();
         }
+        #endregion[HttpGet]
+
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(EmployeeService.RequestGet());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(EmployeeService.RequestGet(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOEmployee dtoEmployee)
+        {
+            EmployeeService.RequestCreate(dtoEmployee);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOEmployee dtoEmployee)
+        {
+            EmployeeService.RequestUpdate(dtoEmployee);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            EmployeeService.RequestDelete(id);
+            return Ok();
+        }
+        #endregion
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
 
 
     }

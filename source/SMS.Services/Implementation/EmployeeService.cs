@@ -7,25 +7,30 @@ using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using ReqEmployee = SMS.REQUESTDATA.RequestModels.Employee;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
+using SMS.REQUESTDATA.Infrastructure;
 
 namespace SMS.Services.Implementation
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _repository;
+        private readonly IRequestRepository<ReqEmployee> _requestRepository;
         private readonly IPersonService _personService;
         private readonly IEmployeeFinanceService _employeeFinanceService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper)
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestRepository<ReqEmployee> requestRepository)
         {
             _repository = repository;
+            _requestRepository = requestRepository;
             _personService = personService;
             _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
         }
 
+        #region SMS Section
         public EmployeesList Get(int pageNumber, int pageSize)
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
@@ -365,5 +370,55 @@ namespace SMS.Services.Implementation
                 Description = descriptionMessage
             };
         }
+        #endregion
+
+        #region SMS Request Section
+
+        public List<DTOEmployee> RequestGet()
+        {
+            var employees = _requestRepository.Get().Where(d => d.IsDeleted == false).ToList();
+            var employeeList = new List<DTOEmployee>();
+            foreach (var employee in employees)
+            {
+                employeeList.Add(_mapper.Map<ReqEmployee, DTOEmployee>(employee));
+            }
+            return employeeList;
+        }
+        public DTOEmployee RequestGet(Guid? id)
+        {
+            if (id == null) return null;
+
+            var employeeRecord = _requestRepository.Get().FirstOrDefault(d => d.Id == id && d.IsDeleted == false);
+            if (employeeRecord == null) return null;
+
+            return _mapper.Map<ReqEmployee, DTOEmployee>(employeeRecord);
+        }
+        public Guid RequestCreate(DTOEmployee dtoEmployee)
+        {
+            dtoEmployee.CreatedDate = DateTime.UtcNow;
+            dtoEmployee.IsDeleted = false;
+            dtoEmployee.Id = Guid.NewGuid();
+            _requestRepository.Add(_mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee));
+            return dtoEmployee.Id;
+        }
+        public void RequestUpdate(DTOEmployee dtoEmployee)
+        {
+            var employee = RequestGet(dtoEmployee.Id);
+            dtoEmployee.UpdateDate = DateTime.UtcNow;
+            var mergedEmployee = _mapper.Map(dtoEmployee, employee);
+            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(mergedEmployee));
+        }
+        public void RequestDelete(Guid? id)
+        {
+            if (id == null)
+                return;
+            var employee = RequestGet(id);
+            employee.IsDeleted = true;
+            employee.DeletedDate = DateTime.UtcNow;
+            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(employee));
+        }
+
+        #endregion
+
     }
 }
