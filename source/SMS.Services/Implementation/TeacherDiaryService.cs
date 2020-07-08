@@ -8,6 +8,7 @@ using SMS.Services.Infrastructure;
 using SMS.REQUESTDATA.Infrastructure;
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
+using RequestEmployee = SMS.REQUESTDATA.RequestModels.Employee;
 using RequestTeacherDiary = SMS.REQUESTDATA.RequestModels.TeacherDiary;
 using System.Text.RegularExpressions;
 using SMS.DTOs.ReponseDTOs;
@@ -189,7 +190,7 @@ namespace SMS.Services.Implementation
         #region RequestSMS Section
         public TeacherDiariesList RequestGet(int pageNumber, int pageSize)
         {
-            var teacherDiaries = _requestRepository.Get().Where(td => td.IsDeleted == false).OrderByDescending(st => st.DairyDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(); ;
+            var teacherDiaries = _requestRepository.Get().Where(td => td.IsDeleted == false).ToList(); 
             var teacherDiaryCount = _requestRepository.Get().Count(td => td.IsDeleted == false);
             var teacherDiaryTempList = new List<DTOTeacherDiary>();
             foreach (var teacherDiary in teacherDiaries)
@@ -221,7 +222,9 @@ namespace SMS.Services.Implementation
             dtoteacherDiary.CreatedDate = DateTime.Now;
             dtoteacherDiary.IsDeleted = false;
             dtoteacherDiary.Id = Guid.NewGuid();
-            RequestHelpingMethodForRelationship(dtoteacherDiary);
+            dtoteacherDiary.Employee = null;
+            dtoteacherDiary.School = null;
+            //RequestHelpingMethodForRelationship(dtoteacherDiary);
             _requestRepository.Add(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(dtoteacherDiary));
             return validationResult;
         }
@@ -232,9 +235,9 @@ namespace SMS.Services.Implementation
             {
                 return validationResult;
             }
-            var teacherDiary = Get(dtoteacherDiary.Id);
+            var teacherDiary = RequestGet(dtoteacherDiary.Id);
             dtoteacherDiary.UpdateDate = DateTime.UtcNow;
-            RequestHelpingMethodForRelationship(dtoteacherDiary);
+            //RequestHelpingMethodForRelationship(dtoteacherDiary);
             var mergedTeacherDiary = _mapper.Map(dtoteacherDiary, teacherDiary);
             _requestRepository.Update(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(mergedTeacherDiary));
             return validationResult;
@@ -243,19 +246,19 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var teacherDiary = Get(id);
+            var teacherDiary = RequestGet(id);
             teacherDiary.IsDeleted = true;
             teacherDiary.DeletedBy = DeletedBy;
             teacherDiary.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(teacherDiary));
         }
-        private void RequestHelpingMethodForRelationship(DTOTeacherDiary dtoteacherDiary)
-        {
-            dtoteacherDiary.SchoolId = dtoteacherDiary.School.Id;
-            dtoteacherDiary.School = null;
-            dtoteacherDiary.InstructorId = dtoteacherDiary.Employee.Id;
-            dtoteacherDiary.Employee = null;
-        }
+        //private void RequestHelpingMethodForRelationship(DTOTeacherDiary dtoteacherDiary)
+        //{
+        //    dtoteacherDiary.SchoolId = dtoteacherDiary.School.Id;
+        //    dtoteacherDiary.School = null;
+        //    dtoteacherDiary.InstructorId = dtoteacherDiary.Employee.Id;
+        //    dtoteacherDiary.Employee = null;
+        //}
 
         private TeacherDiaryResponse RequestValidation(DTOTeacherDiary dtoteacherDiary)
         {

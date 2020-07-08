@@ -104,38 +104,40 @@ namespace SMS.API.Controllers
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOStudent dtoStudent)
         {
-            var httpRequest = HttpContext.Current.Request;
+            //var httpRequest = HttpContext.Current.Request;
             //var dtoStudent = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
             //dtoStudent.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             //dtoStudent.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            if (httpRequest.Files.Count > 0)
-            {
-                var file = httpRequest.Files[0];
-                dtoStudent.ImageId = _fileService.Create(file);
-            }
-            return Ok(_studentService.RequestCreate(dtoStudent));
+            //if (httpRequest.Files.Count > 0)
+            //{
+            //    var file = httpRequest.Files[0];
+            //    dtoStudent.ImageId = _fileService.Create(file);
+            //}
+            _studentService.RequestCreate(dtoStudent);
+            return Ok();
         }
         [HttpPut]
         [Route("RequestUpdate")]
         public IHttpActionResult RequestUpdate(DTOStudent dtoStudent)
         {
-            var httpRequest = HttpContext.Current.Request;
-            //var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
-           // studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-           // studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            if (httpRequest.Files.Count > 0)
-            {
-                var file = httpRequest.Files[0];
-                dtoStudent.ImageId = _fileService.Update(file, dtoStudent.Image.Id);
-            }
-            return Ok(_studentService.RequestUpdate(dtoStudent));
+            // var httpRequest = HttpContext.Current.Request;
+            // //var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
+            //// studentDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //// studentDetail.Person.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            // if (httpRequest.Files.Count > 0)
+            // {
+            //     var file = httpRequest.Files[0];
+            //     dtoStudent.ImageId = _fileService.Update(file, dtoStudent.Image.Id);
+            // }
+            _studentService.RequestUpdate(dtoStudent);
+            return Ok();
         }
         [HttpDelete]
         [Route("RequestDelete")]
         public IHttpActionResult RequestDelete(Guid id)
         {
-            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            _studentService.RequestDelete(id, deletedBy);
+            //var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _studentService.RequestDelete(id/*, deletedBy*/);
             return Ok();
         }
         #endregion

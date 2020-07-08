@@ -47,18 +47,19 @@ namespace SMS.API.Controllers
         [Route("RequestGet")]
         public IHttpActionResult RequestGet(Guid? schoolId, Guid? classId, int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(TimeTableService.RequestGet(schoolId, classId, pageNumber, pageSize));
+            TimeTableService.RequestGet(schoolId, classId, pageNumber, pageSize);
+            return Ok();
         }
 
         [HttpPost]
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOTimeTable dtoTimeTable)
         {
-            var httpRequest = HttpContext.Current.Request;
-            dtoTimeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
-            dtoTimeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            //TimeTableService.RequestCreate(dtoTimeTable);
-            return Ok(TimeTableService.RequestCreate(dtoTimeTable));
+           // var httpRequest = HttpContext.Current.Request;
+            //dtoTimeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
+            //dtoTimeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TimeTableService.RequestCreate(dtoTimeTable);
+            return Ok();
         }
 
         #endregion

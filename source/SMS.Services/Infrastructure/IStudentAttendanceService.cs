@@ -28,7 +28,7 @@ namespace SMS.Services.Infrastructure
         DTOStudentAttendance RequestGet(Guid? id);
         StudentAttendanceResponse RequestCreate(DTOStudentAttendance dtoStudentAttendance);
         void RequestUpdate(DTOStudentAttendance dtoStudentAttendance);
-        void RequestDelete(Guid? id, string deletedBy);
+        void RequestDelete(Guid? id/*, string deletedBy*/);
         #endregion
     }
 }

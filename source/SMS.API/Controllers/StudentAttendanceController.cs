@@ -137,7 +137,8 @@ namespace SMS.API.Controllers
         [Route("RequestGet")]
         public IHttpActionResult RequestGet(Guid? classId, Guid? schoolId, int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(StudentAttendanceService.RequestGet(classId, schoolId, pageNumber, pageSize));
+            StudentAttendanceService.RequestGet(classId, schoolId, pageNumber, pageSize);
+            return Ok();
         }
         /// <summary>
         /// Fetch data on the basis of class and school 
@@ -173,27 +174,28 @@ namespace SMS.API.Controllers
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOStudentAttendance dtoStudentAttendance)
         {
-            var httpRequest = HttpContext.Current.Request;
-            dtoStudentAttendance = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
-           //dtoStudentAttendance.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(StudentAttendanceService.RequestCreate(dtoStudentAttendance));
+            //var httpRequest = HttpContext.Current.Request;
+            //dtoStudentAttendance = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
+            //dtoStudentAttendance.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            StudentAttendanceService.RequestCreate(dtoStudentAttendance);
+            return Ok();
         }
         [HttpPut]
         [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate()
+        public IHttpActionResult RequestUpdate(DTOStudentAttendance dtoStudentAttendance)
         {
-            var httpRequest = HttpContext.Current.Request;
-            var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
-            studentAttendanceDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.RequestUpdate(studentAttendanceDetail);
+            //var httpRequest = HttpContext.Current.Request;
+            //var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
+            //studentAttendanceDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            StudentAttendanceService.RequestUpdate(dtoStudentAttendance);
             return Ok();
         }
         [HttpDelete]
         [Route("RequestDelete")]
         public IHttpActionResult RequestDelete(Guid id)
         {
-            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.RequestDelete(id, deletedBy);
+            //var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            StudentAttendanceService.RequestDelete(id/*, deletedBy*/);
             return Ok();
         }
         #endregion

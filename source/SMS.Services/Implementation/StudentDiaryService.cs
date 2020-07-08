@@ -75,13 +75,13 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.CreatedDate = DateTime.UtcNow;
             dtoStudentDiary.IsDeleted = false;
             dtoStudentDiary.Id = Guid.NewGuid();
-            dtoStudentDiary.InstructorId = null;
+            dtoStudentDiary.Employee = null;
             dtoStudentDiary.School = null;
             _requestRepository.Add(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(dtoStudentDiary));
         }
         public List<DTOStudentDiary> RequestGet()
         {
-            var studentDiary = _requestRepository.Get().ToList();
+            var studentDiary = _requestRepository.Get().Where(sd => sd.IsDeleted == false).ToList();
             var StudentDiaryList = new List<DTOStudentDiary>();
             foreach (var studentdiary in studentDiary)
             {
@@ -99,7 +99,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTOStudentDiary dtoStudentDiary)
         {
-            var studentDiary = Get(dtoStudentDiary.Id);
+            var studentDiary = RequestGet(dtoStudentDiary.Id);
             dtoStudentDiary.UpdateDate = DateTime.UtcNow;
             var mergedstudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
             _requestRepository.Update(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(mergedstudentDiary));
@@ -108,7 +108,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var studentDiary = Get(id);
+            var studentDiary = RequestGet(id);
             studentDiary.IsDeleted = true;
             studentDiary.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(studentDiary));

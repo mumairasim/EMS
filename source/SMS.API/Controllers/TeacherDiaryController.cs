@@ -80,23 +80,24 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate()
+        public IHttpActionResult RequestCreate(DTOTeacherDiary dtoTeacherDiary)
         {
 
-            var httpRequest = HttpContext.Current.Request;
-            var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
-            teacherDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //var httpRequest = HttpContext.Current.Request;
+            //var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
+            //teacherDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             //teacherDiaryDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(TeacherDiaryService.RequestCreate(teacherDiaryDetail));
+            TeacherDiaryService.RequestCreate(dtoTeacherDiary);
+            return Ok();
         }
         [HttpPut]
         [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate()
+        public IHttpActionResult RequestUpdate(DTOTeacherDiary dtoTeacherDiary)
         {
-            var httpRequest = HttpContext.Current.Request;
-            var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
-            teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(TeacherDiaryService.RequestUpdate(teacherDiaryDetail));
+            //var httpRequest = HttpContext.Current.Request;
+            //var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
+            //teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            return Ok(TeacherDiaryService.RequestUpdate(dtoTeacherDiary));
         }
 
         [HttpDelete]

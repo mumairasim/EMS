@@ -98,7 +98,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTOPerson dtoPerson)
         {
-            var person = Get(dtoPerson.Id);
+            var person = RequestGet(dtoPerson.Id);
             dtoPerson.UpdateDate = DateTime.UtcNow;
             var mergedPerson = _mapper.Map(dtoPerson, person);
             _requestRepository.Update(_mapper.Map<DTOPerson, RequestPerson>(mergedPerson));
@@ -107,7 +107,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var person = Get(id);
+            var person = RequestGet(id);
             person.IsDeleted = true;
             person.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOPerson, RequestPerson>(person));

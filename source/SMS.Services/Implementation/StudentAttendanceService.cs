@@ -270,13 +270,13 @@ namespace SMS.Services.Implementation
             var mergedStudentAttendance = _mapper.Map(dtoStudentAttendance, studentAttendance);
             _requestRepository.Update(_mapper.Map<DTOStudentAttendance, RequestStudentAttendance>(mergedStudentAttendance));
         }
-        public void RequestDelete(Guid? id, string deletedBy)
+        public void RequestDelete(Guid? id/*, string deletedBy*/)
         {
             if (id == null)
                 return;
-            var studentAttendance = Get(id);
+            var studentAttendance = RequestGet(id);
             studentAttendance.IsDeleted = true;
-            studentAttendance.DeletedBy = deletedBy;
+            //studentAttendance.DeletedBy = deletedBy;
             studentAttendance.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOStudentAttendance, RequestStudentAttendance>(studentAttendance));
         }

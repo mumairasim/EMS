@@ -136,13 +136,13 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("RequestGetAll")]
         public IHttpActionResult RequestGetAll()
         {
             try
             {
-                var result = _studentFinanceDetailsService.RequestGetAll();
-                return Ok(result);
+                 _studentFinanceDetailsService.RequestGetAll();
+                return Ok();
             }
             catch (Exception)
             {

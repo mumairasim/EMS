@@ -221,16 +221,16 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate()
+        public IHttpActionResult RequestCreate(DTOStudentFinancesInfo dtoStudentFinances)
         {
-            var httpRequest = HttpContext.Current.Request;
-            var financeInfoList = JsonConvert.DeserializeObject<List<DTOStudentFinancesInfo>>(httpRequest.Params["form"]);
+            //var httpRequest = HttpContext.Current.Request;
+            //var financeInfoList = JsonConvert.DeserializeObject<List<DTOStudentFinancesInfo>>(httpRequest.Params["form"]);
 
-            foreach (var item in financeInfoList)
-            {
-                item.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-                _studentFinanceService.RequestCreate(item);
-            }
+            //foreach (var item in financeInfoList)
+            //{
+            //    item.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+                _studentFinanceService.RequestCreate(dtoStudentFinances);
+            //}
 
             return Ok();
         }

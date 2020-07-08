@@ -126,7 +126,6 @@ namespace SMS.Services.Implementation
             dTOStudentFinanceDetails.CreatedDate = DateTime.UtcNow;
             dTOStudentFinanceDetails.IsDeleted = false;
             dTOStudentFinanceDetails.Id = Guid.NewGuid();
-
             _requestRepository.Add(_mapper.Map<DTOStudentFinanceDetails, RequestStudentFinanceDetail>(dTOStudentFinanceDetails));
         }
 
@@ -189,12 +188,13 @@ namespace SMS.Services.Implementation
         /// <returns></returns>
         List<DTOStudentFinanceDetails> IStudentFinanceDetailsService.RequestGetAll()
         {
-            var StudentFinancess = _requestRepository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
+            var StudentFinancess = _requestRepository.Get().Where(x => x.IsDeleted == false/* || x.IsDeleted == null*/).ToList();
             var StudentFinancesList = new List<DTOStudentFinanceDetails>();
             foreach (var StudentFinances in StudentFinancess)
             {
                 StudentFinancesList.Add(_mapper.Map<RequestStudentFinanceDetail, DTOStudentFinanceDetails>(StudentFinances));
             }
+            
             return StudentFinancesList;
         }
 
