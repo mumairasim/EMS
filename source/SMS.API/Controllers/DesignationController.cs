@@ -2,10 +2,12 @@
 using SMS.Services.Infrastructure;
 using System.Web.Http;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
     [RoutePrefix("api/v1/Designation")]
+    [EnableCors("*", "*", "*")]
     public class DesignationController : ApiController
     {
         public IDesignationService _designationService;
@@ -14,6 +16,7 @@ namespace SMS.API.Controllers
             _designationService = designationService;
         }
 
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get()
@@ -47,5 +50,52 @@ namespace SMS.API.Controllers
             _designationService.Delete(id);
             return Ok();
         }
+        #endregion
+
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(_designationService.RequestGet());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_designationService.RequestGet(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTODesignation dtoDesignation)
+        {
+            _designationService.RequestCreate(dtoDesignation);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTODesignation dtoDesignation)
+        {
+            _designationService.RequestUpdate(dtoDesignation);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            _designationService.RequestDelete(id);
+            return Ok();
+        }
+        #endregion
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

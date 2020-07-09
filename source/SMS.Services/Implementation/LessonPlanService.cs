@@ -9,6 +9,9 @@ using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
+using SMS.REQUESTDATA.Infrastructure;
+using ReqLessonPlan = SMS.REQUESTDATA.RequestModels.LessonPlan;
+
 
 namespace SMS.Services.Implementation
 {
@@ -16,13 +19,16 @@ namespace SMS.Services.Implementation
     public class LessonPlanService : ILessonPlanService
     {
         private readonly IRepository<LessonPlan> _repository;
+        private readonly IRequestRepository<ReqLessonPlan> _requestRepository;
         private readonly IMapper _mapper;
-        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper)
+        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper, IRequestRepository<ReqLessonPlan> requestRepository)
         {
             _repository = repository;
+            _requestRepository = requestRepository;
             _mapper = mapper;
         }
 
+        #region SMS Section
         public LessonPlansList Get(int pageNumber, int pageSize)
         {
             var lessonPlans = _repository.Get().Where(lp => lp.IsDeleted == false).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
@@ -176,5 +182,55 @@ namespace SMS.Services.Implementation
                 Description = descriptionMessage
             };
         }
+        #endregion
+
+        #region SMS Request Section
+
+        public List<DTOLessonPlan> RequestGet()
+        {
+            var lessonPlans = _requestRepository.Get().Where(lp => lp.IsDeleted == false).ToList();
+            var lessonPlanList = new List<DTOLessonPlan>();
+            foreach (var lessonPlan in lessonPlans)
+            {
+                lessonPlanList.Add(_mapper.Map<ReqLessonPlan, DTOLessonPlan>(lessonPlan));
+            }
+            return lessonPlanList;
+        }
+        public DTOLessonPlan RequestGet(Guid? id)
+        {
+            if (id == null) return null;
+
+            var lessonPlanRecord = _requestRepository.Get().FirstOrDefault(lp => lp.Id == id && lp.IsDeleted == false);
+            if (lessonPlanRecord == null) return null;
+
+            return _mapper.Map<ReqLessonPlan, DTOLessonPlan>(lessonPlanRecord);
+        }
+        public Guid RequestCreate(DTOLessonPlan dtoLessonPlan)
+        {
+            dtoLessonPlan.CreatedDate = DateTime.UtcNow;
+            dtoLessonPlan.IsDeleted = false;
+            dtoLessonPlan.Id = Guid.NewGuid();
+            _requestRepository.Add(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(dtoLessonPlan));
+            return dtoLessonPlan.Id;
+        }
+        public void RequestUpdate(DTOLessonPlan dtoLessonPlan)
+        {
+            var lessonPlan =RequestGet(dtoLessonPlan.Id);
+            dtoLessonPlan.UpdateDate = DateTime.UtcNow;
+            var mergedLessonPlan = _mapper.Map(dtoLessonPlan, lessonPlan);
+            _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(mergedLessonPlan));
+        }
+        public void RequestDelete(Guid? id)
+        {
+            if (id == null)
+                return;
+            var lessonPlan = RequestGet(id);
+            lessonPlan.IsDeleted = true;
+            lessonPlan.DeletedDate = DateTime.UtcNow;
+            _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(lessonPlan));
+        }
+
+        #endregion
+
     }
 }

@@ -16,6 +16,7 @@ namespace SMS.Services.Implementation
         #region Properties
         private readonly IRepository<DBStudentFinanceDetails> _repository;
         private readonly IRequestRepository<RequestStudentFinanceDetail> _requestRepository;
+        private readonly IFinanceTypeService _financeTypeService;
         private IMapper _mapper;
         #endregion
 
@@ -24,7 +25,7 @@ namespace SMS.Services.Implementation
         public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IRequestRepository<RequestStudentFinanceDetail> requestRepository, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
+            _financeTypeService = financeTypeService;
             _mapper = mapper;
         }
 
@@ -77,6 +78,37 @@ namespace SMS.Services.Implementation
 
             var StudentFinances = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var StudentFinancesDto = _mapper.Map<DBStudentFinanceDetails, DTOStudentFinanceDetails>(StudentFinances);
+
+            return StudentFinancesDto;
+        }
+
+        public DTOStudentFinanceDetails GetByFeeType(Guid? studentId, string feeType)
+        {
+            if (studentId == null || string.IsNullOrEmpty(feeType))
+            {
+                return null;
+            }
+            var financeType = _financeTypeService.GetByName(feeType);
+            var StudentFinances = _repository.Get().FirstOrDefault(x => x.StudentId == studentId && x.FinanceTypeId == financeType.Id && (x.IsDeleted == false || x.IsDeleted == null));
+            var StudentFinancesDto = _mapper.Map<DBStudentFinanceDetails, DTOStudentFinanceDetails>(StudentFinances);
+
+            return StudentFinancesDto;
+        }
+
+        /// <summary>
+        /// Returns a list of Records of a StudentFinances by student Id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public List<DTOStudentFinanceDetails> GetByStudentId(Guid? studentId)
+        {
+            if (studentId == null)
+            {
+                return null;
+            }
+
+            var StudentFinances = _repository.Get().Where(x => x.StudentId == studentId && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
+            var StudentFinancesDto = _mapper.Map<List<DBStudentFinanceDetails>, List<DTOStudentFinanceDetails>>(StudentFinances);
 
             return StudentFinancesDto;
         }

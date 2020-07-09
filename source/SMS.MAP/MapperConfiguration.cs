@@ -8,6 +8,8 @@ using DBStudentFinanceDetails = SMS.DATA.Models.StudentFinanceDetail;
 using RequestStudentFinanceDetail = SMS.REQUESTDATA.RequestModels.StudentFinanceDetail;
 using DBStudentFinances = SMS.DATA.Models.Student_Finances;
 using DBWorksheet = SMS.DATA.Models.Worksheet;
+using ReqWorksheet = SMS.REQUESTDATA.RequestModels.Worksheet;
+using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using DTOCourse = SMS.DTOs.DTOs.Course;
 using DTOPerson = SMS.DTOs.DTOs.Person;
@@ -17,7 +19,7 @@ using RequestStudent = SMS.REQUESTDATA.RequestModels.Student;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using DTOStudentFinanceDetails = SMS.DTOs.DTOs.StudentFinanceDetail;
 using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
-using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
+
 using Person = SMS.DATA.Models.Person;
 using RequestPerson = SMS.REQUESTDATA.RequestModels.Person;
 using School = SMS.DATA.Models.School;
@@ -25,6 +27,7 @@ using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
 using Student = SMS.DATA.Models.Student;
 using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
+using ReqLessonPlan = SMS.REQUESTDATA.RequestModels.LessonPlan;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 using RequestEmployee= SMS.REQUESTDATA.RequestModels.Employee;
@@ -97,8 +100,6 @@ namespace SMS.MAP
             CreateMap<DBEmployeeFinanceInfo, DTOEmployeeFinanceInfo>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
-            
-
             CreateMap<Person, DTOPerson>();
 
             CreateMap<Class, DTOClass>();
@@ -129,9 +130,18 @@ namespace SMS.MAP
             CreateMap<Course, DTOCourse>();
 
             CreateMap<DBWorksheet, DTOWorksheet>();
+            CreateMap<ReqWorksheet, DTOWorksheet>();
 
             CreateMap<LessonPlan, DTOLessonPlan>();
             CreateMap<DTOLessonPlan, DTOLessonPlan>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<ReqLessonPlan, DTOLessonPlan>();
+            CreateMap<DTOLessonPlan, DTOLessonPlan>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+            CreateMap<DBEmployeeFinanceDetail, DTOEmployeeFinanceDetail>();
+            CreateMap<DTOEmployeeFinanceDetail, DTOEmployeeFinanceDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
             CreateMap<TeacherDiary, DTOTeacherDiary>();
@@ -207,12 +217,16 @@ namespace SMS.MAP
             CreateMap<DTOSchool, ReqSchool>();
             CreateMap<DTOCourse, Course>();
             CreateMap<DTOWorksheet, DBWorksheet>();
+            CreateMap<DTOWorksheet, ReqWorksheet>();
             CreateMap<DTOLessonPlan, LessonPlan>();
+            CreateMap<DTOLessonPlan, ReqLessonPlan>();
             CreateMap<DTOTeacherDiary, TeacherDiary>();
             CreateMap<DTOTeacherDiary, RequestTeacherDiary>();
             CreateMap<DTOEmployee, Employee>();
             CreateMap<RequestEmployee, DTOEmployee>();
             CreateMap<DTODesignation, Designation>();
+            CreateMap<DTODesignation, ReqDesignation>();
+
             CreateMap<DTOStudentFinances, DBStudentFinances>();
             CreateMap<DTOStudentFinances, RequestStudentFinance>();
             CreateMap<DTOStudentFinanceDetails, DBStudentFinanceDetails>();

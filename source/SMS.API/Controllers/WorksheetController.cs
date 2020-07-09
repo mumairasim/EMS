@@ -18,10 +18,10 @@ namespace SMS.API.Controllers
         {
             _worksheetService = worksheetService;
         }
-
         #endregion
 
-        #region API Calls
+        #region SMS
+
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
@@ -108,6 +108,97 @@ namespace SMS.API.Controllers
             try
             {
                 _worksheetService.Delete(id);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
+        #endregion
+
+        #region SMS Request
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            if (id == null)
+            {
+                return BadRequest("No Id Recieved");
+            }
+
+            try
+            {
+                var result = _worksheetService.RequestGet(id);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("RequestGetAll")]
+        public IHttpActionResult RequestGetAll()
+        {
+            try
+            {
+                var result = _worksheetService.RequestGetAll();
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(Worksheet worksheet)
+        {
+            worksheet.Employee = null;
+            try
+            {
+                _worksheetService.RequestCreate(worksheet);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(Worksheet worksheet)
+        {
+            worksheet.Employee = null;
+
+            try
+            {
+                _worksheetService.RequestUpdate(worksheet);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            if (id == null)
+            {
+                return BadRequest("No Id Recieved");
+            }
+
+            try
+            {
+                _worksheetService.RequestDelete(id);
             }
             catch (Exception)
             {
