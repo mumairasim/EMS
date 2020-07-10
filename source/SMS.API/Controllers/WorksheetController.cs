@@ -207,5 +207,23 @@ namespace SMS.API.Controllers
             return Ok();
         }
         #endregion
+
+        #region Request Approver
+        [HttpPut]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Worksheet worksheet)
+        {
+            
+            try
+            {
+                _worksheetService.ApproveRequest(worksheet);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+        #endregion
     }
 }

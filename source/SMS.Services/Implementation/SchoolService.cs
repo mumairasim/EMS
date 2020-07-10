@@ -9,7 +9,6 @@ using SMS.Services.Infrastructure;
 using DTOSchool = SMS.DTOs.DTOs.School;
 using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
 
-
 namespace SMS.Services.Implementation
 {
     public class SchoolService : ISchoolService
@@ -98,7 +97,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTOSchool dtoSchool)
         {
-            var school = Get(dtoSchool.Id);
+            var school = RequestGet(dtoSchool.Id);
             dtoSchool.UpdateDate = DateTime.UtcNow;
             var mergedSchool = _mapper.Map(dtoSchool, school);
             _requestRepository.Update(_mapper.Map<DTOSchool, ReqSchool>(mergedSchool));
@@ -107,7 +106,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var school = Get(id);
+            var school = RequestGet(id);
             school.IsDeleted = true;
             school.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOSchool, ReqSchool>(school));
