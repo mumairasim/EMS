@@ -22,9 +22,10 @@ namespace SMS.Services.Implementation
 
         #region Init
 
-        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IRequestRepository<RequestStudentFinanceDetail> requestRepository, IMapper mapper)
+        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IFinanceTypeService financeTypeService, IRequestRepository<RequestStudentFinanceDetail> requestRepository, IMapper mapper)
         {
             _repository = repository;
+            _requestRepository = requestRepository;
             _financeTypeService = financeTypeService;
             _mapper = mapper;
         }

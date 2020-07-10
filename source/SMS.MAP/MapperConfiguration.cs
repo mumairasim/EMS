@@ -225,7 +225,7 @@ namespace SMS.MAP
             CreateMap<DTOEmployee, Employee>();
             CreateMap<RequestEmployee, DTOEmployee>();
             CreateMap<DTODesignation, Designation>();
-            CreateMap<DTODesignation, ReqDesignation>();
+            CreateMap<DTODesignation, RequestDesignation>();
 
             CreateMap<DTOStudentFinances, DBStudentFinances>();
             CreateMap<DTOStudentFinances, RequestStudentFinance>();
