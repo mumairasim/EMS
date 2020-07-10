@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="DTOs\Assignment.cs" />
     <Compile Include="DTOs\EmployeeFinanceInfo.cs" />
+    <Compile Include="DTOs\RequestStatus.cs" />
+    <Compile Include="DTOs\RequestType.cs" />
     <Compile Include="DTOs\StudentAttendanceDetail.cs" />
     <Compile Include="DTOs\StudentAttendance.cs" />
     <Compile Include="DTOs\AttendanceStatus.cs" />
