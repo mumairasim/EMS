@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("ClassStudentDiary")]
-    public partial class ClassStudentDiary : BaseEntity
+    public partial class ClassStudentDiary : RequestBase
     {
 
         public Guid? StudentDiaryId { get; set; }

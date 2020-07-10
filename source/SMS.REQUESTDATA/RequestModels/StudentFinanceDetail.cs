@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
-    public partial class StudentFinanceDetail : BaseEntity
+    public partial class StudentFinanceDetail : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StudentFinanceDetail()

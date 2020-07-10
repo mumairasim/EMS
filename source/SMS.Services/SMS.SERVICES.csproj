@@ -62,6 +62,8 @@
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\EmployeeFinanceService.cs" />
     <Compile Include="Implementation\FinanceTypeService.cs" />
+    <Compile Include="Implementation\RequestStatusService.cs" />
+    <Compile Include="Implementation\RequestTypeService.cs" />
     <Compile Include="Implementation\StudentAttendanceDetailService.cs" />
     <Compile Include="Implementation\StudentAttendanceService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
@@ -84,6 +86,8 @@
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IEmployeeFinanceService.cs" />
     <Compile Include="Infrastructure\IFinanceTypeService.cs" />
+    <Compile Include="Infrastructure\IRequestStatusService.cs" />
+    <Compile Include="Infrastructure\IRequestTypeService.cs" />
     <Compile Include="Infrastructure\IStudentAttendanceDetailService.cs" />
     <Compile Include="Infrastructure\IStudentAttendanceService.cs" />
     <Compile Include="Infrastructure\IAttendanceStatusService.cs" />

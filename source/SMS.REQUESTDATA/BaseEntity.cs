@@ -1,5 +1,4 @@
-﻿using SMS.REQUESTDATA.RequestModels;
-using System;
+﻿using System;
 
 namespace SMS.REQUESTDATA
 {
@@ -20,6 +19,5 @@ namespace SMS.REQUESTDATA
 
         public bool? IsDeleted { get; set; }
 
-        public Guid? RequestStatusId { get; set; }
     }
 }
