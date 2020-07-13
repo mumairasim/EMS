@@ -462,13 +462,13 @@ namespace SMS.Services.Implementation
             return studentsList;
         }
 
-        public /*void*/StudentResponse RequestCreate(DTOStudent dtoStudent)
+        public void/*StudentResponse */RequestCreate(DTOStudent dtoStudent)
         {
-            var validationResult = RequestValidation(dtoStudent);
-            if (validationResult.IsError)
-            {
-                return validationResult;
-            }
+            //var validationResult = RequestValidation(dtoStudent);
+            //if (validationResult.IsError)
+            //{
+            //    return validationResult;
+            //}
             dtoStudent.CreatedDate = DateTime.UtcNow;
             dtoStudent.IsDeleted = false;
             dtoStudent.Id = Guid.NewGuid();
@@ -479,23 +479,23 @@ namespace SMS.Services.Implementation
             //RequestHelpingMethodForRelationship(dtoStudent);
             //RequestInsertStudentFinanceDetail(dtoStudent);
             _requestRepository.Add(_mapper.Map<DTOStudent, RequestStudent>(dtoStudent));
-            return validationResult;
+            //return validationResult;
         }
 
-        public StudentResponse RequestUpdate(DTOStudent dtoStudent)
+        public /*StudentResponse*/void RequestUpdate(DTOStudent dtoStudent)
         {
-            var validationResult = RequestValidation(dtoStudent);
-            if (validationResult.IsError)
-            {
-                return validationResult;
-            }
+            //var validationResult = RequestValidation(dtoStudent);
+            //if (validationResult.IsError)
+            //{
+            //    return validationResult;
+            //}
             var student = RequestGet(dtoStudent.Id);
             dtoStudent.UpdateDate = DateTime.UtcNow;
             //RequestHelpingMethodForRelationship(dtoStudent);
             var mergedStudent = _mapper.Map(dtoStudent, student);
             _personService.RequestUpdate(mergedStudent.Person);
             _requestRepository.Update(_mapper.Map<DTOStudent, RequestStudent>(mergedStudent));
-            return validationResult;
+            //return validationResult;
         }
         public void RequestDelete(Guid? id/*, string deletedBy*/)
         {
