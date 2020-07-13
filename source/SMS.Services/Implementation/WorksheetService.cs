@@ -243,6 +243,7 @@ namespace SMS.Services.Implementation
         #region Request Approver
         public void ApproveRequest(DTOWorksheet dTOWorksheet)
         {
+
             var requestType = _requestTypeService.RequestGet(dTOWorksheet.RequestTypeId);
             GenericApiResponse status;
             switch (requestType.Value)
