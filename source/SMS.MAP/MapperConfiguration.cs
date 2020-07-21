@@ -36,6 +36,7 @@ using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
+using ReqAttendanceStatus = SMS.REQUESTDATA.RequestModels.AttendanceStatus;
 using DBFinanceType = SMS.DATA.Models.FinanceType;
 using DTOFinanceType = SMS.DTOs.DTOs.FinanceType;
 using DBEmployeeFinanceDetail = SMS.DATA.Models.EmployeeFinanceDetail;
@@ -175,6 +176,7 @@ namespace SMS.MAP
             CreateMap<StudentAttendance, DTOStudentAttendance>();
             CreateMap<DTOStudentAttendance, DTOStudentAttendance>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            CreateMap<ReqAttendanceStatus, DTOAttendanceStatus>();
             CreateMap<AttendanceStatus, DTOAttendanceStatus>();
             CreateMap<DTOAttendanceStatus, DTOAttendanceStatus>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -230,6 +232,7 @@ namespace SMS.MAP
             CreateMap<DTOUserInfo, DBUserInfo>();
             CreateMap<DTOStudentFinance, DBStudentFinance>();
             CreateMap<DTOEmployeeFinanceInfo, DBEmployeeFinanceInfo>();
+            CreateMap<DTOAttendanceStatus, ReqAttendanceStatus>();
             CreateMap<DTOAttendanceStatus, AttendanceStatus>();
             CreateMap<DTOStudentAttendance, StudentAttendance>();
             CreateMap<DTOStudentAttendanceDetail, StudentAttendanceDetail>();
