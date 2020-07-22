@@ -7,13 +7,13 @@ namespace SMS.REQUESTDATA.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class test : IMigrationMetadata
+    public sealed partial class assignment : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(test));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(assignment));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007211518017_test"; }
+            get { return "202007220659270_assignment"; }
         }
         
         string IMigrationMetadata.Source

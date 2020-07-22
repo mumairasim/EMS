@@ -41,6 +41,9 @@ namespace SMS.REQUESTDATA.RequestModels
         public virtual DbSet<Worksheet> Worksheets { get; set; }
         public virtual DbSet<RequestType> RequestTypes { get; set; }
         public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
+        public virtual DbSet<AttendanceStatus> AttendanceStatuses{get; set; }
+        public virtual DbSet<StudentAttendance> StudentAttendances{ get; set; }
+        public virtual DbSet<StudentAttendanceDetail> StudentAttendanceDetails{ get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

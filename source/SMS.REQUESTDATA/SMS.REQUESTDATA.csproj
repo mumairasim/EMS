@@ -57,9 +57,13 @@
     <Compile Include="Infrastructure\IRequestDbContext.cs" />
     <Compile Include="Infrastructure\IRequestRepository.cs" />
     <Compile Include="Infrastructure\IRequestUnitOfWork.cs" />
-    <Compile Include="Migrations\202007211518017_test.cs" />
-    <Compile Include="Migrations\202007211518017_test.designer.cs">
-      <DependentUpon>202007211518017_test.cs</DependentUpon>
+    <Compile Include="Migrations\202007220651038_initial.cs" />
+    <Compile Include="Migrations\202007220651038_initial.designer.cs">
+      <DependentUpon>202007220651038_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007220659270_assignment.cs" />
+    <Compile Include="Migrations\202007220659270_assignment.designer.cs">
+      <DependentUpon>202007220659270_assignment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,7 +88,6 @@
     <Compile Include="RequestModels\RequestStatus.cs" />
     <Compile Include="RequestModels\RequestType.cs" />
     <Compile Include="RequestModels\School.cs" />
-    <Compile Include="RequestModels\SMS.cs" />
     <Compile Include="RequestModels\SMSRequest.cs" />
     <Compile Include="RequestModels\Student.cs" />
     <Compile Include="RequestModels\StudentAssignment.cs" />
@@ -105,8 +108,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007211518017_test.resx">
-      <DependentUpon>202007211518017_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007220651038_initial.resx">
+      <DependentUpon>202007220651038_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007220659270_assignment.resx">
+      <DependentUpon>202007220659270_assignment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
