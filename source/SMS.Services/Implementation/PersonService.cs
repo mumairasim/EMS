@@ -4,19 +4,22 @@ using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
+using SMS.REQUESTDATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using SMS.REQUESTDATA.Infrastructure;
 using RequestPerson = SMS.REQUESTDATA.RequestModels.Person;
 using DTOPerson = SMS.DTOs.DTOs.Person;
+using ReqPerson = SMS.REQUESTDATA.RequestModels.Person;
+
 
 namespace SMS.Services.Implementation
 {
     public class PersonService : IPersonService
     {
         private readonly IRepository<Person> _repository;
-        private readonly IRequestRepository<RequestPerson> _requestRepository;
+        private readonly IRequestRepository<ReqPerson> _requestRepository;
         private IMapper _mapper;
-        public PersonService(IRepository<Person> repository, IRequestRepository<RequestPerson> requestRepository, IMapper mapper)
+        public PersonService(IRepository<Person> repository, IMapper mapper, IRequestRepository<ReqPerson> requestRepository)
         {
             _repository = repository;
             _requestRepository = requestRepository;
@@ -68,14 +71,14 @@ namespace SMS.Services.Implementation
         }
         #endregion
 
-        #region RequestSMS Section
+        #region SMS Request Section
         public List<DTOPerson> RequestGet()
         {
             var people = _requestRepository.Get().ToList();
             var peopleList = new List<DTOPerson>();
             foreach (var person in people)
             {
-                peopleList.Add(_mapper.Map<RequestPerson, DTOPerson>(person));
+                peopleList.Add(_mapper.Map<ReqPerson, DTOPerson>(person));
             }
             return peopleList;
         }
@@ -85,7 +88,7 @@ namespace SMS.Services.Implementation
             var personRecord = _requestRepository.Get().FirstOrDefault(p => p.Id == id);
             if (personRecord == null) return null;
 
-            return _mapper.Map<RequestPerson, DTOPerson>(personRecord);
+            return _mapper.Map<ReqPerson, DTOPerson>(personRecord);
         }
 
         public Guid RequestCreate(DTOPerson dtoPerson)
@@ -93,7 +96,7 @@ namespace SMS.Services.Implementation
             dtoPerson.CreatedDate = DateTime.UtcNow;
             dtoPerson.IsDeleted = false;
             dtoPerson.Id = Guid.NewGuid();
-            _requestRepository.Add(_mapper.Map<DTOPerson, RequestPerson>(dtoPerson));
+            _requestRepository.Add(_mapper.Map<DTOPerson, ReqPerson>(dtoPerson));
             return dtoPerson.Id;
         }
         public void RequestUpdate(DTOPerson dtoPerson)
@@ -101,7 +104,7 @@ namespace SMS.Services.Implementation
             var person = RequestGet(dtoPerson.Id);
             dtoPerson.UpdateDate = DateTime.UtcNow;
             var mergedPerson = _mapper.Map(dtoPerson, person);
-            _requestRepository.Update(_mapper.Map<DTOPerson, RequestPerson>(mergedPerson));
+            _requestRepository.Update(_mapper.Map<DTOPerson, ReqPerson>(mergedPerson));
         }
         public void RequestDelete(Guid? id)
         {
@@ -110,7 +113,7 @@ namespace SMS.Services.Implementation
             var person = RequestGet(id);
             person.IsDeleted = true;
             person.DeletedDate = DateTime.UtcNow;
-            _requestRepository.Update(_mapper.Map<DTOPerson, RequestPerson>(person));
+            _requestRepository.Update(_mapper.Map<DTOPerson, ReqPerson>(person));
         }
         #endregion
     }
