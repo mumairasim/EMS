@@ -238,7 +238,7 @@ namespace SMS.MAP
             CreateMap<DTOTeacherDiary, TeacherDiary>();
             CreateMap<DTOTeacherDiary, RequestTeacherDiary>();
             CreateMap<DTOEmployee, Employee>();
-            CreateMap<RequestEmployee, DTOEmployee>();
+            CreateMap<DTOEmployee, RequestEmployee >();
             CreateMap<DTODesignation, Designation>();
             CreateMap<DTODesignation, RequestDesignation>();
 

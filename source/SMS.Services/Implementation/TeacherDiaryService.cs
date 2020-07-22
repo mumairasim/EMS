@@ -212,13 +212,13 @@ namespace SMS.Services.Implementation
             return teacherDiary;
         }
 
-        public TeacherDiaryResponse RequestCreate(DTOTeacherDiary dtoteacherDiary)
+        public /*TeacherDiaryResponse*/void RequestCreate(DTOTeacherDiary dtoteacherDiary)
         {
-            var validationResult = RequestValidation(dtoteacherDiary);
-            if (validationResult.IsError)
-            {
-                return validationResult;
-            }
+            //var validationResult = RequestValidation(dtoteacherDiary);
+            //if (validationResult.IsError)
+            //{
+            //    return validationResult;
+            //}
             dtoteacherDiary.CreatedDate = DateTime.Now;
             dtoteacherDiary.IsDeleted = false;
             dtoteacherDiary.Id = Guid.NewGuid();
@@ -226,29 +226,29 @@ namespace SMS.Services.Implementation
             dtoteacherDiary.School = null;
             //RequestHelpingMethodForRelationship(dtoteacherDiary);
             _requestRepository.Add(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(dtoteacherDiary));
-            return validationResult;
+            //return validationResult;
         }
-        public TeacherDiaryResponse RequestUpdate(DTOTeacherDiary dtoteacherDiary)
+        public /*TeacherDiaryResponse*/void RequestUpdate(DTOTeacherDiary dtoteacherDiary)
         {
-            var validationResult = RequestValidation(dtoteacherDiary);
-            if (validationResult.IsError)
-            {
-                return validationResult;
-            }
+            //var validationresult = requestvalidation(dtoteacherdiary);
+            //if (validationresult.iserror)
+            //{
+            //    return validationresult;
+            //}
             var teacherDiary = RequestGet(dtoteacherDiary.Id);
             dtoteacherDiary.UpdateDate = DateTime.UtcNow;
             //RequestHelpingMethodForRelationship(dtoteacherDiary);
             var mergedTeacherDiary = _mapper.Map(dtoteacherDiary, teacherDiary);
             _requestRepository.Update(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(mergedTeacherDiary));
-            return validationResult;
+            //return validationResult;
         }
-        public void RequestDelete(Guid? id, string DeletedBy)
+        public void RequestDelete(Guid? id/*, string DeletedBy*/)
         {
             if (id == null)
                 return;
             var teacherDiary = RequestGet(id);
             teacherDiary.IsDeleted = true;
-            teacherDiary.DeletedBy = DeletedBy;
+            //teacherDiary.DeletedBy = DeletedBy;
             teacherDiary.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(teacherDiary));
         }

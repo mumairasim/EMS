@@ -97,15 +97,16 @@ namespace SMS.API.Controllers
             //var httpRequest = HttpContext.Current.Request;
             //var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
             //teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(TeacherDiaryService.RequestUpdate(dtoTeacherDiary));
+            TeacherDiaryService.RequestUpdate(dtoTeacherDiary);
+            return Ok();
         }
 
         [HttpDelete]
         [Route("RequestDelete")]
         public IHttpActionResult RequestDelete(Guid id)
         {
-            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.RequestDelete(id, deletedBy);
+            //var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            TeacherDiaryService.RequestDelete(id/*, deletedBy*/);
             return Ok();
         }
 
