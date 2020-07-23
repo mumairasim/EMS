@@ -13,14 +13,16 @@ namespace SMS.Services.Implementation
     {
         #region Properties
         private readonly IRepository<DBStudentFinanceDetails> _repository;
+        private readonly IFinanceTypeService _financeTypeService;
         private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IMapper mapper)
+        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IFinanceTypeService financeTypeService, IMapper mapper)
         {
             _repository = repository;
+            _financeTypeService = financeTypeService;
             _mapper = mapper;
         }
 
@@ -77,6 +79,37 @@ namespace SMS.Services.Implementation
             return StudentFinancesDto;
         }
 
+        public DTOStudentFinanceDetails GetByFeeType(Guid? studentId, string feeType)
+        {
+            if (studentId == null || string.IsNullOrEmpty(feeType))
+            {
+                return null;
+            }
+            var financeType = _financeTypeService.GetByName(feeType);
+            var StudentFinances = _repository.Get().FirstOrDefault(x => x.StudentId == studentId && x.FinanceTypeId == financeType.Id && (x.IsDeleted == false || x.IsDeleted == null));
+            var StudentFinancesDto = _mapper.Map<DBStudentFinanceDetails, DTOStudentFinanceDetails>(StudentFinances);
+
+            return StudentFinancesDto;
+        }
+
+        /// <summary>
+        /// Returns a list of Records of a StudentFinances by student Id
+        /// </summary>
+        /// <param name="studentId"></param>
+        /// <returns></returns>
+        public List<DTOStudentFinanceDetails> GetByStudentId(Guid? studentId)
+        {
+            if (studentId == null)
+            {
+                return null;
+            }
+
+            var StudentFinances = _repository.Get().Where(x => x.StudentId == studentId && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
+            var StudentFinancesDto = _mapper.Map<List<DBStudentFinanceDetails>, List<DTOStudentFinanceDetails>>(StudentFinances);
+
+            return StudentFinancesDto;
+        }
+
         /// <summary>
         /// Service level call : Updates the Single Record of a StudentFinances 
         /// </summary>
@@ -110,7 +143,6 @@ namespace SMS.Services.Implementation
         }
 
         #endregion
-
 
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Files")]
-    public class File : BaseEntity
+    public class File : RequestBase
     {
         public string Name { get; set; }
         public string Description { get; set; }

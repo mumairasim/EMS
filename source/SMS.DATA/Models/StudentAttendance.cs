@@ -11,6 +11,5 @@ namespace SMS.DATA.Models
         public Guid? ClassId { get; set; }
         public virtual Class Class { get; set; }
         public virtual School School { get; set; }
-
     }
 }

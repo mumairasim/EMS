@@ -18,5 +18,9 @@ namespace SMS.DTOs.DTOs
         public string DeletedBy { get; set; }
 
         public bool? IsDeleted { get; set; }
+
+        public Guid? RequestTypeId { get; set; }
+        public Guid? RequestStatusId { get; set; }
+
     }
 }

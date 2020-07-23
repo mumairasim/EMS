@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DTOEmployeeFinanceInfo = SMS.DTOs.DTOs.EmployeeFinanceInfo;
+using DTOEmployeeFinanceDetail = SMS.DTOs.DTOs.EmployeeFinanceDetail;
 
 namespace SMS.Services.Infrastructure
 {
@@ -23,5 +24,25 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <returns></returns>
         void Create(DTOEmployeeFinanceInfo employeeFinanceInfo);
+
+
+        /// <summary>
+        /// Service level call : Creates record for employee finance detail (meta)
+        /// </summary>
+        /// <returns></returns>
+        void CreateFinanceDetails(DTOEmployeeFinanceDetail dTOEmployeeFinanceDetail);
+
+
+        /// <summary>
+        /// Service level call : Gets the employee finance detail
+        /// </summary>
+        /// <returns></returns>
+        DTOEmployeeFinanceDetail GetFinanceDetailByEmployeeId(Guid empId);
+
+        /// <summary>
+        /// Service level call : Updates the employee finance detail
+        /// </summary>
+        /// <returns></returns>
+        void UpdateFinanceDetail(DTOEmployeeFinanceDetail dTOEmployeeFinanceDetail);
     }
 }

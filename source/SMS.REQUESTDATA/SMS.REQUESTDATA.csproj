@@ -57,8 +57,17 @@
     <Compile Include="Infrastructure\IRequestDbContext.cs" />
     <Compile Include="Infrastructure\IRequestRepository.cs" />
     <Compile Include="Infrastructure\IRequestUnitOfWork.cs" />
+    <Compile Include="Migrations\202007220651038_initial.cs" />
+    <Compile Include="Migrations\202007220651038_initial.designer.cs">
+      <DependentUpon>202007220651038_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007220713323_test.cs" />
+    <Compile Include="Migrations\202007220713323_test.designer.cs">
+      <DependentUpon>202007220713323_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestBase.cs" />
     <Compile Include="RequestModels\Assignment.cs" />
     <Compile Include="RequestModels\AttendanceStatus.cs" />
     <Compile Include="RequestModels\Class.cs" />
@@ -76,9 +85,9 @@
     <Compile Include="RequestModels\LessonPlan.cs" />
     <Compile Include="RequestModels\Period.cs" />
     <Compile Include="RequestModels\Person.cs" />
+    <Compile Include="RequestModels\RequestStatus.cs" />
     <Compile Include="RequestModels\RequestType.cs" />
     <Compile Include="RequestModels\School.cs" />
-    <Compile Include="RequestModels\SMS.cs" />
     <Compile Include="RequestModels\SMSRequest.cs" />
     <Compile Include="RequestModels\Student.cs" />
     <Compile Include="RequestModels\StudentAssignment.cs" />
@@ -97,6 +106,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007220651038_initial.resx">
+      <DependentUpon>202007220651038_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007220713323_test.resx">
+      <DependentUpon>202007220713323_test.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

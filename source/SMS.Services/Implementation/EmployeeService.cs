@@ -7,23 +7,30 @@ using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using ReqEmployee = SMS.REQUESTDATA.RequestModels.Employee;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
+using SMS.REQUESTDATA.Infrastructure;
 
 namespace SMS.Services.Implementation
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _repository;
+        private readonly IRequestRepository<ReqEmployee> _requestRepository;
         private readonly IPersonService _personService;
+        private readonly IEmployeeFinanceService _employeeFinanceService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IMapper mapper)
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestRepository<ReqEmployee> requestRepository)
         {
             _repository = repository;
+            _requestRepository = requestRepository;
             _personService = personService;
+            _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
         }
 
+        #region SMS Section
         public EmployeesList Get(int pageNumber, int pageSize)
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
@@ -58,6 +65,11 @@ namespace SMS.Services.Implementation
             if (id == null) return null;
             var employeeRecord = _repository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
             var employee = _mapper.Map<Employee, DTOEmployee>(employeeRecord);
+            var fincanceDetails = _employeeFinanceService.GetFinanceDetailByEmployeeId(employee.Id);
+            if (fincanceDetails != null)
+            {
+                employee.MonthlySalary = _employeeFinanceService.GetFinanceDetailByEmployeeId(employee.Id).Salary;
+            }
             return employee;
         }
         public EmployeeResponse Create(DTOEmployee dtoEmployee)
@@ -73,8 +85,20 @@ namespace SMS.Services.Implementation
             dtoEmployee.PersonId = _personService.Create(dtoEmployee.Person);
             HelpingMethodForRelationship(dtoEmployee);
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
+            InsertFinanceDetails(dtoEmployee);
             return validationResult;
         }
+
+        private void InsertFinanceDetails(DTOEmployee dtoEmployee)
+        {
+            var financeDetail = new EmployeeFinanceDetail
+            {
+                EmployeeId = dtoEmployee.Id,
+                Salary = dtoEmployee.MonthlySalary
+            };
+            _employeeFinanceService.CreateFinanceDetails(financeDetail);
+        }
+
         public EmployeeResponse Update(DTOEmployee dtoEmployee)
         {
             var validationResult = Validation(dtoEmployee);
@@ -82,11 +106,22 @@ namespace SMS.Services.Implementation
             {
                 return validationResult;
             }
-            var employee = Get(dtoEmployee.PersonId);
+            var employee = Get(dtoEmployee.Id);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, employee);
             _personService.Update(mergedEmployee.Person);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));
+            var finance = _employeeFinanceService.GetFinanceDetailByEmployeeId(dtoEmployee.Id);
+            if (finance != null)
+            {
+                finance.Salary = dtoEmployee.MonthlySalary;
+                _employeeFinanceService.UpdateFinanceDetail(finance);
+            }
+            else
+            {
+                InsertFinanceDetails(dtoEmployee);
+            }
             return validationResult;
         }
         public void Delete(Guid? id, string DeletedBy)
@@ -112,7 +147,7 @@ namespace SMS.Services.Implementation
         {
             var alphaRegex = new Regex("^[a-zA-Z ]+$");
             var numericRegex = new Regex("^[0-9]*$");
-            if (dtoEmployee.Person.FirstName == null || dtoEmployee.Person.FirstName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.FirstName) || dtoEmployee.Person.FirstName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -126,7 +161,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.LastName == null || dtoEmployee.Person.LastName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.LastName) || dtoEmployee.Person.LastName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -154,7 +189,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.Phone == null || dtoEmployee.Person.Phone.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.Phone) || dtoEmployee.Person.Phone.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "PhoneLimitError",
@@ -168,7 +203,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.Nationality == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.Nationality))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNationality",
@@ -182,7 +217,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.Religion != null && !alphaRegex.IsMatch(dtoEmployee.Person.Religion))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.Religion) && !alphaRegex.IsMatch(dtoEmployee.Person.Religion))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                    "InvalidText",
@@ -203,7 +238,7 @@ namespace SMS.Services.Implementation
                     "Class cannot be null"
                     );
             }
-            if (dtoEmployee.Person.ParentName == null || dtoEmployee.Person.ParentName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentName) || dtoEmployee.Person.ParentName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -224,7 +259,7 @@ namespace SMS.Services.Implementation
                     "Cnic must be of 13 digits"
                     );
             }
-            if (dtoEmployee.Person.ParentRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentRelation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidRelation",
@@ -238,21 +273,21 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentOccupation != null && dtoEmployee.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoEmployee.Person.ParentOccupation))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentOccupation) && dtoEmployee.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoEmployee.Person.ParentOccupation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoEmployee.Person.ParentNationality != null && !alphaRegex.IsMatch(dtoEmployee.Person.ParentNationality))
+            if (!string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentNationality) && !alphaRegex.IsMatch(dtoEmployee.Person.ParentNationality))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoEmployee.Person.ParentMobile1 == null || dtoEmployee.Person.ParentMobile1.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentMobile1) || dtoEmployee.Person.ParentMobile1.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNumber",
@@ -266,7 +301,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyName == null || dtoEmployee.Person.ParentEmergencyName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyName) || dtoEmployee.Person.ParentEmergencyName.Length > 100)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidName",
@@ -280,7 +315,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyRelation))
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidRelation",
@@ -294,7 +329,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoEmployee.Person.ParentEmergencyMobile == null || dtoEmployee.Person.ParentEmergencyMobile.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoEmployee.Person.ParentEmergencyMobile) || dtoEmployee.Person.ParentEmergencyMobile.Length > 15)
             {
                 return PrepareFailureResponse(dtoEmployee.Id,
                     "InvalidNumber",
@@ -335,5 +370,61 @@ namespace SMS.Services.Implementation
                 Description = descriptionMessage
             };
         }
+        #endregion
+
+        #region SMS Request Section
+
+        public List<DTOEmployee> RequestGet()
+        {
+            var employees = _requestRepository.Get().Where(em => em.IsDeleted == false).ToList();
+            var employeeList = new List<DTOEmployee>();
+            foreach (var employee in employees)
+            {
+                employeeList.Add(_mapper.Map<ReqEmployee, DTOEmployee>(employee));
+            }
+            return employeeList;
+        }
+        public DTOEmployee RequestGet(Guid? id)
+        {
+            if (id == null) return null;
+
+            var employeeRecord = _requestRepository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
+            if (employeeRecord == null) return null;
+
+            return _mapper.Map<ReqEmployee, DTOEmployee>(employeeRecord);
+        }
+        public Guid RequestCreate(DTOEmployee dtoEmployee)
+        {
+            dtoEmployee.CreatedDate = DateTime.UtcNow;
+            dtoEmployee.IsDeleted = false;
+            dtoEmployee.Id = Guid.NewGuid();
+            dtoEmployee.PersonId = _personService.RequestCreate(dtoEmployee.Person);
+            _requestRepository.Add(_mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee));
+            return dtoEmployee.Id;
+        }
+        public void RequestUpdate(DTOEmployee dtoEmployee)
+        {
+            var reqemployee = RequestGet(dtoEmployee.Id);
+            dtoEmployee.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoEmployee);
+            var mergedEmployee = _mapper.Map(dtoEmployee, reqemployee);
+            _personService.RequestUpdate(mergedEmployee.Person);
+            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(mergedEmployee));
+        }
+        public void RequestDelete(Guid? id)
+        {
+
+            if (id == null)
+                return;
+            var employee = RequestGet(id);
+            employee.IsDeleted = true;
+            //employee.DeletedBy = DeletedBy;
+            employee.DeletedDate = DateTime.UtcNow;
+            _personService.RequestDelete(employee.PersonId);
+            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(employee));
+        }
+
+        #endregion
+
     }
 }

@@ -224,8 +224,7 @@ project.lock.json
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
-/source/SMS.REQUESTDATA/Migrations/
-/source/SMS.DATA/Migrations/
+
 #*/Web.config
 #*/App.config
 #/source/SMS.WEB/Web.config

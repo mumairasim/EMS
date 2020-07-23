@@ -18,12 +18,14 @@ namespace SMS.Services.Implementation
         private readonly IRepository<Student> _repository;
         private readonly IPersonService _personService;
         private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
+        private readonly IFinanceTypeService _financeTypeService;
         private readonly IMapper _mapper;
-        public StudentService(IRepository<Student> repository, IPersonService personService, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper)
+        public StudentService(IRepository<Student> repository, IPersonService personService, IStudentFinanceDetailsService studentFinanceDetailsService, IFinanceTypeService financeTypeService, IMapper mapper)
         {
             _repository = repository;
             _personService = personService;
             _studentFinanceDetailsService = studentFinanceDetailsService;
+            _financeTypeService = financeTypeService;
             _mapper = mapper;
         }
         public StudentsList Get(int pageNumber, int pageSize)
@@ -50,6 +52,9 @@ namespace SMS.Services.Implementation
             if (id == null) return null;
             var studentRecord = _repository.Get().FirstOrDefault(st => st.Id == id && st.IsDeleted == false);
             var student = _mapper.Map<Student, DTOStudent>(studentRecord);
+
+            student.MonthlyFee = _studentFinanceDetailsService.GetByFeeType(student.Id, "Monthly") != null ? _studentFinanceDetailsService.GetByFeeType(student.Id, "Monthly").Fee : 0;
+            student.AdmissionFee = _studentFinanceDetailsService.GetByFeeType(student.Id, "Admission") != null ? _studentFinanceDetailsService.GetByFeeType(student.Id, "Admission").Fee : 0;
             return student;
         }
         public StudentsList Get(Guid classId, Guid schoolId)
@@ -74,7 +79,7 @@ namespace SMS.Services.Implementation
         public StudentResponse Create(DTOStudent dtoStudent)
         {
             var validationResult = Validation(dtoStudent);
-            if(validationResult.IsError)
+            if (validationResult.IsError)
             {
                 return validationResult;
             }
@@ -83,25 +88,55 @@ namespace SMS.Services.Implementation
             dtoStudent.Id = Guid.NewGuid();
             dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
             HelpingMethodForRelationship(dtoStudent);
-            InsertStudentFinanceDetail(dtoStudent);
             _repository.Add(_mapper.Map<DTOStudent, Student>(dtoStudent));
+            InsertStudentFinanceDetail(dtoStudent);
             return validationResult;
         }
 
-        public StudentResponse Update(DTOStudent dtoStudent)
+        public StudentResponse Update(DTOStudent dtoStudentUpdatedState)
         {
-            var validationResult = Validation(dtoStudent);
+            var validationResult = Validation(dtoStudentUpdatedState);
             if (validationResult.IsError)
             {
                 return validationResult;
             }
-            var student = Get(dtoStudent.Id);
-            dtoStudent.UpdateDate = DateTime.UtcNow;
-            var mergedStudent = _mapper.Map(dtoStudent, student);
+            var dtoStudentCurrentState = Get(dtoStudentUpdatedState.Id);
+            dtoStudentUpdatedState.UpdateDate = DateTime.UtcNow;
+            HelpingMethodForRelationship(dtoStudentUpdatedState);
+            var mergedStudent = _mapper.Map(dtoStudentUpdatedState, dtoStudentCurrentState);
             _personService.Update(mergedStudent.Person);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
+            UpsertFinanceDetailsAgainstStudent(dtoStudentUpdatedState, dtoStudentCurrentState);
             return validationResult;
         }
+
+        private void UpsertFinanceDetailsAgainstStudent(DTOStudent dtoStudentUpdatedState, DTOStudent dtoStudentCurrentState)
+        {
+            var finances = _studentFinanceDetailsService.GetByStudentId(dtoStudentCurrentState.Id);
+            var typeNames = new string[] { "Admission", "Monthly" };
+            if (finances.Count == 0)
+            {
+                InsertStudentFinanceDetail(dtoStudentUpdatedState);
+            }
+            else
+            {
+                foreach (var finance in finances)
+                {
+                    var financeType = _financeTypeService.Get(finance.FinanceTypeId);
+                    switch (financeType.Type)
+                    {
+                        case "Admission":
+                            finance.Fee = dtoStudentUpdatedState.AdmissionFee;
+                            break;
+                        case "Monthly":
+                            finance.Fee = dtoStudentUpdatedState.MonthlyFee;
+                            break;
+                    }
+                    _studentFinanceDetailsService.Update(finance);
+                }
+            }
+        }
+
         public void Delete(Guid? id, string deletedBy)
         {
             if (id == null)
@@ -115,16 +150,25 @@ namespace SMS.Services.Implementation
         }
         private void InsertStudentFinanceDetail(DTOStudent dtoStudent)
         {
-            var stdFinance = new DTOStudentFinanceDetail
+            var listOfTypeIds = new[] { new { _financeTypeService.GetByName("Admission").Id, FeeAmount = dtoStudent.AdmissionFee },
+                new { _financeTypeService.GetByName("Monthly").Id, FeeAmount = dtoStudent.MonthlyFee }
+            }.ToList();
+
+            foreach (var type in listOfTypeIds)
             {
-                Id = Guid.NewGuid(),
-                StudentId = dtoStudent.Id,
-                IsDeleted = false,
-                CreatedDate = dtoStudent.CreatedDate,
-                CreatedBy = dtoStudent.CreatedBy,
-                FinanceTypeId = Guid.Parse("8B50E73B-11BF-44B9-8DA1-EF1602F4479E") // need to replace by dropdown
-            };
-            _studentFinanceDetailsService.Create(stdFinance);
+                var stdFinance = new DTOStudentFinanceDetail
+                {
+                    Id = Guid.NewGuid(),
+                    StudentId = dtoStudent.Id,
+                    IsDeleted = false,
+                    Fee = type.FeeAmount,
+                    CreatedDate = dtoStudent.CreatedDate,
+                    CreatedBy = dtoStudent.CreatedBy,
+                    FinanceTypeId = type.Id
+                };
+                _studentFinanceDetailsService.Create(stdFinance);
+            }
+
 
         }
 
@@ -141,21 +185,21 @@ namespace SMS.Services.Implementation
         {
             var alphaRegex = new Regex("^[a-zA-Z ]+$");
             var numericRegex = new Regex("^[0-9]*$");
-            if (dtoStudent.Person.FirstName == null || dtoStudent.Person.FirstName.Length>100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.FirstName) || dtoStudent.Person.FirstName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
                     "Name may null or exceed than 100 characters"
                     );
             }
-            if(!alphaRegex.IsMatch(dtoStudent.Person.FirstName))
+            if (!alphaRegex.IsMatch(dtoStudent.Person.FirstName))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                    "InvalidName",
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.LastName == null || dtoStudent.Person.LastName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.LastName) || dtoStudent.Person.LastName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -169,7 +213,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.Cnic == null || dtoStudent.Person.Cnic.Length!=13)
+            if (dtoStudent.Person.Cnic == null || dtoStudent.Person.Cnic.Length != 13)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "CnicLimitError",
@@ -183,7 +227,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.Phone == null || dtoStudent.Person.Phone.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.Phone) || dtoStudent.Person.Phone.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "PhoneLimitError",
@@ -197,7 +241,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.Nationality == null )
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.Nationality))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNationality",
@@ -211,14 +255,14 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.Religion != null && !alphaRegex.IsMatch(dtoStudent.Person.Religion))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.Religion) && !alphaRegex.IsMatch(dtoStudent.Person.Religion))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                    "InvalidText",
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.School == null )
+            if (dtoStudent.School == null)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidSchool",
@@ -232,7 +276,7 @@ namespace SMS.Services.Implementation
                     "Class cannot be null"
                     );
             }
-            if (dtoStudent.Person.ParentName == null || dtoStudent.Person.ParentName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentName) || dtoStudent.Person.ParentName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -253,7 +297,7 @@ namespace SMS.Services.Implementation
                     "Cnic must be of 13 digits"
                     );
             }
-            if (dtoStudent.Person.ParentRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentRelation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidRelation",
@@ -267,21 +311,21 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentOccupation != null && dtoStudent.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoStudent.Person.ParentOccupation))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.ParentOccupation) && dtoStudent.Person.ParentOccupation.Length > 100 && !alphaRegex.IsMatch(dtoStudent.Person.ParentOccupation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoStudent.Person.ParentNationality != null  && !alphaRegex.IsMatch(dtoStudent.Person.ParentNationality))
+            if (!string.IsNullOrWhiteSpace(dtoStudent.Person.ParentNationality) && !alphaRegex.IsMatch(dtoStudent.Person.ParentNationality))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidText",
                     "Text Field doesn't contain any numbers"
                     );
             }
-            if (dtoStudent.Person.ParentMobile1 == null || dtoStudent.Person.ParentMobile1.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentMobile1) || dtoStudent.Person.ParentMobile1.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
@@ -295,7 +339,7 @@ namespace SMS.Services.Implementation
                    "This field contains only digits"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyName == null || dtoStudent.Person.ParentEmergencyName.Length > 100)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyName) || dtoStudent.Person.ParentEmergencyName.Length > 100)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidName",
@@ -309,7 +353,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyRelation == null)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyRelation))
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidRelation",
@@ -323,7 +367,7 @@ namespace SMS.Services.Implementation
                    "Text Field doesn't contain any numbers"
                    );
             }
-            if (dtoStudent.Person.ParentEmergencyMobile == null || dtoStudent.Person.ParentEmergencyMobile.Length > 15)
+            if (string.IsNullOrWhiteSpace(dtoStudent.Person.ParentEmergencyMobile) || dtoStudent.Person.ParentEmergencyMobile.Length > 15)
             {
                 return PrepareFailureResponse(dtoStudent.Id,
                     "InvalidNumber",
@@ -358,7 +402,7 @@ namespace SMS.Services.Implementation
             return new StudentResponse
             {
                 Id = id,
-                IsError=false,
+                IsError = false,
                 StatusCode = "200",
                 Message = message,
                 Description = descriptionMessage

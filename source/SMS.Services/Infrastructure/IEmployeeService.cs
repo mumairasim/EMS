@@ -9,12 +9,24 @@ namespace SMS.Services.Infrastructure
 
     public interface IEmployeeService 
     {
-        EmployeesList Get(int pageNumber, int pageSize);  
+        #region SMS Section
+        EmployeesList Get(int pageNumber, int pageSize);
         DTOEmployee Get(Guid? id);
         List<DTOEmployee> GetEmployeeByDesignation();
         EmployeeResponse Create(DTOEmployee employee);
         EmployeeResponse Update(DTOEmployee dtoEmployee);
         void Delete(Guid? id, string DeletedBy);
+        #endregion
+
+        #region SMS Request Section
+        List<DTOEmployee> RequestGet();
+        DTOEmployee RequestGet(Guid? id);
+        Guid RequestCreate(DTOEmployee dtoEmployee);
+        void RequestUpdate(DTOEmployee dtoEmployee);
+        void RequestDelete(Guid? id);
+        #endregion
+
     }
+
 }
 

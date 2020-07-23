@@ -20,6 +20,13 @@ namespace SMS.Services.Infrastructure
         DTOFinanceType Get(Guid? id);
 
         /// <summary>
+        /// Retruns a Single Record of a FinanceType by name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DTOFinanceType GetByName(string name);
+
+        /// <summary>
         /// Service level call : Creates a single record of a FinanceType
         /// </summary>
         /// <param name="dtoFinanceType"></param>

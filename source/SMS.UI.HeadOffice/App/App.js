@@ -122,6 +122,8 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanUpdate.html",
             controller: "lessonPlanUpdateCtrl"
         })
+
+
         .when("/userProfile", {
             title: "User Profile View",
             templateUrl: "App/Controllers/UserProfile/UserProfile.html",
@@ -210,6 +212,11 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             title: "Student Attendance Update",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheetUpdate.html",
             controller: "studentAttendanceSheetUpdateCtrl"
+        })
+        .when("/timeTableBase", {
+            title: "Time Table Base",
+            templateUrl: "App/Controllers/Modules/TimeTable/timeTableBase.html",
+            controller: "timeTableBaseCtrl"
         })
         .when("/timeTableCreate", {
             title: "Time Table Create",

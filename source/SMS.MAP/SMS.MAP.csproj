@@ -56,6 +56,10 @@
       <Project>{afadb3c9-3f0f-4680-96de-a6a7e7ec92bb}</Project>
       <Name>SMS.DTOs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SMS.REQUESTDATA\SMS.REQUESTDATA.csproj">
+      <Project>{a7dbd438-6800-4f1b-9e97-9ba2b431d963}</Project>
+      <Name>SMS.REQUESTDATA</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

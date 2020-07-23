@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Worksheet")]
-    public partial class Worksheet : BaseEntity
+    public partial class Worksheet : RequestBase
     {
         public string Text { get; set; }
 

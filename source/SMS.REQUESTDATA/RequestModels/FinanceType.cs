@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
-    public partial class FinanceType : BaseEntity
+    public partial class FinanceType : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FinanceType()
