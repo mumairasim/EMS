@@ -226,6 +226,10 @@ namespace SMS.MAP
             CreateMap<DTOTimeTableDetail, DTOTimeTableDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<DBStudentDiary, DTOStudentDiary>();
+            CreateMap<DBStudentDiary, DTOStudentDiary>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<Period, DTOPeriod>();
             CreateMap<DTOPeriod, DTOPeriod>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
