@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
-    public partial class EmployeeFinance : BaseEntity
+    public partial class EmployeeFinance : RequestBase
     {
+
         public Guid? EmployeeFinanceDetailsId { get; set; }
 
         public bool? SalaryTransfered { get; set; }

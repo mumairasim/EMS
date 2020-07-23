@@ -16,7 +16,7 @@ namespace SMS.DTOs.DTOs
         public School School { get; set; }
         public string PreviousSchoolName { get; set; }
         public string ReasonForLeaving { get; set; }
-
-        
+        public decimal? AdmissionFee { get; set; }
+        public decimal? MonthlyFee { get; set; }
     }
 }

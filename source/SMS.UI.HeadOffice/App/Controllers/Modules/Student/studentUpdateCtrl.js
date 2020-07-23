@@ -75,26 +75,28 @@
     };
 
     $scope.StudentUpdate = function () {
-        var data = $scope.StudentModel;
+        if ($scope.IsValid()) {
+            var data = $scope.StudentModel;
 
-        var formData = new FormData();
+            var formData = new FormData();
 
-        if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
-            $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
-            formData.append("file", $scope.NewImageFile[0]);
-            data.Image.ImageFile = null;
-        }
-        formData.append('studentModel', JSON.stringify(data));
-        var responsedata = apiService.masterput('/api/v1/Student/Update', formData);
-        responsedata.then(function mySucces(response) {
-            $scope.response = response.data;
-            $scope.growltext("Student updated successfully.", false);
-            window.location = "#!/studentBase";
-        },
-            function myError(response) {
+            if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
+                $scope.NewImageFile = $scope.StudentModel.Image.ImageFile;
+                formData.append("file", $scope.NewImageFile[0]);
+                data.Image.ImageFile = null;
+            }
+            formData.append('studentModel', JSON.stringify(data));
+            var responsedata = apiService.masterput('/api/v1/Student/Update', formData);
+            responsedata.then(function mySucces(response) {
                 $scope.response = response.data;
-                $scope.growltext("Student updation failed", true);
-            });
+                $scope.growltext("Student updated successfully.", false);
+                window.location = "#!/studentBase";
+            },
+                function myError(response) {
+                    $scope.response = response.data;
+                    $scope.growltext("Student updation failed", true);
+                });
+        }
     };
     $scope.FetchStudent = function () {
         var id = $routeParams.Id;
@@ -145,8 +147,80 @@
     $scope.Cancel = function () {
         window.location = "#!/studentBase";
     };
+
+    $scope.IsValid = function () {
+        if ($scope.StudentModel.Person == undefined) {
+            $scope.growltext("Invalid student data", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.FirstName == null || $scope.StudentModel.Person.FirstName == "" || $scope.StudentModel.Person.FirstName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("FirstName cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName == "" || $scope.StudentModel.Person.LastName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("LastName cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.Cnic == null || $scope.StudentModel.Person.Cnic.length != 13) {
+            $scope.IsError = "Cnic must be of 13 digits";
+            $scope.growltext("Cnic must be of 13 digits", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone == "" || $scope.StudentModel.Person.Phone.length > 15) {
+            $scope.IsError = "Phone cannot exceed from 15 digits";
+            $scope.growltext("Phone cannot be null or cannot exceed from 15 digits", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.Nationality == null || $scope.StudentModel.Person.Nationality == "") {
+            $scope.IsError = "Nationality cannot be null";
+            $scope.growltext("Nationality cannot be null", true);
+            return false;
+        }
+
+        if ($scope.StudentModel.School == null) {
+            $scope.IsError = "School cannot be null";
+            $scope.growltext("School cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Class == null) {
+            $scope.IsError = "Class cannot be null";
+            $scope.growltext("Class cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentName == null || $scope.StudentModel.Person.ParentName == "" || $scope.StudentModel.Person.ParentName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("ParentName cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentRelation == null || $scope.StudentModel.Person.ParentRelation == "") {
+            $scope.IsError = "Relation cannot be null";
+            $scope.growltext("ParentRelation cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentMobile1 == null || $scope.StudentModel.Person.ParentMobile1 == "" || $scope.StudentModel.Person.ParentMobile1.length > 15) {
+            $scope.IsError = "Number cannot be null";
+            $scope.growltext("ParentMobile1 cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentEmergencyName == null || $scope.StudentModel.Person.ParentEmergencyName == "" || $scope.StudentModel.Person.ParentEmergencyName.length > 100) {
+            $scope.IsError = "Name cannot be null";
+            $scope.growltext("ParentName cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentEmergencyRelation == null || $scope.StudentModel.Person.ParentEmergencyRelation == "") {
+            $scope.IsError = "Relation cannot be null";
+            $scope.growltext("ParentRelation cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.Person.ParentEmergencyMobile == null || $scope.StudentModel.Person.ParentEmergencyMobile == "" || $scope.StudentModel.Person.ParentEmergencyMobile.length > 15) {
+            $scope.IsError = "Number cannot be null";
+            $scope.growltext("ParentEmergencyMobile cannot be null", true);
+            return false;
+        }
+        return true;
+    }
+
     $scope.GetSchools();
-
-
-
 }]);

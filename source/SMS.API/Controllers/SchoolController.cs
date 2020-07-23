@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using SMS.Services.Infrastructure;
+using System;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.API.Controllers
@@ -20,6 +20,7 @@ namespace SMS.API.Controllers
             _schoolService = schoolService;
         }
 
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
@@ -62,5 +63,52 @@ namespace SMS.API.Controllers
             _schoolService.Delete(id, DeletedBy);
             return Ok();
         }
+        #endregion
+
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(_schoolService.RequestGet());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_schoolService.RequestGet(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOSchool dtoSchool)
+        {
+            _schoolService.RequestCreate(dtoSchool);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOSchool dtoSchool)
+        {
+            _schoolService.RequestUpdate(dtoSchool);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            _schoolService.RequestDelete(id);
+            return Ok();
+        }
+        #endregion
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

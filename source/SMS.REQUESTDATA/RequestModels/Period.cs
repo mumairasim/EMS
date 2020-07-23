@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Period")]
-    public partial class Period : BaseEntity
+    public partial class Period : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Period()
@@ -20,14 +20,9 @@ namespace SMS.REQUESTDATA.RequestModels
         public TimeSpan? FromTime { get; set; }
 
         public TimeSpan? ToTime { get; set; }
-
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
-
-        public virtual RequestType RequestType { get; set; }
         public virtual School School { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeTableDetail> TimeTableDetails { get; set; }
     }

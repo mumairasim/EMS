@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.REQUESTDATA.RequestModels
 {
+
     [Table("Class")]
-    public partial class Class : BaseEntity
+    public partial class Class : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Class()
@@ -19,17 +20,12 @@ namespace SMS.REQUESTDATA.RequestModels
             TimeTableDetails = new HashSet<TimeTableDetail>();
         }
 
-
         [Required]
         [StringLength(50)]
         public string ClassName { get; set; }
-
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
-
         public virtual School School { get; set; }
-        public virtual RequestType RequestType { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClassAssignement> ClassAssignements { get; set; }

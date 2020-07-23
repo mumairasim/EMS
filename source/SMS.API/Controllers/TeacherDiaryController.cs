@@ -41,8 +41,7 @@ namespace SMS.API.Controllers
             var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
             teacherDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             //teacherDiaryDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.Create(teacherDiaryDetail);
-            return Ok();
+            return Ok(TeacherDiaryService.Create(teacherDiaryDetail));
         }
         [HttpPut]
         [Route("Update")]
@@ -51,8 +50,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
             teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.Update(teacherDiaryDetail);
-            return Ok();
+            return Ok(TeacherDiaryService.Update(teacherDiaryDetail));
         }
 
         [HttpDelete]

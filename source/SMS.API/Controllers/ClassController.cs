@@ -7,6 +7,8 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using DTOClass = SMS.DTOs.DTOs.Class;
+using SMS.Services.Infrastructure;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
@@ -20,6 +22,7 @@ namespace SMS.API.Controllers
             _classService = classService;
         }
 
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
@@ -67,5 +70,18 @@ namespace SMS.API.Controllers
             _classService.Delete(id, DeletedBy);
             return Ok();
         }
+        #endregion
+
+
+
+        #region Request Approver
+        [HttpGet]
+        [Route("ApproveRequest")]
+        public IHttpActionResult ApproveRequest(Guid id)
+        {
+            //to be added
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("StudentDiary")]
-    public partial class StudentDiary:BaseEntity
+    public partial class StudentDiary : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StudentDiary()
@@ -19,10 +19,6 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public Guid? InstructorId { get; set; }
         public Guid? SchoolId { get; set; }
-
-        public Guid? RequestTypeId { get; set; }
-
-        public virtual RequestType RequestType { get; set; }
 
         public virtual School School { get; set; }
 

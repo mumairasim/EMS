@@ -1,19 +1,15 @@
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace SMS.DTOs.DTOs
 {
     public class TimeTableDetail : DtoBaseEntity
     {
-        [StringLength(50)]
         public string Day { get; set; }
 
-        public Guid? ClassId { get; set; }
-
-        public Guid? PeriodId { get; set; }
-
-        public Guid? TeacherId { get; set; }
-
         public Guid? TimeTableId { get; set; }
+
+        public TimeTable TimeTable { get; set; }
+        public List<Period> Periods { get; set; }
     }
 }

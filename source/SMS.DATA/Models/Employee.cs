@@ -14,11 +14,13 @@ namespace SMS.DATA.Models
             EmployeeFinanceDetails = new HashSet<EmployeeFinanceDetail>();
             StudentDiaries = new HashSet<StudentDiary>();
             TeacherDiaries = new HashSet<TeacherDiary>();
-            TimeTableDetails = new HashSet<TimeTableDetail>();
+            Periods = new HashSet<Period>();
             Worksheets = new HashSet<Worksheet>();
         }
 
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? EmployeeNumber { get; set; }
+
         public Guid? PersonId { get; set; }
 
         public Guid? DesignationId { get; set; }
@@ -31,7 +33,7 @@ namespace SMS.DATA.Models
         public virtual Designation Designation { get; set; }
 
         public virtual Person Person { get; set; }
-        
+
         //public int SerialNumber { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -44,7 +46,7 @@ namespace SMS.DATA.Models
         public virtual ICollection<TeacherDiary> TeacherDiaries { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TimeTableDetail> TimeTableDetails { get; set; }
+        public virtual ICollection<Period> Periods { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Worksheet> Worksheets { get; set; }

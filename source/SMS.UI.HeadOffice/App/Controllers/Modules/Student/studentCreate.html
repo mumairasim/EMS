@@ -3,39 +3,47 @@
     <form class="">
         <div class="position-relative row form-group">
             <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
-            </div>-->
+        </div>-->
             <div class="col-sm-9">
                 <h3 class="card-title fs-20 text-center">Student Information</h3>
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="firstname" class="col-form-label"> <span class="mendatory">* </span>Firstname</label>
-                        <input name="firstname" id="firstname" placeholder="firstname" type="text" class="form-control" ng-Model="StudentModel.Person.FirstName">
+                        <label for="firstname" class="col-form-label"><span class="mendatory">* </span>Firstname</label>
+                        <input name="firstname" id="firstname" placeholder="firstname" type="text" class="form-control" ng-Model="StudentModel.Person.FirstName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastname" class="col-form-label"> <span class="mendatory">* </span>Lastname</label>
-                        <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-Model="StudentModel.Person.LastName">
+                        <label for="lastname" class="col-form-label "><span class="mendatory">* </span>Lastname</label>
+                        <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-Model="StudentModel.Person.LastName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                 </div>
                 <div class="position-relative row form-group">
                     <div class="col-sm-3">
-                        <label for="cnic" class="col-form-label"> <span class="mendatory">* </span>CNIC/B.Form</label>
-                        <input name="cnic" id="cnic" placeholder="cnic/b.form" type="text" class="form-control" ng-Model="StudentModel.Person.Cnic">
+                        <!--<span class="mendatory">* </span>-->
+                        <label for="cnic" class="col-form-label required ">
+                            B.Form
+                            <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="cnic" id="cnic" placeholder="cnic/b.form" type="text" class="form-control" ng-Model="StudentModel.Person.Cnic" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
-                        <label for="phone" class="col-form-label"> <span class="mendatory">* </span>Phone</label>
-                        <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-Model="StudentModel.Person.Phone">
+                        <label for="phone" class="col-form-label">
+                            Phone
+                            <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-Model="StudentModel.Person.Phone" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
                         <label for="nationality" class="col-form-label"> <span class="mendatory">* </span>Nationality</label>
-                        <input name="nationality" id="nationality" placeholder="Nationality" type="text" class="form-control" ng-Model="StudentModel.Person.Nationality">
+                        <input name="nationality" id="nationality" placeholder="Nationality" type="text" class="form-control" ng-Model="StudentModel.Person.Nationality" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
                         <label for="religion" class="col-form-label">Religion</label>
-                        <input name="religion" id="religion" placeholder="religion" type="text" class="form-control" ng-Model="StudentModel.Person.Religion">
+                        <input name="religion" id="religion" placeholder="religion" type="text" class="form-control" ng-Model="StudentModel.Person.Religion" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
+
                 <!--<img class=" img-circle img-thumbnail" ng-src="data:image/JPEG;base64,{{StudentModel.Image.ImageFile}}" alt="avatar">-->
                 <img class=" img-circle img-thumbnail" ngf-src="StudentModel.Image.ImageFile" alt="avatar" onerror="this.onerror=null;this.src='../../images/avatar_2x.png';">
                 <div style="margin-top: 10px;">
@@ -108,22 +116,31 @@
                 <h3 class="card-title fs-20 text-center">Parent/Guardian Information</h3>
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="name" class="col-form-label">Parent/Guardian Name</label>
-                        <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-Model="StudentModel.Person.ParentName">
+                        <label for="name" class="col-form-label required">
+                            Parent/Guardian Name
+                            <a href="#" data-toggle="tooltip" title="This field only contains alphabets" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-Model="StudentModel.Person.ParentName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
-                        <label for="cnic" class="col-form-label">CNIC</label>
-                        <input name="cnic" id="cnic" placeholder="cnic" type="text" class="form-control" ng-Model="StudentModel.Person.ParentCnic">
+                        <label for="cnic" class="col-form-label">
+                            CNIC
+                            <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="cnic" id="cnic" placeholder="cnic" type="text" class="form-control" ng-Model="StudentModel.Person.ParentCnic" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                 </div>
                 <div class="position-relative row form-group">
                     <div class="col-sm-6">
-                        <label for="relation" class="col-form-label">Relation</label>
-                        <input name="relation" id="relation" placeholder="relation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentRealtion">
+                        <label for="relation" class="col-form-label required">
+                            Relation
+                            <a href="#" data-toggle="tooltip" title="This field only contains alphabets" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="relation" id="relation" placeholder="relation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentRelation" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
                         <label for="occupation" class="col-form-label">Occupation</label>
-                        <input name="occupation" id="occupation" placeholder="occupation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentOccupation">
+                        <input name="occupation" id="occupation" placeholder="occupation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentOccupation" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                 </div>
                 <div class="position-relative row form-group">
@@ -133,7 +150,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="nationality" class="col-form-label">Nationality</label>
-                        <input name="nationality" id="nationality" placeholder="nationality" type="text" class="form-control" ng-Model="StudentModel.Person.ParentNationality">
+                        <input name="nationality" id="nationality" placeholder="nationality" type="text" class="form-control" ng-Model="StudentModel.Person.ParentNationality" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                 </div>
             </div>
@@ -154,12 +171,18 @@
                 <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="StudentModel.Person.ParentCity">
             </div>
             <div class="col-sm-4">
-                <label for="mobile1" class="col-form-label">Mobile 1</label>
-                <input name="mobile1" id="mobile1" placeholder="mobile 1" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile1">
+                <label for="mobile1" class="col-form-label required">
+                    Mobile 1
+                    <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                </label>
+                <input name="mobile1" id="mobile1" placeholder="mobile 1" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile1" pattern="^[0-9]*$" ng-pattern-restrict>
             </div>
             <div class="col-sm-4">
-                <label for="mobile2" class="col-form-label">Mobile 2</label>
-                <input name="mobile2" id="mobile2" placeholder="mobile 2" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile2">
+                <label for="mobile2" class="col-form-label">
+                    Mobile 2
+                    <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                </label>
+                <input name="mobile2" id="mobile2" placeholder="mobile 2" type="text" class="form-control" ng-Model="StudentModel.Person.ParentMobile2" pattern="^[0-9]*$" ng-pattern-restrict>
             </div>
         </div>
         <div class="position-relative row form-group">
@@ -170,16 +193,40 @@
             <div class="col-sm-9">
                 <div class="position-relative row form-group">
                     <div class="col-sm-4">
-                        <label for="name" class="col-form-label">Name</label>
-                        <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyName">
+                        <label for="name" class="col-form-label"><span class="mendatory">* </span>Name</label>
+                        <input name="name" id="name" placeholder="name" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-4">
-                        <label for="relation" class="col-form-label">Relation</label>
-                        <input name="relation" id="relation" placeholder="relation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyRealtion">
+                        <label for="relation" class="col-form-label"><span class="mendatory">* </span>Relation</label>
+                        <input name="relation" id="relation" placeholder="relation" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyRelation" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-4">
-                        <label for="mobile" class="col-form-label">Mobile</label>
-                        <input name="mobile" id="mobile" placeholder="mobile" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyMobile">
+                        <label for="mobile" class="col-form-label required">
+                            Mobile
+                            <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="mobile" id="mobile" placeholder="mobile" type="text" class="form-control" ng-Model="StudentModel.Person.ParentEmergencyMobile" pattern="^[0-9]*$" ng-pattern-restrict>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-relative row form-group">
+            <div class="col-sm-12">
+                <h3 class="card-title fs-20 text-center">Finances</h3>
+                <div class="position-relative row form-group">
+                    <div class="col-sm-6">
+                        <label for="name" class="col-form-label required">
+                            Admission Fee
+                            <a href="#" data-toggle="tooltip" title="This field only contains alphabets" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="name" id="AdmissionFee" placeholder="Admission Fee" type="text" class="form-control" ng-Model="StudentModel.AdmissionFee" pattern="^[0-9]*$" ng-pattern-restrict>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="cnic" class="col-form-label">
+                            Monthly Fee
+                            <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
+                        </label>
+                        <input name="cnic" id="MonthlyFee" placeholder="Monthly Fee" type="text" class="form-control" ng-Model="StudentModel.MonthlyFee" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                 </div>
             </div>

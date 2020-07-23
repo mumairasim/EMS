@@ -52,8 +52,7 @@ namespace SMS.API.Controllers
                 var file = httpRequest.Files[0];
                 studentDetail.ImageId = _fileService.Create(file);
             }
-            _studentService.Create(studentDetail);
-            return Ok();
+            return Ok(_studentService.Create(studentDetail));
         }
         [HttpPut]
         [Route("Update")]
@@ -68,8 +67,7 @@ namespace SMS.API.Controllers
                 var file = httpRequest.Files[0];
                 studentDetail.ImageId = _fileService.Update(file, studentDetail.Image.Id);
             }
-            _studentService.Update(studentDetail);
-            return Ok();
+            return Ok(_studentService.Update(studentDetail));
         }
         [HttpDelete]
         [Route("Delete")]

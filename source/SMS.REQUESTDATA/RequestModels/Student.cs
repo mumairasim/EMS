@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Student")]
-    public partial class Student:BaseEntity
+    public partial class Student : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Student()
@@ -16,24 +16,25 @@ namespace SMS.REQUESTDATA.RequestModels
             StudentStudentDiaries = new HashSet<StudentStudentDiary>();
         }
 
-        [Required]
-        [StringLength(50)]
-        public string RegistrationNumber { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int RegistrationNumber { get; set; }
 
         public Guid? PersonId { get; set; }
 
         public Guid? ClassId { get; set; }
+        public Guid? ImageId { get; set; }
 
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
+        public virtual School School { get; set; }
 
-        public virtual RequestType RequestType { get; set; }
         public virtual Class Class { get; set; }
+        public virtual File Image { get; set; }
+        public string PreviousSchoolName { get; set; }
+        public string ReasonForLeaving { get; set; }
 
         public virtual Person Person { get; set; }
-
-        public virtual School School { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentAssignment> StudentAssignments { get; set; }
@@ -43,5 +44,6 @@ namespace SMS.REQUESTDATA.RequestModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StudentStudentDiary> StudentStudentDiaries { get; set; }
+
     }
 }

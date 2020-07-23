@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.REQUESTDATA.RequestModels
 {
     [Table("Employee")]
-    public partial class Employee : BaseEntity
+    public partial class Employee : RequestBase
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
@@ -18,24 +18,23 @@ namespace SMS.REQUESTDATA.RequestModels
             Worksheets = new HashSet<Worksheet>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? EmployeeNumber { get; set; }
+
         public Guid? PersonId { get; set; }
 
         public Guid? DesignationId { get; set; }
-
         public Guid? SchoolId { get; set; }
 
-        public Guid? RequestTypeId { get; set; }
-
-
+        public virtual School School { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Assignment> Assignments { get; set; }
 
         public virtual Designation Designation { get; set; }
 
         public virtual Person Person { get; set; }
-
-        public virtual School School { get; set; }
-        public virtual RequestType RequestType { get; set; }
+        
+        //public int SerialNumber { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeFinanceDetail> EmployeeFinanceDetails { get; set; }

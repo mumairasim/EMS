@@ -7,7 +7,7 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
     $scope.Setisloggedinfalse();
 
     if ($cookies.get('SMS_token') != null) {
-        window.location = "#!/dashboard";
+        window.location = "/#!/dashboard";
     }
 
     $scope.GetUser = function () {
@@ -23,7 +23,7 @@ SMSHO.controller('loginCtrl', ['$scope', 'apiService', '$cookies', function ($sc
             else {
                 localStorage.setItem('SMS_UserImage', null);
             }
-            window.location = "#!/dashboard";
+            window.location = "/#!/dashboard";
         },
             function myError(response) {
                 $scope.response = response.data;
