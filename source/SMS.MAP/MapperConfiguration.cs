@@ -34,6 +34,7 @@ using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 using ReqAttendanceStatus = SMS.REQUESTDATA.RequestModels.AttendanceStatus;
@@ -52,6 +53,7 @@ using DTORequestStatus = SMS.DTOs.DTOs.RequestStatus;
 
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
+using DBStudentDiary = SMS.DATA.Models.StudentDiary;
 
 using DBStudentFinance = SMS.DATA.Models.NonDbContextModels.StudentFinanceInfo;
 using DTOStudentFinance = SMS.DTOs.DTOs.StudentFinanceInfo;
@@ -63,6 +65,9 @@ using DTOEmployeeFinanceInfo = SMS.DTOs.DTOs.EmployeeFinanceInfo;
 using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
 using DTOTimeTableDetail = SMS.DTOs.DTOs.TimeTableDetail;
 using DTOPeriod = SMS.DTOs.DTOs.Period;
+
+
+
 
 namespace SMS.MAP
 {
@@ -200,6 +205,10 @@ namespace SMS.MAP
             CreateMap<DTOPeriod, DTOPeriod>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<DBStudentDiary, DTOStudentDiary>();
+            CreateMap<DBStudentDiary, DTOStudentDiary>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             #endregion
 
             #region DTO to DB
@@ -242,6 +251,7 @@ namespace SMS.MAP
             CreateMap<DTOTimeTable, TimeTable>();
             CreateMap<DTOTimeTableDetail, TimeTableDetail>();
             CreateMap<DTOPeriod, Period>();
+            CreateMap<DTOStudentDiary, DBStudentDiary>();
 
             #endregion
 

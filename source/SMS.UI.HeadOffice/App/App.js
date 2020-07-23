@@ -39,48 +39,74 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             controller: "studentBaseCtrl"
         })
         .when("/employeeSearch", {
-            title: "Employee Search",
-            templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",
-            controller: "employeeSearchCtrl"
+    })
+        .when("/schoolSearch", {
+        title: "School Search",
+        templateUrl: "App/Controllers/Modules/School/schoolSearch.html",
+            controller: "schoolSearchCtrl"
+        }).when("/schoolCreate", {
+        title: "School Create",
+        templateUrl: "App/Controllers/Modules/School/schoolCreate.html",
+        controller: "schoolCreateCtrl"
+    }).when("/schoolUpdate", {
+        title: "School Update",
+        templateUrl: "App/Controllers/Modules/School/schoolUpdate.html",
+        controller: "schoolUpdateCtrl"
+    }).when("/schoolBase", {
+        title: "School Search",
+        templateUrl: "App/Controllers/Modules/School/schoolBase.html",
+        controller: "schoolBaseCtrl"
+    })
+        .when("/studentDiarySearch", {
+            title: "StudentDiary Search",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiarySearch.html",
+            controller: "studentDiarySearchCtrl"
+        }).when("/studentDiaryCreate", {
+            title: "StudentDiary Create",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryCreate.html",
+            controller: "studentDiaryCreateCtrl"
+        }).when("/studentDiaryUpdate", {
+            title: "StudentDiary Update",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryUpdate.html",
+            controller: "studentDiaryUpdateCtrl"
+        }).when("/studentDiaryBase", {
+            title: "StudentDiary Search",
+            templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryBase.html",
+            controller: "studentDiaryBaseCtrl"
         })
-        .when("/employeeCreate", {
-            title: "Employee Create",
-            templateUrl: "App/Controllers/Modules/Employee/employeeCreate.html",
-            controller: "employeeCreateCtrl"
-        })
-        .when("/employeeUpdate", {
-            title: "Employee Update",
-            templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
-            controller: "employeeUpdateCtrl"
-        })
-        .when("/employeeBase", {
-            title: "Employee Search",
-            templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
-            controller: "employeeBaseCtrl"
-        })
-
-
-        .when("/teacherDiarySearch", {
-            title: "TeacherDiary Search",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiarySearch.html",
-            controller: "teacherDiarySearchCtrl"
-        })
-        .when("/teacherDiaryCreate", {
-            title: "TeacherDiary Create",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryCreate.html",
-            controller: "teacherDiaryCreateCtrl"
-        })
-        .when("/teacherDiaryUpdate", {
-            title: "TeacherDiary Update",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryUpdate.html",
-            controller: "teacherDiaryUpdateCtrl"
-        })
-        .when("/teacherDiaryBase", {
-            title: "TeacherDiary Search",
-            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",
-            controller: "teacherDiaryBaseCtrl"
-        })
-
+        .when("/classSearch", {
+            title: "Class Search",
+            templateUrl: "App/Controllers/Modules/class/classSearch.html",
+            controller: "studentDiarySearchCtrl"
+        }).when("/classCreate", {
+            title: "Class Create",
+            templateUrl: "App/Controllers/Modules/class/classCreate.html",
+            controller: "classCreateCtrl"
+        }).when("/classUpdate", {
+            title: "Class Update",
+            templateUrl: "App/Controllers/Modules/class/classUpdate.html",
+            controller: "classUpdateCtrl"
+        }).when("/classBase", {
+            title: "Class Search",
+            templateUrl: "App/Controllers/Modules/class/classBase.html",
+            controller: "classBaseCtrl"
+        }).when("/employeeSearch", {
+        title: "Employee Search",
+        templateUrl: "App/Controllers/Modules/Employee/employeeSearch.html",
+        controller: "employeeSearchCtrl"
+    }).when("/employeeCreate", {
+        title: "Employee Create",
+        templateUrl: "App/Controllers/Modules/Employee/employeeCreate.html",
+        controller: "employeeCreateCtrl"
+    }).when("/employeeUpdate", {
+        title: "Employee Update",
+        templateUrl: "App/Controllers/Modules/Employee/employeeUpdate.html",
+        controller: "employeeUpdateCtrl"
+    }).when("/employeeBase", {
+        title: "Employee Search",
+        templateUrl: "App/Controllers/Modules/Employee/employeeBase.html",
+        controller: "employeeBaseCtrl"
+    })
         .when("/lessonPlanBase", {
             title: "LessonPlan Search",
             templateUrl: "App/Controllers/Modules/LessonPlan/lessonPlanBase.html",
