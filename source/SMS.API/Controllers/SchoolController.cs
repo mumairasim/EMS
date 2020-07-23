@@ -6,6 +6,7 @@ using SMS.Services.Infrastructure;
 using System;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.API.Controllers

@@ -2,6 +2,8 @@
 using SMS.DTOs.DTOs;
 using DTOSchool= SMS.DTOs.DTOs.School;
 using System.Collections.Generic;
+using DTOSchool = SMS.DTOs.DTOs.School;
+>>>>>>>>> Temporary merge branch 2
 namespace SMS.Services.Infrastructure
 {
     public interface ISchoolService

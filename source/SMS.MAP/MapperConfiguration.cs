@@ -66,6 +66,9 @@ using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
 using DTOTimeTableDetail = SMS.DTOs.DTOs.TimeTableDetail;
 using DTOPeriod = SMS.DTOs.DTOs.Period;
 
+
+
+
 namespace SMS.MAP
 {
     public class MapperConfigurationInternal : Profile
@@ -248,6 +251,7 @@ namespace SMS.MAP
             CreateMap<DTOTimeTable, TimeTable>();
             CreateMap<DTOTimeTableDetail, TimeTableDetail>();
             CreateMap<DTOPeriod, Period>();
+            CreateMap<DTOStudentDiary, DBStudentDiary>();
 
             #endregion
 

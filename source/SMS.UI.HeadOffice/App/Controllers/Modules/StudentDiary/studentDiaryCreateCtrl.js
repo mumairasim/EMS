@@ -3,15 +3,32 @@
     $scope.StudentDiaryDiaryModel = {
         Diarytext: '',
         DairyDate: '',
-        InstructorId: '',
+        Employee: $scope.Employee,
+        School: $scope.School
+    };
+    $scope.Employee = {
+        Name: ''
+    };
+    $scope.School = {
+        Id: '',
+        Name: '',
+        Location: ''
+    };
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data;
+            $scope.StudentDiaryModel.School = $scope.Schools.Schools[0];
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
     };
     $scope.GetEmployees = function () {
         var responsedata = apiService.masterget('/api/v1/Employee/Get');
-
         responsedata.then(function mySucces(response) {
-
-            $scope.Employees = response.data.Employees;
-            $scope.StudentDiaryModel.Employee = $scope.Employees[0];
+            $scope.Employees = response.data;
+            $scope.StudentDiaryModel.Employee = $scope.Employees.Employees[0];
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -19,7 +36,6 @@
     };
     $scope.StudentDiaryCreate = function () {
         var data = $scope.StudentDiaryModel;
-        data.InstructorId = $scope.StudentDiaryModel.Employee.Id;
         var formData = new FormData();
         formData.append('studentDiaryModel', JSON.stringify(data));
         var responsedata = apiService.post('/api/v1/StudentDiary/Create', formData);
@@ -37,4 +53,5 @@
         window.location = "#!/studentDiaryBase";
     };
     $scope.GetEmployees();
+    $scope.GetSchools();
 }]);

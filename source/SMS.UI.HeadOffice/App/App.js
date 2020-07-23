@@ -7,30 +7,38 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         title: "Login",
         templateUrl: "App/Controllers/Authentication/login.html",
         controller: "loginCtrl"
-    }).when("/register", {
-        title: "Register",
-        templateUrl: "App/Controllers/Authentication/register.html",
-        controller: "registerCtrl"
-    }).when("/dashboard", {
-        title: "Dashboard",
-        templateUrl: "App/Controllers/Dashboard/dashboard.html",
-        controller: "dashboardCtrl"
-    }).when("/studentSearch", {
-        title: "Student Search",
-        templateUrl: "App/Controllers/Modules/Student/studentSearch.html",
-        controller: "studentSearchCtrl"
-    }).when("/studentCreate", {
-        title: "Student Create",
-        templateUrl: "App/Controllers/Modules/Student/studentCreate.html",
-        controller: "studentCreateCtrl"
-    }).when("/studentUpdate", {
-        title: "Student Update",
-        templateUrl: "App/Controllers/Modules/Student/studentUpdate.html",
-        controller: "studentUpdateCtrl"
-    }).when("/studentBase", {
-        title: "Student Search",
-        templateUrl: "App/Controllers/Modules/Student/studentBase.html",
-        controller: "studentBaseCtrl"
+    })
+        .when("/register", {
+            title: "Register",
+            templateUrl: "App/Controllers/Authentication/register.html",
+            controller: "registerCtrl"
+        })
+        .when("/dashboard", {
+            title: "Dashboard",
+            templateUrl: "App/Controllers/Dashboard/dashboard.html",
+            controller: "dashboardCtrl"
+        })
+        .when("/studentSearch", {
+            title: "Student Search",
+            templateUrl: "App/Controllers/Modules/Student/studentSearch.html",
+            controller: "studentSearchCtrl"
+        })
+        .when("/studentCreate", {
+            title: "Student Create",
+            templateUrl: "App/Controllers/Modules/Student/studentCreate.html",
+            controller: "studentCreateCtrl"
+        })
+        .when("/studentUpdate", {
+            title: "Student Update",
+            templateUrl: "App/Controllers/Modules/Student/studentUpdate.html",
+            controller: "studentUpdateCtrl"
+        })
+        .when("/studentBase", {
+            title: "Student Search",
+            templateUrl: "App/Controllers/Modules/Student/studentBase.html",
+            controller: "studentBaseCtrl"
+        })
+        .when("/employeeSearch", {
     })
         .when("/schoolSearch", {
         title: "School Search",
@@ -64,7 +72,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         }).when("/studentDiaryBase", {
             title: "StudentDiary Search",
             templateUrl: "App/Controllers/Modules/StudentDiary/studentDiaryBase.html",
-            controller: "studentDiarylBaseCtrl"
+            controller: "studentDiaryBaseCtrl"
         })
         .when("/classSearch", {
             title: "Class Search",

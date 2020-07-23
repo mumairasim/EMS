@@ -5,6 +5,7 @@ using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
 using SMS.REQUESTDATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using School= SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
