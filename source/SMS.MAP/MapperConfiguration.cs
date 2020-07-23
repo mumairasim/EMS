@@ -39,6 +39,7 @@ using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
+using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using RequestStudentAttendance = SMS.REQUESTDATA.RequestModels.StudentAttendance;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using RequestStudentAttendanceDetail = SMS.REQUESTDATA.RequestModels.StudentAttendanceDetail;
@@ -60,6 +61,8 @@ using DTORequestStatus = SMS.DTOs.DTOs.RequestStatus;
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
 using RequestTeacherDiary = SMS.REQUESTDATA.RequestModels.TeacherDiary;
+using DBStudentDiary = SMS.DATA.Models.StudentDiary;
+
 using DBStudentFinance = SMS.DATA.Models.NonDbContextModels.StudentFinanceInfo;
 using RequestStudentFinance = SMS.REQUESTDATA.RequestModels.Student_Finances;
 using DTOStudentFinance = SMS.DTOs.DTOs.StudentFinanceInfo;
@@ -74,6 +77,9 @@ using DTOTimeTableDetail = SMS.DTOs.DTOs.TimeTableDetail;
 using RequestTimeTableDetail = SMS.REQUESTDATA.RequestModels.TimeTableDetail;
 using DTOPeriod = SMS.DTOs.DTOs.Period;
 using RequestPeriod = SMS.REQUESTDATA.RequestModels.Period;
+
+
+
 
 namespace SMS.MAP
 {
@@ -283,6 +289,7 @@ namespace SMS.MAP
             CreateMap<DTOTimeTableDetail, TimeTableDetail>();
             CreateMap<DTOPeriod, Period>();
             CreateMap<DTOPeriod, RequestPeriod>();
+            CreateMap<DTOStudentDiary, DBStudentDiary>();
 
             #endregion
 

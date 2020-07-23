@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
+using SMS.DTOs.DTOs;
+
 namespace SMS.Services.Infrastructure
 {
     public interface IStudentDiaryService
@@ -8,7 +9,7 @@ namespace SMS.Services.Infrastructure
         #region SMS Section
         List<DTOStudentDiary> Get();
         DTOStudentDiary Get(Guid? id);
-        void Create(DTOStudentDiary StudentDiary );
+        void Create(DTOStudentDiary StudentDiary);
         void Update(DTOStudentDiary dtoStudentDiary);
         void Delete(Guid? id);
         #endregion

@@ -1,4 +1,6 @@
-﻿namespace SMS.DTOs.DTOs
+﻿using System;
+namespace SMS.DTOs.DTOs
+
 {
     public class School : DtoBaseEntity
     {

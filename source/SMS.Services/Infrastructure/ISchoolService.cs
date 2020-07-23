@@ -1,4 +1,5 @@
 ﻿using System;
+using SMS.DTOs.DTOs;
 using System.Collections.Generic;
 using DTOSchool = SMS.DTOs.DTOs.School;
 namespace SMS.Services.Infrastructure
@@ -8,7 +9,7 @@ namespace SMS.Services.Infrastructure
         #region SMS
         List<DTOSchool> Get();
         DTOSchool Get(Guid? id);
-        Guid Create(DTOSchool dtoSchool);
+       void Create(DTOSchool dtoSchool);
         void Update(DTOSchool dtoSchool);
         void Delete(Guid? id);
         #endregion

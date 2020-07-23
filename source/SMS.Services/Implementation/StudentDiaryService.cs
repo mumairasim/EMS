@@ -5,10 +5,12 @@ using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DATA.Models;
 using SMS.REQUESTDATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using StudentDiary = SMS.DATA.Models.StudentDiary;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using RequestStudentDiary = SMS.REQUESTDATA.RequestModels.StudentDiary;
+
 
 namespace SMS.Services.Implementation
 {
@@ -29,27 +31,32 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.CreatedDate = DateTime.UtcNow;
             dtoStudentDiary.IsDeleted = false;
             dtoStudentDiary.Id = Guid.NewGuid();
-            dtoStudentDiary.InstructorId = null;
-            dtoStudentDiary.School = null;
+            HelpingMethodForRelationship(dtoStudentDiary);
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }
-        public List<DTOStudentDiary> Get()
+        public StudentDiariesList Get(int pageNumber, int pageSize)
         {
-            var studentDiary = _repository.Get().ToList();
-            var StudentDiaryList = new List<DTOStudentDiary>();
-            foreach (var studentdiary in studentDiary)
+            var StudentDiaries = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var StudentDiariesCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var studentDiaryTempList = new List<DTOStudentDiary>();
+            foreach (var studentdiary in StudentDiaries)
             {
-                StudentDiaryList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(studentdiary));
+                studentDiaryTempList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(studentdiary));
             }
-            return StudentDiaryList;
+            var studentDiariesList = new StudentDiariesList()
+            {
+                StudentDiaries = studentDiaryTempList,
+                StudentDiariesCount= StudentDiariesCount
+            };
+            return studentDiariesList;
         }
         public DTOStudentDiary Get(Guid? id)
         {
             if (id == null) return null;
-            var StudentDiaryRecord = _repository.Get().FirstOrDefault(sd => sd.Id == id);
-            if (StudentDiaryRecord == null) return null;
+            var studentDiaryRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
+            var studentdiary = _mapper.Map < StudentDiary, DTOStudentDiary >(studentDiaryRecord);
 
-            return _mapper.Map<StudentDiary, DTOStudentDiary>(StudentDiaryRecord);
+            return studentdiary;
         }
         public void Update(DTOStudentDiary dtoStudentDiary)
         {
@@ -58,12 +65,14 @@ namespace SMS.Services.Implementation
             var mergedstudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(mergedstudentDiary));
         }
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
             if (id == null)
                 return;
             var studentDiary = Get(id);
             studentDiary.IsDeleted = true;
+            studentDiary.DeletedBy = DeletedBy;
+
             studentDiary.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOStudentDiary, StudentDiary>(studentDiary));
         }
@@ -115,4 +124,7 @@ namespace SMS.Services.Implementation
         }
         #endregion
     }
+     
+
 }
+
