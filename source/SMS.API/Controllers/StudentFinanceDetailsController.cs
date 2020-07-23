@@ -141,10 +141,10 @@ namespace SMS.API.Controllers
         {
             try
             {
-                 _studentFinanceDetailsService.RequestGetAll();
-                return Ok();
+                var result = _studentFinanceDetailsService.RequestGetAll();
+                return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }

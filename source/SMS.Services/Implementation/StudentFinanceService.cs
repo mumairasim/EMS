@@ -163,7 +163,7 @@ namespace SMS.Services.Implementation
                 CreatedDate = DateTime.UtcNow,
                 FeeYear = DTOStudentFinances.FeeYear,
                 IsDeleted = false,
-                CreatedBy = Guid.Parse(DTOStudentFinances.CreatedBy)
+                //CreatedBy = Guid.Parse(DTOStudentFinances.CreatedBy)
             };
 
             if (newFinance.FeeSubmitted ?? false)
@@ -181,7 +181,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var StudentFinances = Get(id);
+            var StudentFinances = RequestGet(id);
             if (StudentFinances != null)
             {
                 StudentFinances.IsDeleted = true;
@@ -211,13 +211,13 @@ namespace SMS.Services.Implementation
 
         public List<DTOStudentFinanceCustom> RequestGetByFilter(Guid? schoolId, Guid? classId, Guid? studentId, string feeMonth)
         {
-            var rs = _storedProcCaller.GetStudentFinance(schoolId, classId, studentId, feeMonth);
+            var rs = _storedProcCaller.RequestGetStudentFinance(schoolId, classId, studentId, feeMonth);
             return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
         }
 
         public List<DTOStudentFinanceCustom> RequestGetDetailByFilter(Guid? schoolId, Guid? ClassId, Guid? StudentId)
         {
-            var rs = _storedProcCaller.GetStudentFinanceDetail(schoolId, ClassId, StudentId);
+            var rs = _storedProcCaller.RequestGetStudentFinanceDetail(schoolId, ClassId, StudentId);
             return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
         }
 
@@ -228,7 +228,7 @@ namespace SMS.Services.Implementation
         /// <param name="DTOStudentFinances"></param>
         public void RequestUpdate(DTOStudentFinances DTOStudentFinances)
         {
-            var StudentFinances = Get(DTOStudentFinances.Id);
+            var StudentFinances = RequestGet(DTOStudentFinances.Id);
             if (StudentFinances != null)
             {
                 DTOStudentFinances.UpdateDate = DateTime.UtcNow;

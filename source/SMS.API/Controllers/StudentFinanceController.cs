@@ -178,7 +178,7 @@ namespace SMS.API.Controllers
                 var result = _studentFinanceService.RequestGetAll();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
@@ -237,14 +237,14 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate()
+        public IHttpActionResult RequestUpdate(DTOStudentFinances dtoStudentFinances)
         {
-            var httpRequest = HttpContext.Current.Request;
-            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
-            dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            //var httpRequest = HttpContext.Current.Request;
+            //var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
+            //dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             try
             {
-                _studentFinanceService.RequestUpdate(dTOStudentFinances);
+                _studentFinanceService.RequestUpdate(dtoStudentFinances);
             }
             catch (Exception)
             {

@@ -18,8 +18,8 @@ namespace SMS.Services.Infrastructure
         #region RequestSMS Section
         TeacherDiariesList RequestGet(int pageNumber, int pageSize);
         DTOTeacherDiary RequestGet(Guid? id);
-/*        TeacherDiaryResponse*/ void RequestCreate(DTOTeacherDiary teacherDiary);
-      /*  TeacherDiaryResponse*/ void RequestUpdate(DTOTeacherDiary dtoTeacherDiary);
+        TeacherDiaryResponse RequestCreate(DTOTeacherDiary teacherDiary);
+        TeacherDiaryResponse RequestUpdate(DTOTeacherDiary dtoTeacherDiary);
         void RequestDelete(Guid? id/*, string DeletedBy*/);
         #endregion
     }

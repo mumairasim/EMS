@@ -170,7 +170,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null)
                 return;
-            var StudentFinances = Get(id);
+            var StudentFinances = RequestGet(id);
             if (StudentFinances != null)
             {
                 StudentFinances.IsDeleted = true;
@@ -204,7 +204,7 @@ namespace SMS.Services.Implementation
         /// <param name="dTOStudentFinanceDetails"></param>
         public void RequestUpdate(DTOStudentFinanceDetails dTOStudentFinanceDetails)
         {
-            var StudentFinances = Get(dTOStudentFinanceDetails.Id);
+            var StudentFinances = RequestGet(dTOStudentFinanceDetails.Id);
             if (StudentFinances != null)
             {
                 dTOStudentFinanceDetails.UpdateDate = DateTime.UtcNow;

@@ -94,13 +94,21 @@ namespace SMS.MAP
             CreateMap<DTOPerson, DTOPerson>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
-            CreateMap<RequestPerson, DTOPerson>();
+            CreateMap<ReqPerson, DTOPerson>();
 
             CreateMap<DBStudentFinances, DTOStudentFinances>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<RequestStudentFinance, DTOStudentFinances>()
+    .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<DBStudentFinanceDetails, DTOStudentFinanceDetails>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+
+            CreateMap<RequestStudentFinanceDetail, DTOStudentFinanceDetails>()
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+            
 
             CreateMap<DBEmployeeFinanceInfo, DTOEmployeeFinanceInfo>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -230,7 +238,7 @@ namespace SMS.MAP
             //DTO to Db
             CreateMap<DTOStudent, Student>();
             CreateMap<DTOStudent, RequestStudent>();
-            CreateMap<DTOPerson, RequestPerson>();
+            CreateMap<DTOPerson, ReqPerson>();
             CreateMap<DTOPerson, Person>();
             CreateMap<DTOPerson, ReqPerson>();
             CreateMap<DTOClass, Class>();

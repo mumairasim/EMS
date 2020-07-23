@@ -20,8 +20,8 @@ namespace SMS.Services.Infrastructure
         StudentsList RequestGet(int pageNumber, int pageSize);
         DTOStudent RequestGet(Guid? id);
         StudentsList RequestGet(Guid classId, Guid schoolId);
-        /*StudentResponse*/void RequestCreate(DTOStudent student);
-        /*StudentResponse*/ void RequestUpdate(DTOStudent dtoStudent);
+        StudentResponse RequestCreate(DTOStudent student);
+        StudentResponse RequestUpdate(DTOStudent dtoStudent);
         void RequestDelete(Guid? id/*, string DeletedBy*/);
         #endregion
     }
