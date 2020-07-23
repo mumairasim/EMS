@@ -39,7 +39,6 @@ using DTOFile = SMS.DTOs.DTOs.File;
 using DBUserInfo = SMS.DATA.Models.NonDbContextModels.UserInfo;
 using DTOUserInfo = SMS.DTOs.DTOs.UserInfo;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
-using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using RequestStudentAttendance = SMS.REQUESTDATA.RequestModels.StudentAttendance;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 using RequestStudentAttendanceDetail = SMS.REQUESTDATA.RequestModels.StudentAttendanceDetail;

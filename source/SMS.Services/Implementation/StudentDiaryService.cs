@@ -123,6 +123,16 @@ namespace SMS.Services.Implementation
             _requestRepository.Update(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(studentDiary));
         }
         #endregion
+
+        #region private
+        private void HelpingMethodForRelationship(DTOStudentDiary dtoStudentDiary)
+        {
+            dtoStudentDiary.InstructorId = dtoStudentDiary.Employee.Id;
+            dtoStudentDiary.SchoolId = dtoStudentDiary.School.Id;
+            dtoStudentDiary.School = null;
+            dtoStudentDiary.Employee = null;
+        }
+        #endregion
     }
      
 
