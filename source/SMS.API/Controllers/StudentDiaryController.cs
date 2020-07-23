@@ -20,7 +20,7 @@ namespace SMS.API.Controllers
         {
             _studentDiaryService = studentDiaryService;
         }
-
+        #region SMS Section
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
@@ -70,5 +70,43 @@ namespace SMS.API.Controllers
             _studentDiaryService.Delete(id, DeletedBy);
             return Ok();
         }
+        #endregion
+
+        #region RequestSMS Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(_studentDiaryService.RequestGet());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_studentDiaryService.RequestGet(id));
+        }
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOStudentDiary dtoStudentDiary)
+        {
+            _studentDiaryService.RequestCreate(dtoStudentDiary);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOStudentDiary dtoStudentDiary)
+        {
+            _studentDiaryService.RequestUpdate(dtoStudentDiary);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            _studentDiaryService.RequestDelete(id);
+            return Ok();
+        }
+        #endregion
+       
     }
 }
