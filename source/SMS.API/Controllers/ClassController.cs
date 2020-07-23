@@ -58,7 +58,47 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(ClassService.RequestGet());
+        }
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(ClassService.RequestGet(id));
+        }
+        //[HttpGet]
+        //[Route("GetBySchool")]
+        //public IHttpActionResult GetBySchool(Guid schoolId)
+        //{
+        //    return Ok(ClassService.GetBySchool(schoolId));
+        //}
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOClass dtoClass)
+        {
+            ClassService.RequestCreate(dtoClass);
+            return Ok();
+        }
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOClass dtoClass)
+        {
+            ClassService.RequestUpdate(dtoClass);
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            ClassService.RequestDelete(id);
+            return Ok();
+        }
+        #endregion
 
         #region Request Approver
         [HttpGet]

@@ -6,6 +6,7 @@ namespace SMS.Services.Infrastructure
 {
     public interface ICourseService
     {
+        #region SMS Section
         /// <summary>
         /// Service level call : Return all records of course
         /// </summary>
@@ -38,5 +39,17 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id);
 
         List<DTOCourse> GetAllBySchool(Guid? schoolId);
+        #endregion
+
+        #region SMS Request Section
+        
+        List<DTOCourse> RequestGet();
+        DTOCourse RequestGet(Guid? id);
+        void RequestCreate(DTOCourse student);
+        void RequestUpdate(DTOCourse dtoStudent);
+        void RequestDelete(Guid? id);
+
+        //List<DTOCourse> GetAllBySchool(Guid? schoolId);
+        #endregion
     }
 }
