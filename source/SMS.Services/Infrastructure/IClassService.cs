@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using SMS.DTOs.DTOs;
 using DTOClass = SMS.DTOs.DTOs.Class;
 
 namespace SMS.Services.Infrastructure
@@ -8,8 +8,8 @@ namespace SMS.Services.Infrastructure
     {
         #region SMS Section
         List<DTOClass> Get();
+        ClassesList Get(int pageNumber, int pageSize);
         DTOClass Get(Guid? id);
-        List<DTOClass> GetBySchool(Guid? schoolId);
         void Create(DTOClass Class);
         void Update(DTOClass dtoClass);
         void Delete(Guid? id);
@@ -25,5 +25,6 @@ namespace SMS.Services.Infrastructure
         #endregion
 
 
+        void Delete(Guid? id, string DeletedBy);
     }
 }

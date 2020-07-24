@@ -1,5 +1,11 @@
 ﻿using System;
+
+using System.Linq;
+using System.Web;
+using SMS.Services.Infrastructure;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using SMS.Services.Infrastructure;
 using System.Web.Http.Cors;
@@ -10,50 +16,58 @@ namespace SMS.API.Controllers
     [EnableCors("*", "*", "*")]
     public class ClassController : ApiController
     {
-        public IClassService ClassService;
+        public IClassService _classService;
         public ClassController(IClassService classService)
         {
-            ClassService = classService;
+            _classService = classService;
         }
 
         #region SMS Section
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(ClassService.Get());
+            return Ok(_classService.Get(pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(ClassService.Get(id));
+            return Ok(_classService.Get(id));
         }
         [HttpGet]
-        [Route("GetBySchool")]
-        public IHttpActionResult GetBySchool(Guid schoolId)
-        {
-            return Ok(ClassService.GetBySchool(schoolId));
-        }
+        
+        
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOClass dtoClass)
+        public IHttpActionResult Create()
         {
-            ClassService.Create(dtoClass);
+
+            var httpRequest = HttpContext.Current.Request;
+            var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
+             classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+             _classService.Create(classDetail);
             return Ok();
-        }
+            
+    }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTOClass dtoClass)
+        public IHttpActionResult Update()
         {
-            ClassService.Update(dtoClass);
+            var httpRequest = HttpContext.Current.Request;
+            var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
+            classDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            classDetail.SchoolId = classDetail.School.Id;
+            _classService.Update(classDetail);
+           
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
         {
-            ClassService.Delete(id);
+            var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Delete(id, DeletedBy);
             return Ok();
         }
         #endregion

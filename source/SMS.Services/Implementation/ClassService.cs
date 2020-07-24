@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.REQUESTDATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using ReqClass = SMS.REQUESTDATA.RequestModels.Class;
@@ -30,21 +31,28 @@ namespace SMS.Services.Implementation
             dtoClass.CreatedDate = DateTime.UtcNow;
             dtoClass.IsDeleted = false;
             dtoClass.Id = Guid.NewGuid();
-            dtoClass.School = null;
+            HelpingMethodForRelationship(dtoClass);
             _repository.Add(_mapper.Map<DTOClass, Class>(dtoClass));
         }
-        public List<DTOClass> Get()
+        public ClassesList Get(int pageNumber, int pageSize)
         {
-            var clasess = _repository.Get().Where(cl => cl.IsDeleted == false).ToList();
-            var classList = new List<DTOClass>();
-            foreach (var itemClass in clasess)
+            var clasess = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var ClassCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var classTempList = new List<DTOClass>();
+            foreach (var Classes in clasess)
             {
-                classList.Add(_mapper.Map<Class, DTOClass>(itemClass));
+                classTempList.Add(_mapper.Map<Class, DTOClass>(Classes));
             }
-            return classList;
+            var classesList = new ClassesList()
+            {
+                Classes = classTempList,
+                classesCount = ClassCount
+            };
+            return classesList;
         }
         public DTOClass Get(Guid? id)
         {
+            if (id == null) return null;
             var classRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
             var classes = _mapper.Map<Class, DTOClass>(classRecord);
 
@@ -62,18 +70,19 @@ namespace SMS.Services.Implementation
         }
         public void Update(DTOClass dtoClass)
         {
-            var Classes = Get(dtoClass.SchoolId);
+            var Classes = Get(dtoClass.Id);
             dtoClass.UpdateDate = DateTime.UtcNow;
             var mergedClass = _mapper.Map(dtoClass, Classes);
             _repository.Update(_mapper.Map<DTOClass, Class>(mergedClass));
         }
-        public void Delete(Guid? id)
+        public void Delete(Guid? id, string DeletedBy)
         {
             if (id == null)
                 return;
             var classes = Get(id);
             classes.IsDeleted = true;
             classes.DeletedDate = DateTime.UtcNow;
+            classes.DeletedBy = DeletedBy;
             _repository.Update(_mapper.Map<DTOClass, Class>(classes));
         }
         #endregion
@@ -133,7 +142,13 @@ namespace SMS.Services.Implementation
             _requestRepository.Update(_mapper.Map<DTOClass, ReqClass>(classes));
         }
         #endregion
+        private void HelpingMethodForRelationship(DTOClass dtoClass)
+        {
+            dtoClass.SchoolId = dtoClass.School.Id;
+            dtoClass.School = null;
+        }
 
+       
     }
 }
 
