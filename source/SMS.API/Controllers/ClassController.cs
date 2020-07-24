@@ -77,13 +77,13 @@ namespace SMS.API.Controllers
         [Route("RequestGet")]
         public IHttpActionResult RequestGet()
         {
-            return Ok(ClassService.RequestGet());
+            return Ok(_classService.RequestGet());
         }
         [HttpGet]
         [Route("RequestGet")]
         public IHttpActionResult RequestGet(Guid id)
         {
-            return Ok(ClassService.RequestGet(id));
+            return Ok(_classService.RequestGet(id));
         }
         //[HttpGet]
         //[Route("GetBySchool")]
@@ -95,21 +95,21 @@ namespace SMS.API.Controllers
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOClass dtoClass)
         {
-            ClassService.RequestCreate(dtoClass);
+            _classService.RequestCreate(dtoClass);
             return Ok();
         }
         [HttpPut]
         [Route("RequestUpdate")]
         public IHttpActionResult RequestUpdate(DTOClass dtoClass)
         {
-            ClassService.RequestUpdate(dtoClass);
+            _classService.RequestUpdate(dtoClass);
             return Ok();
         }
         [HttpDelete]
         [Route("RequestDelete")]
         public IHttpActionResult RequestDelete(Guid id)
         {
-            ClassService.RequestDelete(id);
+            _classService.RequestDelete(id);
             return Ok();
         }
         #endregion
