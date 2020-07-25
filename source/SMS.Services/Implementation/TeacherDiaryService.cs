@@ -19,12 +19,16 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<TeacherDiary> _repository;
         private readonly IRequestRepository<RequestTeacherDiary> _requestRepository;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public TeacherDiaryService(IRepository<TeacherDiary> repository, IRequestRepository<RequestTeacherDiary> requestRepository, IMapper mapper)
+        public TeacherDiaryService(IRepository<TeacherDiary> repository, IRequestRepository<RequestTeacherDiary> requestRepository, IMapper mapper, IRequestStatusService requestStatusService, IRequestTypeService requestTypeService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
+            _requestStatusService = requestStatusService;
+            _requestTypeService = requestTypeService;
         }
         #region SMS Section
         public TeacherDiariesList Get(int pageNumber, int pageSize)
@@ -190,7 +194,7 @@ namespace SMS.Services.Implementation
         #region RequestSMS Section
         public TeacherDiariesList RequestGet(int pageNumber, int pageSize)
         {
-            var teacherDiaries = _requestRepository.Get().Where(td => td.IsDeleted == false).ToList(); 
+            var teacherDiaries = _requestRepository.Get().Where(td => td.IsDeleted == false).ToList();
             var teacherDiaryCount = _requestRepository.Get().Count(td => td.IsDeleted == false);
             var teacherDiaryTempList = new List<DTOTeacherDiary>();
             foreach (var teacherDiary in teacherDiaries)
@@ -202,6 +206,7 @@ namespace SMS.Services.Implementation
                 TeacherDiaries = teacherDiaryTempList,
                 TeacherDiariesCount = teacherDiaryCount
             };
+            teacherDiariesList.TeacherDiaries = MapRequestTypeAndStatus(teacherDiariesList.TeacherDiaries).ToList();
             return teacherDiariesList;
         }
         public DTOTeacherDiary RequestGet(Guid? id)
@@ -223,7 +228,11 @@ namespace SMS.Services.Implementation
             dtoteacherDiary.IsDeleted = false;
             dtoteacherDiary.Id = Guid.NewGuid();
             RequestHelpingMethodForRelationship(dtoteacherDiary);
-            _requestRepository.Add(_mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(dtoteacherDiary));
+    
+            var dbRec = _mapper.Map<DTOTeacherDiary, RequestTeacherDiary>(dtoteacherDiary);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoteacherDiary.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoteacherDiary.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
             return validationResult;
         }
         public TeacherDiaryResponse RequestUpdate(DTOTeacherDiary dtoteacherDiary)
@@ -345,6 +354,25 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
+        }
+        #endregion
+
+        #region Private
+
+
+        private IEnumerable<DTOTeacherDiary> MapRequestTypeAndStatus(IEnumerable<DTOTeacherDiary> dtoWorksheets)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var worksheet in dtoWorksheets)
+            {
+                worksheet.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
+                worksheet.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
+            }
+
+            return dtoWorksheets;
         }
         #endregion
     }

@@ -19,17 +19,22 @@ namespace SMS.Services.Implementation
         private readonly IRequestRepository<RequestTimeTable> _requestRepository;
         private readonly IMapper _mapper;
         private readonly ITimeTableDetailService _timeTableDetailService;
-        public TimeTableService(IRepository<TimeTable> repository, IRequestRepository<RequestTimeTable> requestRepository, IMapper mapper, ITimeTableDetailService timeTableDetailService)
+        private readonly IRequestStatusService _requestStatusService;
+        private readonly IRequestTypeService _requestTypeService;
+
+        public TimeTableService(IRepository<TimeTable> repository, IRequestRepository<RequestTimeTable> requestRepository, IMapper mapper, ITimeTableDetailService timeTableDetailService, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
+            _requestTypeService = requestTypeService;
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
             _timeTableDetailService = timeTableDetailService;
+            _requestStatusService = requestStatusService;
         }
         #region SMS Section
         public TimeTableList Get(Guid? schoolId, Guid? classId, int pageNumber, int pageSize)
         {
-            var timeTables = _repository.Get().Where(tt => tt.IsDeleted == false && tt.SchoolId==schoolId).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var timeTables = _repository.Get().Where(tt => tt.IsDeleted == false && tt.SchoolId == schoolId).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             var timeTableCount = _repository.Get().Count(st => st.IsDeleted == false);
             var timeTableList = new List<DTOTimeTable>();
             foreach (var timeTable in timeTables)
@@ -116,12 +121,16 @@ namespace SMS.Services.Implementation
         {
             try
             {
-               
+
                 dtoTimeTable.CreatedDate = DateTime.Now;
                 dtoTimeTable.IsDeleted = false;
                 dtoTimeTable.Id = Guid.NewGuid();
                 RequestHelpingMethodForRelationship(dtoTimeTable);
-                var timeTable = _requestRepository.Add(_mapper.Map<DTOTimeTable, RequestTimeTable>(dtoTimeTable));
+                var timeTable = _mapper.Map<DTOTimeTable, RequestTimeTable>(dtoTimeTable);
+                timeTable.RequestTypeId = _requestTypeService.RequestGetByName(dtoTimeTable.RequestTypeString).Id;
+                timeTable.RequestStatusId = _requestStatusService.RequestGetByName(dtoTimeTable.RequestStatusString).Id;
+                _requestRepository.Add(timeTable);
+
                 if (dtoTimeTable.TimeTableDetails != null)
                     foreach (var timeTableDetail in dtoTimeTable.TimeTableDetails)
                     {
@@ -162,6 +171,23 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
+        }
+        #endregion
+
+        #region Private
+        private IEnumerable<DTOTimeTable> MapRequestTypeAndStatus(IEnumerable<DTOTimeTable> dtoWorksheets)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var worksheet in dtoWorksheets)
+            {
+                worksheet.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
+                worksheet.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
+            }
+
+            return dtoWorksheets;
         }
         #endregion
     }
