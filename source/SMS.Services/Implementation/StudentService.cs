@@ -22,8 +22,10 @@ namespace SMS.Services.Implementation
         private readonly IPersonService _personService;
         private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
         private readonly IFinanceTypeService _financeTypeService;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public StudentService(IRepository<Student> repository, IPersonService personService, IFinanceTypeService financeTypeService, IRequestRepository<RequestStudent> requestRepository, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper)
+        public StudentService(IRepository<Student> repository, IPersonService personService, IFinanceTypeService financeTypeService, IRequestRepository<RequestStudent> requestRepository, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
@@ -31,6 +33,8 @@ namespace SMS.Services.Implementation
             _studentFinanceDetailsService = studentFinanceDetailsService;
             _financeTypeService = financeTypeService;
             _mapper = mapper;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
         }
 
         #region SMS Section
@@ -432,7 +436,7 @@ namespace SMS.Services.Implementation
                 Students = studentTempList,
                 StudentsCount = studentCount
             };
-
+            studentsList.Students = MapRequestTypeAndStatus(studentsList.Students).ToList();
             return studentsList;
         }
 
@@ -475,7 +479,11 @@ namespace SMS.Services.Implementation
             dtoStudent.PersonId = _personService.RequestCreate(dtoStudent.Person);
             RequestHelpingMethodForRelationship(dtoStudent);
             RequestInsertStudentFinanceDetail(dtoStudent);
-            _requestRepository.Add(_mapper.Map<DTOStudent, RequestStudent>(dtoStudent));
+
+            var dbRec = _mapper.Map<DTOStudent, RequestStudent>(dtoStudent);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoStudent.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoStudent.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
             return validationResult;
         }
 
@@ -755,6 +763,24 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
+        }
+        #endregion
+
+        #region Private
+
+        private IEnumerable<DTOStudent> MapRequestTypeAndStatus(IEnumerable<DTOStudent> dTOStudent)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var worksheet in dTOStudent)
+            {
+                worksheet.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
+                worksheet.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
+            }
+
+            return dTOStudent;
         }
         #endregion
     }

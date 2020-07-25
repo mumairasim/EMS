@@ -18,12 +18,16 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<StudentDiary> _repository;
         private readonly IRequestRepository<RequestStudentDiary> _requestRepository;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public StudentDiaryService(IRepository<StudentDiary> repository, IRequestRepository<RequestStudentDiary> requestRepository, IMapper mapper)
+        public StudentDiaryService(IRepository<StudentDiary> repository, IRequestRepository<RequestStudentDiary> requestRepository, IMapper mapper, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
         }
         #region SMS Section
         public void Create(DTOStudentDiary dtoStudentDiary)
@@ -86,7 +90,11 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.Id = Guid.NewGuid();
             dtoStudentDiary.Employee = null;
             dtoStudentDiary.School = null;
-            _requestRepository.Add(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(dtoStudentDiary));
+
+            var dbRec = _mapper.Map<DTOStudentDiary, RequestStudentDiary>(dtoStudentDiary);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoStudentDiary.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoStudentDiary.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
         }
         public List<DTOStudentDiary> RequestGet()
         {
@@ -96,8 +104,10 @@ namespace SMS.Services.Implementation
             {
                 StudentDiaryList.Add(_mapper.Map<RequestStudentDiary, DTOStudentDiary>(studentdiary));
             }
-            return StudentDiaryList;
+
+            return MapRequestTypeAndStatus(StudentDiaryList).ToList();
         }
+
         public DTOStudentDiary RequestGet(Guid? id)
         {
             if (id == null) return null;
@@ -131,6 +141,21 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.SchoolId = dtoStudentDiary.School.Id;
             dtoStudentDiary.School = null;
             dtoStudentDiary.Employee = null;
+        }
+
+        private IEnumerable<DTOStudentDiary> MapRequestTypeAndStatus(IEnumerable<DTOStudentDiary> dtoWorksheets)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var worksheet in dtoWorksheets)
+            {
+                worksheet.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
+                worksheet.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
+            }
+
+            return dtoWorksheets;
         }
         #endregion
     }
