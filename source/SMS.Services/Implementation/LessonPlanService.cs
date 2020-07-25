@@ -20,11 +20,15 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<LessonPlan> _repository;
         private readonly IRequestRepository<ReqLessonPlan> _requestRepository;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper, IRequestRepository<ReqLessonPlan> requestRepository)
+        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper, IRequestRepository<ReqLessonPlan> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
             _mapper = mapper;
         }
 
@@ -194,7 +198,7 @@ namespace SMS.Services.Implementation
             {
                 lessonPlanList.Add(_mapper.Map<ReqLessonPlan, DTOLessonPlan>(lessonPlan));
             }
-            return lessonPlanList;
+            return MapRequestTypeAndStatus(lessonPlanList).ToList();
         }
         public DTOLessonPlan RequestGet(Guid? id)
         {
@@ -210,7 +214,10 @@ namespace SMS.Services.Implementation
             dtoLessonPlan.CreatedDate = DateTime.UtcNow;
             dtoLessonPlan.IsDeleted = false;
             dtoLessonPlan.Id = Guid.NewGuid();
-            _requestRepository.Add(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(dtoLessonPlan));
+            var dbRec = _mapper.Map<DTOLessonPlan, ReqLessonPlan>(dtoLessonPlan);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoLessonPlan.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoLessonPlan.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
             return dtoLessonPlan.Id;
         }
         public void RequestUpdate(DTOLessonPlan dtoLessonPlan)
@@ -231,6 +238,19 @@ namespace SMS.Services.Implementation
         }
 
         #endregion
+        private IEnumerable<DTOLessonPlan> MapRequestTypeAndStatus(IEnumerable<DTOLessonPlan> dtoLessonPlans)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var dtoLessonPlan in dtoLessonPlans)
+            {
+                dtoLessonPlan.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => dtoLessonPlan.RequestTypeId != null && rt.Id == dtoLessonPlan.RequestTypeId.Value)?.Value;
+                dtoLessonPlan.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => dtoLessonPlan.RequestStatusId != null && rs.Id == dtoLessonPlan.RequestStatusId.Value)?.Type;
+            }
 
+            return dtoLessonPlans;
+        }
     }
 }

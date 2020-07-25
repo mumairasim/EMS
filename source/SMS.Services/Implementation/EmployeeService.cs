@@ -20,11 +20,15 @@ namespace SMS.Services.Implementation
         private readonly IRequestRepository<ReqEmployee> _requestRepository;
         private readonly IPersonService _personService;
         private readonly IEmployeeFinanceService _employeeFinanceService;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestRepository<ReqEmployee> requestRepository)
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestRepository<ReqEmployee> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
             _personService = personService;
             _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
@@ -388,7 +392,7 @@ namespace SMS.Services.Implementation
             {
                 employeeList.Add(_mapper.Map<ReqEmployee, DTOEmployee>(employee));
             }
-            return employeeList;
+            return MapRequestTypeAndStatus(employeeList).ToList();
         }
         public DTOEmployee RequestGet(Guid? id)
         {
@@ -406,7 +410,10 @@ namespace SMS.Services.Implementation
             dtoEmployee.Id = Guid.NewGuid();
             dtoEmployee.PersonId = _personService.RequestCreate(dtoEmployee.Person);
             HelpingMethodForRelationship(dtoEmployee);
-            _requestRepository.Add(_mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee));
+            var dbRec = _mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoEmployee.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoEmployee.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
             return dtoEmployee.Id;
         }
         public void RequestUpdate(DTOEmployee dtoEmployee)
@@ -432,6 +439,19 @@ namespace SMS.Services.Implementation
         }
 
         #endregion
+        private IEnumerable<DTOEmployee> MapRequestTypeAndStatus(IEnumerable<DTOEmployee> dtEmployees)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var dtEmployee in dtEmployees)
+            {
+                dtEmployee.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => dtEmployee.RequestTypeId != null && rt.Id == dtEmployee.RequestTypeId.Value)?.Value;
+                dtEmployee.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => dtEmployee.RequestStatusId != null && rs.Id == dtEmployee.RequestStatusId.Value)?.Type;
+            }
 
+            return dtEmployees;
+        }
     }
 }

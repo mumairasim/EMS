@@ -17,11 +17,15 @@ namespace SMS.Services.Implementation
     {
         private readonly IRepository<Class> _repository;
         private readonly IRequestRepository<ReqClass> _requestRepository;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public ClassService(IRepository<Class> repository, IMapper mapper, IRequestRepository<ReqClass> requestRepository)
+        public ClassService(IRepository<Class> repository, IMapper mapper, IRequestRepository<ReqClass> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
             _mapper = mapper;
         }
 
@@ -88,7 +92,7 @@ namespace SMS.Services.Implementation
         #endregion
 
         #region SMS Request Section
-       
+
         public List<DTOClass> RequestGet()
         {
             var clasess = _requestRepository.Get().Where(cl => cl.IsDeleted == false).ToList();
@@ -97,7 +101,7 @@ namespace SMS.Services.Implementation
             {
                 classList.Add(_mapper.Map<ReqClass, DTOClass>(itemClass));
             }
-            return classList;
+            return MapRequestTypeAndStatus(classList).ToList();
         }
         public DTOClass RequestGet(Guid? id)
         {
@@ -123,7 +127,10 @@ namespace SMS.Services.Implementation
             dtoClass.IsDeleted = false;
             dtoClass.Id = Guid.NewGuid();
             dtoClass.School = null;
-            _requestRepository.Add(_mapper.Map<DTOClass, ReqClass>(dtoClass));
+            var dbRec = _mapper.Map<DTOClass, ReqClass>(dtoClass);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoClass.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoClass.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
         }
         public void RequestUpdate(DTOClass dtoClass)
         {
@@ -147,8 +154,21 @@ namespace SMS.Services.Implementation
             dtoClass.SchoolId = dtoClass.School.Id;
             dtoClass.School = null;
         }
+        private IEnumerable<DTOClass> MapRequestTypeAndStatus(IEnumerable<DTOClass> dtoClasses)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var dtoClass in dtoClasses)
+            {
+                dtoClass.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => dtoClass.RequestTypeId != null && rt.Id == dtoClass.RequestTypeId.Value)?.Value;
+                dtoClass.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => dtoClass.RequestStatusId != null && rs.Id == dtoClass.RequestStatusId.Value)?.Type;
+            }
 
-       
+            return dtoClasses;
+        }
+
     }
 }
 

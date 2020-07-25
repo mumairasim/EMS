@@ -20,13 +20,17 @@ namespace SMS.Services.Implementation
         private readonly IRepository<StudentAttendance> _repository;
         private readonly IRequestRepository<RequestStudentAttendance> _requestRepository;
         private readonly IStudentAttendanceDetailService _studentAttendanceDetailService;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public StudentAttendanceService(IRepository<StudentAttendance> repository, IMapper mapper, IRequestRepository<RequestStudentAttendance> requestRepository, IStudentAttendanceDetailService studentAttendanceDetailService)
+        public StudentAttendanceService(IRepository<StudentAttendance> repository, IMapper mapper, IRequestRepository<RequestStudentAttendance> requestRepository, IStudentAttendanceDetailService studentAttendanceDetailService, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
             _studentAttendanceDetailService = studentAttendanceDetailService;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
         }
         #region SMS Section
         public StudentsAttendanceList Get(int pageNumber, int pageSize)
@@ -183,6 +187,7 @@ namespace SMS.Services.Implementation
             {
                 studentAttendanceList.Add(_mapper.Map<RequestStudentAttendance, DTOStudentAttendance>(studentAttendance));
             }
+            studentAttendanceList = MapRequestTypeAndStatus(studentAttendanceList).ToList();
             var studentsAttendanceList = new StudentsAttendanceList()
             {
                 StudentsAttendances = studentAttendanceList,
@@ -246,7 +251,10 @@ namespace SMS.Services.Implementation
                 dtoStudentAttendance.CreatedDate = DateTime.UtcNow;
                 dtoStudentAttendance.IsDeleted = false;
                 dtoStudentAttendance.Id = Guid.NewGuid();
-                _requestRepository.Add(_mapper.Map<DTOStudentAttendance, RequestStudentAttendance>(dtoStudentAttendance));
+                var dbRec = _mapper.Map<DTOStudentAttendance, RequestStudentAttendance>(dtoStudentAttendance);
+                dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoStudentAttendance.RequestTypeString).Id;
+                dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoStudentAttendance.RequestStatusString).Id;
+                _requestRepository.Add(dbRec);
                 _studentAttendanceDetailService.Create(dtoStudentAttendance.StudentAttendanceDetail,
                     dtoStudentAttendance.CreatedBy,
                     dtoStudentAttendance.Id);
@@ -315,6 +323,20 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
+        }
+        private IEnumerable<DTOStudentAttendance> MapRequestTypeAndStatus(IEnumerable<DTOStudentAttendance> dtoStudentAttendances)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var dtoStudentAttendance in dtoStudentAttendances)
+            {
+                dtoStudentAttendance.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => dtoStudentAttendance.RequestTypeId != null && rt.Id == dtoStudentAttendance.RequestTypeId.Value)?.Value;
+                dtoStudentAttendance.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => dtoStudentAttendance.RequestStatusId != null && rs.Id == dtoStudentAttendance.RequestStatusId.Value)?.Type;
+            }
+
+            return dtoStudentAttendances;
         }
         #endregion
     }

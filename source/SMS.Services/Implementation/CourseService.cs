@@ -16,16 +16,20 @@ namespace SMS.Services.Implementation
         #region Properties
         private readonly IRepository<Course> _repository;
         private readonly IRequestRepository<ReqCourse> _requestRepository;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public CourseService(IRepository<Course> repository, IRequestRepository<ReqCourse> requestRepository, IMapper mapper)
+        public CourseService(IRepository<Course> repository, IRequestRepository<ReqCourse> requestRepository, IMapper mapper, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
+            _requestTypeService = requestTypeService;
+            _requestStatusService = requestStatusService;
         }
 
         #endregion
@@ -135,7 +139,7 @@ namespace SMS.Services.Implementation
             {
                 courseList.Add(_mapper.Map<ReqCourse, DTOCourse>(course));
             }
-            return courseList;
+            return MapRequestTypeAndStatus(courseList).ToList();
         }
         public DTOCourse RequestGet(Guid? id)
         {
@@ -154,7 +158,10 @@ namespace SMS.Services.Implementation
             dtoCourse.CreatedDate = DateTime.UtcNow;
             dtoCourse.IsDeleted = false;
             dtoCourse.Id = Guid.NewGuid();
-            _requestRepository.Add(_mapper.Map<DTOCourse, ReqCourse>(dtoCourse));
+            var dbRec = _mapper.Map<DTOCourse, ReqCourse>(dtoCourse);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoCourse.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoCourse.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
         }
 
         
@@ -187,7 +194,7 @@ namespace SMS.Services.Implementation
             }
         }
 
-        
+
         //public List<DTOCourse> GetAllBySchool(Guid? schoolId)
         //{
         //    var courses = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null) && x.SchoolId == schoolId).ToList();
@@ -200,6 +207,19 @@ namespace SMS.Services.Implementation
         //}
 
         #endregion
+        private IEnumerable<DTOCourse> MapRequestTypeAndStatus(IEnumerable<DTOCourse> dtoCourses)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var dtoClass in dtoCourses)
+            {
+                dtoClass.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => dtoClass.RequestTypeId != null && rt.Id == dtoClass.RequestTypeId.Value)?.Value;
+                dtoClass.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => dtoClass.RequestStatusId != null && rs.Id == dtoClass.RequestStatusId.Value)?.Type;
+            }
 
+            return dtoCourses;
+        }
     }
 }
