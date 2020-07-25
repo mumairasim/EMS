@@ -1,4 +1,5 @@
-﻿using DTORequestStatus = SMS.DTOs.DTOs.RequestStatus;
+﻿using System.Collections.Generic;
+using DTORequestStatus = SMS.DTOs.DTOs.RequestStatus;
 
 
 namespace SMS.Services.Infrastructure
@@ -11,5 +12,7 @@ namespace SMS.Services.Infrastructure
         /// <param name="name"></param>
         /// <returns></returns>
         DTORequestStatus RequestGetByName(string name);
+
+        List<DTORequestStatus> RequestGetAll();
     }
 }

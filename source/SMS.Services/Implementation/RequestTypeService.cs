@@ -79,6 +79,19 @@ namespace SMS.Services.Implementation
         }
 
         /// <summary>
+        /// Retruns a Single Record of a RequestType of SMS Request By Name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public DTORequestType RequestGetByName(string name)
+        {
+            var worksheet = _requestRepository.Get().FirstOrDefault(x => x.Value == name && (x.IsDeleted == false || x.IsDeleted == null));
+            var worksheetDto = _mapper.Map<DBRequestType, DTORequestType>(worksheet);
+
+            return worksheetDto;
+        }
+
+        /// <summary>
         /// Service level call : Updates the Single Record of a RequestType of SMS Request
         /// </summary>
         /// <param name="dtoRequestType"></param>

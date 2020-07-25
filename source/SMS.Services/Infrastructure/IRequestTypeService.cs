@@ -21,6 +21,13 @@ namespace SMS.Services.Infrastructure
         DTORequestType RequestGet(Guid? id);
 
         /// <summary>
+        /// Retruns a Single Record of a RequestType on SMS Request by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        DTORequestType RequestGetByName(string name);
+
+        /// <summary>
         /// Service level call : Creates a single record of a RequestType on SMS Request
         /// </summary>
         /// <param name="dtoRequestType"></param>

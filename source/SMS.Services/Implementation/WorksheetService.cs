@@ -167,8 +167,10 @@ namespace SMS.Services.Implementation
             dTOWorksheet.CreatedDate = DateTime.UtcNow;
             dTOWorksheet.IsDeleted = false;
             dTOWorksheet.Id = Guid.NewGuid();
-
-            _requestRepository.Add(_mapper.Map<DTOWorksheet, ReqWorksheet>(dTOWorksheet));
+            var dbRec = _mapper.Map<DTOWorksheet, ReqWorksheet>(dTOWorksheet);
+            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dTOWorksheet.RequestTypeString).Id;
+            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dTOWorksheet.RequestStatusString).Id;
+            _requestRepository.Add(dbRec);
         }
 
         /// <summary>
@@ -228,7 +230,7 @@ namespace SMS.Services.Implementation
         /// Service level call : Return all records of a Worksheet of SMS Request
         /// </summary>
         /// <returns></returns>
-        List<DTOWorksheet> IWorksheetService.RequestGetAll()
+        public List<DTOWorksheet> RequestGetAll()
         {
             var worksheets = _requestRepository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var worksheetList = new List<DTOWorksheet>();
@@ -236,7 +238,7 @@ namespace SMS.Services.Implementation
             {
                 worksheetList.Add(_mapper.Map<ReqWorksheet, DTOWorksheet>(worksheet));
             }
-            return worksheetList;
+            return MapRequestTypeAndStatus(worksheetList).ToList();
         }
         #endregion
 
@@ -299,6 +301,21 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
+        }
+
+        private IEnumerable<DTOWorksheet> MapRequestTypeAndStatus(IEnumerable<DTOWorksheet> dtoWorksheets)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var worksheet in dtoWorksheets)
+            {
+                worksheet.RequestTypeString =
+                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
+                worksheet.RequestStatusString =
+                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
+            }
+
+            return dtoWorksheets;
         }
         #endregion
     }

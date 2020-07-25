@@ -1,6 +1,7 @@
 ﻿using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 
 namespace SMS.Services.Implementation
@@ -19,9 +20,11 @@ namespace SMS.Services.Implementation
         private readonly ITimeTableService _timeTableService;
         private readonly IStudentFinanceService _studentFinanceService;
         private readonly IEmployeeFinanceService _employeeFinanceService;
+        private readonly IRequestTypeService _requestTypeService;
+        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
 
-        public RequestManagementService(IStudentService studentService, IEmployeeService employeeService, ICourseService courseService, IClassService classService, ILessonPlanService lessonPlanService, IStudentAttendanceService studentAttendanceService, IStudentDiaryService studentDiaryService, ITeacherDiaryService teacherDiaryService, IWorksheetService worksheetService, ITimeTableService timeTableService, IStudentFinanceService studentFinanceService, IEmployeeFinanceService employeeFinanceService, IMapper mapper)
+        public RequestManagementService(IStudentService studentService, IEmployeeService employeeService, ICourseService courseService, IClassService classService, ILessonPlanService lessonPlanService, IStudentAttendanceService studentAttendanceService, IStudentDiaryService studentDiaryService, ITeacherDiaryService teacherDiaryService, IWorksheetService worksheetService, ITimeTableService timeTableService, IStudentFinanceService studentFinanceService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestStatusService requestStatusService, IRequestTypeService requestTypeService)
         {
             _employeeService = employeeService;
             _courseService = courseService;
@@ -35,6 +38,8 @@ namespace SMS.Services.Implementation
             _studentFinanceService = studentFinanceService;
             _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
+            _requestStatusService = requestStatusService;
+            _requestTypeService = requestTypeService;
             _studentService = studentService;
         }
 
@@ -53,8 +58,24 @@ namespace SMS.Services.Implementation
             //commonRequestList.AddRange(_mapper.Map<List<TimeTable>, List<CommonRequestModel>>(_timeTableService.RequestGet() ?.TimeTables));
             commonRequestList.AddRange(_mapper.Map<List<Student_Finances>, List<CommonRequestModel>>(_studentFinanceService.RequestGetAll()));
             //commonRequestList.AddRange(_mapper.Map<List<EmployeeFinance>, List<CommonRequestModel>>(_employeeFinanceService.Get));
+            return MapRequestTypeAndStatus(commonRequestList);
+        }
+
+        private IEnumerable<CommonRequestModel> MapRequestTypeAndStatus(IEnumerable<CommonRequestModel> commonRequestList)
+        {
+            var requestTypes = _requestTypeService.RequestGetAll();
+            var requestStatuses = _requestStatusService.RequestGetAll();
+            foreach (var commonRequest in commonRequestList)
+            {
+                commonRequest.RequestType =
+                    requestTypes.FirstOrDefault(rt => commonRequest.RequestTypeId != null && rt.Id == commonRequest.RequestTypeId.Value);
+                commonRequest.RequestStatus =
+                    requestStatuses.FirstOrDefault(rs => commonRequest.RequestStatusId != null && rs.Id == commonRequest.RequestStatusId.Value);
+            }
+
             return commonRequestList;
         }
+
 
     }
 }

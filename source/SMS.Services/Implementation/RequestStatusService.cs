@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using SMS.REQUESTDATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System.Linq;
@@ -40,6 +41,12 @@ namespace SMS.Services.Implementation
             var reqStatus = _requestRepository.Get().FirstOrDefault(x => x.Type == name && (x.IsDeleted == false || x.IsDeleted == null));
             var reqStatusDto = _mapper.Map<RequestStatus, DTORequestStatus>(reqStatus);
 
+            return reqStatusDto;
+        }
+        public List<DTORequestStatus> RequestGetAll()
+        {
+            var reqStatus = _requestRepository.Get().Where(x => x.IsDeleted == false || x.IsDeleted == null).ToList();
+            var reqStatusDto = _mapper.Map<List<RequestStatus>, List<DTORequestStatus>>(reqStatus);
             return reqStatusDto;
         }
     }
