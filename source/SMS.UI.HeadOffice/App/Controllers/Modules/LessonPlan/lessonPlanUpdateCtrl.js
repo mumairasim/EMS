@@ -39,7 +39,7 @@
                     $scope.response = response.data;
                     $scope.growltext("Lesson Plan updation failed", true);
                 });
-        }s
+        }
     };
     $scope.FetchLessonPlan = function () {
         var id = $routeParams.Id;

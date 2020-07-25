@@ -80,6 +80,7 @@
     <Compile Include="Implementation\TimeTableDetailService.cs" />
     <Compile Include="Implementation\TimeTableService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
+    <Compile Include="Implementation\RequestManagementService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Infrastructure\ITimeTableDetailService.cs" />
     <Compile Include="Infrastructure\ITimeTableService.cs" />
     <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
+    <Compile Include="Infrastructure\IRequestManagementService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

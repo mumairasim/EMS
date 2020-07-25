@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\Assignment.cs" />
+    <Compile Include="DTOs\CommonRequestModel.cs" />
     <Compile Include="DTOs\EmployeeFinanceInfo.cs" />
     <Compile Include="DTOs\RequestStatus.cs" />
     <Compile Include="DTOs\RequestType.cs" />
