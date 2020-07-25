@@ -1,4 +1,5 @@
-﻿using SMS.DTOs.ReponseDTOs;
+﻿using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using System;
 using System.Collections.Generic;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
@@ -73,7 +74,9 @@ namespace SMS.Services.Infrastructure
         #endregion
 
         #region Approver
-        void ApproveRequest(DTOWorksheet dTOWorksheet);
+
+        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
+
         #endregion
     }
 }

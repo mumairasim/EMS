@@ -7,6 +7,7 @@ using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 
 
@@ -105,12 +106,20 @@ namespace SMS.API.Controllers
         #endregion
 
         #region Request Approver
-        [HttpGet]
+        [HttpPost]
         [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Guid id)
+        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
-            //to be added
-            throw new NotImplementedException();
+
+            try
+            {
+                _lessonplanService.ApproveRequest(commonRequestModel);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
         }
         #endregion
 

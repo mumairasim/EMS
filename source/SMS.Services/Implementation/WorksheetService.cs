@@ -6,6 +6,7 @@ using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SMS.DTOs.DTOs;
 using DBWorksheet = SMS.DATA.Models.Worksheet;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 using ReqWorksheet = SMS.REQUESTDATA.RequestModels.Worksheet;
@@ -243,46 +244,46 @@ namespace SMS.Services.Implementation
         #endregion
 
         #region Request Approver
-        public void ApproveRequest(DTOWorksheet dTOWorksheet)
+        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
         {
-
-            var requestType = _requestTypeService.RequestGet(dTOWorksheet.RequestTypeId);
-            GenericApiResponse status;
-            switch (requestType.Value)
+            var dto = RequestGet(dtoCommonRequestModel.Id);
+            GenericApiResponse status = null;
+            switch (dtoCommonRequestModel.RequestTypeString)
             {
                 case "Create":
-                    status = Create(dTOWorksheet);
-                    UpdateRequestStatus(dTOWorksheet, status);
+                    status = Create(dto);
+                    UpdateRequestStatus(dto, status);
                     break;
                 case "Update":
-                    status = Update(dTOWorksheet);
-                    UpdateRequestStatus(dTOWorksheet, status);
+                    status = Update(dto);
+                    UpdateRequestStatus(dto, status);
                     break;
                 case "Delete":
-                    status = Delete(dTOWorksheet.Id);
-                    UpdateRequestStatus(dTOWorksheet, status);
+                    status = Delete(dto.Id);
+                    UpdateRequestStatus(dto, status);
                     break;
                 default:
                     break;
             }
 
+            return status;
         }
 
         #endregion
 
         #region Utils
-        private void UpdateRequestStatus(DTOWorksheet dTOWorksheet, GenericApiResponse status)
+        private void UpdateRequestStatus(DTOWorksheet dto, GenericApiResponse status)
         {
             if (status.StatusCode == "200")//success
             {
-                dTOWorksheet.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
             }
             else
             {
-                dTOWorksheet.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
             }
             //updating the status of the current request in Request DB
-            RequestUpdate(dTOWorksheet);
+            RequestUpdate(dto);
         }
         private GenericApiResponse PrepareFailureResponse(string errorMessage, string descriptionMessage)
         {

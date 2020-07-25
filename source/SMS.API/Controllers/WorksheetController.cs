@@ -209,14 +209,14 @@ namespace SMS.API.Controllers
         #endregion
 
         #region Request Approver
-        [HttpPut]
+        [HttpPost]
         [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Worksheet worksheet)
+        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
             
             try
             {
-                _worksheetService.ApproveRequest(worksheet);
+                _worksheetService.ApproveRequest(commonRequestModel);
             }
             catch (Exception)
             {

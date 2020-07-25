@@ -222,7 +222,7 @@ namespace SMS.Services.Implementation
         }
         public void RequestUpdate(DTOLessonPlan dtoLessonPlan)
         {
-            var lessonPlan =RequestGet(dtoLessonPlan.Id);
+            var lessonPlan = RequestGet(dtoLessonPlan.Id);
             dtoLessonPlan.UpdateDate = DateTime.UtcNow;
             var mergedLessonPlan = _mapper.Map(dtoLessonPlan, lessonPlan);
             _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(mergedLessonPlan));
@@ -235,6 +235,33 @@ namespace SMS.Services.Implementation
             lessonPlan.IsDeleted = true;
             lessonPlan.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(lessonPlan));
+        }
+
+        #endregion
+        #region Request Approver
+        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
+        {
+            var dto = RequestGet(dtoCommonRequestModel.Id);
+            GenericApiResponse status = null;
+            switch (dtoCommonRequestModel.RequestTypeString)
+            {
+                case "Create":
+                    status = Create(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                case "Update":
+                    status = Update(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                //case "Delete":
+                //    status = Delete(dto.Id,"admin");
+                //    UpdateRequestStatus(dto, status);
+                //    break;
+                default:
+                    break;
+            }
+
+            return status;
         }
 
         #endregion
@@ -251,6 +278,19 @@ namespace SMS.Services.Implementation
             }
 
             return dtoLessonPlans;
+        }
+        private void UpdateRequestStatus(DTOLessonPlan dto, GenericApiResponse status)
+        {
+            if (status.StatusCode == "200")//success
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
+            }
+            else
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
+            }
+            //updating the status of the current request in Request DB
+            RequestUpdate(dto);
         }
     }
 }

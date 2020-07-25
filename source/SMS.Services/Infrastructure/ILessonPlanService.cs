@@ -24,6 +24,12 @@ namespace SMS.Services.Infrastructure
         void RequestUpdate(DTOLessonPlan dtoLessonPlan);
         void RequestDelete(Guid? id);
         #endregion
+
+        #region Approver
+
+        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
+
+        #endregion
     }
 }
 
