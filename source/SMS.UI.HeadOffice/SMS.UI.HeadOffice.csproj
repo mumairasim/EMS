@@ -142,6 +142,8 @@
     <Content Include="App\Controllers\Modules\EmployeeFinance\employeeFinanceBase.html" />
     <Content Include="App\Controllers\Modules\EmployeeFinance\employeeFinanceCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\EmployeeFinance\employeeFinanceBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\Requests\requestManagementCtrl.js" />
+    <Content Include="App\Controllers\Modules\Requests\requestManagement.html" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceCreate.html" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceBase.html" />

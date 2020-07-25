@@ -197,6 +197,11 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/TimeTable/timeTableCreate.html",
             controller: "timeTableCreateCtrl"
         })
+        .when("/requests", {
+            title: "Requests",
+            templateUrl: "App/Controllers/Modules/Requests/requestManagement.html",
+            controller: "requestManagementCtrl"
+        })
         .otherwise({
             redirectTo: '/'
         });
