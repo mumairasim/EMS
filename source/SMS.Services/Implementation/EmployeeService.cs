@@ -137,8 +137,14 @@ namespace SMS.Services.Implementation
         }
         private void HelpingMethodForRelationship(DTOEmployee dtoEmployee)
         {
-            dtoEmployee.SchoolId = dtoEmployee.School.Id;
-            dtoEmployee.DesignationId = dtoEmployee.Designation.Id;
+            if (dtoEmployee.SchoolId == null)
+            {
+                dtoEmployee.SchoolId = dtoEmployee.School?.Id;
+            }
+            if (dtoEmployee.DesignationId == null)
+            {
+                dtoEmployee.DesignationId = dtoEmployee.Designation?.Id;
+            }
             dtoEmployee.Person = null;
             dtoEmployee.Designation = null;
             dtoEmployee.School = null;
@@ -399,6 +405,7 @@ namespace SMS.Services.Implementation
             dtoEmployee.IsDeleted = false;
             dtoEmployee.Id = Guid.NewGuid();
             dtoEmployee.PersonId = _personService.RequestCreate(dtoEmployee.Person);
+            HelpingMethodForRelationship(dtoEmployee);
             _requestRepository.Add(_mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee));
             return dtoEmployee.Id;
         }
@@ -406,9 +413,9 @@ namespace SMS.Services.Implementation
         {
             var reqemployee = RequestGet(dtoEmployee.Id);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
-            HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, reqemployee);
             _personService.RequestUpdate(mergedEmployee.Person);
+            HelpingMethodForRelationship(dtoEmployee);
             _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(mergedEmployee));
         }
         public void RequestDelete(Guid? id)

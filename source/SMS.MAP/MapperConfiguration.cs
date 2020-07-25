@@ -254,7 +254,6 @@ namespace SMS.MAP
             CreateMap<DTOStudent, RequestStudent>();
             CreateMap<DTOPerson, ReqPerson>();
             CreateMap<DTOPerson, Person>();
-            CreateMap<DTOPerson, ReqPerson>();
             CreateMap<DTOClass, Class>();
             CreateMap<DTOStudentDiary, StudentDiary>();
             CreateMap<DTOStudentDiary, RequestStudentDiary>();
