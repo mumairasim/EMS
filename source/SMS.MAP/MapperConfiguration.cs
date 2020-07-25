@@ -60,8 +60,6 @@ using DTORequestStatus = SMS.DTOs.DTOs.RequestStatus;
 
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
-using StudentDiary = SMS.DATA.Models.StudentDiary;
-using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 using RequestTeacherDiary = SMS.REQUESTDATA.RequestModels.TeacherDiary;
 using DBStudentDiary = SMS.DATA.Models.StudentDiary;
 

@@ -28,7 +28,7 @@ namespace SMS.API.Controllers
                 var result = RequestManagementService.GetAllRequests();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
