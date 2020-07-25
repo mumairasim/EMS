@@ -6,6 +6,7 @@ namespace SMS.Services.Infrastructure
 {
     public interface IStudentFinanceDetailsService
     {
+        #region SMS 
         /// <summary>
         /// Service level call : Return all records of a StudentFinanceDetails
         /// </summary>
@@ -50,5 +51,40 @@ namespace SMS.Services.Infrastructure
         /// </summary>
         /// <param name="id"></param>
         void Delete(Guid? id);
+        #endregion
+
+        #region RequestSMS 
+        /// <summary>
+        /// Service level call : Return all records of a StudentFinanceDetails
+        /// </summary>
+        /// <returns></returns>
+        List<DTOStudentFinanceDetails> RequestGetAll();
+
+        /// <summary>
+        /// Retruns a Single Record of a StudentFinanceDetails
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DTOStudentFinanceDetails RequestGet(Guid? id);
+
+        /// <summary>
+        /// Service level call : Creates a single record of a StudentFinanceDetails
+        /// </summary>
+        /// <param name="dtoStudentFinanceDetails"></param>
+        void RequestCreate(DTOStudentFinanceDetails dTOStudentFinanceDetails);
+
+        /// <summary>
+        /// Service level call : Updates the Single Record of a StudentFinanceDetails 
+        /// </summary>
+        /// <param name="dtoStudentFinanceDetails"></param>
+        void RequestUpdate(DTOStudentFinanceDetails dTOStudentFinanceDetails);
+
+        /// <summary>
+        /// Service level call : Delete a single record of a StudentFinanceDetails
+        /// </summary>
+        /// <param name="id"></param>
+        void RequestDelete(Guid? id);
+        #endregion
     }
+
 }

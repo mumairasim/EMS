@@ -113,5 +113,102 @@ namespace SMS.API.Controllers
             return Ok();
         }
         #endregion
+
+        #region RequestAPI Calls
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            if (id == null)
+            {
+                return BadRequest("No Id Recieved");
+            }
+
+            try
+            {
+                var result = _studentFinanceDetailsService.RequestGet(id);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("RequestGetAll")]
+        public IHttpActionResult RequestGetAll()
+        {
+            try
+            {
+                var result = _studentFinanceDetailsService.RequestGetAll();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate(DTOStudentFinanceDetails dTOStudentFinanceDetails)
+        {
+            if (dTOStudentFinanceDetails == null)
+            {
+                return BadRequest("StudentFinances not Recieved");
+            }
+
+            try
+            {
+                _studentFinanceDetailsService.RequestCreate(dTOStudentFinanceDetails);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate(DTOStudentFinanceDetails dTOStudentFinanceDetails)
+        {
+            if (dTOStudentFinanceDetails == null)
+            {
+                return BadRequest("StudentFinances not Recieved");
+            }
+
+            try
+            {
+                _studentFinanceDetailsService.RequestUpdate(dTOStudentFinanceDetails);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            if (id == null)
+            {
+                return BadRequest("No Id Recieved");
+            }
+
+            try
+            {
+                _studentFinanceDetailsService.RequestDelete(id);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
+        }
+        #endregion
     }
 }
