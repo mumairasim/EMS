@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using SMS.Services.Infrastructure;
 using System.Web.Http.Cors;
+using SMS.DTOs.DTOs;
 
 namespace SMS.API.Controllers
 {
@@ -115,12 +116,20 @@ namespace SMS.API.Controllers
         #endregion
 
         #region Request Approver
-        [HttpGet]
+        [HttpPost]
         [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Guid id)
+        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
-            //to be added
-            throw new NotImplementedException();
+
+            try
+            {
+                _classService.ApproveRequest(commonRequestModel);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
         }
         #endregion
     }

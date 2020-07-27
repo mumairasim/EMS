@@ -439,6 +439,35 @@ namespace SMS.Services.Implementation
         }
 
         #endregion
+
+
+        #region Request Approver
+        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
+        {
+            var dto = RequestGet(dtoCommonRequestModel.Id);
+            GenericApiResponse status = null;
+            switch (dtoCommonRequestModel.RequestTypeString)
+            {
+                case "Create":
+                    status = Create(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                case "Update":
+                    status = Update(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                //case "Delete":
+                //    status = Delete(dto.Id,"admin");
+                //    UpdateRequestStatus(dto, status);
+                //    break;
+                default:
+                    break;
+            }
+
+            return status;
+        }
+
+        #endregion
         private IEnumerable<DTOEmployee> MapRequestTypeAndStatus(IEnumerable<DTOEmployee> dtEmployees)
         {
             var requestTypes = _requestTypeService.RequestGetAll();
@@ -452,6 +481,19 @@ namespace SMS.Services.Implementation
             }
 
             return dtEmployees;
+        }
+        private void UpdateRequestStatus(DTOEmployee dto, GenericApiResponse status)
+        {
+            if (status.StatusCode == "200")//success
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
+            }
+            else
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
+            }
+            //updating the status of the current request in Request DB
+            RequestUpdate(dto);
         }
     }
 }
