@@ -18,7 +18,7 @@ namespace SMS.API.Controllers
         {
             _financeTypeService = financeTypeService;
         }
-
+        #region SMS Section
         [HttpGet]
         [Route("GetAll")]
         public IHttpActionResult Get()
@@ -64,5 +64,56 @@ namespace SMS.API.Controllers
             _financeTypeService.Delete(id, deletedBy);
             return Ok();
         }
+        #endregion
+
+
+        #region SMS Request Section
+        [HttpGet]
+        [Route("RequestGetAll")]
+        public IHttpActionResult RequestGet()
+        {
+            return Ok(_financeTypeService.RequestGetAll());
+        }
+
+        [HttpGet]
+        [Route("RequestGet")]
+        public IHttpActionResult RequestGet(Guid id)
+        {
+            return Ok(_financeTypeService.RequestGet(id));
+        }
+
+        [HttpPost]
+        [Route("RequestCreate")]
+        public IHttpActionResult RequestCreate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var financeTypeDetail = JsonConvert.DeserializeObject<DTOFinanceType>(httpRequest.Params["financeTypeModel"]);
+            financeTypeDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+
+            _financeTypeService.RequestCreate(financeTypeDetail);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("RequestUpdate")]
+        public IHttpActionResult RequestUpdate()
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var financeTypeDetail = JsonConvert.DeserializeObject<DTOFinanceType>(httpRequest.Params["financeTypeModel"]);
+            financeTypeDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _financeTypeService.RequestUpdate(financeTypeDetail);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("RequestDelete")]
+        public IHttpActionResult RequestDelete(Guid id)
+        {
+            var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _financeTypeService.RequestDelete(id, deletedBy);
+            return Ok();
+        }
+        #endregion
+
     }
 }

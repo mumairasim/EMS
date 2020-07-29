@@ -23,7 +23,7 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-        #region APIs
+        #region SMS Section
         [HttpGet]
         [Route("GetByFilter/{schoolId}/{SalaryMonth}")]
         public IHttpActionResult GetByFilter(Guid? schoolId = null, Guid? designationId = null, string SalaryMonth = "0")
