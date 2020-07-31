@@ -13,7 +13,5 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public DateTime? ToDate { get; set; }
         public Guid? SchoolId { get; set; }
-
-        public virtual School School { get; set; }
     }
 }
