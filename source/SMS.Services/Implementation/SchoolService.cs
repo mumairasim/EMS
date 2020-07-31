@@ -7,7 +7,7 @@ using SMS.DATA.Models;
 using SMS.REQUESTDATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
-using School= SMS.DATA.Models.School;
+using School = SMS.DATA.Models.School;
 using DTOSchool = SMS.DTOs.DTOs.School;
 using ReqSchool = SMS.REQUESTDATA.RequestModels.School;
 
@@ -41,6 +41,11 @@ namespace SMS.Services.Implementation
                 SchoolsCount = SchoolCount
             };
             return schoolsList;
+        }
+        public List<DTOSchool> GetAll()
+        {
+            var schools = _repository.Get().Where(cl => cl.IsDeleted == false).ToList();
+            return _mapper.Map<List<School>, List<DTOSchool>>(schools);
         }
         public DTOSchool Get(Guid? id)
         {
