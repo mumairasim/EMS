@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 namespace SMS.Services.Infrastructure
 {
-    public interface IWorksheetService
+    public interface IWorksheetService :IBaseService<DTOWorksheet>
     {
         #region SMS
         /// <summary>
@@ -41,11 +41,11 @@ namespace SMS.Services.Infrastructure
         #endregion
 
         #region SMS Request
-        /// <summary>
-        /// Service level call : Return all records of a Worksheet on SMS Request
-        /// </summary>
-        /// <returns></returns>
-        List<DTOWorksheet> RequestGetAll();
+        ///// <summary>
+        ///// Service level call : Return all records of a Worksheet on SMS Request
+        ///// </summary>
+        ///// <returns></returns>
+        //List<DTOWorksheet> RequestGetAll();
 
         /// <summary>
         /// Retruns a Single Record of a Worksheet on SMS Request

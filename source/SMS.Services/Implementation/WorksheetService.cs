@@ -13,28 +13,20 @@ using ReqWorksheet = SMS.REQUESTDATA.RequestModels.Worksheet;
 
 namespace SMS.Services.Implementation
 {
-    public class WorksheetService : IWorksheetService
+    public class WorksheetService : BaseService<DTOWorksheet>, IWorksheetService
     {
         #region Properties
         private readonly IRepository<DBWorksheet> _repository;
-        private readonly IRequestRepository<ReqWorksheet> _requestRepository;
-        private readonly IRequestTypeService _requestTypeService;
-        private readonly IRequestStatusService _requestStatusService;
         private const string error_not_found = "Record not found";
         private const string server_error = "Server error";
 
-        private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public WorksheetService(IRepository<DBWorksheet> repository, IMapper mapper, IRequestRepository<ReqWorksheet> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
+        public WorksheetService(IRepository<DBWorksheet> repository, IMapper mapper, IRequestRepository<ReqWorksheet> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService):base(mapper, requestRepository, requestTypeService,requestStatusService)
         {
-            _requestTypeService = requestTypeService;
-            _requestStatusService = requestStatusService;
             _repository = repository;
-            _requestRepository = requestRepository;
-            _mapper = mapper;
         }
 
         #endregion
@@ -227,20 +219,7 @@ namespace SMS.Services.Implementation
             }
         }
 
-        /// <summary>
-        /// Service level call : Return all records of a Worksheet of SMS Request
-        /// </summary>
-        /// <returns></returns>
-        public List<DTOWorksheet> RequestGetAll()
-        {
-            var worksheets = _requestRepository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
-            var worksheetList = new List<DTOWorksheet>();
-            foreach (var worksheet in worksheets)
-            {
-                worksheetList.Add(_mapper.Map<ReqWorksheet, DTOWorksheet>(worksheet));
-            }
-            return MapRequestTypeAndStatus(worksheetList).ToList();
-        }
+
         #endregion
 
         #region Request Approver
