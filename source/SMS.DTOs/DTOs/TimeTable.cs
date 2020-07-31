@@ -7,8 +7,6 @@ namespace SMS.DTOs.DTOs
     {
         public string TimeTableName { get; set; }
         public Guid? ClassId { get; set; }
-
-        public School School { get; set; }
         public Class Class { get; set; }
         public List<TimeTableDetail> TimeTableDetails { get; set; }
     }

@@ -7,7 +7,6 @@ namespace SMS.DTOs.DTOs
         public string Text { get; set; }
 
         public DateTime? ForDate { get; set; }
-
         public Guid? InstructorId { get; set; }
         public Employee Employee { get; set; }
     }

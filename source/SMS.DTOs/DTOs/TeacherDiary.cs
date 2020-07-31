@@ -9,6 +9,5 @@ namespace SMS.DTOs.DTOs
         public DateTime? DairyDate { get; set; }
         public Guid? InstructorId { get; set; }
         public  Employee Employee { get; set; }
-        public School School { get; set; }
     }
 }

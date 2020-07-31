@@ -8,7 +8,5 @@ namespace SMS.DTOs.DTOs
         [StringLength(50)]
         
         public string ClassName { get; set; }
-        public Guid? SchoolId { get; set; }
-        public School School { get; set; }
     }
 }

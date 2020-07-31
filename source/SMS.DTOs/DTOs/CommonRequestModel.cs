@@ -5,6 +5,5 @@
         public RequestType RequestType { get; set; }
         public RequestStatus RequestStatus { get; set; }
         public string RequestFor { get; set; }
-        public School School { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace SMS.DTOs.DTOs
         public Person Person { get; set; }
         public File Image { get; set; }
         public Class Class { get; set; }
-        public School School { get; set; }
         public string PreviousSchoolName { get; set; }
         public string ReasonForLeaving { get; set; }
         public decimal? AdmissionFee { get; set; }
