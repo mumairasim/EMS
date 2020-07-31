@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
@@ -110,13 +111,22 @@ namespace SMS.API.Controllers
         }
         #endregion
 
+
         #region Request Approver
-        [HttpGet]
+        [HttpPost]
         [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Guid id)
+        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
-            //to be added
-            throw new NotImplementedException();
+
+            try
+            {
+                EmployeeService.ApproveRequest(commonRequestModel);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+            return Ok();
         }
         #endregion
 

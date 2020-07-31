@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using DTOClass = SMS.DTOs.DTOs.Class;
 
 namespace SMS.Services.Infrastructure
@@ -10,8 +11,9 @@ namespace SMS.Services.Infrastructure
         #region SMS Section
         ClassesList Get(int pageNumber, int pageSize);
         DTOClass Get(Guid? id);
-        void Create(DTOClass Class);
-        void Update(DTOClass dtoClass);
+        GenericApiResponse Create(DTOClass Class);
+        GenericApiResponse Update(DTOClass dtoClass);
+        void Delete(Guid? id, string DeletedBy);
         #endregion
 
         #region SMS Request Section
@@ -23,7 +25,11 @@ namespace SMS.Services.Infrastructure
         void RequestDelete(Guid? id);
         #endregion
 
+        #region Approver
 
-        void Delete(Guid? id, string DeletedBy);
+        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
+
+        #endregion
+
     }
 }
