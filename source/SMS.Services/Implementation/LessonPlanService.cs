@@ -69,7 +69,7 @@ namespace SMS.Services.Implementation
             {
                 dtoLessonplan.Id = Guid.NewGuid();
             }
-            dtoLessonplan.SchoolId = dtoLessonplan.School.Id;
+            dtoLessonplan.SchoolId = dtoLessonplan.School?.Id;
             dtoLessonplan.School = null;
             _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(dtoLessonplan));
             return validationResult;
@@ -149,13 +149,6 @@ namespace SMS.Services.Implementation
                     );
             }
             if (dtoLessonplan.ToDate == null)
-            {
-                return PrepareFailureResponse(dtoLessonplan.Id,
-                    "InvalidField",
-                    "This field cannot be null"
-                    );
-            }
-            if (dtoLessonplan.School == null)
             {
                 return PrepareFailureResponse(dtoLessonplan.Id,
                     "InvalidField",
@@ -246,6 +239,7 @@ namespace SMS.Services.Implementation
         public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
         {
             var dto = RequestGet(dtoCommonRequestModel.Id);
+            dto.School = dtoCommonRequestModel.School;
             GenericApiResponse status = null;
             switch (dtoCommonRequestModel.RequestTypeString)
             {
