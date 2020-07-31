@@ -6,7 +6,6 @@ namespace SMS.DTOs.DTOs
     public class TimeTable : DtoBaseEntity
     {
         public string TimeTableName { get; set; }
-        public Guid? SchoolId { get; set; }
         public Guid? ClassId { get; set; }
 
         public School School { get; set; }

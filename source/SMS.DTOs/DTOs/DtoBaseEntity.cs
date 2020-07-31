@@ -17,6 +17,8 @@ namespace SMS.DTOs.DTOs
 
         public string DeletedBy { get; set; }
 
+        public Guid? SchoolId { get; set; }
+
         public bool? IsDeleted { get; set; }
 
         public string RequestTypeString { get; set; }

@@ -9,7 +9,6 @@ namespace SMS.DTOs.DTOs
         public Guid? PersonId { get; set; }
         public Guid? ImageId { get; set; }
         public Guid? ClassId { get; set; }
-        public Guid? SchoolId { get; set; }
         public Person Person { get; set; }
         public File Image { get; set; }
         public Class Class { get; set; }

@@ -6,7 +6,6 @@ namespace SMS.DTOs.DTOs
     public class StudentAttendance : DtoBaseEntity
     {
         public DateTime? AttendanceDate { get; set; }
-        public Guid? SchoolId { get; set; }
         public Guid? ClassId { get; set; }
         public Class Class { get; set; }
         public School School { get; set; }

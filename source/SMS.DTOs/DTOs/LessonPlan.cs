@@ -10,8 +10,6 @@ namespace SMS.DTOs.DTOs
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }
-        public Guid? SchoolId { get; set; }
-       
         public School School { get; set; }
 
     }
