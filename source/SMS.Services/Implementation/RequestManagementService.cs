@@ -8,6 +8,7 @@ namespace SMS.Services.Implementation
 {
     public class RequestManagementService : IRequestManagementService
     {
+        private readonly ISchoolService _schoolService;
         private readonly IStudentService _studentService;
         private readonly IEmployeeService _employeeService;
         private readonly ICourseService _courseService;
@@ -24,7 +25,7 @@ namespace SMS.Services.Implementation
         private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
 
-        public RequestManagementService(IStudentService studentService, IEmployeeService employeeService, ICourseService courseService, IClassService classService, ILessonPlanService lessonPlanService, IStudentAttendanceService studentAttendanceService, IStudentDiaryService studentDiaryService, ITeacherDiaryService teacherDiaryService, IWorksheetService worksheetService, ITimeTableService timeTableService, IStudentFinanceService studentFinanceService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestStatusService requestStatusService, IRequestTypeService requestTypeService)
+        public RequestManagementService(IStudentService studentService, IEmployeeService employeeService, ICourseService courseService, IClassService classService, ILessonPlanService lessonPlanService, IStudentAttendanceService studentAttendanceService, IStudentDiaryService studentDiaryService, ITeacherDiaryService teacherDiaryService, IWorksheetService worksheetService, ITimeTableService timeTableService, IStudentFinanceService studentFinanceService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestStatusService requestStatusService, IRequestTypeService requestTypeService, ISchoolService schoolService)
         {
             _employeeService = employeeService;
             _courseService = courseService;
@@ -40,6 +41,7 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
             _requestStatusService = requestStatusService;
             _requestTypeService = requestTypeService;
+            _schoolService = schoolService;
             _studentService = studentService;
         }
 
@@ -65,12 +67,16 @@ namespace SMS.Services.Implementation
         {
             var requestTypes = _requestTypeService.RequestGetAll();
             var requestStatuses = _requestStatusService.RequestGetAll();
+            var schools = _schoolService.GetAll();
             foreach (var commonRequest in commonRequestList)
             {
                 commonRequest.RequestType =
-                    requestTypes.FirstOrDefault(rt => commonRequest.RequestTypeId != null && rt.Id == commonRequest.RequestTypeId.Value);
+                    requestTypes.FirstOrDefault(rt =>
+                        commonRequest.RequestTypeId != null && rt.Id == commonRequest.RequestTypeId.Value);
                 commonRequest.RequestStatus =
-                    requestStatuses.FirstOrDefault(rs => commonRequest.RequestStatusId != null && rs.Id == commonRequest.RequestStatusId.Value);
+                    requestStatuses.FirstOrDefault(rs =>
+                        commonRequest.RequestStatusId != null && rs.Id == commonRequest.RequestStatusId.Value);
+                commonRequest.School = schools.FirstOrDefault(x => x.Id == commonRequest.SchoolId);
             }
 
             return commonRequestList;
