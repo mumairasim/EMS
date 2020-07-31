@@ -9,9 +9,5 @@ namespace SMS.REQUESTDATA.RequestModels
         public Guid? CourseId { get; set; }
 
         public Guid? ClassId { get; set; }
-
-        public virtual Class Class { get; set; }
-
-        public virtual Course Course { get; set; }
     }
 }

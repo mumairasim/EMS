@@ -9,8 +9,6 @@ namespace SMS.REQUESTDATA.RequestModels
         public DateTime AttendanceDate { get; set; }
         public Guid? SchoolId { get; set; }
         public Guid? ClassId { get; set; }
-        public virtual Class Class { get; set; }
-        public virtual School School { get; set; }
 
     }
 }

@@ -328,51 +328,51 @@ namespace SMS.MAP
             #region ToCommonRequestModel
             CreateMap<DTOStudent, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "student"))
+                    opts => opts.MapFrom(source => "Student"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOEmployee, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "employee"))
+                    opts => opts.MapFrom(source => "Employee"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOCourse, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "course"))
+                    opts => opts.MapFrom(source => "Course"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOClass, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "class"))
+                    opts => opts.MapFrom(source => "Class"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOLessonPlan, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "lessonplan"))
+                    opts => opts.MapFrom(source => "LessonPlan"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOStudentAttendance, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "studentattendance"))
+                    opts => opts.MapFrom(source => "StudentAttendance"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOStudentDiary, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "studentdiary"))
+                    opts => opts.MapFrom(source => "StudentDiary"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOTeacherDiary, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "teacherdiary"))
+                    opts => opts.MapFrom(source => "TeacherDiary"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOWorksheet, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "worksheet"))
+                    opts => opts.MapFrom(source => "Worksheet"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOTimeTable, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "timetable"))
+                    opts => opts.MapFrom(source => "TimeTable"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOStudentFinance, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "studentfinance"))
+                    opts => opts.MapFrom(source => "StudentFinance"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             CreateMap<DTOEmployeeFinance, CommonRequestModel>()
                 .ForMember(destination => destination.RequestFor,
-                    opts => opts.MapFrom(source => "employeefinance"))
+                    opts => opts.MapFrom(source => "EmployeeFinance"))
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
             #endregion
         }

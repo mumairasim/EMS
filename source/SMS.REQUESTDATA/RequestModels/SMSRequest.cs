@@ -47,31 +47,6 @@ namespace SMS.REQUESTDATA.RequestModels
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.Assignments)
-                .WithOptional(e => e.Employee)
-                .HasForeignKey(e => e.InstructorId);
-
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.StudentDiaries)
-                .WithOptional(e => e.Employee)
-                .HasForeignKey(e => e.InstructorId);
-
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.TeacherDiaries)
-                .WithOptional(e => e.Employee)
-                .HasForeignKey(e => e.InstructorId);
-
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.TimeTableDetails)
-                .WithOptional(e => e.Employee)
-                .HasForeignKey(e => e.TeacherId);
-
-            modelBuilder.Entity<Employee>()
-                .HasMany(e => e.Worksheets)
-                .WithOptional(e => e.Employee)
-                .HasForeignKey(e => e.InstructorId);
-
             modelBuilder.Entity<EmployeeFinanceDetail>()
                 .Property(e => e.Salary)
                 .HasPrecision(19, 4);

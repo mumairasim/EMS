@@ -11,8 +11,5 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public Guid? ClassId { get; set; }
 
-        public virtual Class Class { get; set; }
-
-        public virtual StudentDiary StudentDiary { get; set; }
     }
 }

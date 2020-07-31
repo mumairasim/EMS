@@ -12,8 +12,5 @@ namespace SMS.REQUESTDATA.RequestModels
 
         public Guid? AssignmentId { get; set; }
 
-        public virtual Assignment Assignment { get; set; }
-
-        public virtual Class Class { get; set; }
     }
 }
