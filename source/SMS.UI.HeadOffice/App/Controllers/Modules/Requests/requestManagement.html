@@ -26,36 +26,21 @@
             </tr>
         </thead>
         <tbody>
-        <tr class="odd" ng-repeat="request in RequestList">
-            <td>{{request.RequestFor}}</td>
-            <td>{{request.RequestType.Value}}</td>
-            <td>{{request.CreatedDate}}</td>
-            <td>{{request.School.Name}}</td>
+            <tr class="odd" ng-repeat="request in RequestList">
+                <td>{{request.RequestFor}}</td>
+                <td>{{request.RequestType.Value}}</td>
+                <td>{{request.CreatedDate}}</td>
+                <td>{{request.School.Name}}</td>
 
-            <td>
-                <button class="mb-2 mr-2 btn-transition btn btn-outline-success">
-                    Approve
-                </button>
-                <button class="mb-2 mr-2 btn-transition btn btn-outline-danger">
-                    Decline
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>Student</td>
-            <td>Create</td>
-            <td>July 22, 2020</td>
-            <td>Allied School</td>
-
-            <td>
-                <button class="mb-2 mr-2 btn-transition btn btn-outline-success">
-                    Approve
-                </button>
-                <button class="mb-2 mr-2 btn-transition btn btn-outline-danger">
-                    Decline
-                </button>
-            </td>
-        </tr>
+                <td>
+                    <button class="mb-2 mr-2 btn-transition btn btn-outline-success" ng-click="ApproveRequest(request)">
+                        Approve
+                    </button>
+                    <button class="mb-2 mr-2 btn-transition btn btn-outline-danger">
+                        Decline
+                    </button>
+                </td>
+            </tr>
         </tbody>
     </table>
     <nav aria-label="Page navigation example">

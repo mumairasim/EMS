@@ -115,7 +115,7 @@ namespace SMS.API.Controllers
             {
                 _lessonplanService.ApproveRequest(commonRequestModel);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
