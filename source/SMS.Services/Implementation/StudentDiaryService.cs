@@ -34,7 +34,10 @@ namespace SMS.Services.Implementation
         {
             dtoStudentDiary.CreatedDate = DateTime.UtcNow;
             dtoStudentDiary.IsDeleted = false;
-            dtoStudentDiary.Id = Guid.NewGuid();
+            if (dtoStudentDiary.Id == Guid.Empty)
+            {
+                dtoStudentDiary.Id = Guid.NewGuid();
+            }
             HelpingMethodForRelationship(dtoStudentDiary);
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }

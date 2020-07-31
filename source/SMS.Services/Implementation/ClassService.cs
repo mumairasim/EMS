@@ -39,7 +39,10 @@ namespace SMS.Services.Implementation
             {
                 dtoClass.CreatedDate = DateTime.UtcNow;
                 dtoClass.IsDeleted = false;
-                dtoClass.Id = Guid.NewGuid();
+                if (dtoClass.Id == Guid.Empty)
+                {
+                    dtoClass.Id = Guid.NewGuid();
+                }
                 HelpingMethodForRelationship(dtoClass);
                 _repository.Add(_mapper.Map<DTOClass, Class>(dtoClass));
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
@@ -49,7 +52,7 @@ namespace SMS.Services.Implementation
             {
                 return PrepareFailureResponse("Error", server_error);
             }
-            
+
         }
         public ClassesList Get(int pageNumber, int pageSize)
         {
@@ -85,7 +88,7 @@ namespace SMS.Services.Implementation
             }
             return classList;
         }
-        
+
         public GenericApiResponse Update(DTOClass dtoClass)
         {
             try
@@ -104,7 +107,7 @@ namespace SMS.Services.Implementation
             {
                 return PrepareFailureResponse("Error", server_error);
             }
-            
+
         }
         public void Delete(Guid? id, string DeletedBy)
         {
@@ -148,7 +151,7 @@ namespace SMS.Services.Implementation
         //    return classList;
         //}
 
-        
+
         public void RequestCreate(DTOClass dtoClass)
         {
             dtoClass.CreatedDate = DateTime.UtcNow;
@@ -159,7 +162,7 @@ namespace SMS.Services.Implementation
             dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoClass.RequestTypeString).Id;
             dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoClass.RequestStatusString).Id;
             _requestRepository.Add(dbRec);
-           // return dtoClass.Id;
+            // return dtoClass.Id;
         }
         public void RequestUpdate(DTOClass dtoClass)
         {

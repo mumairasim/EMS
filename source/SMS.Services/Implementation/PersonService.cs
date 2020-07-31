@@ -49,7 +49,11 @@ namespace SMS.Services.Implementation
         {
             dtoPerson.CreatedDate = DateTime.UtcNow;
             dtoPerson.IsDeleted = false;
-            dtoPerson.Id = Guid.NewGuid();
+
+            if (dtoPerson.Id == Guid.Empty)
+            {
+                dtoPerson.Id = Guid.NewGuid();
+            }
             _repository.Add(_mapper.Map<DTOPerson, Person>(dtoPerson));
             return dtoPerson.Id;
         }

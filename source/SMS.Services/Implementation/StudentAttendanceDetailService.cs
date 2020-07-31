@@ -99,7 +99,10 @@ namespace SMS.Services.Implementation
         {
             dtoStudentAttendance.CreatedDate = DateTime.UtcNow;
             dtoStudentAttendance.IsDeleted = false;
-            dtoStudentAttendance.Id = Guid.NewGuid();
+            if (dtoStudentAttendance.Id == Guid.Empty)
+            {
+                dtoStudentAttendance.Id = Guid.NewGuid();
+            }
             dtoStudentAttendance.StudentAttendance = null;
             _requestRepository.Add(_mapper.Map<DTOStudentAttendanceDetail, RequestStudentAttendanceDetail>(dtoStudentAttendance));
             return dtoStudentAttendance.Id;

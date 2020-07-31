@@ -54,7 +54,6 @@ namespace SMS.Services.Implementation
         {
             var newFinance = new DBEmployeeFinance
             {
-                Id = Guid.NewGuid(),
                 EmployeeFinanceDetailsId = employeeFinanceInfo.EmpFinanceDetailsId,
                 SalaryTransfered = employeeFinanceInfo.IsSalaryTransferred,
                 SalaryMonth = employeeFinanceInfo.SalaryMonth,
@@ -64,6 +63,10 @@ namespace SMS.Services.Implementation
                 CreatedBy = employeeFinanceInfo.CreatedBy
             };
 
+            if (employeeFinanceInfo.Id == Guid.Empty)
+            {
+                newFinance.Id = Guid.NewGuid();
+            }
             if (newFinance.SalaryTransfered ?? false)
             {
                 _repository.Add(newFinance);
@@ -74,7 +77,10 @@ namespace SMS.Services.Implementation
         {
             dTOEmployeeFinanceDetail.CreatedDate = DateTime.UtcNow;
             dTOEmployeeFinanceDetail.IsDeleted = false;
-            dTOEmployeeFinanceDetail.Id = Guid.NewGuid();
+            if (dTOEmployeeFinanceDetail.Id == Guid.Empty)
+            {
+                dTOEmployeeFinanceDetail.Id = Guid.NewGuid();
+            }
             _repositoryFinanceDetail.Add(_mapper.Map<EmployeeFinanceDetail, DBEmployeeFinanceDetail>(dTOEmployeeFinanceDetail));
         }
 

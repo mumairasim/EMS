@@ -42,7 +42,10 @@ namespace SMS.Services.Implementation
         {
             dTOStudentFinanceDetails.CreatedDate = DateTime.UtcNow;
             dTOStudentFinanceDetails.IsDeleted = false;
-            dTOStudentFinanceDetails.Id = Guid.NewGuid();
+            if (dTOStudentFinanceDetails.Id == Guid.Empty)
+            {
+                dTOStudentFinanceDetails.Id = Guid.NewGuid();
+            }
 
             _repository.Add(_mapper.Map<DTOStudentFinanceDetails, DBStudentFinanceDetails>(dTOStudentFinanceDetails));
         }

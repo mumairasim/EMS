@@ -65,7 +65,10 @@ namespace SMS.Services.Implementation
             }
             dtoLessonplan.CreatedDate = DateTime.UtcNow;
             dtoLessonplan.IsDeleted = false;
-            dtoLessonplan.Id = Guid.NewGuid();
+            if (dtoLessonplan.Id == Guid.Empty)
+            {
+                dtoLessonplan.Id = Guid.NewGuid();
+            }
             dtoLessonplan.SchoolId = dtoLessonplan.School.Id;
             dtoLessonplan.School = null;
             _repository.Add(_mapper.Map<DTOLessonPlan, LessonPlan>(dtoLessonplan));

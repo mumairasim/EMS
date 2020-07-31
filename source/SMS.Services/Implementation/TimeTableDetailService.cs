@@ -30,7 +30,12 @@ namespace SMS.Services.Implementation
             {
                 dtoTimeTableDetail.CreatedDate = DateTime.Now;
                 dtoTimeTableDetail.IsDeleted = false;
-                dtoTimeTableDetail.Id = Guid.NewGuid();
+
+                if (dtoTimeTableDetail.Id == Guid.Empty)
+                {
+                    dtoTimeTableDetail.Id = Guid.NewGuid();
+                }
+
                 var timeTableDetail = _repository.Add(_mapper.Map<DTOTimeTableDetail, TimeTableDetail>(dtoTimeTableDetail));
                 if (dtoTimeTableDetail.Periods != null)
                     foreach (var period in dtoTimeTableDetail.Periods)

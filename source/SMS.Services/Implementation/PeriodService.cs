@@ -31,7 +31,10 @@ namespace SMS.Services.Implementation
                 {
                     dtoPeriod.CreatedDate = DateTime.Now;
                     dtoPeriod.IsDeleted = false;
-                    dtoPeriod.Id = Guid.NewGuid();
+                    if (dtoPeriod.Id == Guid.Empty)
+                    {
+                        dtoPeriod.Id = Guid.NewGuid();
+                    }
                     HelpingMethodForRelationship(dtoPeriod);
                     _repository.Add(_mapper.Map<DTOPeriod, Period>(dtoPeriod));
                     return PrepareSuccessResponse("success", "");

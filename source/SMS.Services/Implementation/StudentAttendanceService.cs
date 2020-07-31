@@ -104,7 +104,7 @@ namespace SMS.Services.Implementation
                         "Attendance Record for Date: " + dtoStudentAttendance.AttendanceDate.Value.ToShortDateString() + " already exist and can not be created. Please Update if you want to edit attendance.");
                 dtoStudentAttendance.CreatedDate = DateTime.UtcNow;
                 dtoStudentAttendance.IsDeleted = false;
-                dtoStudentAttendance.Id = Guid.NewGuid();
+
                 _repository.Add(_mapper.Map<DTOStudentAttendance, StudentAttendance>(dtoStudentAttendance));
                 _studentAttendanceDetailService.Create(dtoStudentAttendance.StudentAttendanceDetail,
                     dtoStudentAttendance.CreatedBy,

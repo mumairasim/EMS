@@ -95,7 +95,10 @@ namespace SMS.Services.Implementation
             }
             dtoStudent.CreatedDate = DateTime.UtcNow;
             dtoStudent.IsDeleted = false;
-            dtoStudent.Id = Guid.NewGuid();
+            if (dtoStudent.Id == Guid.Empty)
+            {
+                dtoStudent.Id = Guid.NewGuid();
+            }
             dtoStudent.PersonId = _personService.Create(dtoStudent.Person);
             HelpingMethodForRelationship(dtoStudent);
             _repository.Add(_mapper.Map<DTOStudent, Student>(dtoStudent));
@@ -168,7 +171,6 @@ namespace SMS.Services.Implementation
             {
                 var stdFinance = new DTOStudentFinanceDetail
                 {
-                    Id = Guid.NewGuid(),
                     StudentId = dtoStudent.Id,
                     IsDeleted = false,
                     Fee = type.FeeAmount,
@@ -176,6 +178,10 @@ namespace SMS.Services.Implementation
                     CreatedBy = dtoStudent.CreatedBy,
                     FinanceTypeId = type.Id
                 };
+                if (stdFinance.Id == Guid.Empty)
+                {
+                    stdFinance.Id = Guid.NewGuid();
+                }
                 _studentFinanceDetailsService.Create(stdFinance);
             }
 

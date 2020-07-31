@@ -39,7 +39,11 @@ namespace SMS.Services.Implementation
         {
             dTOFinanceType.CreatedDate = DateTime.Now;
             dTOFinanceType.IsDeleted = false;
-            dTOFinanceType.Id = Guid.NewGuid();
+
+            if (dTOFinanceType.Id == Guid.Empty)
+            {
+                dTOFinanceType.Id = Guid.NewGuid();
+            }
 
             _repository.Add(_mapper.Map<DTOFinanceType, DBFinanceType>(dTOFinanceType));
         }
@@ -216,7 +220,7 @@ namespace SMS.Services.Implementation
         /// Service level call : Return all records of a FinanceType
         /// </summary>
         /// <returns></returns>
-        List<DTOFinanceType> IFinanceTypeService.RequestGetAll()
+        public List<DTOFinanceType> RequestGetAll()
         {
             var financeTypes = _requestRepository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var financeTypeList = new List<DTOFinanceType>();

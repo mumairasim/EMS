@@ -36,7 +36,7 @@ namespace SMS.Services.Implementation
         public DTODesignation Get(Guid? id)
         {
             if (id == null) return null;
-            var designationRecord = _repository.Get().FirstOrDefault(d => d.Id == id &&  d.IsDeleted == false);
+            var designationRecord = _repository.Get().FirstOrDefault(d => d.Id == id && d.IsDeleted == false);
             if (designationRecord == null) return null;
 
             return _mapper.Map<Designation, DTODesignation>(designationRecord);
@@ -45,7 +45,10 @@ namespace SMS.Services.Implementation
         {
             dtoDesignation.CreatedDate = DateTime.UtcNow;
             dtoDesignation.IsDeleted = false;
-            dtoDesignation.Id = Guid.NewGuid();
+            if (dtoDesignation.Id == Guid.Empty)
+            {
+                dtoDesignation.Id = Guid.NewGuid();
+            }
             _repository.Add(_mapper.Map<DTODesignation, Designation>(dtoDesignation));
             return dtoDesignation.Id;
         }
@@ -68,7 +71,7 @@ namespace SMS.Services.Implementation
         #endregion
 
         #region SMS Request Section
-       
+
         public List<DTODesignation> RequestGet()
         {
             var designations = _requestRepository.Get().Where(d => d.IsDeleted == false).ToList();
@@ -82,7 +85,7 @@ namespace SMS.Services.Implementation
         public DTODesignation RequestGet(Guid? id)
         {
             if (id == null) return null;
-            
+
             var designationRecord = _requestRepository.Get().FirstOrDefault(d => d.Id == id && d.IsDeleted == false);
             if (designationRecord == null) return null;
 
@@ -112,7 +115,7 @@ namespace SMS.Services.Implementation
             designation.DeletedDate = DateTime.UtcNow;
             _requestRepository.Update(_mapper.Map<DTODesignation, ReqDesignation>(designation));
         }
-        
+
         #endregion
     }
 }

@@ -39,20 +39,24 @@ namespace SMS.Services.Implementation
         /// <summary>
         /// Service level call : Creates a single record of a StudentFinances
         /// </summary>
-        /// <param name="DTOStudentFinances"></param>
-        public void Create(DTOStudentFinanceCustom DTOStudentFinances)
+        /// <param name="dtoStudentFinances"></param>
+        public void Create(DTOStudentFinanceCustom dtoStudentFinances)
         {
             var newFinance = new DBStudentFinances
             {
-                Id = Guid.NewGuid(),
-                StudentFinanceDetailsId = DTOStudentFinances.StudentFinanceDetailsId,
-                FeeSubmitted = DTOStudentFinances.FeeSubmitted,
-                FeeMonth = DTOStudentFinances.FeeMonth,
+                StudentFinanceDetailsId = dtoStudentFinances.StudentFinanceDetailsId,
+                FeeSubmitted = dtoStudentFinances.FeeSubmitted,
+                FeeMonth = dtoStudentFinances.FeeMonth,
                 CreatedDate = DateTime.UtcNow,
-                FeeYear = DTOStudentFinances.FeeYear,
+                FeeYear = dtoStudentFinances.FeeYear,
                 IsDeleted = false,
-                CreatedBy = DTOStudentFinances.CreatedBy
+                CreatedBy = dtoStudentFinances.CreatedBy
             };
+
+            if (newFinance.Id == Guid.Empty)
+            {
+                newFinance.Id = Guid.NewGuid();
+            }
 
             if (newFinance.FeeSubmitted ?? false)
             {

@@ -54,7 +54,7 @@ namespace SMS.Services.Implementation
 
                 //below check is to create request type instances with the same Ids in both DBs, 
                 //if request is from front end then assign a new Id
-                if (dTOWorksheet.Id == null)
+                if (dTOWorksheet.Id == Guid.Empty)
                 {
                     dTOWorksheet.Id = Guid.NewGuid();
                 }

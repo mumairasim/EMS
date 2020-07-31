@@ -45,7 +45,12 @@ namespace SMS.Services.Implementation
         {
             dtoAttendanceStatus.CreatedDate = DateTime.UtcNow;
             dtoAttendanceStatus.IsDeleted = false;
-            dtoAttendanceStatus.Id = Guid.NewGuid();
+            //if request is from front end then assign a new Id
+            if (dtoAttendanceStatus.Id == Guid.Empty)
+            {
+                dtoAttendanceStatus.Id = Guid.NewGuid();
+            }
+
             _repository.Add(_mapper.Map<DTOAttendanceStatus, AttendanceStatus>(dtoAttendanceStatus));
             return dtoAttendanceStatus.Id;
         }

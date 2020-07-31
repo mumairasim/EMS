@@ -85,7 +85,10 @@ namespace SMS.Services.Implementation
             }
             dtoEmployee.CreatedDate = DateTime.UtcNow;
             dtoEmployee.IsDeleted = false;
-            dtoEmployee.Id = Guid.NewGuid();
+            if (dtoEmployee.Id == Guid.Empty)
+            {
+                dtoEmployee.Id = Guid.NewGuid();
+            }
             dtoEmployee.PersonId = _personService.Create(dtoEmployee.Person);
             HelpingMethodForRelationship(dtoEmployee);
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));

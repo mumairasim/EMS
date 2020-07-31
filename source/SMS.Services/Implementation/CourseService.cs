@@ -45,14 +45,17 @@ namespace SMS.Services.Implementation
         /// </summary>
         /// <param name="dtoCourse"></param>
         /// 
-        
+
         public GenericApiResponse Create(DTOCourse dtoCourse)
         {
             try
             {
                 dtoCourse.CreatedDate = DateTime.UtcNow;
                 dtoCourse.IsDeleted = false;
-                dtoCourse.Id = Guid.NewGuid();
+                if (dtoCourse.Id == Guid.Empty)
+                {
+                    dtoCourse.Id = Guid.NewGuid();
+                }
                 _repository.Add(_mapper.Map<DTOCourse, Course>(dtoCourse));
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
 
@@ -104,7 +107,7 @@ namespace SMS.Services.Implementation
         /// </summary>
         /// <param name="dtoCourse"></param>
         /// 
-        
+
         public GenericApiResponse Update(DTOCourse dtoCourse)
         {
             try
@@ -156,7 +159,7 @@ namespace SMS.Services.Implementation
 
 
         #region SMS Request Section
-      
+
         public List<DTOCourse> RequestGet()
         {
             var courses = _requestRepository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
@@ -190,7 +193,7 @@ namespace SMS.Services.Implementation
             _requestRepository.Add(dbRec);
         }
 
-        
+
         public void RequestDelete(Guid? id)
         {
             if (id == null)
@@ -206,7 +209,7 @@ namespace SMS.Services.Implementation
         }
 
 
-        
+
         public void RequestUpdate(DTOCourse dtoCourse)
         {
             var course = RequestGet(dtoCourse.Id);

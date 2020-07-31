@@ -110,7 +110,6 @@ namespace SMS.API.Controllers
         [Route("ApproveRequest")]
         public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
-
             try
             {
                 _lessonplanService.ApproveRequest(commonRequestModel);

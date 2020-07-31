@@ -54,7 +54,10 @@ namespace SMS.Services.Implementation
         {
             dtoSchool.CreatedDate = DateTime.UtcNow;
             dtoSchool.IsDeleted = false;
-            dtoSchool.Id = Guid.NewGuid();
+            if (dtoSchool.Id == Guid.Empty)
+            {
+                dtoSchool.Id = Guid.NewGuid();
+            }
             _repository.Add(_mapper.Map<DTOSchool, School>(dtoSchool));
         }
         public void Update(DTOSchool dtoSchool)

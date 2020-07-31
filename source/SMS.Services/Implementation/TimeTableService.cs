@@ -54,7 +54,11 @@ namespace SMS.Services.Implementation
             {
                 dtoTimeTable.CreatedDate = DateTime.Now;
                 dtoTimeTable.IsDeleted = false;
-                dtoTimeTable.Id = Guid.NewGuid();
+                if (dtoTimeTable.Id == Guid.Empty)
+                {
+                    dtoTimeTable.Id = Guid.NewGuid();
+                }
+
                 HelpingMethodForRelationship(dtoTimeTable);
                 var timeTable = _repository.Add(_mapper.Map<DTOTimeTable, TimeTable>(dtoTimeTable));
                 if (dtoTimeTable.TimeTableDetails != null)
