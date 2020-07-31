@@ -9,7 +9,7 @@ using System.Linq;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using ReqClass = SMS.REQUESTDATA.RequestModels.Class;
-
+using SMS.DTOs.ReponseDTOs;
 
 namespace SMS.Services.Implementation
 {
@@ -19,6 +19,9 @@ namespace SMS.Services.Implementation
         private readonly IRequestRepository<ReqClass> _requestRepository;
         private readonly IRequestTypeService _requestTypeService;
         private readonly IRequestStatusService _requestStatusService;
+        private const string error_not_found = "Record not found";
+        private const string server_error = "Server error";
+
         private readonly IMapper _mapper;
         public ClassService(IRepository<Class> repository, IMapper mapper, IRequestRepository<ReqClass> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
         {
@@ -30,13 +33,23 @@ namespace SMS.Services.Implementation
         }
 
         #region SMS Section
-        public void Create(DTOClass dtoClass)
+        public GenericApiResponse Create(DTOClass dtoClass)
         {
-            dtoClass.CreatedDate = DateTime.UtcNow;
-            dtoClass.IsDeleted = false;
-            dtoClass.Id = Guid.NewGuid();
-            HelpingMethodForRelationship(dtoClass);
-            _repository.Add(_mapper.Map<DTOClass, Class>(dtoClass));
+            try
+            {
+                dtoClass.CreatedDate = DateTime.UtcNow;
+                dtoClass.IsDeleted = false;
+                dtoClass.Id = Guid.NewGuid();
+                HelpingMethodForRelationship(dtoClass);
+                _repository.Add(_mapper.Map<DTOClass, Class>(dtoClass));
+                return PrepareSuccessResponse("Created", "Instance Created Successfully");
+
+            }
+            catch (Exception)
+            {
+                return PrepareFailureResponse("Error", server_error);
+            }
+            
         }
         public ClassesList Get(int pageNumber, int pageSize)
         {
@@ -72,12 +85,26 @@ namespace SMS.Services.Implementation
             }
             return classList;
         }
-        public void Update(DTOClass dtoClass)
+        
+        public GenericApiResponse Update(DTOClass dtoClass)
         {
-            var Classes = Get(dtoClass.Id);
-            dtoClass.UpdateDate = DateTime.UtcNow;
-            var mergedClass = _mapper.Map(dtoClass, Classes);
-            _repository.Update(_mapper.Map<DTOClass, Class>(mergedClass));
+            try
+            {
+                var Classes = Get(dtoClass.Id);
+                if (Classes != null)
+                {
+                    dtoClass.UpdateDate = DateTime.UtcNow;
+                    var mergedClass = _mapper.Map(dtoClass, Classes);
+                    _repository.Update(_mapper.Map<DTOClass, Class>(mergedClass));
+                    return PrepareSuccessResponse("Updated", "Instance Updated Successfully");
+                }
+                return PrepareFailureResponse("Error", error_not_found);
+            }
+            catch (Exception)
+            {
+                return PrepareFailureResponse("Error", server_error);
+            }
+            
         }
         public void Delete(Guid? id, string DeletedBy)
         {
@@ -121,6 +148,7 @@ namespace SMS.Services.Implementation
         //    return classList;
         //}
 
+        
         public void RequestCreate(DTOClass dtoClass)
         {
             dtoClass.CreatedDate = DateTime.UtcNow;
@@ -131,6 +159,7 @@ namespace SMS.Services.Implementation
             dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoClass.RequestTypeString).Id;
             dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoClass.RequestStatusString).Id;
             _requestRepository.Add(dbRec);
+           // return dtoClass.Id;
         }
         public void RequestUpdate(DTOClass dtoClass)
         {
@@ -149,11 +178,58 @@ namespace SMS.Services.Implementation
             _requestRepository.Update(_mapper.Map<DTOClass, ReqClass>(classes));
         }
         #endregion
+
+        #region Request Approver
+        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
+        {
+            var dto = RequestGet(dtoCommonRequestModel.Id);
+            GenericApiResponse status = null;
+            switch (dtoCommonRequestModel.RequestTypeString)
+            {
+                case "Create":
+                    status = Create(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                case "Update":
+                    status = Update(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                //case "Delete":
+                //    status = Delete(dto.Id,"admin");
+                //    UpdateRequestStatus(dto, status);
+                //    break;
+                default:
+                    break;
+            }
+
+            return status;
+        }
+
+        #endregion
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
             dtoClass.SchoolId = dtoClass.School.Id;
             dtoClass.School = null;
         }
+        private GenericApiResponse PrepareFailureResponse(string errorMessage, string descriptionMessage)
+        {
+            return new GenericApiResponse
+            {
+                StatusCode = "400",
+                Message = errorMessage,
+                Description = descriptionMessage
+            };
+        }
+        private GenericApiResponse PrepareSuccessResponse(string message, string descriptionMessage)
+        {
+            return new GenericApiResponse
+            {
+                StatusCode = "200",
+                Message = message,
+                Description = descriptionMessage
+            };
+        }
+
         private IEnumerable<DTOClass> MapRequestTypeAndStatus(IEnumerable<DTOClass> dtoClasses)
         {
             var requestTypes = _requestTypeService.RequestGetAll();
@@ -169,6 +245,19 @@ namespace SMS.Services.Implementation
             return dtoClasses;
         }
 
+        private void UpdateRequestStatus(DTOClass dto, GenericApiResponse status)
+        {
+            if (status.StatusCode == "200")//success
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
+            }
+            else
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
+            }
+            //updating the status of the current request in Request DB
+            RequestUpdate(dto);
+        }
     }
 }
 

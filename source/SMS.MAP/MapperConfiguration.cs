@@ -49,8 +49,10 @@ using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
 using ReqAttendanceStatus = SMS.REQUESTDATA.RequestModels.AttendanceStatus;
 using DBFinanceType = SMS.DATA.Models.FinanceType;
 using DTOFinanceType = SMS.DTOs.DTOs.FinanceType;
+using ReqFinanceType = SMS.REQUESTDATA.RequestModels.FinanceType;
 using DBEmployeeFinanceDetail = SMS.DATA.Models.EmployeeFinanceDetail;
 using DTOEmployeeFinanceDetail = SMS.DTOs.DTOs.EmployeeFinanceDetail;
+using ReqEmployeeFinance = SMS.REQUESTDATA.RequestModels.EmployeeFinance;
 using DBEmployeeFinance = SMS.DATA.Models.EmployeeFinance;
 using DTOEmployeeFinance = SMS.DTOs.DTOs.EmployeeFinance;
 
@@ -216,6 +218,7 @@ namespace SMS.MAP
             CreateMap<StudentAttendance, DTOStudentAttendance>();
             CreateMap<DTOStudentAttendance, DTOStudentAttendance>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
             CreateMap<ReqAttendanceStatus, DTOAttendanceStatus>();
             CreateMap<AttendanceStatus, DTOAttendanceStatus>();
             CreateMap<DTOAttendanceStatus, DTOAttendanceStatus>()
@@ -224,6 +227,7 @@ namespace SMS.MAP
             CreateMap<DTOStudentAttendanceDetail, DTOStudentAttendanceDetail>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<ReqFinanceType, DTOFinanceType>();
             CreateMap<DBFinanceType, DTOFinanceType>();
             CreateMap<DTOFinanceType, DTOFinanceType>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
@@ -297,6 +301,7 @@ namespace SMS.MAP
             CreateMap<DTOStudentAttendanceDetail, RequestStudentAttendanceDetail>();
             CreateMap<DTOEmployeeFinance, DBEmployeeFinance>();
             CreateMap<DTOEmployeeFinanceDetail, DBEmployeeFinanceDetail>();
+            CreateMap<DTOFinanceType, ReqFinanceType>();
             CreateMap<DTOFinanceType, DBFinanceType>();
             CreateMap<DTOTimeTable, TimeTable>();
             CreateMap<DTOTimeTable, RequestTimeTableDetail>();
