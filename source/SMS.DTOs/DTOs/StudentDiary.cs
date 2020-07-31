@@ -12,6 +12,5 @@ namespace SMS.DTOs.DTOs
         public Guid? InstructorId { get; set; }
 
         public Employee Employee { get; set; }
-        public School School { get; set; }
     }
 }

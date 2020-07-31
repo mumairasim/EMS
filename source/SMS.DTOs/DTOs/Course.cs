@@ -9,6 +9,5 @@ namespace SMS.DTOs.DTOs
 
         public string CourseName { get; set; }
 
-        public virtual School School { get; set; }
     }
 }
