@@ -17,7 +17,7 @@ namespace SMS.Services.Infrastructure
         StudentsAttendanceList Search(Expression<Func<StudentAttendance, bool>> predicate, int pageNumber, int pageSize);
         DTOStudentAttendance Get(Guid? id);
         StudentAttendanceResponse Create(DTOStudentAttendance dtoStudentAttendance);
-        void Update(DTOStudentAttendance dtoStudentAttendance);
+        StudentAttendanceResponse Update(DTOStudentAttendance dtoStudentAttendance);
         void Delete(Guid? id, string deletedBy);
         #endregion
 

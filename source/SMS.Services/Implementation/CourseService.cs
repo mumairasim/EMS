@@ -241,6 +241,7 @@ namespace SMS.Services.Implementation
         public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
         {
             var dto = RequestGet(dtoCommonRequestModel.Id);
+            dto.School = dtoCommonRequestModel.School;
             GenericApiResponse status = null;
             switch (dtoCommonRequestModel.RequestTypeString)
             {

@@ -116,7 +116,7 @@ namespace SMS.Services.Implementation
             }
             return null;
         }
-        public void Update(DTOStudentAttendance dtoStudentAttendance)
+        public StudentAttendanceResponse Update(DTOStudentAttendance dtoStudentAttendance)
         {
             var studentAttendance = Get(dtoStudentAttendance.Id);
             dtoStudentAttendance.UpdateDate = DateTime.UtcNow;
@@ -128,6 +128,10 @@ namespace SMS.Services.Implementation
             dtoStudentAttendance.StudentAttendanceDetail = null;
             var mergedStudentAttendance = _mapper.Map(dtoStudentAttendance, studentAttendance);
             _repository.Update(_mapper.Map<DTOStudentAttendance, StudentAttendance>(mergedStudentAttendance));
+            return PrepareSuccessResponse(
+                dtoStudentAttendance.Id,
+                "AttendanceCreated",
+                "Attendance Record has been successfully updated.");
         }
         public void Delete(Guid? id, string deletedBy)
         {
@@ -339,5 +343,46 @@ namespace SMS.Services.Implementation
             return dtoStudentAttendances;
         }
         #endregion
+        #region Request Approver
+        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
+        {
+            var dto = RequestGet(dtoCommonRequestModel.Id);
+            dto.School = dtoCommonRequestModel.School;
+            GenericApiResponse status = null;
+            switch (dtoCommonRequestModel.RequestTypeString)
+            {
+                case "Create":
+                    status = Create(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                case "Update":
+                    status = Update(dto);
+                    UpdateRequestStatus(dto, status);
+                    break;
+                //case "Delete":
+                //    status = Delete(dto.Id,"admin");
+                //    UpdateRequestStatus(dto, status);
+                //    break;
+                default:
+                    break;
+            }
+
+            return status;
+        }
+
+        #endregion
+        private void UpdateRequestStatus(DTOStudentAttendance dto, GenericApiResponse status)
+        {
+            if (status.StatusCode == "200")//success
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
+            }
+            else
+            {
+                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
+            }
+            //updating the status of the current request in Request DB
+            RequestUpdate(dto);
+        }
     }
 }
