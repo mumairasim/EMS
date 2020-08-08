@@ -115,9 +115,9 @@ namespace SMS.Services.Implementation
             }
             var dtoStudentCurrentState = Get(dtoStudentUpdatedState.Id);
             dtoStudentUpdatedState.UpdateDate = DateTime.UtcNow;
-            HelpingMethodForRelationship(dtoStudentUpdatedState);
             var mergedStudent = _mapper.Map(dtoStudentUpdatedState, dtoStudentCurrentState);
             _personService.Update(mergedStudent.Person);
+            HelpingMethodForRelationship(dtoStudentUpdatedState);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
             UpsertFinanceDetailsAgainstStudent(dtoStudentUpdatedState, dtoStudentCurrentState);
             return validationResult;
