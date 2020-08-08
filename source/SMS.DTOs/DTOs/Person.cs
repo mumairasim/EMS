@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using SMS.DTOs.DTOs.Enums;
 
 namespace SMS.DTOs.DTOs
 {
@@ -22,6 +23,7 @@ namespace SMS.DTOs.DTOs
         public Guid? AspNetUserId { get; set; }
         public int? Age { get; }
         public DateTime? DOB { get; set; }
+        public Gender Gender { get; set; }
 
         [StringLength(250)]
         public string FirstName { get; set; }
@@ -49,6 +51,7 @@ namespace SMS.DTOs.DTOs
         public string ParentEmail { get; set; }
         public string ParentOfficeAddress { get; set; }
         public string ParentCity { get; set; }
+        public string City { get; set; }
         public string ParentMobile1 { get; set; }
         public string ParentMobile2 { get; set; }
         public string ParentEmergencyName { get; set; }

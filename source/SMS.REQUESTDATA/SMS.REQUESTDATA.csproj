@@ -73,6 +73,14 @@
     <Compile Include="Migrations\202007310936191_FKRelationshipsBreak.designer.cs">
       <DependentUpon>202007310936191_FKRelationshipsBreak.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008080730534_add-city.cs" />
+    <Compile Include="Migrations\202008080730534_add-city.designer.cs">
+      <DependentUpon>202008080730534_add-city.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008080820000_add-gender.cs" />
+    <Compile Include="Migrations\202008080820000_add-gender.designer.cs">
+      <DependentUpon>202008080820000_add-gender.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestBase.cs" />
@@ -88,6 +96,7 @@
     <Compile Include="RequestModels\Employee.cs" />
     <Compile Include="RequestModels\EmployeeFinance.cs" />
     <Compile Include="RequestModels\EmployeeFinanceDetail.cs" />
+    <Compile Include="RequestModels\Enums\Gender.cs" />
     <Compile Include="RequestModels\File.cs" />
     <Compile Include="RequestModels\FinanceType.cs" />
     <Compile Include="RequestModels\LessonPlan.cs" />
@@ -128,7 +137,14 @@
     <EmbeddedResource Include="Migrations\202007310936191_FKRelationshipsBreak.resx">
       <DependentUpon>202007310936191_FKRelationshipsBreak.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008080730534_add-city.resx">
+      <DependentUpon>202008080730534_add-city.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008080820000_add-gender.resx">
+      <DependentUpon>202008080820000_add-gender.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

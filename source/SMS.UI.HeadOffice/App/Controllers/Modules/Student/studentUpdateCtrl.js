@@ -56,7 +56,7 @@
     $scope.GetClasses = function () {
         var responsedata = apiService.masterget('/api/v1/Class/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Classes = response.data;
+            $scope.Classes = response.data.Classes;
             $scope.FetchStudent();
         },
             function myError(response) {
@@ -66,7 +66,7 @@
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
+            $scope.Schools = response.data.Schools;
             $scope.GetClasses();
         },
             function myError(response) {
@@ -142,7 +142,7 @@
                 $scope.growltext("Invalid Image file please select image of size less than 1MB", true);
             }
         }
-        
+
     };
     $scope.Cancel = function () {
         window.location = "#!/studentBase";

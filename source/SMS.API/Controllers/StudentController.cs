@@ -42,7 +42,7 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTOStudent dtoStudent)
+        public IHttpActionResult Create()
         {
             var httpRequest = HttpContext.Current.Request;
             var studentDetail = JsonConvert.DeserializeObject<DTOStudent>(httpRequest.Params["studentModel"]);
@@ -53,7 +53,7 @@ namespace SMS.API.Controllers
                 var file = httpRequest.Files[0];
                 studentDetail.ImageId = _fileService.Create(file);
             }
-            return Ok(_studentService.Create(dtoStudent));
+            return Ok(_studentService.Create(studentDetail));
         }
         [HttpPut]
         [Route("Update")]

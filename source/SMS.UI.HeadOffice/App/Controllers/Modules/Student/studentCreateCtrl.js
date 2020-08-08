@@ -55,7 +55,7 @@
     $scope.GetClasses = function () {
         var responsedata = apiService.masterget('/api/v1/Class/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Classes = response.data;
+            $scope.Classes = response.data.Classes;
             $scope.StudentModel.Class = $scope.Classes[0];
         },
             function myError(response) {
@@ -65,14 +65,18 @@
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
+            $scope.Schools = response.data.Schools;
             $scope.StudentModel.School = $scope.Schools[0];
         },
             function myError(response) {
                 $scope.response = response.data;
             });
     };
+    $scope.AssignGender = function (gender) {
+        $scope.StudentModel.Gender = gender;
+    };
     $scope.StudentCreate = function () {
+
         if ($scope.IsValid()) {
             var data = $scope.StudentModel;
             var formData = new FormData();
@@ -130,7 +134,7 @@
         if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName == "" || $scope.StudentModel.Person.LastName.length > 100) {
             $scope.IsError = "Name cannot be null";
             $scope.growltext("LastName cannot be null", true);
-            return false; 
+            return false;
         }
         if ($scope.StudentModel.Person.Cnic == null || $scope.StudentModel.Person.Cnic.length != 13) {
             $scope.IsError = "Cnic must be of 13 digits";
@@ -189,8 +193,8 @@
         }
         return true;
     }
-    
-        
-$scope.GetSchools();
-$scope.GetClasses();
+
+
+    $scope.GetSchools();
+    $scope.GetClasses();
 }]);

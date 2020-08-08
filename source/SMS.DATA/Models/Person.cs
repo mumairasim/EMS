@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SMS.DATA.Models.Enums;
 
 namespace SMS.DATA.Models
 {
@@ -26,6 +27,7 @@ namespace SMS.DATA.Models
         [StringLength(50)]
         public string Cnic { get; set; }
         public string ParentCnic { get; set; }
+        public Gender Gender { get; set; }
         public DateTime? DOB { get; set; }
 
         [StringLength(250)]
@@ -42,6 +44,7 @@ namespace SMS.DATA.Models
         public string ParentEmail { get; set; }
         public string ParentOfficeAddress { get; set; }
         public string ParentCity { get; set; }
+        public string City { get; set; }
         public string ParentMobile1 { get; set; }
         public string ParentMobile2 { get; set; }
         public string ParentEmergencyName { get; set; }
