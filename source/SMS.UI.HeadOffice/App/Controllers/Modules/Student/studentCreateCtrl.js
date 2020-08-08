@@ -73,7 +73,7 @@
             });
     };
     $scope.AssignGender = function (gender) {
-        $scope.StudentModel.Gender = gender;
+        $scope.StudentModel.Person.Gender = gender;
     };
     $scope.StudentCreate = function () {
 

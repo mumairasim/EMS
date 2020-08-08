@@ -41,7 +41,9 @@
         Name: '',
         Location: ''
     };
-
+    $scope.AssignGender = function (gender) {
+        $scope.StudentModel.Person.Gender = gender;
+    };
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {

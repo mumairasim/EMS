@@ -63,11 +63,11 @@
             </div>
             <div class="col-sm-4">
                 <label for="gender" class="col-form-label">Gender:</label><br>
-                <input type="radio" id="male" name="gender" value="male" ng-Model="Gender" ng-Change="AssignGender(1)">
+                <input type="radio" id="male" name="gender" value="male" ng-Click="AssignGender(1)">
                 <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female" ng-Model="Gender" ng-Change="AssignGender(2)">
+                <input type="radio" id="female" name="gender" value="female" ng-Click="AssignGender(2)">
                 <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other" ng-Model="Gender" ng-Change="AssignGender(0)">
+                <input type="radio" id="other" name="gender" value="other" ng-Click="AssignGender(0)">
                 <label for="other">Other</label>
                 <!--<input name="gender" id="gender" placeholder="gender" type="text" class="form-control" ng-Model="StudentModel.Person.Gender">-->
             </div>
@@ -80,7 +80,7 @@
                 </select>
             </div>
             <div class="col-sm-4">
-                <label for="class" class="col-form-label">Class Applying For</label>
+                <label for="class" class="col-form-label">Class</label>
                 <select name="class" id="class" class="form-control" ng-Model="StudentModel.Class"
                         ng-options="Class.ClassName for Class in Classes  track by Class.Id">
                 </select>

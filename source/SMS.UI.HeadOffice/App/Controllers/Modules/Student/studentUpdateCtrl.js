@@ -108,6 +108,12 @@
             if ($scope.StudentModel.Image != null && $scope.StudentModel.Image != undefined) {
                 $scope.FetchImage();
             }
+            if ($scope.StudentModel.Person.Gender==1)
+                $('#male')[0].checked = true;
+            else if ($scope.StudentModel.Person.Gender == 2)
+                $('#female')[0].checked = true;
+            else if ($scope.StudentModel.Person.Gender == 0)
+                $('#other')[0].checked = true;
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -125,7 +131,7 @@
             });
     };
     $scope.AssignGender = function (gender) {
-        $scope.StudentModel.Gender = gender;
+        $scope.StudentModel.Person.Gender = gender;
     };
     $scope.CheckIsFileValid = function (file) {
         if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
@@ -135,6 +141,7 @@
             $scope.IsFileValid = false;
         }
     };
+    
     $scope.SelectFileForUpload = function (file) {
         if (file.length > 0) {
             $scope.CheckIsFileValid(file[0]);
