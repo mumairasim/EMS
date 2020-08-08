@@ -124,6 +124,9 @@
                 $scope.response = response.data;
             });
     };
+    $scope.AssignGender = function (gender) {
+        $scope.StudentModel.Gender = gender;
+    };
     $scope.CheckIsFileValid = function (file) {
         if ((file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/gif') &&
             file.size <= (512 * 1024)) {
