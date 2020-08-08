@@ -60,11 +60,11 @@
             </div>
             <div class="col-sm-4">
                 <label for="gender" class="col-form-label">Gender:</label><br>
-                <input type="radio" id="male" name="gender" value="male" disabled>
+                <input type="radio" id="male" name="gender" value="male" ng-Click="AssignGender(1)">
                 <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female" disabled>
+                <input type="radio" id="female" name="gender" value="female" ng-Click="AssignGender(2)">
                 <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other" disabled>
+                <input type="radio" id="other" name="gender" value="other" ng-Click="AssignGender(0)">
                 <label for="other">Other</label>
             </div>
         </div>

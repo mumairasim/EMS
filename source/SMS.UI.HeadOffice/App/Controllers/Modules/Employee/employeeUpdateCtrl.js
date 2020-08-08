@@ -78,12 +78,21 @@
                 });
         }
     };
+    $scope.AssignGender = function (gender) {
+        $scope.StudentModel.Person.Gender = gender;
+    };
     $scope.FetchEmployee = function () {
         var id = $routeParams.Id;
         var url = '/api/v1/Employee/Get?id=' + id;
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
             $scope.EmployeeModel = response.data;
+            if ($scope.EmployeeModel.Person.Gender == 1)
+                $('#male')[0].checked = true;
+            else if ($scope.EmployeeModel.Person.Gender == 2)
+                $('#female')[0].checked = true;
+            else if ($scope.EmployeeModel.Person.Gender == 0)
+                $('#other')[0].checked = true;
         },
             function myError(response) {
                 $scope.response = response.data;
