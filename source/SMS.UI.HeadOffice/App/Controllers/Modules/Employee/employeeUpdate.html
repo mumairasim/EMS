@@ -78,12 +78,12 @@
             <div class="col-sm-4">
                 <label for="designation" class="col-form-label">Designation</label>
                 <select name="designation" id="designation" class="form-control" ng-Model="EmployeeModel.Designation"
-                        ng-options="Designation.Name for Designation in Designations">
+                        ng-options="Designation.Name for Designation in Designations track by Designation.Id">
                 </select>
             </div>
             <div class="col-sm-4">
                 <label for="city" class="col-form-label">City</label>
-                <input name="city" id="city" placeholder="city" type="text" disabled class="form-control" ng-Model="EmployeeModel.Person.City">
+                <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="EmployeeModel.Person.City">
             </div>
         </div>
         <div class="position-relative row form-group">

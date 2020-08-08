@@ -39,7 +39,7 @@
         Name: '',
         Location: ''
     };
-    
+
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {
@@ -84,6 +84,7 @@
         var responsedata = apiService.masterget(url);
         responsedata.then(function mySucces(response) {
             $scope.EmployeeModel = response.data;
+            $scope.EmployeeModel.Person.DOB = new Date(response.data.Person.DOB);
         },
             function myError(response) {
                 $scope.response = response.data;
