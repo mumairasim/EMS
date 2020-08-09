@@ -63,6 +63,12 @@ namespace SMS.API.Controllers
            
             return Ok();
         }
+        [HttpGet]
+        [Route("GetBySchool")]
+        public IHttpActionResult GetBySchool(Guid schoolId)
+        {
+            return Ok(_classService.GetBySchool(schoolId));
+        }
         [HttpDelete]
         [Route("Delete")]
         public IHttpActionResult Delete(Guid id)
@@ -86,12 +92,7 @@ namespace SMS.API.Controllers
         {
             return Ok(_classService.RequestGet(id));
         }
-        //[HttpGet]
-        //[Route("GetBySchool")]
-        //public IHttpActionResult GetBySchool(Guid schoolId)
-        //{
-        //    return Ok(ClassService.GetBySchool(schoolId));
-        //}
+        
         [HttpPost]
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOClass dtoClass)

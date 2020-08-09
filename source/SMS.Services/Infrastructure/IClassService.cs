@@ -19,7 +19,7 @@ namespace SMS.Services.Infrastructure
         #region SMS Request Section
         List<DTOClass> RequestGet();
         DTOClass RequestGet(Guid? id);
-        //st<DTOClass> GetBySchool(Guid? schoolId);
+        List<DTOClass> GetBySchool(Guid? schoolId);
         void RequestCreate(DTOClass Class);
         void RequestUpdate(DTOClass dtoClass);
         void RequestDelete(Guid? id);
