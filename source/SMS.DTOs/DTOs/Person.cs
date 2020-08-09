@@ -6,10 +6,31 @@ namespace SMS.DTOs.DTOs
 {
     public class Person : DtoBaseEntity
     {
-
+        private DateTime? _dob;
         public Guid? AspNetUserId { get; set; }
         public int? Age { get; set; }
-        public DateTime? DOB { get; set; }
+
+        public DateTime? DOB
+        {
+            get { return _dob; }
+            set
+            {
+                if (value != null)
+                {
+                    _dob = (DateTime)value;
+
+                    // Save today's date.
+                    var today = DateTime.Today;
+
+                    // Calculate the age.
+                    Age = today.Year - _dob.Value.Year;
+
+                    // Go back to the year the person was born in case of a leap year
+                    if (_dob.Value.Date > today.AddYears(-Age.Value)) Age--;
+                }
+
+            }
+        }
         public Gender Gender { get; set; }
 
         [StringLength(250)]
@@ -47,7 +68,6 @@ namespace SMS.DTOs.DTOs
 
         [StringLength(50)]
         public string Phone { get; set; }
-
         public Guid? ImageId { get; set; }
         public virtual File Image { get; set; }
 

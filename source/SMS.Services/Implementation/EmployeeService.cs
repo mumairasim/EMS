@@ -115,9 +115,9 @@ namespace SMS.Services.Implementation
             }
             var employee = Get(dtoEmployee.Id);
             dtoEmployee.UpdateDate = DateTime.UtcNow;
-            HelpingMethodForRelationship(dtoEmployee);
             var mergedEmployee = _mapper.Map(dtoEmployee, employee);
             _personService.Update(mergedEmployee.Person);
+            HelpingMethodForRelationship(mergedEmployee);
             _repository.Update(_mapper.Map<DTOEmployee, Employee>(mergedEmployee));
             var finance = _employeeFinanceService.GetFinanceDetailByEmployeeId(dtoEmployee.Id);
             if (finance != null)
@@ -148,10 +148,8 @@ namespace SMS.Services.Implementation
             {
                 dtoEmployee.SchoolId = dtoEmployee.School?.Id;
             }
-            if (dtoEmployee.DesignationId == null)
-            {
-                dtoEmployee.DesignationId = dtoEmployee.Designation?.Id;
-            }
+
+            dtoEmployee.DesignationId = dtoEmployee.Designation?.Id;
             dtoEmployee.Person = null;
             dtoEmployee.Designation = null;
             dtoEmployee.School = null;

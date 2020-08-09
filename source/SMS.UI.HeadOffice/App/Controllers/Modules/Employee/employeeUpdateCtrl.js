@@ -39,7 +39,7 @@
         Name: '',
         Location: ''
     };
-    
+
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {
@@ -93,6 +93,7 @@
                 $('#female')[0].checked = true;
             else if ($scope.EmployeeModel.Person.Gender == 0)
                 $('#other')[0].checked = true;
+            $scope.EmployeeModel.Person.DOB = new Date(response.data.Person.DOB);
         },
             function myError(response) {
                 $scope.response = response.data;
