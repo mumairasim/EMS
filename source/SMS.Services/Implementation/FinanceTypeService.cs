@@ -123,7 +123,7 @@ namespace SMS.Services.Implementation
         public List<DTOFinanceType> GetAll(string search = "")
         {
             //var financeTypes = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
-            var financeTypes = _repository.Get(search + "IsDeleted=false Or IsDeleted=null").ToList();
+            var financeTypes = _repository.Get(search).ToList();
 
             var financeTypeList = new List<DTOFinanceType>();
             foreach (var financeType in financeTypes)

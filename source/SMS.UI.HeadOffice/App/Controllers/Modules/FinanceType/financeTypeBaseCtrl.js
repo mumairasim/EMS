@@ -4,7 +4,7 @@
 SMSHO.controller('financeTypeBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.GetFinanceTypes = function () {
-        var responsedata = apiService.masterget('/api/v1/FinanceType/GetAll');
+        var responsedata = apiService.masterget('/api/v1/FinanceType/GetAll?search=Type=~!Admission~And~');
         responsedata.then(function mySucces(response) {
             $scope.financeTypeList = response.data;
         },

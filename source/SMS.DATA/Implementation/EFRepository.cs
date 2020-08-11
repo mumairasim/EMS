@@ -37,19 +37,20 @@ namespace SMS.DATA.Implementation
         }
         public IQueryable<T> Get(string stringPredicate)
         {
+            stringPredicate += "IsDeleted=false~Or~IsDeleted=null";
             var toSearch = ExtractStringToSearchFromPredicate(stringPredicate);
             if (toSearch == null)
             {
                 return _unitOfWork.Context.Set<T>().Where(stringPredicate);
             }
-            var replacedPredicate = stringPredicate.Replace(toSearch, "@0");
+            var replacedPredicate = stringPredicate.Replace(toSearch, "@0").Replace('~', ' ');
             return _unitOfWork.Context.Set<T>().Where(replacedPredicate, toSearch.Substring(1));
         }
 
         private string ExtractStringToSearchFromPredicate(string predicate)
         {
-            var words = predicate.Split(' ');
-            return words.FirstOrDefault(x => x.Contains("#"));
+            var words = predicate.Split('~');
+            return words.FirstOrDefault(x => x.Contains("!"));
         }
         public void Update(T entity)
         {

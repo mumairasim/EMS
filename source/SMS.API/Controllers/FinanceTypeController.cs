@@ -21,9 +21,9 @@ namespace SMS.API.Controllers
         #region SMS Section
         [HttpGet]
         [Route("GetAll")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string search = "")
         {
-            return Ok(_financeTypeService.GetAll());
+            return Ok(_financeTypeService.GetAll(search));
         }
 
         [HttpGet]
