@@ -92,8 +92,8 @@
                     </div>
                     <div class="col-sm-3">
                         <label for="periodDay" class="col-form-label">Day</label>
-                        <select name="periodDay" id="periodDay" class="form-control" ng-model="SelectedDay"
-                                ng-options="Day.Day for Day in TimeTable.TimeTableDetails  track by $index">
+                        <select name="periodDay" id="periodDay" class="form-control" ng-model=""
+                                ng-options="Detail.Day for Detail in TimeTable.TimeTableDetails">
                         </select>
                     </div>
                     <div class="col-sm-3">

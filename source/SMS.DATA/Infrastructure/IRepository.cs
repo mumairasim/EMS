@@ -10,6 +10,7 @@ namespace SMS.DATA.Infrastructure
     {
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
+        IQueryable<T> Get(string stringPredicate);
         T Add(T entity);
         void Delete(T entity);
         void Update(T entity);

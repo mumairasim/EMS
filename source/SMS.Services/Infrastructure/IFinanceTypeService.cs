@@ -11,7 +11,7 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return all records of a FinanceType
         /// </summary>
         /// <returns></returns>
-        List<DTOFinanceType> GetAll();
+        List<DTOFinanceType> GetAll(string search = "");
 
         /// <summary>
         /// Retruns a Single Record of a FinanceType

@@ -3,6 +3,7 @@ using System;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Linq.Dynamic;
 
 namespace SMS.DATA.Implementation
 {
@@ -34,7 +35,22 @@ namespace SMS.DATA.Implementation
         {
             return _unitOfWork.Context.Set<T>().Where(predicate);
         }
+        public IQueryable<T> Get(string stringPredicate)
+        {
+            var toSearch = ExtractStringToSearchFromPredicate(stringPredicate);
+            if (toSearch == null)
+            {
+                return _unitOfWork.Context.Set<T>().Where(stringPredicate);
+            }
+            var replacedPredicate = stringPredicate.Replace(toSearch, "@0");
+            return _unitOfWork.Context.Set<T>().Where(replacedPredicate, toSearch.Substring(1));
+        }
 
+        private string ExtractStringToSearchFromPredicate(string predicate)
+        {
+            var words = predicate.Split(' ');
+            return words.FirstOrDefault(x => x.Contains("#"));
+        }
         public void Update(T entity)
         {
             //_unitOfWork.Context.Entry(entity).State = EntityState.Modified;
