@@ -36,7 +36,7 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
+            $scope.Schools = response.data.Schools;
             var temp = {
                 Name: '-- Ignore --',
                 Id: '0'

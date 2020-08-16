@@ -1,4 +1,4 @@
-﻿SMSHO.controller('timeTableCreateCtrl', ['$scope', 'apiService', '$cookies','$filter', function ($scope, apiService, $cookies, $filter) {
+﻿SMSHO.controller('timeTableCreateCtrl', ['$scope', 'apiService', '$cookies', '$filter', function ($scope, apiService, $cookies, $filter) {
     'use strict';
     $scope.TimeTable = {
         TimeTableDetails: [{
@@ -26,6 +26,7 @@
         $scope.friday = true;
         $scope.saturday = false;
         $scope.sunday = false;
+        $scope.RemoveEmptySpace();
         $scope.PopulateRows();
 
     };
@@ -178,7 +179,8 @@
         } else {
             $scope.remove("Sunday");
         }
-        $scope.PreparePeriodTimeTableDetailsList();
+        $scope.RemoveEmptySpace();
+        $scope.SelectedDay = $scope.TimeTable.TimeTableDetails[0];
     };
     $scope.remove = function (item) {
         for (var i = 0; i < $scope.TimeTable.TimeTableDetails.length; i++) {
@@ -199,13 +201,13 @@
         }
         return false;
     };
-    $scope.PreparePeriodTimeTableDetailsList = function () {
-        $scope.Day = $scope.TimeTable.TimeTableDetails[0];
-    };
-    $scope.test = function (x, index) {
-        console.log(x);
-        console.log(index);
-        $scope.head = x.Day;
+    $scope.RemoveEmptySpace = function () {
+        for (var i = 0; i < $scope.TimeTable.TimeTableDetails.length; i++) {
+            if ($scope.TimeTable.TimeTableDetails[i].Day === '') {
+                $scope.TimeTable.TimeTableDetails.splice(i, 1);
+                break;
+            }
+        }
     };
     $scope.GuidGenerator = function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
