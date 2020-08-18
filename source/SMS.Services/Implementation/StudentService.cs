@@ -56,6 +56,61 @@ namespace SMS.Services.Implementation
 
             return studentsList;
         }
+        public StudentsList Get(string searchString, int pageNumber, int pageSize)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return Get(pageNumber, pageSize);
+            var students = _repository.Get().Where(st =>
+                (
+                    st.RegistrationNumber.ToString().Equals(searchString) ||
+                    st.Person.Cnic.Contains(searchString) ||
+                    st.Person.Phone.Equals(searchString) ||
+                    st.Person.FirstName.Contains(searchString) ||
+                    st.Person.LastName.Contains(searchString) ||
+                    st.Person.Phone.Contains(searchString)
+                ) &&
+                st.IsDeleted == false
+                ).OrderByDescending(st => st.RegistrationNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var studentCount = _repository.Get().Count(st => (
+                                                                 st.RegistrationNumber.ToString().Equals(searchString) ||
+                                                                 st.Person.Cnic.Contains(searchString) ||
+                                                                 st.Person.Phone.Equals(searchString) ||
+                                                                 st.Person.FirstName.Contains(searchString) ||
+                                                                 st.Person.LastName.Contains(searchString) ||
+                                                                 st.Person.Phone.Contains(searchString)
+                                                             ) && st.IsDeleted == false);
+            var studentTempList = new List<DTOStudent>();
+            foreach (var student in students)
+            {
+                studentTempList.Add(_mapper.Map<Student, DTOStudent>(student));
+            }
+
+            var studentsList = new StudentsList()
+            {
+                Students = studentTempList,
+                StudentsCount = studentCount
+            };
+
+            return studentsList;
+        }
+        public StudentsList Get(int registrationNumber, int pageNumber, int pageSize)
+        {
+            var students = _repository.Get().Where(st => st.RegistrationNumber.Equals(registrationNumber) && st.IsDeleted == false).OrderByDescending(st => st.RegistrationNumber).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var studentCount = _repository.Get().Count(st => st.RegistrationNumber.Equals(registrationNumber) && st.IsDeleted == false);
+            var studentTempList = new List<DTOStudent>();
+            foreach (var student in students)
+            {
+                studentTempList.Add(_mapper.Map<Student, DTOStudent>(student));
+            }
+
+            var studentsList = new StudentsList()
+            {
+                Students = studentTempList,
+                StudentsCount = studentCount
+            };
+
+            return studentsList;
+        }
 
         public DTOStudent Get(Guid? id)
         {
@@ -418,7 +473,7 @@ namespace SMS.Services.Implementation
             return new StudentResponse
             {
                 Id = id,
-                IsError=false,
+                IsError = false,
                 StatusCode = "200",
                 Message = message,
                 Description = descriptionMessage

@@ -8,6 +8,7 @@ namespace SMS.Services.Infrastructure
     {
         #region SMS
         SchoolsList Get(int pageNumber, int pageSize);
+        SchoolsList Get(string searchString, int pageNumber, int pageSize);
         List<DTOSchool> GetAll();
         DTOSchool Get(Guid? id);
         void Create(DTOSchool dtoSchool);

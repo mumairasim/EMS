@@ -9,6 +9,8 @@ namespace SMS.Services.Infrastructure
     {
         #region SMS Section
         StudentsList Get(int pageNumber, int pageSize);
+        StudentsList Get(string searchString, int pageNumber, int pageSize);
+        StudentsList Get(int registrationNumber, int pageNumber, int pageSize);
         DTOStudent Get(Guid? id);
         StudentsList Get(Guid classId, Guid schoolId);
         StudentResponse Create(DTOStudent student);

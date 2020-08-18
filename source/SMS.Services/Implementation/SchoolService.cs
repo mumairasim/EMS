@@ -29,16 +29,43 @@ namespace SMS.Services.Implementation
         public SchoolsList Get(int pageNumber, int pageSize)
         {
             var schools = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var SchoolCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var schoolCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
             var schoolTempList = new List<DTOSchool>();
-            foreach (var Schools in schools)
+            foreach (var school in schools)
             {
-                schoolTempList.Add(_mapper.Map<School, DTOSchool>(Schools));
+                schoolTempList.Add(_mapper.Map<School, DTOSchool>(school));
             }
             var schoolsList = new SchoolsList()
             {
                 Schools = schoolTempList,
-                SchoolsCount = SchoolCount
+                SchoolsCount = schoolCount
+            };
+            return schoolsList;
+        }
+        public SchoolsList Get(string searchString, int pageNumber, int pageSize)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return Get(pageNumber, pageSize);
+            var schools = _repository.Get().Where(cl =>
+                (
+                    cl.Name.Contains(searchString) ||
+                    cl.Location.Contains(searchString)
+                    ) &&
+                cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var schoolCount = _repository.Get().Count(st => (
+                                                                st.Name.Contains(searchString) ||
+                                                                st.Location.Contains(searchString)
+                                                            ) &&
+                                                            st.IsDeleted == false);
+            var schoolTempList = new List<DTOSchool>();
+            foreach (var school in schools)
+            {
+                schoolTempList.Add(_mapper.Map<School, DTOSchool>(school));
+            }
+            var schoolsList = new SchoolsList()
+            {
+                Schools = schoolTempList,
+                SchoolsCount = schoolCount
             };
             return schoolsList;
         }

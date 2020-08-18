@@ -3,13 +3,26 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
+    $scope.registrationNumber = "";
     $scope.GetStudents = function () {
-        var responsedata = apiService.masterget('/api/v1/Student/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/Student/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.studentList = response.data.Students;
             $scope.TotalStudents = response.data.StudentsCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
         },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.GetStudentsByRegistrationNumber = function () {
+        var responsedata = apiService.masterget('/api/v1/Student/GetRegNo?registrationNumber=' + $scope.registrationNumber + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        responsedata.then(function mySucces(response) {
+                $scope.studentList = response.data.Students;
+                $scope.TotalStudents = response.data.StudentsCount;
+                $scope.NextAndPreviousButtonsEnablingAndDisabling();
+            },
             function myError(response) {
                 $scope.response = response.data;
             });
@@ -34,11 +47,11 @@ SMSHO.controller('studentBaseCtrl', ['$scope', 'apiService', '$cookies', functio
         }
     };
     $scope.MoveToPage = function (page) {
-        if ($scope.TotalStudents > (page-1) * $scope.pageSize) {
+        if ($scope.TotalStudents > (page - 1) * $scope.pageSize) {
             $scope.pageNumber = page;
             $scope.GetStudents();
         } else {
-            $scope.growltext("Page "+ page + " doesn't exist.", true);
+            $scope.growltext("Page " + page + " doesn't exist.", true);
         }
 
     }

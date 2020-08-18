@@ -4,13 +4,26 @@ SMSHO.controller('employeeBaseCtrl', ['$scope', 'apiService', '$cookies', functi
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
+    $scope.employeeNumber = "";
     $scope.GetEmployees = function () {
-        var responsedata = apiService.masterget('/api/v1/Employee/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/Employee/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.employeeList = response.data.Employees;
             $scope.TotalEmployees = response.data.EmployeesCount;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
         },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.GetEmployeesforGetEmpNo = function () {
+        var responsedata = apiService.masterget('/api/v1/Employee/GetEmpNo?employeeNumber=' + $scope.employeeNumber + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        responsedata.then(function mySucces(response) {
+                $scope.employeeList = response.data.Employees;
+                $scope.TotalEmployees = response.data.EmployeesCount;
+                $scope.NextAndPreviousButtonsEnablingAndDisabling();
+            },
             function myError(response) {
                 $scope.response = response.data;
             });

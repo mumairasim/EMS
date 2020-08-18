@@ -21,10 +21,23 @@ namespace SMS.API.Controllers
         }
 
         #region SMS Section
+        [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(EmployeeService.Get(pageNumber, pageSize));
+        }
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult Get(string searchString, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(EmployeeService.Get(searchString, pageNumber, pageSize));
+        }
+        [HttpGet]
+        [Route("GetEmpNo")]
+        public IHttpActionResult GetEmpNo(int employeeNumber, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(EmployeeService.Get(employeeNumber, pageNumber, pageSize));
         }
 
         [HttpGet]

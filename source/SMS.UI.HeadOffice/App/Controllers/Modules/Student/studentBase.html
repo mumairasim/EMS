@@ -2,18 +2,23 @@
     <h5 class="card-title fs-35">Search Student</h5>
 
     <div class="position-relative row form-group">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <label class="col-form-label recordsCount">Total students found:<span> {{TotalStudents}}</span></label>
         </div>
-        <div class="input-group col-sm-6">
-            <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button">
+        <div class="input-group col-sm-4">
+            <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button" ng-Model="registrationNumber">
             <div class="input-group-append">
-                <button type="button" class="btn btn-outline-primary searchButton"><i class="fa fa-search fa-fw"></i></button>
+                <button type="button" class="btn btn-outline-primary searchButton" ng-click="GetStudentsByRegistrationNumber()">Get Reg No.</button>
+            </div>
+        </div>
+        <div class="input-group col-sm-4">
+            <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button" ng-Model="searchedText">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-outline-primary searchButton" ng-click="GetStudents()"><i class="fa fa-search fa-fw"></i></button>
             </div>
         </div>
 
     </div>
-
 
     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>

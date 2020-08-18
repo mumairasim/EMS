@@ -5,9 +5,10 @@ SMSHO.controller('schoolBaseCtrl', ['$scope', 'apiService', '$cookies', function
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetSchool = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/School/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/School/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.SchoolsList = response.data.Schools;
             $scope.TotalSchool = response.data.SchoolsCount;
@@ -19,16 +20,16 @@ SMSHO.controller('schoolBaseCtrl', ['$scope', 'apiService', '$cookies', function
             });
     };
     $scope.NextAndPreviousButtonsEnablingAndDisabling = function () {
-        if ($scope.TotalSchool > $scope.pageNumber * $scope.pageSize) {
-            $("#nextButton").removeSchool('disabled');
-        } else {
-            $("#nextButton").addSchool('disabled');
-        }
-        if ($scope.pageNumber > 1) {
-            $("#previousButton").removeSchool('disabled');
-        } else {
-            $("#previousButton").addSchool('disabled');
-        }
+        //if ($scope.TotalSchool > $scope.pageNumber * $scope.pageSize) {
+        //    $("#nextButton").removeSchool('disabled');
+        //} else {
+        //    $("#nextButton").addSchool('disabled');
+        //}
+        //if ($scope.pageNumber > 1) {
+        //    $("#previousButton").removeSchool('disabled');
+        //} else {
+        //    $("#previousButton").addSchool('disabled');
+        //}
     };
     $scope.nextPage = function () {
         if ($scope.TotalSchool > $scope.pageNumber * $scope.pageSize) {

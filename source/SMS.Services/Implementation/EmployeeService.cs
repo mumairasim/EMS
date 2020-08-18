@@ -38,7 +38,7 @@ namespace SMS.Services.Implementation
         public EmployeesList Get(int pageNumber, int pageSize)
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var employeeCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var employeeCount = _repository.Get().Count(st => st.IsDeleted == false);
             var employeeTempList = new List<DTOEmployee>();
             foreach (var employee in employees)
             {
@@ -52,7 +52,59 @@ namespace SMS.Services.Implementation
             };
             return employeesList;
         }
+        public EmployeesList Get(string searchString, int pageNumber, int pageSize)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return Get(pageNumber, pageSize);
+            var employees = _repository.Get().Where(em =>
+                (
+                    em.EmployeeNumber.ToString().Equals(searchString) ||
+                    em.Person.Cnic.Contains(searchString) ||
+                    em.Person.Phone.Equals(searchString) ||
+                    em.Person.FirstName.Contains(searchString) ||
+                    em.Person.LastName.Contains(searchString) ||
+                    em.Person.Phone.Contains(searchString)
+                ) &&
+                em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var employeeCount = _repository.Get().Count(em => (
+                                                                  em.EmployeeNumber.ToString().Equals(searchString) ||
+                                                                  em.Person.Cnic.Contains(searchString) ||
+                                                                  em.Person.Phone.Equals(searchString) ||
+                                                                  em.Person.FirstName.Contains(searchString) ||
+                                                                  em.Person.LastName.Contains(searchString) ||
+                                                                  em.Person.Phone.Contains(searchString)
+                                                              ) &&
+                                                              em.IsDeleted == false);
+            var employeeTempList = new List<DTOEmployee>();
+            foreach (var employee in employees)
+            {
+                employeeTempList.Add(_mapper.Map<Employee, DTOEmployee>(employee));
+            }
 
+            var employeesList = new EmployeesList()
+            {
+                Employees = employeeTempList,
+                EmployeesCount = employeeCount
+            };
+            return employeesList;
+        }
+        public EmployeesList Get(int? employeeNumber, int pageNumber, int pageSize)
+        {
+            var employees = _repository.Get().Where(em => em.EmployeeNumber == employeeNumber && em.IsDeleted == false).OrderByDescending(em => em.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var employeeCount = _repository.Get().Count(em => em.EmployeeNumber == employeeNumber && em.IsDeleted == false);
+            var employeeTempList = new List<DTOEmployee>();
+            foreach (var employee in employees)
+            {
+                employeeTempList.Add(_mapper.Map<Employee, DTOEmployee>(employee));
+            }
+
+            var employeesList = new EmployeesList()
+            {
+                Employees = employeeTempList,
+                EmployeesCount = employeeCount
+            };
+            return employeesList;
+        }
         public List<DTOEmployee> GetEmployeeByDesignation()
         {
             var employees = _repository.Get().Where(em => em.IsDeleted == false && em.Designation.Name == "Teacher").ToList();

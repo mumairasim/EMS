@@ -30,6 +30,18 @@ namespace SMS.API.Controllers
         }
         [HttpGet]
         [Route("Get")]
+        public IHttpActionResult Get(string searchString, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(_studentService.Get(searchString, pageNumber, pageSize));
+        }
+        [HttpGet]
+        [Route("GetRegNo")]
+        public IHttpActionResult GetRegNo(int registrationNumber, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(_studentService.Get(registrationNumber, pageNumber, pageSize));
+        }
+        [HttpGet]
+        [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_studentService.Get(id));
