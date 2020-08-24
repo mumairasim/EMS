@@ -15,6 +15,8 @@ namespace SMS.DATA.Models
 
         [Column(TypeName = "money")]
         public decimal? Fee { get; set; }
+        [Column(TypeName = "money")]
+        public decimal? Arears { get; set; }
 
         public Guid? FinanceTypeId { get; set; }
 
