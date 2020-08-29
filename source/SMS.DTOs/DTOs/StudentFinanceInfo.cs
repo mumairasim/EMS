@@ -4,6 +4,7 @@ namespace SMS.DTOs.DTOs
 {
     public class StudentFinanceInfo : DtoBaseEntity
     {
+        public int RegistrationNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Type { get; set; }

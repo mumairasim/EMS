@@ -18,18 +18,20 @@ namespace SMS.Services.Implementation
         private readonly IRepository<DBStudentFinances> _repository;
         private readonly IRequestRepository<RequestStudentFinance> _requestRepository;
         private readonly IStoredProcCaller _storedProcCaller;
+        private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
 
         private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public StudentFinanceService(IRepository<DBStudentFinances> repository, IMapper mapper, IRequestRepository<RequestStudentFinance> requestRepository, IStoredProcCaller storedProcCaller)
+        public StudentFinanceService(IRepository<DBStudentFinances> repository, IMapper mapper, IRequestRepository<RequestStudentFinance> requestRepository, IStoredProcCaller storedProcCaller, IStudentFinanceDetailsService studentFinanceDetailsService)
         {
             _repository = repository;
             _requestRepository = requestRepository;
             _mapper = mapper;
             _storedProcCaller = storedProcCaller;
+            _studentFinanceDetailsService = studentFinanceDetailsService;
         }
 
         #endregion
@@ -118,16 +120,31 @@ namespace SMS.Services.Implementation
         /// Service level call : Updates the Single Record of a StudentFinances 
         /// </summary>
         /// <param name="DTOStudentFinances"></param>
-        public void Update(DTOStudentFinances DTOStudentFinances)
+        public void Update(DTOStudentFinanceCustom dtoStudentFinances)
         {
-            var StudentFinances = Get(DTOStudentFinances.Id);
-            if (StudentFinances != null)
+            var newFinance = new DBStudentFinances
             {
-                DTOStudentFinances.UpdateDate = DateTime.UtcNow;
-                DTOStudentFinances.IsDeleted = false;
-                var updated = _mapper.Map(DTOStudentFinances, StudentFinances);
+                StudentFinanceDetailsId = dtoStudentFinances.StudentFinanceDetailsId,
+                FeeSubmitted = dtoStudentFinances.FeeSubmitted,
+                FeeMonth = dtoStudentFinances.FeeMonth,
+                Arears = dtoStudentFinances.Arears,
+                CreatedDate = DateTime.UtcNow,
+                FeeYear = dtoStudentFinances.FeeYear,
+                IsDeleted = false,
+                CreatedBy = dtoStudentFinances.CreatedBy
+            };
 
-                _repository.Update(_mapper.Map<DTOStudentFinances, DBStudentFinances>(updated));
+            if (newFinance.Id == Guid.Empty)
+            {
+                newFinance.Id = Guid.NewGuid();
+            }
+
+            if (newFinance.FeeSubmitted ?? false)
+            {
+                _repository.Add(newFinance);
+                var studentFinanceDetails=_studentFinanceDetailsService.Get(dtoStudentFinances.StudentFinanceDetailsId);
+                studentFinanceDetails.Arears = dtoStudentFinances.Arears;
+                _studentFinanceDetailsService.Update(studentFinanceDetails);
             }
         }
 

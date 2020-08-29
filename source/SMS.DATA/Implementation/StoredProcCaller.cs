@@ -96,6 +96,7 @@ namespace SMS.DATA.Implementation
             {
                 var stdfDetailsId = rdr["StudentFinanceDetailsId"].ToString() == "" ? Guid.Empty : Guid.Parse(rdr["StudentFinanceDetailsId"].ToString());
                 var studentFinance = new StudentFinanceInfo();
+                studentFinance.RegistrationNumber = !string.IsNullOrWhiteSpace(rdr["RegistrationNumber"].ToString()) ? Convert.ToInt32(rdr["RegistrationNumber"]) : 0;
                 studentFinance.FirstName = rdr["FirstName"].ToString();
                 studentFinance.LastName = rdr["LastName"].ToString();
                 studentFinance.ClassName = rdr["ClassName"].ToString();
@@ -107,6 +108,7 @@ namespace SMS.DATA.Implementation
                 studentFinance.Type = rdr["Type"].ToString();
                 studentFinance.Fee = !string.IsNullOrWhiteSpace(rdr["Fee"].ToString()) ? Convert.ToDecimal(rdr["Fee"]) : new decimal();
                 studentFinance.Arears = !string.IsNullOrWhiteSpace(rdr["Arears"].ToString()) ? Convert.ToDecimal(rdr["Arears"]) : new decimal();
+                studentFinance.FeeSubmitted = !string.IsNullOrWhiteSpace(rdr["FeeSubmitted"].ToString()) && Convert.ToBoolean(rdr["FeeSubmitted"]);
 
                 stdFinanceList.Add(studentFinance);
             }

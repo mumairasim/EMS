@@ -1,7 +1,7 @@
 ﻿//(function (app) {
 //    'use strict';
 
-SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', 'financeService', '$cookies', function ($scope, apiService, financeService, $cookies) {
     'use strict';
     var fullDate = new Date();
     $scope.Year = fullDate.getFullYear();
@@ -45,6 +45,7 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
             };
             $scope.Schools.unshift(temp);
             $scope.School = $scope.Schools[0];
+            $scope.GetFinances();
         },
             function myError(response) {
 
@@ -100,9 +101,14 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
     };
 
 
-
+    $scope.currentRecord = function (currentFinance) {
+        currentFinance.Month = $scope.Month;
+        currentFinance.Year = $scope.Year;
+        financeService.financeRecord = currentFinance;
+    };
 
     $scope.GetSchools();
+
 
 }]);
 
