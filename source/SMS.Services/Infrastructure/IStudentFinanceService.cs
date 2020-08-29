@@ -24,7 +24,7 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return filtered records of a StudentFinances, pass null to ignore filters
         /// </summary>
         /// <returns></returns>
-        List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, Guid? StudentId);
+        List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, int? Regno, string Month, string Year);
 
         /// <summary>
         /// Retruns a Single Record of a StudentFinances

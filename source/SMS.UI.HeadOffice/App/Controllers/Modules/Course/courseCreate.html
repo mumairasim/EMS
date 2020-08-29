@@ -1,0 +1,31 @@
+﻿<div class="container containerCreate">
+    <h5 class="card-title fs-50 text-center">Add Course</h5>
+    <form class="">
+        <div class="position-relative row form-group">
+            <!--<div class="col-sm-9" style="border-style: solid; border-width: medium; width: 50px; height: 50px; border-color: transparent;">
+            </div>-->
+
+            <div class="col-sm-9">
+                <div class="position-relative row form-group">
+                    <div class="col-sm-6">
+                        <label for="coursename" class="col-form-label">Course Name</label>
+                        <input name="coursename" id="coursename" placeholder="name" type="text" class="form-control" ng-Model="CourseModel.CourseName">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="coursecode" class="col-form-label">Course Code</label>
+                        <input name="coursecode" id="coursecode" placeholder="code" type="text" class="form-control" ng-Model="CourseModel.CourseCode">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="position-relative row form-group">
+            <div class="col-sm-6">
+                <button class="btn btn-primary" ng-click="CourseCreate()">Submit</button>
+                <button class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

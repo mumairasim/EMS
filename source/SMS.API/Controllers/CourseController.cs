@@ -1,6 +1,9 @@
-﻿using SMS.DTOs.DTOs;
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -72,8 +75,11 @@ namespace SMS.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(Course course)
+        public IHttpActionResult Create()
         {
+            var httpRequest = HttpContext.Current.Request;
+            var course = JsonConvert.DeserializeObject<Course>(httpRequest.Params["courseModel"]);
+            course.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (course == null)
             {
                 return BadRequest("Course not Recieved");
@@ -92,8 +98,11 @@ namespace SMS.API.Controllers
 
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(Course course)
+        public IHttpActionResult Update()
         {
+            var httpRequest = HttpContext.Current.Request;
+            var course = JsonConvert.DeserializeObject<Course>(httpRequest.Params["courseModel"]);
+            course.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (course == null)
             {
                 return BadRequest("Course not Recieved");

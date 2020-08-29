@@ -107,9 +107,9 @@ namespace SMS.Services.Implementation
             return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
         }
 
-        public List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, Guid? StudentId)
+        public List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, int? Regno, string Month, string Year)
         {
-            var rs = _storedProcCaller.GetStudentFinanceDetail(schoolId, ClassId, StudentId);
+            var rs = _storedProcCaller.GetStudentFinanceDetail(schoolId, ClassId, Regno, Month, Year);
             return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
         }
 

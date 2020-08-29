@@ -76,6 +76,20 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
             }
         });
     }
+
+    function put(url, datatosend) {
+        return $http({
+            method: "PUT",
+            url: baseUrl + url,
+            data: datatosend,
+            headers: {
+                'Content-Type': "application/json; charset=utf-8",
+                'Authorization': "Bearer " + $cookies.get('SMS_token'),
+                'UserId': $cookies.get('SMS_userId'),
+                'UserName': $cookies.get('SMS_user')
+            }
+        });
+    }
     function masterdelete(url) {
         return $http({
             method: "DELETE",
@@ -112,6 +126,7 @@ SMSHO.factory('apiService', ['$http', '$cookies', function ($http, $cookies) {
         masterpost: masterpost,
         masterget: masterget,
         masterput: masterput,
+        put: put,
         masterdelete: masterdelete,
         post: post
     };

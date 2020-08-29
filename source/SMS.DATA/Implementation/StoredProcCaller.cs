@@ -80,29 +80,34 @@ namespace SMS.DATA.Implementation
             return empFinanceList;
         }
 
-        public List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, Guid? StudentId)
+        public List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, int? Regno, string Month, string Year)
         {
             _connection.Open();
-            SqlCommand cmd = new SqlCommand("GetStudentFinancesDetail", _connection);
+            SqlCommand cmd = new SqlCommand("GetStudentFinancesDetailNew", _connection);
             cmd.Parameters.AddWithValue("@SchoolId", schoolId ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@ClassId", ClassId ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@StudentId", StudentId ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Regno", Regno ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Month", Month ?? (object)DBNull.Value);
+            cmd.Parameters.AddWithValue("@Year", Year ?? (object)DBNull.Value);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             var rdr = cmd.ExecuteReader();
             var stdFinanceList = new List<StudentFinanceInfo>();
             while (rdr.Read())
             {
                 var stdfDetailsId = rdr["StudentFinanceDetailsId"].ToString() == "" ? Guid.Empty : Guid.Parse(rdr["StudentFinanceDetailsId"].ToString());
-                var studentFinance = new StudentFinanceInfo
-                {
-                    FirstName = rdr["FirstName"].ToString(),
-                    LastName = rdr["LastName"].ToString(),
-                    ClassName = rdr["ClassName"].ToString(),
-                    SchoolName = rdr["SchoolName"].ToString(),
-                    StudentFinanceDetailsId = stdfDetailsId,
-                    StudentId = Guid.Parse(rdr["StudentId"].ToString()),
-                    Type = rdr["Type"].ToString()
-                };
+                var studentFinance = new StudentFinanceInfo();
+                studentFinance.FirstName = rdr["FirstName"].ToString();
+                studentFinance.LastName = rdr["LastName"].ToString();
+                studentFinance.ClassName = rdr["ClassName"].ToString();
+                studentFinance.SchoolName = rdr["SchoolName"].ToString();
+                studentFinance.FeeMonth = rdr["FeeMonth"].ToString();
+                studentFinance.FeeYear = rdr["FeeYear"].ToString();
+                studentFinance.StudentFinanceDetailsId = stdfDetailsId;
+                studentFinance.StudentId = Guid.Parse(rdr["StudentId"].ToString());
+                studentFinance.Type = rdr["Type"].ToString();
+                studentFinance.Fee = !string.IsNullOrWhiteSpace(rdr["Fee"].ToString()) ? Convert.ToDecimal(rdr["Fee"]) : new decimal();
+                studentFinance.Arears = !string.IsNullOrWhiteSpace(rdr["Arears"].ToString()) ? Convert.ToDecimal(rdr["Arears"]) : new decimal();
+
                 stdFinanceList.Add(studentFinance);
             }
             _connection.Close();

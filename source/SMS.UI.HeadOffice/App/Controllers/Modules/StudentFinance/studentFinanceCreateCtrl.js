@@ -5,6 +5,8 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
     'use strict';
     var fullDate = new Date();
     $scope.Year = fullDate.getFullYear();
+    $scope.Schools = {};
+    $scope.Class = {};
 
     $scope.Months = [{ value: '0', text: 'January' }, { value: '1', text: 'February' }, { value: '2', text: 'March' },
     { value: '3', text: 'April' }, { value: '4', text: 'May' }, { value: '5', text: 'June' }, { value: '6', text: 'July' },
@@ -40,7 +42,7 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
             var temp = {
                 Name: '-- Ignore --',
                 Id: '0'
-            }
+            };
             $scope.Schools.unshift(temp);
             $scope.School = $scope.Schools[0];
         },
@@ -49,11 +51,29 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', '$cookies'
                 $scope.response = response.data;
             });
     };
-
+    $scope.GetClasses = function () {
+        var responsedata = apiService.masterget('/api/v1/Class/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Classes = response.data.Classes;
+            var tempClass = {
+                ClassName: '-- Ignore --',
+                Id: '0'
+            };
+            $scope.Classes.unshift(tempClass);
+            $scope.Class = $scope.Classes[0];
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
 
 
     $scope.GetFinances = function () {
-        var responsedata = apiService.masterget('/api/v1/StudentFinance/GetDetailByFilter/' + $scope.School.Id);
+        var responsedata = apiService.masterget('/api/v1/StudentFinance/GetDetailByFilter?schoolId=' + $scope.School.Id
+            + '&classId=' + $scope.Class.Id
+            + '&regno=' + $scope.regNo
+            + '&month=' + $scope.Month.text
+            + '&year=' + $scope.Year);
         responsedata.then(function mySucces(response) {
             $scope.FinanceList = response.data;
         },

@@ -14,5 +14,7 @@ namespace SMS.DATA.Models.NonDbContextModels
         public bool FeeSubmitted { get; set; }
         public Guid StudentId { get; set; }
         public Guid? StudentFinanceDetailsId { get; set; }
+        public decimal? Fee { get; set; }
+        public decimal? Arears { get; set; }
     }
 }

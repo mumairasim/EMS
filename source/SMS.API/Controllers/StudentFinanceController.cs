@@ -78,12 +78,12 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetDetailByFilter/{schoolId}")]
-        public IHttpActionResult GetDetailByFilter(Guid? schoolId = null, Guid? classId = null, Guid? studentId = null)
+        [Route("GetDetailByFilter")]
+        public IHttpActionResult GetDetailByFilter(Guid? schoolId = null, Guid? classId = null, int? regno = null, string month = null, string year = null)
         {
             try
             {
-                var result = _studentFinanceService.GetDetailByFilter(schoolId, classId, studentId);
+                var result = _studentFinanceService.GetDetailByFilter(schoolId, classId, regno, month, year);
                 return Ok(result);
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("RequestGetDetailByFilter/{schoolId}")]
-        public IHttpActionResult RequestGetDetailByFilter(Guid? schoolId = null, Guid? classId = null, Guid? studentId = null)
+        public IHttpActionResult RequestGetDetailByFilter(Guid? schoolId = null, Guid? classId = null, int? regno = null, string month = null, string year = null)
         {
             try
             {
-                var result = _studentFinanceService.GetDetailByFilter(schoolId, classId, studentId);
+                var result = _studentFinanceService.GetDetailByFilter(schoolId, classId, regno, month, year);
                 return Ok(result);
             }
             catch (Exception e)
@@ -229,7 +229,7 @@ namespace SMS.API.Controllers
             //foreach (var item in financeInfoList)
             //{
             //    item.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-                _studentFinanceService.RequestCreate(dtoStudentFinances);
+            _studentFinanceService.RequestCreate(dtoStudentFinances);
             //}
 
             return Ok();

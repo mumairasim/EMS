@@ -11,7 +11,7 @@ namespace SMS.DATA.Infrastructure
         List<StudentFinanceInfo> GetStudentFinance(Guid? schoolId, Guid? ClassId, Guid? StudentId, string FeeMonth);
         List<EmployeeFinanceInfo> GetEmployeeFinance(Guid? schoolId, Guid? DesignationId, string SalaryMonth);
         List<EmployeeFinanceInfo> GetEmployeeFinanceDetail(Guid? schoolId, Guid? DesignationId);
-        List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, Guid? StudentId);
+        List<StudentFinanceInfo> GetStudentFinanceDetail(Guid? schoolId, Guid? ClassId, int? Regno, string Month, string Year);
         #endregion
 
         #region Request Stroed
