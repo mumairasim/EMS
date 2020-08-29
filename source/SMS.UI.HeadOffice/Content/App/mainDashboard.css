@@ -15543,7 +15543,8 @@ legend {
 
 .scrollbar-sidebar, .scrollbar-container {
     position: relative;
-    height: 100%
+    height: 92%;
+    overflow: auto;
 }
 
 .scroll-area {

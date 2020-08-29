@@ -23,7 +23,7 @@
         responsedata.then(function mySucces(response) {
             $scope.studentAttendanceList = response.data.StudentAttendanceDetail;
             $scope.Class = response.data.Class;
-            $scope.School = response.data.School;
+            $scope.School = response.data.School.Schools;
             $scope.StudentAttendanceModel.Id = response.data.Id;
             $scope.StudentAttendanceModel.AttendanceDate = new Date(response.data.AttendanceDate);
             $scope.StudentAttendanceModel.SchoolId = $scope.School.Id;

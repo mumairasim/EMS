@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using Newtonsoft.Json;
 using SMS.Services.Infrastructure;
 using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using DTOSchool = SMS.DTOs.DTOs.School;
 
 namespace SMS.API.Controllers

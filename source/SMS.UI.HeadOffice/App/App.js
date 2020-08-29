@@ -134,6 +134,7 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/UserProfile/ChangePassword.html",
             controller: "ChangePasswordCtrl"
         })
+
         .when("/worksheetBase", {
             title: "Worksheet Search",
             templateUrl: "App/Controllers/Modules/Worksheet/worksheetBase.html",
@@ -154,6 +155,51 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
             templateUrl: "App/Controllers/Modules/Worksheet/WorksheetUpdate.html",
             controller: "worksheetUpdateCtrl"
         })
+
+        .when("/courseBase", {
+            title: "Course Search",
+            templateUrl: "App/Controllers/Modules/Course/courseBase.html",
+            controller: "courseBaseCtrl"
+        })
+        .when("/courseSearch", {
+            title: "Course Search",
+            templateUrl: "App/Controllers/Modules/Course/courseSearch.html",
+            controller: "courseSearchCtrl"
+        })
+        .when("/courseCreate", {
+            title: "Course Create",
+            templateUrl: "App/Controllers/Modules/Course/courseCreate.html",
+            controller: "courseCreateCtrl"
+        })
+        .when("/courseUpdate", {
+            title: "Course Update",
+            templateUrl: "App/Controllers/Modules/Course/CourseUpdate.html",
+            controller: "courseUpdateCtrl"
+        })
+
+
+        .when("/teacherDiaryBase", {
+            title: "TeacherDiary Search",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",
+            controller: "teacherDiaryBaseCtrl"
+        })
+        .when("/teacherDiarySearch", {
+            title: "TeacherDiary Search",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiarySearch.html",
+            controller: "teacherDiarySearchCtrl"
+        })
+        .when("/teacherDiaryCreate", {
+            title: "TeacherDiary Create",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryCreate.html",
+            controller: "teacherDiaryCreateCtrl"
+        })
+        .when("/teacherDiaryUpdate", {
+            title: "TeacherDiary Update",
+            templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryUpdate.html",
+            controller: "teacherDiaryUpdateCtrl"
+        })
+
+
         .when("/studentAttendanceSheet", {
             title: "Student Attendance",
             templateUrl: "App/Controllers/Modules/Attendance/studentAttendanceSheet.html",

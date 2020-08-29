@@ -170,6 +170,12 @@
     <Content Include="App\Controllers\Modules\TimeTable\timeTableCreate.html" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Course\courseBase.html" />
+    <Content Include="App\Controllers\Modules\Course\courseBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\Course\courseCreate.html" />
+    <Content Include="App\Controllers\Modules\Course\courseCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Course\courseUpdate.html" />
+    <Content Include="App\Controllers\Modules\Course\courseUpdateCtrl.js" />
     <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
     <Content Include="App\Controllers\UserProfile\UserProfile.html" />
     <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />
