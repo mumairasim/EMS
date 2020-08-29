@@ -145,6 +145,7 @@
     <Content Include="App\Controllers\Modules\Requests\requestManagementCtrl.js" />
     <Content Include="App\Controllers\Modules\Requests\requestManagement.html" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceCreate.html" />
+    <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceBase.html" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceBaseCtrl.js" />
@@ -160,6 +161,7 @@
     <Content Include="App\Controllers\Modules\FinanceType\financeTypeCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdate.html" />
     <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdateCtrl.js" />
+    <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceUpdate.html" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBase.html" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryCreate.html" />
@@ -219,6 +221,7 @@
     <Content Include="App\Controllers\Modules\Student\studentBaseCtrl.js" />
     <Content Include="App\Controllers\rootCtrl.js" />
     <Content Include="App\Controllers\UserProfile\UserProfileCtrl.js" />
+    <Content Include="App\Services\financeService.js" />
     <Content Include="App\Services\apiService.js" />
     <Content Include="Content\App\customStyle.css" />
     <Content Include="Content\App\growl.css" />

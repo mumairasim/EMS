@@ -43,7 +43,7 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Updates the Single Record of a StudentFinances 
         /// </summary>
         /// <param name="dtoStudentFinances"></param>
-        void Update(DTOStudentFinances dTOStudentFinances);
+        void Update(DTOStudentFinanceCustom dTOStudentFinances);
 
         /// <summary>
         /// Service level call : Delete a single record of a StudentFinances

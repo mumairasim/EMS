@@ -126,6 +126,11 @@
     width: 20px;
     margin: 6px;
 }
+.checkboxLarge {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+}
 .block {
     border: 1px solid #ced4da;
     border-radius: 3px;

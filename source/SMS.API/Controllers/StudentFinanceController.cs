@@ -114,7 +114,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult Update()
         {
             var httpRequest = HttpContext.Current.Request;
-            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinances>(httpRequest.Params["studentFinanceModel"]);
+            var dTOStudentFinances = JsonConvert.DeserializeObject<DTOStudentFinancesInfo>(httpRequest.Params["studentFinanceModel"]);
             dTOStudentFinances.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             try
             {

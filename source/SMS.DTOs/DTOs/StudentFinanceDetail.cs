@@ -6,6 +6,7 @@ namespace SMS.DTOs.DTOs
     {
         public Guid? StudentId { get; set; }
         public decimal? Fee { get; set; }
+        public decimal? Arears { get; set; }
 
         public Guid? FinanceTypeId { get; set; }
 
