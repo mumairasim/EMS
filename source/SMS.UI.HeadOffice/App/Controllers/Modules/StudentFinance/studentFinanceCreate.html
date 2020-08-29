@@ -2,16 +2,27 @@
     <h5 class="card-title fs-35">Manage Student Finances</h5>
 
     <!--filters-->
-
-    <div class="col-sm-4">
-        <label for="school" class="col-form-label">School</label>
-        <select name="school" id="school" class="form-control" ng-change="GetClasses()" ng-Model="School"
-                ng-options="School.Name for School in Schools track by School.Id">
-        </select>
-    </div>
-    <div ng-if="FinanceList.length > 0">
+    <div class="position-relative row form-group">
         <div class="col-sm-4">
-            <label for="month" class="col-form-label">Month</label> 
+            <label for="school" class="col-form-label">School</label>
+            <select name="school" id="school" class="form-control" ng-change="GetClasses()" ng-Model="School"
+                    ng-options="School.Name for School in Schools track by School.Id">
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <label for="class" class="col-form-label">Class</label>
+            <select name="class" id="class" class="form-control" ng-Model="Class"
+                    ng-options="Class.ClassName for Class in Classes track by Class.Id">
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <label for="regno" class="col-form-label">RegNo.</label>
+            <input class="form-control" ng-model="regno" />
+        </div>
+    </div>
+    <div class="position-relative row form-group">
+        <div class="col-sm-4">
+            <label for="month" class="col-form-label">Month</label>
             <select name="month" id="month" class="form-control" ng-options="month.text for month in Months track by month.value" ng-Model="Month">
             </select>
         </div>
@@ -40,10 +51,12 @@
                 <th>Last Name</th>
                 <th>Class</th>
                 <th>School</th>
-                <!--<th>Month</th>
-                <th>Year</th>-->
+                <th>Month</th>
+                <th>Year</th>
+                <th>Fee</th>
+                <th>Arears</th>
                 <th>Deposit Fee</th>
-                <!--<th>Actions</th>-->
+                <th>Actions</th>
 
             </tr>
         </thead>
@@ -54,17 +67,23 @@
                 <td>{{studentFinance.LastName}}</td>
                 <td>{{studentFinance.ClassName}}</td>
                 <td>{{studentFinance.SchoolName}}</td>
-                <!--<td>{{studentFinance.FeeMonth}}</td>
-                <td>{{studentFinance.FeeYear}}</td>-->
-                <td><input ng-model="studentFinance.FeeSubmitted" type="checkbox" class="input-sm" /></td>
-                <!--<td>
-                    <a href="#!/studentFinanceUpdate?Id={{studentFinance.Id}}"><i class="fa fa-edit fa-fw"></i> Edit</a>
-                    <a href="" data-toggle="modal" data-target="#confirmationModal" ng-click="ConfirmDelete(studentFinance.Id)"><i class="fa fa-trash fa-fw"></i> Delete</a>
-                </td>-->
+                <td>{{studentFinance.FeeMonth}}</td>
+                <td>{{studentFinance.FeeYear}}</td>
+                <td>{{studentFinance.Fee}}</td>
+                <td>{{studentFinance.Arears}}</td>
+
+                <td>
+                    <input ng-model="studentFinance.FeeSubmitted" type="checkbox" class="input-sm" />
+                </td>
+                <td>
+                    <a href="#"><i class="fa fa-edit fa-fw"></i> Details</a>
+                </td>
 
             </tr>
         </tbody>
     </table>
+
+
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
