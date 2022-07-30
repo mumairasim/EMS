@@ -1,17 +1,17 @@
-﻿using System;
+﻿using AutoMapper;
+using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
+using SMS.REQUESTDATA.Infrastructure;
+using SMS.Services.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using AutoMapper;
-using SMS.DATA.Infrastructure;
-using SMS.DTOs.DTOs;
-using SMS.DTOs.ReponseDTOs;
-using SMS.Services.Infrastructure;
-using SMS.REQUESTDATA.Infrastructure;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
-using StudentAttendance = SMS.DATA.Models.StudentAttendance;
 using RequestStudentAttendance = SMS.REQUESTDATA.RequestModels.StudentAttendance;
+using StudentAttendance = SMS.DATA.Models.StudentAttendance;
 
 namespace SMS.Services.Implementation
 {

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
-using SMS.DTOs.DTOs;
-using SMS.Services.Infrastructure;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
 
 namespace SMS.API.Controllers
@@ -22,13 +22,13 @@ namespace SMS.API.Controllers
 
         #region SMS Section
         [HttpGet]
-        [Route("Get")]
+        [Route("GetAll")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(EmployeeService.Get(pageNumber, pageSize));
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{searchString}")]
         public IHttpActionResult Get(string searchString, int pageNumber = 1, int pageSize = 10)
         {
             return Ok(EmployeeService.Get(searchString, pageNumber, pageSize));
@@ -48,7 +48,7 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(EmployeeService.Get(id));
@@ -95,7 +95,7 @@ namespace SMS.API.Controllers
             return Ok(EmployeeService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(EmployeeService.RequestGet(id));
@@ -104,7 +104,7 @@ namespace SMS.API.Controllers
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOEmployee dtoEmployee)
         {
-           
+
             EmployeeService.RequestCreate(dtoEmployee);
             return Ok();
         }

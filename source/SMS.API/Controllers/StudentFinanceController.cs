@@ -24,7 +24,7 @@ namespace SMS.API.Controllers
 
         #region API Calls
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             if (id == null)
@@ -150,7 +150,7 @@ namespace SMS.API.Controllers
 
         #region RequestSMS Calls
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             if (id == null)

@@ -1,5 +1,5 @@
-﻿using System;
-using SMS.Services.Infrastructure;
+﻿using SMS.Services.Infrastructure;
+using System;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using DTOAttendanceStatus = SMS.DTOs.DTOs.AttendanceStatus;
@@ -23,7 +23,7 @@ namespace SMS.API.Controllers
             return Ok(AttendanceStatusService.Get());
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(AttendanceStatusService.Get(id));
@@ -60,7 +60,7 @@ namespace SMS.API.Controllers
             return Ok(AttendanceStatusService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(AttendanceStatusService.RequestGet(id));
