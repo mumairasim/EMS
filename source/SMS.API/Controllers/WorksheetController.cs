@@ -120,7 +120,7 @@ namespace SMS.API.Controllers
 
         #region SMS Request
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             if (id == null)
@@ -213,7 +213,7 @@ namespace SMS.API.Controllers
         [Route("ApproveRequest")]
         public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
         {
-            
+
             try
             {
                 _worksheetService.ApproveRequest(commonRequestModel);

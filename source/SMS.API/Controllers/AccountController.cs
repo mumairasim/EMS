@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Configuration;
-using System.Web.Hosting;
-using System.Web.Http;
-using System.Web.Http.Cors;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -22,6 +10,15 @@ using SMS.API.Providers;
 using SMS.API.Results;
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
 {
@@ -65,6 +62,7 @@ namespace SMS.API.Controllers
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [HttpGet]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
         {
@@ -80,17 +78,18 @@ namespace SMS.API.Controllers
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [HttpGet]
         [Route("GetUserDetailedInfo")]
         public UserInfo GetUserDetailedInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
             var userInfo = _accountService.GetUserInfo(User.Identity.GetUserName());
-         
+
 
             return userInfo;
         }
 
-       
+
         [Route("UpdateUserInfo")]
         public IHttpActionResult UpdateUserInfo()
         {
@@ -116,6 +115,7 @@ namespace SMS.API.Controllers
         }
 
         // POST api/Account/Logout
+        [HttpPost]
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
@@ -124,6 +124,7 @@ namespace SMS.API.Controllers
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
+        [HttpGet]
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
@@ -164,6 +165,7 @@ namespace SMS.API.Controllers
         }
 
         // POST api/Account/ChangePassword
+        [HttpPost]
         [Route("ChangePassword")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
@@ -184,6 +186,7 @@ namespace SMS.API.Controllers
         }
 
         // POST api/Account/SetPassword
+        [HttpPost]
         [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
@@ -203,6 +206,7 @@ namespace SMS.API.Controllers
         }
 
         // POST api/Account/AddExternalLogin
+        [HttpPost]
         [Route("AddExternalLogin")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
@@ -241,6 +245,7 @@ namespace SMS.API.Controllers
         }
 
         // POST api/Account/RemoveLogin
+        [HttpPost]
         [Route("RemoveLogin")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
@@ -270,6 +275,7 @@ namespace SMS.API.Controllers
         }
 
         // GET api/Account/ExternalLogin
+        [HttpGet]
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
@@ -327,6 +333,7 @@ namespace SMS.API.Controllers
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
+        [HttpGet]
         [AllowAnonymous]
         [Route("ExternalLogins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
@@ -369,6 +376,7 @@ namespace SMS.API.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
+        [HttpPost]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -407,6 +415,7 @@ namespace SMS.API.Controllers
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [HttpPost]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {

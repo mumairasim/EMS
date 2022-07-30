@@ -1,15 +1,12 @@
-﻿using SMS.Services.Infrastructure;
+﻿using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Web.Http;
-using Newtonsoft.Json;
-using SMS.DTOs.DTOs;
-using SMS.Services.Implementation;
 using DTOFile = SMS.DTOs.DTOs.File;
 
 

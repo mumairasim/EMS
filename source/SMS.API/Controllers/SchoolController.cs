@@ -21,19 +21,19 @@ namespace SMS.API.Controllers
 
         #region SMS Section
         [HttpGet]
-        [Route("Get")]
+        [Route("GetAll")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(_schoolService.Get(pageNumber, pageSize));
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{searchString}")]
         public IHttpActionResult Get(string searchString, int pageNumber, int pageSize)
         {
             return Ok(_schoolService.Get(searchString, pageNumber, pageSize));
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_schoolService.Get(id));
@@ -78,7 +78,7 @@ namespace SMS.API.Controllers
             return Ok(_schoolService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(_schoolService.RequestGet(id));

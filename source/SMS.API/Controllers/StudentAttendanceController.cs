@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.Services.Configurations;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
-using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
-using SMS.Services.Configurations;
-using SMS.REQUESTDATA.Infrastructure;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
-using RequestStudentAttendance = SMS.REQUESTDATA.RequestModels.StudentAttendance;
 
 namespace SMS.API.Controllers
 {
@@ -28,9 +26,8 @@ namespace SMS.API.Controllers
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-
         [HttpGet]
-        [Route("Get")]
+        [Route("GetAll")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(StudentAttendanceService.Get(pageNumber, pageSize));
@@ -67,17 +64,14 @@ namespace SMS.API.Controllers
             predicate.And(sa => sa.SchoolId == schoolId);
             return Ok(StudentAttendanceService.Search(predicate, pageNumber, pageSize));
         }
+
         /// <summary>
         /// Fetch by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        
-
-
-        
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(StudentAttendanceService.Get(id));
@@ -120,7 +114,7 @@ namespace SMS.API.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGetAll")]
         public IHttpActionResult RequestGet(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(StudentAttendanceService.RequestGet(pageNumber, pageSize));
@@ -135,7 +129,7 @@ namespace SMS.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid? classId, Guid? schoolId, int pageNumber = 1, int pageSize = 10)
+        public IHttpActionResult RequestGet([FromUri] Guid? classId, [FromUri] Guid? schoolId, [FromUri] int pageNumber = 1, [FromUri] int pageSize = 10)
         {
             StudentAttendanceService.RequestGet(classId, schoolId, pageNumber, pageSize);
             return Ok();
@@ -165,7 +159,7 @@ namespace SMS.API.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(StudentAttendanceService.RequestGet(id));

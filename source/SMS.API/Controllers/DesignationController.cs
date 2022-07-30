@@ -1,8 +1,8 @@
-﻿using System;
-using SMS.Services.Infrastructure;
+﻿using SMS.Services.Infrastructure;
+using System;
 using System.Web.Http;
-using DTODesignation = SMS.DTOs.DTOs.Designation;
 using System.Web.Http.Cors;
+using DTODesignation = SMS.DTOs.DTOs.Designation;
 
 namespace SMS.API.Controllers
 {
@@ -24,7 +24,7 @@ namespace SMS.API.Controllers
             return Ok(_designationService.Get());
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_designationService.Get(id));
@@ -60,7 +60,7 @@ namespace SMS.API.Controllers
             return Ok(_designationService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(_designationService.RequestGet(id));

@@ -1,15 +1,12 @@
-﻿using System;
-
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
-using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using DTOClass = SMS.DTOs.DTOs.Class;
-using SMS.Services.Infrastructure;
-using System.Web.Http.Cors;
-using SMS.DTOs.DTOs;
 
 namespace SMS.API.Controllers
 {
@@ -25,20 +22,20 @@ namespace SMS.API.Controllers
 
         #region SMS Section
         [HttpGet]
-        [Route("Get")]
+        [Route("GetAll")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(_classService.Get(pageNumber, pageSize));
         }
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_classService.Get(id));
         }
         [HttpGet]
-        
-        
+
+
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
@@ -46,11 +43,11 @@ namespace SMS.API.Controllers
 
             var httpRequest = HttpContext.Current.Request;
             var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
-             classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-             _classService.Create(classDetail);
+            classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Create(classDetail);
             return Ok();
-            
-    }
+
+        }
         [HttpPut]
         [Route("Update")]
         public IHttpActionResult Update()
@@ -60,7 +57,7 @@ namespace SMS.API.Controllers
             classDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             classDetail.SchoolId = classDetail.School.Id;
             _classService.Update(classDetail);
-           
+
             return Ok();
         }
         [HttpGet]
@@ -87,12 +84,12 @@ namespace SMS.API.Controllers
             return Ok(_classService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(_classService.RequestGet(id));
         }
-        
+
         [HttpPost]
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOClass dtoClass)

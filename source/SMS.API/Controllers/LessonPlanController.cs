@@ -1,13 +1,12 @@
 ﻿
-using System;
-using System.IO;
-using System.Linq;
-using System.Web;
-using SMS.Services.Infrastructure;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Cors;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 
 
@@ -25,14 +24,14 @@ namespace SMS.API.Controllers
 
         #region SMS Section
         [HttpGet]
-        [Route("Get")]
+        [Route("GetAll")]
         public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
         {
             return Ok(_lessonplanService.Get(pageNumber, pageSize));
         }
 
         [HttpGet]
-        [Route("Get")]
+        [Route("Get/{id}")]
         public IHttpActionResult Get(Guid id)
         {
             return Ok(_lessonplanService.Get(id));
@@ -77,7 +76,7 @@ namespace SMS.API.Controllers
             return Ok(_lessonplanService.RequestGet());
         }
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(_lessonplanService.RequestGet(id));

@@ -76,7 +76,7 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("RequestGet")]
+        [Route("RequestGet/{id}")]
         public IHttpActionResult RequestGet(Guid id)
         {
             return Ok(_financeTypeService.RequestGet(id));

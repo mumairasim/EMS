@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
-using SMS.Services.Infrastructure;
 using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
 
 namespace SMS.API.Controllers
@@ -55,7 +55,7 @@ namespace SMS.API.Controllers
         [Route("RequestCreate")]
         public IHttpActionResult RequestCreate(DTOTimeTable dtoTimeTable)
         {
-           // var httpRequest = HttpContext.Current.Request;
+            // var httpRequest = HttpContext.Current.Request;
             //dtoTimeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
             //dtoTimeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             TimeTableService.RequestCreate(dtoTimeTable);
