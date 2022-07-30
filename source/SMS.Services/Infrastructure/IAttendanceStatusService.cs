@@ -13,13 +13,5 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id);
         #endregion
 
-        #region SMS Request Section
-        List<DTOAttendanceStatus> RequestGet();
-        DTOAttendanceStatus RequestGet(Guid? id);
-        Guid RequestCreate(DTOAttendanceStatus dtoAttendanceStatus);
-        void RequestUpdate(DTOAttendanceStatus dtoAttendanceStatus);
-        void RequestDelete(Guid? id);
-        #endregion
-
     }
 }

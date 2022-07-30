@@ -16,20 +16,6 @@ namespace SMS.Services.Infrastructure
         LessonPlanResponse Update(DTOLessonPlan dtolessonplan);
         void Delete(Guid? id, string DeletedBy);
         #endregion
-
-        #region SMS Request Section
-        List<DTOLessonPlan> RequestGet();
-        DTOLessonPlan RequestGet(Guid? id);
-        Guid RequestCreate(DTOLessonPlan dtoLessonPlan);
-        void RequestUpdate(DTOLessonPlan dtoLessonPlan);
-        void RequestDelete(Guid? id);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
-        #endregion
     }
 }
 

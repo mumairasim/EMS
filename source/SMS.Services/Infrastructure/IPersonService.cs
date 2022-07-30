@@ -14,12 +14,5 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id);
         #endregion
 
-        #region SMS Request Section
-        List<DTOPerson> RequestGet();
-        DTOPerson RequestGet(Guid? id);
-        Guid RequestCreate(DTOPerson dtoPerson);
-        void RequestUpdate(DTOPerson dtoPerson);
-        void RequestDelete(Guid? id);
-        #endregion
     }
 }

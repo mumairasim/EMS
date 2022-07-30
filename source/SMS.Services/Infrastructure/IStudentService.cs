@@ -17,14 +17,5 @@ namespace SMS.Services.Infrastructure
         StudentResponse Update(DTOStudent dtoStudent);
         void Delete(Guid? id, string DeletedBy);
         #endregion
-
-        #region RequestSMS Section
-        StudentsList RequestGet(int pageNumber, int pageSize);
-        DTOStudent RequestGet(Guid? id);
-        StudentsList RequestGet(Guid classId, Guid schoolId);
-        StudentResponse RequestCreate(DTOStudent student);
-        StudentResponse RequestUpdate(DTOStudent dtoStudent);
-        void RequestDelete(Guid? id/*, string DeletedBy*/);
-        #endregion
     }
 }

@@ -16,12 +16,5 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id, string DeletedBy);
         #endregion
 
-        #region SMS Request
-        List<DTOSchool> RequestGet();
-        DTOSchool RequestGet(Guid? id);
-        Guid RequestCreate(DTOSchool dtoSchool);
-        void RequestUpdate(DTOSchool dtoSchool);
-        void RequestDelete(Guid? id);
-        #endregion
     }
 }

@@ -14,21 +14,7 @@ namespace SMS.Services.Infrastructure
         GenericApiResponse Create(DTOClass Class);
         GenericApiResponse Update(DTOClass dtoClass);
         void Delete(Guid? id, string DeletedBy);
-        #endregion
-
-        #region SMS Request Section
-        List<DTOClass> RequestGet();
-        DTOClass RequestGet(Guid? id);
         List<DTOClass> GetBySchool(Guid? schoolId);
-        void RequestCreate(DTOClass Class);
-        void RequestUpdate(DTOClass dtoClass);
-        void RequestDelete(Guid? id);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
         #endregion
 
     }

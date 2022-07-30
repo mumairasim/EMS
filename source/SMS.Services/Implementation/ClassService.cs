@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
-using SMS.REQUESTDATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
-using ReqClass = SMS.REQUESTDATA.RequestModels.Class;
 using SMS.DTOs.ReponseDTOs;
 
 namespace SMS.Services.Implementation
@@ -16,19 +14,13 @@ namespace SMS.Services.Implementation
     public class ClassService : IClassService
     {
         private readonly IRepository<Class> _repository;
-        private readonly IRequestRepository<ReqClass> _requestRepository;
-        private readonly IRequestTypeService _requestTypeService;
-        private readonly IRequestStatusService _requestStatusService;
         private const string error_not_found = "Record not found";
         private const string server_error = "Server error";
 
         private readonly IMapper _mapper;
-        public ClassService(IRepository<Class> repository, IMapper mapper, IRequestRepository<ReqClass> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
+        public ClassService(IRepository<Class> repository, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
-            _requestTypeService = requestTypeService;
-            _requestStatusService = requestStatusService;
             _mapper = mapper;
         }
 
@@ -120,96 +112,6 @@ namespace SMS.Services.Implementation
             _repository.Update(_mapper.Map<DTOClass, Class>(classes));
         }
         #endregion
-
-        #region SMS Request Section
-
-        public List<DTOClass> RequestGet()
-        {
-            var clasess = _requestRepository.Get().Where(cl => cl.IsDeleted == false).ToList();
-            var classList = new List<DTOClass>();
-            foreach (var itemClass in clasess)
-            {
-                classList.Add(_mapper.Map<ReqClass, DTOClass>(itemClass));
-            }
-            return MapRequestTypeAndStatus(classList).ToList();
-        }
-        public DTOClass RequestGet(Guid? id)
-        {
-            var classRecord = _requestRepository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
-            var classes = _mapper.Map<ReqClass, DTOClass>(classRecord);
-
-            return classes;
-        }
-        //public List<DTOClass> RequestGetBySchool(Guid? schoolId)
-        //{
-        //    var classes = _repository.Get().Where(cl => cl.SchoolId == schoolId && cl.IsDeleted == false).ToList();
-        //    var classList = new List<DTOClass>();
-        //    foreach (var itemClass in classes)
-        //    {
-        //        classList.Add(_mapper.Map<Class, DTOClass>(itemClass));
-        //    }
-        //    return classList;
-        //}
-
-
-        public void RequestCreate(DTOClass dtoClass)
-        {
-            dtoClass.CreatedDate = DateTime.UtcNow;
-            dtoClass.IsDeleted = false;
-            dtoClass.Id = Guid.NewGuid();
-            dtoClass.School = null;
-            var dbRec = _mapper.Map<DTOClass, ReqClass>(dtoClass);
-            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoClass.RequestTypeString).Id;
-            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoClass.RequestStatusString).Id;
-            _requestRepository.Add(dbRec);
-            // return dtoClass.Id;
-        }
-        public void RequestUpdate(DTOClass dtoClass)
-        {
-            var Classes = RequestGet(dtoClass.SchoolId);
-            dtoClass.UpdateDate = DateTime.UtcNow;
-            var mergedClass = _mapper.Map(dtoClass, Classes);
-            _requestRepository.Update(_mapper.Map<DTOClass, ReqClass>(mergedClass));
-        }
-        public void RequestDelete(Guid? id)
-        {
-            if (id == null)
-                return;
-            var classes = RequestGet(id);
-            classes.IsDeleted = true;
-            classes.DeletedDate = DateTime.UtcNow;
-            _requestRepository.Update(_mapper.Map<DTOClass, ReqClass>(classes));
-        }
-        #endregion
-
-        #region Request Approver
-        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
-        {
-            var dto = RequestGet(dtoCommonRequestModel.Id);
-            dto.School = dtoCommonRequestModel.School;
-            GenericApiResponse status = null;
-            switch (dtoCommonRequestModel.RequestTypeString)
-            {
-                case "Create":
-                    status = Create(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                case "Update":
-                    status = Update(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                //case "Delete":
-                //    status = Delete(dto.Id,"admin");
-                //    UpdateRequestStatus(dto, status);
-                //    break;
-                default:
-                    break;
-            }
-
-            return status;
-        }
-
-        #endregion
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
             dtoClass.SchoolId = dtoClass.School.Id;
@@ -232,35 +134,6 @@ namespace SMS.Services.Implementation
                 Message = message,
                 Description = descriptionMessage
             };
-        }
-
-        private IEnumerable<DTOClass> MapRequestTypeAndStatus(IEnumerable<DTOClass> dtoClasses)
-        {
-            var requestTypes = _requestTypeService.RequestGetAll();
-            var requestStatuses = _requestStatusService.RequestGetAll();
-            foreach (var dtoClass in dtoClasses)
-            {
-                dtoClass.RequestTypeString =
-                    requestTypes.FirstOrDefault(rt => dtoClass.RequestTypeId != null && rt.Id == dtoClass.RequestTypeId.Value)?.Value;
-                dtoClass.RequestStatusString =
-                    requestStatuses.FirstOrDefault(rs => dtoClass.RequestStatusId != null && rs.Id == dtoClass.RequestStatusId.Value)?.Type;
-            }
-
-            return dtoClasses;
-        }
-
-        private void UpdateRequestStatus(DTOClass dto, GenericApiResponse status)
-        {
-            if (status.StatusCode == "200")//success
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
-            }
-            else
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
-            }
-            //updating the status of the current request in Request DB
-            RequestUpdate(dto);
         }
     }
 }

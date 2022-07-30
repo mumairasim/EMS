@@ -7,28 +7,20 @@ using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
-using ReqEmployee = SMS.REQUESTDATA.RequestModels.Employee;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
-using SMS.REQUESTDATA.Infrastructure;
 
 namespace SMS.Services.Implementation
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IRepository<Employee> _repository;
-        private readonly IRequestRepository<ReqEmployee> _requestRepository;
         private readonly IPersonService _personService;
         private readonly IEmployeeFinanceService _employeeFinanceService;
-        private readonly IRequestTypeService _requestTypeService;
-        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestRepository<ReqEmployee> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
-            _requestTypeService = requestTypeService;
-            _requestStatusService = requestStatusService;
             _personService = personService;
             _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
@@ -434,120 +426,5 @@ namespace SMS.Services.Implementation
             };
         }
         #endregion
-
-        #region SMS Request Section
-
-        public List<DTOEmployee> RequestGet()
-        {
-            var employees = _requestRepository.Get().Where(em => em.IsDeleted == false).ToList();
-            var employeeList = new List<DTOEmployee>();
-            foreach (var employee in employees)
-            {
-                employeeList.Add(_mapper.Map<ReqEmployee, DTOEmployee>(employee));
-            }
-            return MapRequestTypeAndStatus(employeeList).ToList();
-        }
-        public DTOEmployee RequestGet(Guid? id)
-        {
-            if (id == null) return null;
-
-            var employeeRecord = _requestRepository.Get().FirstOrDefault(em => em.Id == id && em.IsDeleted == false);
-            if (employeeRecord == null) return null;
-
-            return _mapper.Map<ReqEmployee, DTOEmployee>(employeeRecord);
-        }
-        public Guid RequestCreate(DTOEmployee dtoEmployee)
-        {
-            dtoEmployee.CreatedDate = DateTime.UtcNow;
-            dtoEmployee.IsDeleted = false;
-            dtoEmployee.Id = Guid.NewGuid();
-            dtoEmployee.PersonId = _personService.RequestCreate(dtoEmployee.Person);
-            HelpingMethodForRelationship(dtoEmployee);
-            var dbRec = _mapper.Map<DTOEmployee, ReqEmployee>(dtoEmployee);
-            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoEmployee.RequestTypeString).Id;
-            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoEmployee.RequestStatusString).Id;
-            _requestRepository.Add(dbRec);
-            return dtoEmployee.Id;
-        }
-        public void RequestUpdate(DTOEmployee dtoEmployee)
-        {
-            var reqemployee = RequestGet(dtoEmployee.Id);
-            dtoEmployee.UpdateDate = DateTime.UtcNow;
-            var mergedEmployee = _mapper.Map(dtoEmployee, reqemployee);
-            _personService.RequestUpdate(mergedEmployee.Person);
-            HelpingMethodForRelationship(dtoEmployee);
-            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(mergedEmployee));
-        }
-        public void RequestDelete(Guid? id)
-        {
-
-            if (id == null)
-                return;
-            var employee = RequestGet(id);
-            employee.IsDeleted = true;
-            //employee.DeletedBy = DeletedBy;
-            employee.DeletedDate = DateTime.UtcNow;
-            _personService.RequestDelete(employee.PersonId);
-            _requestRepository.Update(_mapper.Map<DTOEmployee, ReqEmployee>(employee));
-        }
-
-        #endregion
-
-
-        #region Request Approver
-        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
-        {
-            var dto = RequestGet(dtoCommonRequestModel.Id);
-            dto.School = dtoCommonRequestModel.School;
-            GenericApiResponse status = null;
-            switch (dtoCommonRequestModel.RequestTypeString)
-            {
-                case "Create":
-                    status = Create(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                case "Update":
-                    status = Update(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                //case "Delete":
-                //    status = Delete(dto.Id,"admin");
-                //    UpdateRequestStatus(dto, status);
-                //    break;
-                default:
-                    break;
-            }
-
-            return status;
-        }
-
-        #endregion
-        private IEnumerable<DTOEmployee> MapRequestTypeAndStatus(IEnumerable<DTOEmployee> dtEmployees)
-        {
-            var requestTypes = _requestTypeService.RequestGetAll();
-            var requestStatuses = _requestStatusService.RequestGetAll();
-            foreach (var dtEmployee in dtEmployees)
-            {
-                dtEmployee.RequestTypeString =
-                    requestTypes.FirstOrDefault(rt => dtEmployee.RequestTypeId != null && rt.Id == dtEmployee.RequestTypeId.Value)?.Value;
-                dtEmployee.RequestStatusString =
-                    requestStatuses.FirstOrDefault(rs => dtEmployee.RequestStatusId != null && rs.Id == dtEmployee.RequestStatusId.Value)?.Type;
-            }
-
-            return dtEmployees;
-        }
-        private void UpdateRequestStatus(DTOEmployee dto, GenericApiResponse status)
-        {
-            if (status.StatusCode == "200")//success
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
-            }
-            else
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
-            }
-            //updating the status of the current request in Request DB
-            RequestUpdate(dto);
-        }
     }
 }

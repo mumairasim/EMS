@@ -64,52 +64,5 @@ namespace SMS.API.Controllers
 
         #endregion
 
-        #region RequestSMS Section
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(int pageNumber = 1, int pageSize = 10)
-        {
-            return Ok(TeacherDiaryService.RequestGet(pageNumber, pageSize));
-        }
-
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid id)
-        {
-            return Ok(TeacherDiaryService.RequestGet(id));
-        }
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(DTOTeacherDiary dtoTeacherDiary)
-        {
-
-            //var httpRequest = HttpContext.Current.Request;
-            //var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
-            //teacherDiaryDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            //teacherDiaryDetail.Person.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.RequestCreate(dtoTeacherDiary);
-            return Ok();
-        }
-        [HttpPut]
-        [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate(DTOTeacherDiary dtoTeacherDiary)
-        {
-            //var httpRequest = HttpContext.Current.Request;
-            //var teacherDiaryDetail = JsonConvert.DeserializeObject<DTOTeacherDiary>(httpRequest.Params["teacherDiaryModel"]);
-            //teacherDiaryDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.RequestUpdate(dtoTeacherDiary);
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Route("RequestDelete")]
-        public IHttpActionResult RequestDelete(Guid id)
-        {
-            //var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TeacherDiaryService.RequestDelete(id/*, deletedBy*/);
-            return Ok();
-        }
-
-        #endregion
     }
 }

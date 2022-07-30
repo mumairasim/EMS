@@ -41,27 +41,5 @@ namespace SMS.API.Controllers
 
         #endregion
 
-        #region RequestSMS Section
-
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid? schoolId, Guid? classId, int pageNumber = 1, int pageSize = 10)
-        {
-            TimeTableService.RequestGet(schoolId, classId, pageNumber, pageSize);
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(DTOTimeTable dtoTimeTable)
-        {
-           // var httpRequest = HttpContext.Current.Request;
-            //dtoTimeTable = JsonConvert.DeserializeObject<DTOTimeTable>(httpRequest.Params["timeTableModel"]);
-            //dtoTimeTable.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            TimeTableService.RequestCreate(dtoTimeTable);
-            return Ok();
-        }
-
-        #endregion
     }
 }
