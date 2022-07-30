@@ -53,7 +53,7 @@ namespace SMS.API.Controllers
                 var result = _courseService.GetAll();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
