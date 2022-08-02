@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
-using SMS.REQUESTDATA.Infrastructure;
 using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
+using SMS.REQUESTDATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Linq;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
 using ReqClass = SMS.REQUESTDATA.RequestModels.Class;
-using SMS.DTOs.ReponseDTOs;
 
 namespace SMS.Services.Implementation
 {
@@ -54,10 +54,13 @@ namespace SMS.Services.Implementation
             }
 
         }
-        public ClassesList Get(int pageNumber, int pageSize)
+        public ClassesList Get(int pageNumber, int pageSize, string searchString = "")
         {
-            var clasess = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var ClassCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var clasess = _repository.Get()
+                .Where(cl => string.IsNullOrEmpty(searchString) || cl.School.Name.ToLower().Contains(searchString.ToLower()))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.ClassName.ToLower().Contains(searchString.ToLower())))
+                .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var ClassCount = clasess.Count();
             var classTempList = new List<DTOClass>();
             foreach (var Classes in clasess)
             {

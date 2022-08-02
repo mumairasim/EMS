@@ -7,4 +7,10 @@ namespace SMS.DTOs.DTOs
         public List<Class> Classes { get; set; }
         public int classesCount { get; set; }
     }
+
+    public class CoursesList
+    {
+        public List<Course> Courses { get; set; }
+        public int Count { get; set; }
+    }
 }

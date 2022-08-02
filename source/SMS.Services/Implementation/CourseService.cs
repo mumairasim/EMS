@@ -102,6 +102,9 @@ namespace SMS.Services.Implementation
             return courseDto;
         }
 
+
+
+
         /// <summary>
         /// Service level call : Updates the Single Record of a Course 
         /// </summary>
@@ -310,6 +313,26 @@ namespace SMS.Services.Implementation
             }
             //updating the status of the current request in Request DB
             RequestUpdate(dto);
+        }
+
+        public CoursesList Get(int pageNumber, int pageSize, string searchString = "")
+        {
+            var courses = _repository.Get()
+                .Where(cl => string.IsNullOrEmpty(searchString) || cl.CourseName.ToLower().Contains(searchString.ToLower()))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.CourseCode.ToLower().Contains(searchString.ToLower())))
+                .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var courseCount = courses.Count();
+            var coursesTempList = new List<DTOCourse>();
+            foreach (var course in courses)
+            {
+                coursesTempList.Add(_mapper.Map<Course, DTOCourse>(course));
+            }
+            var classesList = new CoursesList()
+            {
+                Courses = coursesTempList,
+                Count = courseCount
+            };
+            return classesList;
         }
     }
 }

@@ -58,6 +58,14 @@ namespace SMS.API.Controllers
                 return InternalServerError();
             }
         }
+
+        [HttpGet]
+        [Route("Get")]
+        public IHttpActionResult Get(string searchString, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(_courseService.Get(pageNumber, pageSize, searchString));
+        }
+
         [HttpGet]
         [Route("GetAllBySchool")]
         public IHttpActionResult GetAllBySchool(Guid? schoolId)
