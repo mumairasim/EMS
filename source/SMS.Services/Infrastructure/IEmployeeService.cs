@@ -20,19 +20,6 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id, string DeletedBy);
         #endregion
 
-        #region SMS Request Section
-        List<DTOEmployee> RequestGet();
-        DTOEmployee RequestGet(Guid? id);
-        Guid RequestCreate(DTOEmployee dtoEmployee);
-        void RequestUpdate(DTOEmployee dtoEmployee);
-        void RequestDelete(Guid? id);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
-        #endregion
 
     }
 

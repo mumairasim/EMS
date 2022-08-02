@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMS.DATA.Models.Enums;
+using System;
 
 namespace SMS.DATA
 {
@@ -18,5 +19,7 @@ namespace SMS.DATA
         public string DeletedBy { get; set; }
 
         public bool? IsDeleted { get; set; }
+
+        public RequestStatus? ApprovalStatus { get; set; }
     }
 }

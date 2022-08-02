@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using SMS.DATA.Infrastructure;
-using SMS.DATA.Models;
-using SMS.REQUESTDATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using StudentDiary = SMS.DATA.Models.StudentDiary;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
-using RequestStudentDiary = SMS.REQUESTDATA.RequestModels.StudentDiary;
 
 
 namespace SMS.Services.Implementation
@@ -17,17 +14,11 @@ namespace SMS.Services.Implementation
     public class StudentDiaryService : IStudentDiaryService
     {
         private readonly IRepository<StudentDiary> _repository;
-        private readonly IRequestRepository<RequestStudentDiary> _requestRepository;
-        private readonly IRequestTypeService _requestTypeService;
-        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public StudentDiaryService(IRepository<StudentDiary> repository, IRequestRepository<RequestStudentDiary> requestRepository, IMapper mapper, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
+        public StudentDiaryService(IRepository<StudentDiary> repository, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
             _mapper = mapper;
-            _requestTypeService = requestTypeService;
-            _requestStatusService = requestStatusService;
         }
         #region SMS Section
         public void Create(DTOStudentDiary dtoStudentDiary)
@@ -53,7 +44,7 @@ namespace SMS.Services.Implementation
             var studentDiariesList = new StudentDiariesList()
             {
                 StudentDiaries = studentDiaryTempList,
-                StudentDiariesCount= StudentDiariesCount
+                StudentDiariesCount = StudentDiariesCount
             };
             return studentDiariesList;
         }
@@ -61,7 +52,7 @@ namespace SMS.Services.Implementation
         {
             if (id == null) return null;
             var studentDiaryRecord = _repository.Get().FirstOrDefault(cl => cl.Id == id && cl.IsDeleted == false);
-            var studentdiary = _mapper.Map < StudentDiary, DTOStudentDiary >(studentDiaryRecord);
+            var studentdiary = _mapper.Map<StudentDiary, DTOStudentDiary>(studentDiaryRecord);
 
             return studentdiary;
         }
@@ -85,57 +76,6 @@ namespace SMS.Services.Implementation
         }
         #endregion
 
-        #region RequestSMS Section
-        public void RequestCreate(DTOStudentDiary dtoStudentDiary)
-        {
-            dtoStudentDiary.CreatedDate = DateTime.UtcNow;
-            dtoStudentDiary.IsDeleted = false;
-            dtoStudentDiary.Id = Guid.NewGuid();
-            dtoStudentDiary.Employee = null;
-            dtoStudentDiary.School = null;
-
-            var dbRec = _mapper.Map<DTOStudentDiary, RequestStudentDiary>(dtoStudentDiary);
-            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoStudentDiary.RequestTypeString).Id;
-            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoStudentDiary.RequestStatusString).Id;
-            _requestRepository.Add(dbRec);
-        }
-        public List<DTOStudentDiary> RequestGet()
-        {
-            var studentDiary = _requestRepository.Get().Where(sd => sd.IsDeleted == false).ToList();
-            var StudentDiaryList = new List<DTOStudentDiary>();
-            foreach (var studentdiary in studentDiary)
-            {
-                StudentDiaryList.Add(_mapper.Map<RequestStudentDiary, DTOStudentDiary>(studentdiary));
-            }
-
-            return MapRequestTypeAndStatus(StudentDiaryList).ToList();
-        }
-
-        public DTOStudentDiary RequestGet(Guid? id)
-        {
-            if (id == null) return null;
-            var StudentDiaryRecord = _requestRepository.Get().FirstOrDefault(sd => sd.Id == id);
-            if (StudentDiaryRecord == null) return null;
-
-            return _mapper.Map<RequestStudentDiary, DTOStudentDiary>(StudentDiaryRecord);
-        }
-        public void RequestUpdate(DTOStudentDiary dtoStudentDiary)
-        {
-            var studentDiary = RequestGet(dtoStudentDiary.Id);
-            dtoStudentDiary.UpdateDate = DateTime.UtcNow;
-            var mergedstudentDiary = _mapper.Map(dtoStudentDiary, studentDiary);
-            _requestRepository.Update(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(mergedstudentDiary));
-        }
-        public void RequestDelete(Guid? id)
-        {
-            if (id == null)
-                return;
-            var studentDiary = RequestGet(id);
-            studentDiary.IsDeleted = true;
-            studentDiary.DeletedDate = DateTime.UtcNow;
-            _requestRepository.Update(_mapper.Map<DTOStudentDiary, RequestStudentDiary>(studentDiary));
-        }
-        #endregion
 
         #region private
         private void HelpingMethodForRelationship(DTOStudentDiary dtoStudentDiary)
@@ -145,24 +85,9 @@ namespace SMS.Services.Implementation
             dtoStudentDiary.School = null;
             dtoStudentDiary.Employee = null;
         }
-
-        private IEnumerable<DTOStudentDiary> MapRequestTypeAndStatus(IEnumerable<DTOStudentDiary> dtoWorksheets)
-        {
-            var requestTypes = _requestTypeService.RequestGetAll();
-            var requestStatuses = _requestStatusService.RequestGetAll();
-            foreach (var worksheet in dtoWorksheets)
-            {
-                worksheet.RequestTypeString =
-                    requestTypes.FirstOrDefault(rt => worksheet.RequestTypeId != null && rt.Id == worksheet.RequestTypeId.Value)?.Value;
-                worksheet.RequestStatusString =
-                    requestStatuses.FirstOrDefault(rs => worksheet.RequestStatusId != null && rs.Id == worksheet.RequestStatusId.Value)?.Type;
-            }
-
-            return dtoWorksheets;
-        }
         #endregion
     }
-     
+
 
 }
 

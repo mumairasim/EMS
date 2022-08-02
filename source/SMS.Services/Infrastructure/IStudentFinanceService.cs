@@ -52,49 +52,5 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id);
         #endregion
 
-        #region RequestSMS 
-        /// <summary>
-        /// Service level call : Return all records of a StudentFinances
-        /// </summary>
-        /// <returns></returns>
-        List<DTOStudentFinances> RequestGetAll();
-
-        /// <summary>
-        /// Service level call : Return filtered records of a StudentFinances, pass null to ignore filters
-        /// </summary>
-        /// <returns></returns>
-        List<DTOStudentFinanceCustom> RequestGetByFilter(Guid? schoolId, Guid? classId, Guid? studentId, string feeMonth);
-
-        /// <summary>
-        /// Service level call : Return filtered records of a StudentFinances, pass null to ignore filters
-        /// </summary>
-        /// <returns></returns>
-        List<DTOStudentFinanceCustom> RequestGetDetailByFilter(Guid? schoolId, Guid? ClassId, Guid? StudentId);
-
-        /// <summary>
-        /// Retruns a Single Record of a StudentFinances
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        DTOStudentFinances RequestGet(Guid? id);
-
-        /// <summary>
-        /// Service level call : Creates a single record of a StudentFinances
-        /// </summary>
-        /// <param name="dtoStudentFinances"></param>
-        void RequestCreate(DTOStudentFinanceCustom dTOStudentFinances);
-
-        /// <summary>
-        /// Service level call : Updates the Single Record of a StudentFinances 
-        /// </summary>
-        /// <param name="dtoStudentFinances"></param>
-        void RequestUpdate(DTOStudentFinances dTOStudentFinances);
-
-        /// <summary>
-        /// Service level call : Delete a single record of a StudentFinances
-        /// </summary>
-        /// <param name="id"></param>
-        void RequestDelete(Guid? id);
-        #endregion
     }
 }

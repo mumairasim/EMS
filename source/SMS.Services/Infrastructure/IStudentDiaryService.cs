@@ -15,12 +15,5 @@ namespace SMS.Services.Infrastructure
         void Delete(Guid? id, string DeletedBy);
         #endregion
 
-        #region RequestSMS Section
-        List<DTOStudentDiary> RequestGet();
-        DTOStudentDiary RequestGet(Guid? id);
-        void RequestCreate(DTOStudentDiary StudentDiary);
-        void RequestUpdate(DTOStudentDiary dtoStudentDiary);
-        void RequestDelete(Guid? id);
-        #endregion
     }
 }

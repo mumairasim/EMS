@@ -1,5 +1,4 @@
-﻿using SMS.DTOs.DTOs;
-using SMS.DTOs.ReponseDTOs;
+﻿using SMS.DTOs.ReponseDTOs;
 using System;
 using System.Collections.Generic;
 using DTOCourse = SMS.DTOs.DTOs.Course;
@@ -45,21 +44,5 @@ namespace SMS.Services.Infrastructure
         List<DTOCourse> GetAllBySchool(Guid? schoolId);
         #endregion
 
-        #region SMS Request Section
-
-        List<DTOCourse> RequestGet();
-        DTOCourse RequestGet(Guid? id);
-        void RequestCreate(DTOCourse student);
-        void RequestUpdate(DTOCourse dtoStudent);
-        void RequestDelete(Guid? id);
-
-        //List<DTOCourse> GetAllBySchool(Guid? schoolId);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
-        #endregion
     }
 }

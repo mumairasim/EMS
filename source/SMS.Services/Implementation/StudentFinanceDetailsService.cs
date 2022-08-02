@@ -3,11 +3,9 @@ using SMS.DATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
-using SMS.REQUESTDATA.Infrastructure;
 using System.Linq;
 using DBStudentFinanceDetails = SMS.DATA.Models.StudentFinanceDetail;
 using DTOStudentFinanceDetails = SMS.DTOs.DTOs.StudentFinanceDetail;
-using RequestStudentFinanceDetail = SMS.REQUESTDATA.RequestModels.StudentFinanceDetail;
 
 namespace SMS.Services.Implementation
 {
@@ -15,17 +13,15 @@ namespace SMS.Services.Implementation
     {
         #region Properties
         private readonly IRepository<DBStudentFinanceDetails> _repository;
-        private readonly IRequestRepository<RequestStudentFinanceDetail> _requestRepository;
         private readonly IFinanceTypeService _financeTypeService;
         private IMapper _mapper;
         #endregion
 
         #region Init
 
-        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IFinanceTypeService financeTypeService, IRequestRepository<RequestStudentFinanceDetail> requestRepository, IMapper mapper)
+        public StudentFinanceDetailsService(IRepository<DBStudentFinanceDetails> repository, IFinanceTypeService financeTypeService, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
             _financeTypeService = financeTypeService;
             _mapper = mapper;
         }
@@ -151,89 +147,5 @@ namespace SMS.Services.Implementation
 
         #endregion
 
-        #region RequestService Calls
-
-        /// <summary>
-        /// Service level call : Creates a single record of a StudentFinances
-        /// </summary>
-        /// <param name="dTOStudentFinanceDetails"></param>
-        public void RequestCreate(DTOStudentFinanceDetails dTOStudentFinanceDetails)
-        {
-            dTOStudentFinanceDetails.CreatedDate = DateTime.UtcNow;
-            dTOStudentFinanceDetails.IsDeleted = false;
-            dTOStudentFinanceDetails.Id = Guid.NewGuid();
-            _requestRepository.Add(_mapper.Map<DTOStudentFinanceDetails, RequestStudentFinanceDetail>(dTOStudentFinanceDetails));
-        }
-
-        /// <summary>
-        /// Service level call : Delete a single record of a StudentFinances
-        /// </summary>
-        /// <param name="id"></param>
-        public void RequestDelete(Guid? id)
-        {
-            if (id == null)
-                return;
-            var StudentFinances = RequestGet(id);
-            if (StudentFinances != null)
-            {
-                StudentFinances.IsDeleted = true;
-                StudentFinances.DeletedDate = DateTime.UtcNow;
-                _requestRepository.Update(_mapper.Map<DTOStudentFinanceDetails, RequestStudentFinanceDetail>(StudentFinances));
-            }
-
-        }
-
-        /// <summary>
-        /// Retruns a Single Record of a StudentFinances
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public DTOStudentFinanceDetails RequestGet(Guid? id)
-        {
-            if (id == null)
-            {
-                return null;
-            }
-
-            var StudentFinances = _requestRepository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
-            var StudentFinancesDto = _mapper.Map<RequestStudentFinanceDetail, DTOStudentFinanceDetails>(StudentFinances);
-
-            return StudentFinancesDto;
-        }
-
-        /// <summary>
-        /// Service level call : Updates the Single Record of a StudentFinances 
-        /// </summary>
-        /// <param name="dTOStudentFinanceDetails"></param>
-        public void RequestUpdate(DTOStudentFinanceDetails dTOStudentFinanceDetails)
-        {
-            var StudentFinances = RequestGet(dTOStudentFinanceDetails.Id);
-            if (StudentFinances != null)
-            {
-                dTOStudentFinanceDetails.UpdateDate = DateTime.UtcNow;
-                dTOStudentFinanceDetails.IsDeleted = false;
-                var updated = _mapper.Map(dTOStudentFinanceDetails, StudentFinances);
-
-                _requestRepository.Update(_mapper.Map<DTOStudentFinanceDetails, RequestStudentFinanceDetail>(updated));
-            }
-        }
-
-        /// <summary>
-        /// Service level call : Return all records of a StudentFinances
-        /// </summary>
-        /// <returns></returns>
-        List<DTOStudentFinanceDetails> IStudentFinanceDetailsService.RequestGetAll()
-        {
-            var StudentFinancess = _requestRepository.Get().Where(x => x.IsDeleted == false/* || x.IsDeleted == null*/).ToList();
-            var StudentFinancesList = new List<DTOStudentFinanceDetails>();
-            foreach (var StudentFinances in StudentFinancess)
-            {
-                StudentFinancesList.Add(_mapper.Map<RequestStudentFinanceDetail, DTOStudentFinanceDetails>(StudentFinances));
-            }
-            
-            return StudentFinancesList;
-        }
-
-        #endregion
     }
 }

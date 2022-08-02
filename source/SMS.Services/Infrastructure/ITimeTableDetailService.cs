@@ -9,9 +9,6 @@ namespace SMS.Services.Infrastructure
         GenericApiResponse Create(DTOTimeTableDetail timeTableDetail);
         #endregion
 
-        #region RequestSMS
-        GenericApiResponse RequestCreate(DTOTimeTableDetail timeTableDetail);
-        #endregion
     }
 }
 

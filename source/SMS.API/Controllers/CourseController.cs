@@ -53,7 +53,7 @@ namespace SMS.API.Controllers
                 var result = _courseService.GetAll();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return InternalServerError();
             }
@@ -148,126 +148,6 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-        #region SMS Request Section
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid? id)
-        {
-            if (id == null)
-            {
-                return BadRequest("No Id Recieved");
-            }
-
-            try
-            {
-                var result = _courseService.RequestGet(id);
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-        }
-
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet()
-        {
-            try
-            {
-                var result = _courseService.RequestGet();
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-        }
-        //[HttpGet]
-        //[Route("GetAllBySchool")]
-        //public IHttpActionResult GetAllBySchool(Guid? schoolId)
-        //{
-        //    try
-        //    {
-        //        var result = _courseService.GetAllBySchool(schoolId);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return InternalServerError();
-        //    }
-        //}
-
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(Course course)
-        {
-            if (course == null)
-            {
-                return BadRequest("Course not Recieved");
-            }
-
-            try
-            {
-                _courseService.RequestCreate(course);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate(Course course)
-        {
-            if (course == null)
-            {
-                return BadRequest("Course not Recieved");
-            }
-
-            try
-            {
-                _courseService.RequestUpdate(course);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Route("RequestDelete")]
-        public IHttpActionResult RequestDelete(Guid id)
-        {
-            if (id == null)
-            {
-                return BadRequest("No Id Recieved");
-            }
-
-            try
-            {
-                _courseService.RequestDelete(id);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-            return Ok();
-        }
-        #endregion
-
-        #region Request Approver
-        [HttpGet]
-        [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Guid id)
-        {
-            //to be added
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }
 
