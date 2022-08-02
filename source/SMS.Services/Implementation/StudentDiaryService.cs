@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
-using StudentDiary = SMS.DATA.Models.StudentDiary;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
+using StudentDiary = SMS.DATA.Models.StudentDiary;
 
 
 namespace SMS.Services.Implementation
@@ -32,21 +32,26 @@ namespace SMS.Services.Implementation
             HelpingMethodForRelationship(dtoStudentDiary);
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }
-        public StudentDiariesList Get(int pageNumber, int pageSize)
+        public ItemsList<DTOStudentDiary> Get(string searchString, int pageNumber, int pageSize)
         {
-            var StudentDiaries = _repository.Get().Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var StudentDiariesCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
-            var studentDiaryTempList = new List<DTOStudentDiary>();
-            foreach (var studentdiary in StudentDiaries)
+            var resultSet = _repository.Get()
+                .Where(cl => string.IsNullOrEmpty(searchString) || cl.DiaryText.ToLower().Contains(searchString.ToLower()))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.School.Name.ToLower().Contains(searchString.ToLower())))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.FirstName.ToLower().Contains(searchString.ToLower())))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.LastName.ToLower().Contains(searchString.ToLower())))
+                .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var courseCount = resultSet.Count();
+            var tempList = new List<DTOStudentDiary>();
+            foreach (var item in resultSet)
             {
-                studentDiaryTempList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(studentdiary));
+                tempList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(item));
             }
-            var studentDiariesList = new StudentDiariesList()
+            var finalList = new ItemsList<DTOStudentDiary>()
             {
-                StudentDiaries = studentDiaryTempList,
-                StudentDiariesCount = StudentDiariesCount
+                Items = tempList,
+                Count = courseCount
             };
-            return studentDiariesList;
+            return finalList;
         }
         public DTOStudentDiary Get(Guid? id)
         {

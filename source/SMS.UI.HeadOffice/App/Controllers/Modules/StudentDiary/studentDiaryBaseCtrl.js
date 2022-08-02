@@ -4,12 +4,14 @@ SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', fu
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
+
     $scope.GetStudentDiary = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/StudentDiary/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/StudentDiary/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.StudentDiariesList = response.data.StudentDiaries;
-            $scope.TotalStudentDiary = response.data.StudentDiariesCount;
+            $scope.StudentDiariesList = response.data.Items;
+            $scope.TotalStudentDiary = response.data.Count;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
             $scope.loader(false);
         },

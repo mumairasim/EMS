@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
-using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using DTOStudentDiary = SMS.DTOs.DTOs.StudentDiary;
 
 
@@ -23,9 +22,9 @@ namespace SMS.API.Controllers
         #region SMS Section
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            var studentList = _studentDiaryService.Get(pageNumber, pageSize);
+            var studentList = _studentDiaryService.Get(searchString, pageNumber, pageSize);
             return Ok(studentList);
         }
         [HttpGet]
@@ -72,6 +71,6 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-       
+
     }
 }
