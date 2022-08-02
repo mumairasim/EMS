@@ -13,4 +13,17 @@ namespace SMS.DTOs.DTOs
         public List<Course> Courses { get; set; }
         public int Count { get; set; }
     }
+
+    public class TeacherDiaryList
+    {
+        public List<TeacherDiary> Courses { get; set; }
+        public int Count { get; set; }
+    }
+
+    public class ItemsList<T>
+    {
+        public List<T> Items { get; set; }
+        public int Count { get; set; }
+    }
+
 }

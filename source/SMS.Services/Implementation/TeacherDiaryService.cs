@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
-using SMS.Services.Infrastructure;
-using TeacherDiary = SMS.DATA.Models.TeacherDiary;
-using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
-using System.Text.RegularExpressions;
 using SMS.DTOs.ReponseDTOs;
+using SMS.Services.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
+using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 
 namespace SMS.Services.Implementation
 {
@@ -22,22 +22,29 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
         }
         #region SMS Section
-        public TeacherDiariesList Get(int pageNumber, int pageSize)
+        public ItemsList<DTOTeacherDiary> Get(int pageNumber, int pageSize, string searchString)
         {
-            var teacherDiaries = _repository.Get().Where(td => td.IsDeleted == false).OrderByDescending(st => st.DairyDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(); ;
-            var teacherDiaryCount = _repository.Get().Count(td => td.IsDeleted == false);
-            var teacherDiaryTempList = new List<DTOTeacherDiary>();
-            foreach (var teacherDiary in teacherDiaries)
+            var resultSet = _repository.Get()
+                .Where(cl => string.IsNullOrEmpty(searchString) || cl.Name.ToLower().Contains(searchString.ToLower()))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.School.Name.ToLower().Contains(searchString.ToLower())))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.DairyText.ToLower().Contains(searchString.ToLower())))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.FirstName.ToLower().Contains(searchString.ToLower())))
+                .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.LastName.ToLower().Contains(searchString.ToLower())))
+                .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var courseCount = resultSet.Count();
+            var tempList = new List<DTOTeacherDiary>();
+            foreach (var item in resultSet)
             {
-                teacherDiaryTempList.Add(_mapper.Map<TeacherDiary, DTOTeacherDiary>(teacherDiary));
+                tempList.Add(_mapper.Map<TeacherDiary, DTOTeacherDiary>(item));
             }
-            var teacherDiariesList = new TeacherDiariesList()
+            var finalList = new ItemsList<DTOTeacherDiary>()
             {
-                TeacherDiaries = teacherDiaryTempList,
-                TeacherDiariesCount = teacherDiaryCount
+                Items = tempList,
+                Count = courseCount
             };
-            return teacherDiariesList;
+            return finalList;
         }
+
         public DTOTeacherDiary Get(Guid? id)
         {
             if (id == null) return null;
@@ -183,6 +190,8 @@ namespace SMS.Services.Implementation
                 Description = descriptionMessage
             };
         }
+
+
         #endregion
     }
 }

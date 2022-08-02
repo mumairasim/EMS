@@ -16,8 +16,6 @@ namespace SMS.DATA.Implementation
             var connStr = ConfigurationManager.ConnectionStrings["SmsConnection"].ConnectionString;
             _connection = new SqlConnection(connStr);
 
-            var connStrr = ConfigurationManager.ConnectionStrings["SMSRequest"].ConnectionString;
-            _Requestconnection = new SqlConnection(connStrr);
         }
 
         public List<EmployeeFinanceInfo> GetEmployeeFinance(Guid? schoolId, Guid? DesignationId, string SalaryMonth)

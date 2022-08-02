@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
-using SMS.Services.Infrastructure;
 using DTOTeacherDiary = SMS.DTOs.DTOs.TeacherDiary;
 
 namespace SMS.API.Controllers
@@ -21,9 +21,9 @@ namespace SMS.API.Controllers
         #region SMS Section
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(TeacherDiaryService.Get(pageNumber, pageSize));
+            return Ok(TeacherDiaryService.Get(pageNumber, pageSize, searchString));
         }
 
         [HttpGet]
