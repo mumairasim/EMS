@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
         public CourseService(IRepository<Course> repository, IMapper mapper)
         {
             _repository = repository;
-            _mapper = mapper;;
+            _mapper = mapper;
         }
 
         #endregion
@@ -192,5 +192,4 @@ namespace SMS.Services.Implementation
             return classesList;
         }
     }
-}
 }

@@ -1,4 +1,5 @@
-﻿using SMS.DTOs.ReponseDTOs;
+﻿using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using System;
 using System.Collections.Generic;
 using DTOCourse = SMS.DTOs.DTOs.Course;

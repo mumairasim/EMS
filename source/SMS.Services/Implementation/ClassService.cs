@@ -2,14 +2,12 @@
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.DTOs.ReponseDTOs;
-using SMS.REQUESTDATA.Infrastructure;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Class = SMS.DATA.Models.Class;
 using DTOClass = SMS.DTOs.DTOs.Class;
-using SMS.DTOs.ReponseDTOs;
 
 namespace SMS.Services.Implementation
 {
