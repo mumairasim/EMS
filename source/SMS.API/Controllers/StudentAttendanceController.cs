@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.Services.Configurations;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
-using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
-using SMS.Services.Configurations;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
 
 namespace SMS.API.Controllers
@@ -14,10 +14,10 @@ namespace SMS.API.Controllers
     [EnableCors("*", "*", "*")]
     public class StudentAttendanceController : ApiController
     {
-        public IStudentAttendanceService StudentAttendanceService;
+        public IStudentAttendanceService _studentAttendanceService;
         public StudentAttendanceController(IStudentAttendanceService studentAttendanceService)
         {
-            StudentAttendanceService = studentAttendanceService;
+            _studentAttendanceService = studentAttendanceService;
         }
         #region SMS Section
         /// <summary>
@@ -29,9 +29,10 @@ namespace SMS.API.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(StudentAttendanceService.Get(pageNumber, pageSize));
+            var resSet = _studentAttendanceService.Get(searchString, pageNumber, pageSize);
+            return Ok(resSet);
         }
         /// <summary>
         /// Fetch data on the basis of class and school 
@@ -45,7 +46,7 @@ namespace SMS.API.Controllers
         [Route("Get")]
         public IHttpActionResult Get(Guid? classId, Guid? schoolId, int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(StudentAttendanceService.Get(classId, schoolId, pageNumber, pageSize));
+            return Ok(_studentAttendanceService.Get(classId, schoolId, pageNumber, pageSize));
         }
         /// <summary>
         /// Fetch data on the basis of class and school 
@@ -63,22 +64,22 @@ namespace SMS.API.Controllers
             predicate.And(sa => sa.IsDeleted == false);
             predicate.And(sa => sa.ClassId == classId);
             predicate.And(sa => sa.SchoolId == schoolId);
-            return Ok(StudentAttendanceService.Search(predicate, pageNumber, pageSize));
+            return Ok(_studentAttendanceService.Search(predicate, pageNumber, pageSize));
         }
         /// <summary>
         /// Fetch by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        
 
 
-        
+
+
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)
         {
-            return Ok(StudentAttendanceService.Get(id));
+            return Ok(_studentAttendanceService.Get(id));
         }
         [HttpPost]
         [Route("Create")]
@@ -87,7 +88,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
             studentAttendanceDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            return Ok(StudentAttendanceService.Create(studentAttendanceDetail));
+            return Ok(_studentAttendanceService.Create(studentAttendanceDetail));
         }
         [HttpPut]
         [Route("Update")]
@@ -96,7 +97,7 @@ namespace SMS.API.Controllers
             var httpRequest = HttpContext.Current.Request;
             var studentAttendanceDetail = JsonConvert.DeserializeObject<DTOStudentAttendance>(httpRequest.Params["studentAttendanceModel"]);
             studentAttendanceDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.Update(studentAttendanceDetail);
+            _studentAttendanceService.Update(studentAttendanceDetail);
             return Ok();
         }
         [HttpDelete]
@@ -104,7 +105,7 @@ namespace SMS.API.Controllers
         public IHttpActionResult Delete(Guid id)
         {
             var deletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-            StudentAttendanceService.Delete(id, deletedBy);
+            _studentAttendanceService.Delete(id, deletedBy);
             return Ok();
         }
         #endregion

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Expressions;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
 using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 using DTOStudentAttendance = SMS.DTOs.DTOs.StudentAttendance;
 using StudentAttendance = SMS.DATA.Models.StudentAttendance;
 
@@ -25,22 +25,24 @@ namespace SMS.Services.Implementation
             _studentAttendanceDetailService = studentAttendanceDetailService;
         }
         #region SMS Section
-        public StudentsAttendanceList Get(int pageNumber, int pageSize)
+        public ItemsList<DTOStudentAttendance> Get(string searchString, int pageNumber, int pageSize)
         {
-            var attendanceRecords = _repository.Get().Where(ar => ar.IsDeleted == false).OrderByDescending(ar => ar.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var attendanceCount = _repository.Get().Count(st => st.IsDeleted == false);
-            var studentAttendanceList = new List<DTOStudentAttendance>();
-            foreach (var studentAttendance in attendanceRecords)
+            var resultSet = _repository.Get()
+             .Where(cl => string.IsNullOrEmpty(searchString) || cl.Class.ClassName.ToLower().Contains(searchString.ToLower()))
+             .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.School.Name.ToLower().Contains(searchString.ToLower())))
+             .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var resultCount = resultSet.Count();
+            var tempList = new List<DTOStudentAttendance>();
+            foreach (var item in resultSet)
             {
-                studentAttendanceList.Add(_mapper.Map<StudentAttendance, DTOStudentAttendance>(studentAttendance));
+                tempList.Add(_mapper.Map<StudentAttendance, DTOStudentAttendance>(item));
             }
-            var studentsAttendanceList = new StudentsAttendanceList()
+            var finalList = new ItemsList<DTOStudentAttendance>()
             {
-                StudentsAttendances = studentAttendanceList,
-                StudentsAttendanceCount = attendanceCount
+                Items = tempList,
+                Count = resultCount
             };
-
-            return studentsAttendanceList;
+            return finalList;
         }
         public DTOStudentAttendance Get(Guid? id)
         {
