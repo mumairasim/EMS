@@ -162,6 +162,12 @@
     <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdate.html" />
     <Content Include="App\Controllers\Modules\FinanceType\financeTypeUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\StudentFinance\studentFinanceUpdate.html" />
+    <Content Include="App\Controllers\Modules\Designation\designationBase.html" />
+    <Content Include="App\Controllers\Modules\Designation\designationBaseCtrl.js" />
+    <Content Include="App\Controllers\Modules\Designation\designationCreate.html" />
+    <Content Include="App\Controllers\Modules\Designation\designationCreateCtrl.js" />
+    <Content Include="App\Controllers\Modules\Designation\designationUpdate.html" />
+    <Content Include="App\Controllers\Modules\Designation\designationUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBase.html" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryCreate.html" />

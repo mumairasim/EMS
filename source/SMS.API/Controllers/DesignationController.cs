@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
+using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
-using DTODesignation = SMS.DTOs.DTOs.Designation;
 using System.Web.Http.Cors;
 
 namespace SMS.API.Controllers
@@ -19,9 +22,9 @@ namespace SMS.API.Controllers
         #region SMS Section
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_designationService.Get());
+            return Ok(_designationService.Get(searchString, pageNumber, pageSize));
         }
         [HttpGet]
         [Route("Get")]
@@ -31,15 +34,21 @@ namespace SMS.API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(DTODesignation dtoDesignation)
+        public IHttpActionResult Create()
         {
+            var httpRequest = HttpContext.Current.Request;
+            var dtoDesignation = JsonConvert.DeserializeObject<Designation>(httpRequest.Params["designationModel"]);
+            dtoDesignation.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _designationService.Create(dtoDesignation);
             return Ok();
         }
         [HttpPut]
         [Route("Update")]
-        public IHttpActionResult Update(DTODesignation dtoDesignation)
+        public IHttpActionResult Update()
         {
+            var httpRequest = HttpContext.Current.Request;
+            var dtoDesignation = JsonConvert.DeserializeObject<Designation>(httpRequest.Params["designationModel"]);
+            dtoDesignation.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _designationService.Update(dtoDesignation);
             return Ok();
         }

@@ -178,6 +178,27 @@ SMSHO.config(['$routeProvider', '$locationProvider', 'localStorageServiceProvide
         })
 
 
+        .when("/designationBase", {
+            title: "Designation Search",
+            templateUrl: "App/Controllers/Modules/Designation/designationBase.html",
+            controller: "designationBaseCtrl"
+        })
+        .when("/designationSearch", {
+            title: "Designation Search",
+            templateUrl: "App/Controllers/Modules/Designation/designationSearch.html",
+            controller: "designationSearchCtrl"
+        })
+        .when("/designationCreate", {
+            title: "Designation Create",
+            templateUrl: "App/Controllers/Modules/Designation/designationCreate.html",
+            controller: "designationCreateCtrl"
+        })
+        .when("/designationUpdate", {
+            title: "Designation Update",
+            templateUrl: "App/Controllers/Modules/Designation/designationUpdate.html",
+            controller: "designationUpdateCtrl"
+        })
+
         .when("/teacherDiaryBase", {
             title: "TeacherDiary Search",
             templateUrl: "App/Controllers/Modules/TeacherDiary/teacherDiaryBase.html",

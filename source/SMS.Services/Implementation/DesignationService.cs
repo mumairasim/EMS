@@ -1,10 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using SMS.DATA.Infrastructure;
-using SMS.DATA.Models;
-using SMS.Services.Infrastructure;
+using Designation = SMS.DATA.Models.Designation;
 using DTODesignation = SMS.DTOs.DTOs.Designation;
 
 namespace SMS.Services.Implementation
@@ -19,15 +20,23 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
         }
         #region SMS Section
-        public List<DTODesignation> Get()
+        public ItemsList<DTODesignation> Get(string searchString, int pageNumber, int pageSize)
         {
-            var designations = _repository.Get().Where(d => d.IsDeleted == false).ToList();
-            var designationList = new List<DTODesignation>();
-            foreach (var designation in designations)
+            var resultSet = _repository.Get()
+              .Where(cl => string.IsNullOrEmpty(searchString) || cl.Name.ToLower().Contains(searchString.ToLower()))
+              .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var resultCount = resultSet.Count();
+            var tempList = new List<DTODesignation>();
+            foreach (var item in resultSet)
             {
-                designationList.Add(_mapper.Map<Designation, DTODesignation>(designation));
+                tempList.Add(_mapper.Map<Designation, DTODesignation>(item));
             }
-            return designationList;
+            var finalList = new ItemsList<DTODesignation>()
+            {
+                Items = tempList,
+                Count = resultCount
+            };
+            return finalList;
         }
         public DTODesignation Get(Guid? id)
         {
