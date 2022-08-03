@@ -78,6 +78,7 @@
     <Compile Include="Implementation\TimeTableDetailService.cs" />
     <Compile Include="Implementation\TimeTableService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
+    <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />

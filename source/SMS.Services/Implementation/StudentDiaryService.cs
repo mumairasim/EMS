@@ -40,7 +40,7 @@ namespace SMS.Services.Implementation
                 .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.FirstName.ToLower().Contains(searchString.ToLower())))
                 .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.LastName.ToLower().Contains(searchString.ToLower())))
                 .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var courseCount = resultSet.Count();
+            var resultCount = resultSet.Count();
             var tempList = new List<DTOStudentDiary>();
             foreach (var item in resultSet)
             {
@@ -49,7 +49,7 @@ namespace SMS.Services.Implementation
             var finalList = new ItemsList<DTOStudentDiary>()
             {
                 Items = tempList,
-                Count = courseCount
+                Count = resultCount
             };
             return finalList;
         }

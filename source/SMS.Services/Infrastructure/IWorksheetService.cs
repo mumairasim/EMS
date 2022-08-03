@@ -1,6 +1,6 @@
-﻿using SMS.DTOs.ReponseDTOs;
+﻿using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using System;
-using System.Collections.Generic;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 namespace SMS.Services.Infrastructure
 {
@@ -11,7 +11,8 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return all records of a Worksheet
         /// </summary>
         /// <returns></returns>
-        List<DTOWorksheet> GetAll();
+        ItemsList<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize);
+
 
         /// <summary>
         /// Retruns a Single Record of a Worksheet

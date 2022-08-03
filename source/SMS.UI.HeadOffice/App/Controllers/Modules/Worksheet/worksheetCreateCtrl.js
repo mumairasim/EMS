@@ -25,7 +25,7 @@
         data.InstructorId = $scope.WorksheetModel.Employee.Id;
         var formData = new FormData();
         formData.append('worksheetModel', JSON.stringify(data));
-        var responsedata = apiService.masterpost('/api/v1/Worksheet/Create', formData);
+        var responsedata = apiService.post('/api/v1/Worksheet/Create', formData);
         responsedata.then(function mySucces(response) {
 
             $scope.response = response.data;

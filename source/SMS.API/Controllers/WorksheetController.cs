@@ -43,13 +43,13 @@ namespace SMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
-        public IHttpActionResult GetAll()
+        [Route("Get")]
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-                var result = _worksheetService.GetAll();
-                return Ok(result);
+                var studentList = _worksheetService.Get(searchString, pageNumber, pageSize);
+                return Ok(studentList);
             }
             catch (Exception)
             {

@@ -3,10 +3,14 @@
 
 SMSHO.controller('worksheetBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
+    $scope.pageSize = "10";
+    $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetWorksheets = function () {
-        var responsedata = apiService.masterget('/api/v1/Worksheet/GetAll');
+        var responsedata = apiService.masterget('/api/v1/Worksheet/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.worksheetList = response.data;
+            $scope.worksheetList = response.data.Items;
+            $scope.Count = response.data.Count;
         },
             function myError(response) {
                 $scope.response = response.data;
