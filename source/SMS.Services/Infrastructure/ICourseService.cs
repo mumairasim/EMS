@@ -15,6 +15,8 @@ namespace SMS.Services.Infrastructure
         /// <returns></returns>
         List<DTOCourse> GetAll();
 
+        CoursesList Get(int pageNumber, int pageSize, string searchString = "");
+
         /// <summary>
         /// Retruns a Single Record of a Course
         /// </summary>
@@ -43,21 +45,5 @@ namespace SMS.Services.Infrastructure
         List<DTOCourse> GetAllBySchool(Guid? schoolId);
         #endregion
 
-        #region SMS Request Section
-        
-        List<DTOCourse> RequestGet();
-        DTOCourse RequestGet(Guid? id);
-        void RequestCreate(DTOCourse student);
-        void RequestUpdate(DTOCourse dtoStudent);
-        void RequestDelete(Guid? id);
-
-        //List<DTOCourse> GetAllBySchool(Guid? schoolId);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
-        #endregion
     }
 }

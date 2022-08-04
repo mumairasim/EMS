@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Autofac;
 using Autofac.Integration.WebApi;
 using SMS.DATA.Implementation;
@@ -8,8 +6,6 @@ using SMS.DATA.Infrastructure;
 using System.Reflection;
 using System.Web.Http;
 using AutoMapper;
-using SMS.REQUESTDATA.Implementation;
-using SMS.REQUESTDATA.Infrastructure;
 using SMS.MAP;
 
 namespace SMS.API.Registrar
@@ -22,8 +18,6 @@ namespace SMS.API.Registrar
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(RequestRepository<>)).As(typeof(IRequestRepository<>)).InstancePerLifetimeScope();
-            builder.RegisterType<RequestUnitOfWork>().As<IRequestUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<StoredProcCaller>().As<IStoredProcCaller>().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assembly.Load("SMS.SERVICES"))
                 .Where(t => t.Name.EndsWith("Service"))

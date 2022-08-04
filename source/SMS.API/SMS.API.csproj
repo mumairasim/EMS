@@ -260,7 +260,6 @@
     <Compile Include="Controllers\TimeTableController.cs" />
     <Compile Include="Controllers\TeacherDiaryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\RequestManagementController.cs" />
     <Compile Include="Controllers\WorksheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -382,10 +381,6 @@
     <ProjectReference Include="..\SMS.MAP\SMS.MAP.csproj">
       <Project>{8C54D1D5-E377-434E-97C5-1DA53C7E3FBF}</Project>
       <Name>SMS.MAP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SMS.REQUESTDATA\SMS.REQUESTDATA.csproj">
-      <Project>{a7dbd438-6800-4f1b-9e97-9ba2b431d963}</Project>
-      <Name>SMS.REQUESTDATA</Name>
     </ProjectReference>
     <ProjectReference Include="..\SMS.Services\SMS.SERVICES.csproj">
       <Project>{a47c6074-6049-4b84-a2a1-caa111367c50}</Project>

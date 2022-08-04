@@ -70,50 +70,5 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-        #region SMS Request Section
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet()
-        {
-            return Ok(_schoolService.RequestGet());
-        }
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid id)
-        {
-            return Ok(_schoolService.RequestGet(id));
-        }
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(DTOSchool dtoSchool)
-        {
-            _schoolService.RequestCreate(dtoSchool);
-            return Ok();
-        }
-        [HttpPut]
-        [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate(DTOSchool dtoSchool)
-        {
-            _schoolService.RequestUpdate(dtoSchool);
-            return Ok();
-        }
-        [HttpDelete]
-        [Route("RequestDelete")]
-        public IHttpActionResult RequestDelete(Guid id)
-        {
-            _schoolService.RequestDelete(id);
-            return Ok();
-        }
-        #endregion
-
-        #region Request Approver
-        [HttpGet]
-        [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(Guid id)
-        {
-            //to be added
-            throw new NotImplementedException();
-        }
-        #endregion
     }
 }

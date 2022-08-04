@@ -1,7 +1,6 @@
 ﻿using SMS.DTOs.DTOs;
 using SMS.DTOs.ReponseDTOs;
 using System;
-using System.Collections.Generic;
 using DTOWorksheet = SMS.DTOs.DTOs.Worksheet;
 namespace SMS.Services.Infrastructure
 {
@@ -12,7 +11,8 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return all records of a Worksheet
         /// </summary>
         /// <returns></returns>
-        List<DTOWorksheet> GetAll();
+        ItemsList<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize);
+
 
         /// <summary>
         /// Retruns a Single Record of a Worksheet
@@ -40,43 +40,5 @@ namespace SMS.Services.Infrastructure
         GenericApiResponse Delete(Guid? id);
         #endregion
 
-        #region SMS Request
-        /// <summary>
-        /// Service level call : Return all records of a Worksheet on SMS Request
-        /// </summary>
-        /// <returns></returns>
-        List<DTOWorksheet> RequestGetAll();
-
-        /// <summary>
-        /// Retruns a Single Record of a Worksheet on SMS Request
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        DTOWorksheet RequestGet(Guid? id);
-
-        /// <summary>
-        /// Service level call : Creates a single record of a Worksheet on SMS Request
-        /// </summary>
-        /// <param name="dtoWorksheet"></param>
-        void RequestCreate(DTOWorksheet dTOWorksheet);
-
-        /// <summary>
-        /// Service level call : Updates the Single Record of a Worksheet  on SMS Request
-        /// </summary>
-        /// <param name="dtoWorksheet"></param>
-        void RequestUpdate(DTOWorksheet dTOWorksheet);
-
-        /// <summary>
-        /// Service level call : Delete a single record of a Worksheet on SMS Request
-        /// </summary>
-        /// <param name="id"></param>
-        void RequestDelete(Guid? id);
-        #endregion
-
-        #region Approver
-
-        GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel);
-
-        #endregion
     }
 }

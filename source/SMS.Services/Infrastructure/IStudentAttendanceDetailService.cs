@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SMS.DTOs.DTOs;
 using DTOStudentAttendanceDetail = SMS.DTOs.DTOs.StudentAttendanceDetail;
 namespace SMS.Services.Infrastructure
 {
@@ -15,13 +14,5 @@ namespace SMS.Services.Infrastructure
         List<DTOStudentAttendanceDetail> GetByStudentAttendanceId(Guid? studentId);
         #endregion
 
-        #region RequestSMS section
-        DTOStudentAttendanceDetail RequestGet(Guid? id);
-        Guid RequestCreate(DTOStudentAttendanceDetail dtoStudentAttendance);
-        void RequestCreate(List<DTOStudentAttendanceDetail> dtoStudentAttendanceDetailList, string createdBy, Guid id);
-        void RequestUpdate(DTOStudentAttendanceDetail dtoStudentAttendance);
-        void RequestDelete(Guid? id, string deletedBy);
-        List<DTOStudentAttendanceDetail> RequestGetByStudentAttendanceId(Guid? studentId);
-        #endregion
     }
 }

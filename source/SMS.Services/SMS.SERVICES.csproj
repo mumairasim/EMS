@@ -62,8 +62,6 @@
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\EmployeeFinanceService.cs" />
     <Compile Include="Implementation\FinanceTypeService.cs" />
-    <Compile Include="Implementation\RequestStatusService.cs" />
-    <Compile Include="Implementation\RequestTypeService.cs" />
     <Compile Include="Implementation\StudentAttendanceDetailService.cs" />
     <Compile Include="Implementation\StudentAttendanceService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
@@ -80,15 +78,12 @@
     <Compile Include="Implementation\TimeTableDetailService.cs" />
     <Compile Include="Implementation\TimeTableService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
-    <Compile Include="Implementation\RequestManagementService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />
     <Compile Include="Infrastructure\ICourseService.cs" />
     <Compile Include="Infrastructure\IEmployeeFinanceService.cs" />
     <Compile Include="Infrastructure\IFinanceTypeService.cs" />
-    <Compile Include="Infrastructure\IRequestStatusService.cs" />
-    <Compile Include="Infrastructure\IRequestTypeService.cs" />
     <Compile Include="Infrastructure\IStudentAttendanceDetailService.cs" />
     <Compile Include="Infrastructure\IStudentAttendanceService.cs" />
     <Compile Include="Infrastructure\IAttendanceStatusService.cs" />
@@ -106,7 +101,6 @@
     <Compile Include="Infrastructure\ITimeTableDetailService.cs" />
     <Compile Include="Infrastructure\ITimeTableService.cs" />
     <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
-    <Compile Include="Infrastructure\IRequestManagementService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,10 +120,6 @@
     <ProjectReference Include="..\SMS.MAP\SMS.MAP.csproj">
       <Project>{8c54d1d5-e377-434e-97c5-1da53c7e3fbf}</Project>
       <Name>SMS.MAP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SMS.REQUESTDATA\SMS.REQUESTDATA.csproj">
-      <Project>{a7dbd438-6800-4f1b-9e97-9ba2b431d963}</Project>
-      <Name>SMS.REQUESTDATA</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

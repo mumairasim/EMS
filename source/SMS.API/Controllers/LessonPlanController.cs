@@ -69,59 +69,6 @@ namespace SMS.API.Controllers
         }
         #endregion
 
-        #region SMS Request Section
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet()
-        {
-            return Ok(_lessonplanService.RequestGet());
-        }
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid id)
-        {
-            return Ok(_lessonplanService.RequestGet(id));
-        }
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(DTOLessonPlan dtoLessonPlan)
-        {
-            _lessonplanService.RequestCreate(dtoLessonPlan);
-            return Ok();
-        }
-        [HttpPut]
-        [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate(DTOLessonPlan dtoLessonPlan)
-        {
-            _lessonplanService.RequestUpdate(dtoLessonPlan);
-            return Ok();
-        }
-        [HttpDelete]
-        [Route("RequestDelete")]
-        public IHttpActionResult RequestDelete(Guid id)
-        {
-            _lessonplanService.RequestDelete(id);
-            return Ok();
-        }
-        #endregion
-
-        #region Request Approver
-        [HttpPost]
-        [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
-        {
-            try
-            {
-                _lessonplanService.ApproveRequest(commonRequestModel);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError();
-            }
-            return Ok();
-        }
-        #endregion
-
     }
 }
 

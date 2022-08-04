@@ -9,8 +9,6 @@ using LessonPlan = SMS.DATA.Models.LessonPlan;
 using DTOLessonPlan = SMS.DTOs.DTOs.LessonPlan;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
-using SMS.REQUESTDATA.Infrastructure;
-using ReqLessonPlan = SMS.REQUESTDATA.RequestModels.LessonPlan;
 
 
 namespace SMS.Services.Implementation
@@ -19,16 +17,10 @@ namespace SMS.Services.Implementation
     public class LessonPlanService : ILessonPlanService
     {
         private readonly IRepository<LessonPlan> _repository;
-        private readonly IRequestRepository<ReqLessonPlan> _requestRepository;
-        private readonly IRequestTypeService _requestTypeService;
-        private readonly IRequestStatusService _requestStatusService;
         private readonly IMapper _mapper;
-        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper, IRequestRepository<ReqLessonPlan> requestRepository, IRequestTypeService requestTypeService, IRequestStatusService requestStatusService)
+        public LessonPlanService(IRepository<LessonPlan> repository, IMapper mapper)
         {
             _repository = repository;
-            _requestRepository = requestRepository;
-            _requestTypeService = requestTypeService;
-            _requestStatusService = requestStatusService;
             _mapper = mapper;
         }
 
@@ -184,111 +176,5 @@ namespace SMS.Services.Implementation
         }
         #endregion
 
-        #region SMS Request Section
-
-        public List<DTOLessonPlan> RequestGet()
-        {
-            var lessonPlans = _requestRepository.Get().Where(lp => lp.IsDeleted == false).ToList();
-            var lessonPlanList = new List<DTOLessonPlan>();
-            foreach (var lessonPlan in lessonPlans)
-            {
-                lessonPlanList.Add(_mapper.Map<ReqLessonPlan, DTOLessonPlan>(lessonPlan));
-            }
-            return MapRequestTypeAndStatus(lessonPlanList).ToList();
-        }
-        public DTOLessonPlan RequestGet(Guid? id)
-        {
-            if (id == null) return null;
-
-            var lessonPlanRecord = _requestRepository.Get().FirstOrDefault(lp => lp.Id == id && lp.IsDeleted == false);
-            if (lessonPlanRecord == null) return null;
-
-            return _mapper.Map<ReqLessonPlan, DTOLessonPlan>(lessonPlanRecord);
-        }
-        public Guid RequestCreate(DTOLessonPlan dtoLessonPlan)
-        {
-            dtoLessonPlan.CreatedDate = DateTime.UtcNow;
-            dtoLessonPlan.IsDeleted = false;
-            dtoLessonPlan.Id = Guid.NewGuid();
-            var dbRec = _mapper.Map<DTOLessonPlan, ReqLessonPlan>(dtoLessonPlan);
-            dbRec.RequestTypeId = _requestTypeService.RequestGetByName(dtoLessonPlan.RequestTypeString).Id;
-            dbRec.RequestStatusId = _requestStatusService.RequestGetByName(dtoLessonPlan.RequestStatusString).Id;
-            _requestRepository.Add(dbRec);
-            return dtoLessonPlan.Id;
-        }
-        public void RequestUpdate(DTOLessonPlan dtoLessonPlan)
-        {
-            var lessonPlan = RequestGet(dtoLessonPlan.Id);
-            dtoLessonPlan.UpdateDate = DateTime.UtcNow;
-            var mergedLessonPlan = _mapper.Map(dtoLessonPlan, lessonPlan);
-            _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(mergedLessonPlan));
-        }
-        public void RequestDelete(Guid? id)
-        {
-            if (id == null)
-                return;
-            var lessonPlan = RequestGet(id);
-            lessonPlan.IsDeleted = true;
-            lessonPlan.DeletedDate = DateTime.UtcNow;
-            _requestRepository.Update(_mapper.Map<DTOLessonPlan, ReqLessonPlan>(lessonPlan));
-        }
-
-        #endregion
-
-        #region Request Approver
-        public GenericApiResponse ApproveRequest(CommonRequestModel dtoCommonRequestModel)
-        {
-            var dto = RequestGet(dtoCommonRequestModel.Id);
-            dto.School = dtoCommonRequestModel.School;
-            GenericApiResponse status = null;
-            switch (dtoCommonRequestModel.RequestTypeString)
-            {
-                case "Create":
-                    status = Create(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                case "Update":
-                    status = Update(dto);
-                    UpdateRequestStatus(dto, status);
-                    break;
-                //case "Delete":
-                //    status = Delete(dto.Id,"admin");
-                //    UpdateRequestStatus(dto, status);
-                //    break;
-                default:
-                    break;
-            }
-
-            return status;
-        }
-
-        #endregion
-        private IEnumerable<DTOLessonPlan> MapRequestTypeAndStatus(IEnumerable<DTOLessonPlan> dtoLessonPlans)
-        {
-            var requestTypes = _requestTypeService.RequestGetAll();
-            var requestStatuses = _requestStatusService.RequestGetAll();
-            foreach (var dtoLessonPlan in dtoLessonPlans)
-            {
-                dtoLessonPlan.RequestTypeString =
-                    requestTypes.FirstOrDefault(rt => dtoLessonPlan.RequestTypeId != null && rt.Id == dtoLessonPlan.RequestTypeId.Value)?.Value;
-                dtoLessonPlan.RequestStatusString =
-                    requestStatuses.FirstOrDefault(rs => dtoLessonPlan.RequestStatusId != null && rs.Id == dtoLessonPlan.RequestStatusId.Value)?.Type;
-            }
-
-            return dtoLessonPlans;
-        }
-        private void UpdateRequestStatus(DTOLessonPlan dto, GenericApiResponse status)
-        {
-            if (status.StatusCode == "200")//success
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Approved").Id;
-            }
-            else
-            {
-                dto.RequestStatusId = _requestStatusService.RequestGetByName("Error").Id;
-            }
-            //updating the status of the current request in Request DB
-            RequestUpdate(dto);
-        }
     }
 }

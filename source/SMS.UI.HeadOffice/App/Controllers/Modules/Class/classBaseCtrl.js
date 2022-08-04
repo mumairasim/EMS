@@ -5,9 +5,10 @@ SMSHO.controller('classBaseCtrl', ['$scope', 'apiService', '$cookies', function 
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetClass = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/Class/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/Class/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         debugger;
         responsedata.then(function mySucces(response) {
             $scope.ClassList = response.data.Classes;
@@ -74,6 +75,6 @@ SMSHO.controller('classBaseCtrl', ['$scope', 'apiService', '$cookies', function 
             });
     };
     $scope.GetClass();
-    
+
 }]);
 

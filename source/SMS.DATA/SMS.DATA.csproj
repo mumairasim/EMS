@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202207291514290_DbSchema.designer.cs">
       <DependentUpon>202207291514290_DbSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207302036327_ApprovalStatusAddition.cs" />
+    <Compile Include="Migrations\202207302036327_ApprovalStatusAddition.designer.cs">
+      <DependentUpon>202207302036327_ApprovalStatusAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
     <Compile Include="Models\EmployeeFinanceDetail.cs" />
+    <Compile Include="Models\Enums\RequestStatus.cs" />
     <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FinanceType.cs" />
@@ -115,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202207291514290_DbSchema.resx">
       <DependentUpon>202207291514290_DbSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207302036327_ApprovalStatusAddition.resx">
+      <DependentUpon>202207302036327_ApprovalStatusAddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

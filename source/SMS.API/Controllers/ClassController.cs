@@ -1,15 +1,12 @@
-﻿using System;
-
+﻿using Newtonsoft.Json;
+using SMS.DTOs.DTOs;
+using SMS.Services.Infrastructure;
+using System;
 using System.Linq;
 using System.Web;
-using SMS.Services.Infrastructure;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using DTOClass = SMS.DTOs.DTOs.Class;
-using SMS.Services.Infrastructure;
-using System.Web.Http.Cors;
-using SMS.DTOs.DTOs;
 
 namespace SMS.API.Controllers
 {
@@ -37,8 +34,11 @@ namespace SMS.API.Controllers
             return Ok(_classService.Get(id));
         }
         [HttpGet]
-        
-        
+        [Route("Get")]
+        public IHttpActionResult Get(string searchString, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(_classService.Get(pageNumber, pageSize, searchString));
+        }
         [HttpPost]
         [Route("Create")]
         public IHttpActionResult Create()
@@ -46,11 +46,11 @@ namespace SMS.API.Controllers
 
             var httpRequest = HttpContext.Current.Request;
             var classDetail = JsonConvert.DeserializeObject<DTOClass>(httpRequest.Params["classModel"]);
-             classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
-             _classService.Create(classDetail);
+            classDetail.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            _classService.Create(classDetail);
             return Ok();
-            
-    }
+
+        }
         [HttpPut]
         [Route("Update")]
         public IHttpActionResult Update()
@@ -60,7 +60,7 @@ namespace SMS.API.Controllers
             classDetail.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             classDetail.SchoolId = classDetail.School.Id;
             _classService.Update(classDetail);
-           
+
             return Ok();
         }
         [HttpGet]
@@ -75,61 +75,6 @@ namespace SMS.API.Controllers
         {
             var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _classService.Delete(id, DeletedBy);
-            return Ok();
-        }
-        #endregion
-
-        #region SMS Request Section
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet()
-        {
-            return Ok(_classService.RequestGet());
-        }
-        [HttpGet]
-        [Route("RequestGet")]
-        public IHttpActionResult RequestGet(Guid id)
-        {
-            return Ok(_classService.RequestGet(id));
-        }
-        
-        [HttpPost]
-        [Route("RequestCreate")]
-        public IHttpActionResult RequestCreate(DTOClass dtoClass)
-        {
-            _classService.RequestCreate(dtoClass);
-            return Ok();
-        }
-        [HttpPut]
-        [Route("RequestUpdate")]
-        public IHttpActionResult RequestUpdate(DTOClass dtoClass)
-        {
-            _classService.RequestUpdate(dtoClass);
-            return Ok();
-        }
-        [HttpDelete]
-        [Route("RequestDelete")]
-        public IHttpActionResult RequestDelete(Guid id)
-        {
-            _classService.RequestDelete(id);
-            return Ok();
-        }
-        #endregion
-
-        #region Request Approver
-        [HttpPost]
-        [Route("ApproveRequest")]
-        public IHttpActionResult ApproveRequest(CommonRequestModel commonRequestModel)
-        {
-
-            try
-            {
-                _classService.ApproveRequest(commonRequestModel);
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
             return Ok();
         }
         #endregion

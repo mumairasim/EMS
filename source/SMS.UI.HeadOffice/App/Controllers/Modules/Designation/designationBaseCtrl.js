@@ -1,17 +1,16 @@
 ﻿
-
-SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
+SMSHO.controller('designationBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
     $scope.searchedText = "";
 
-    $scope.GetStudentDiary = function () {
+    $scope.GetDesignation = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/StudentDiary/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/Designation/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.StudentDiariesList = response.data.Items;
-            $scope.TotalStudentDiary = response.data.Count;
+            $scope.designationList = response.data.Items;
+            $scope.Count = response.data.Count;
             $scope.NextAndPreviousButtonsEnablingAndDisabling();
             $scope.loader(false);
         },
@@ -20,7 +19,7 @@ SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', fu
             });
     };
     $scope.NextAndPreviousButtonsEnablingAndDisabling = function () {
-        if ($scope.TotalStudentDiary > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.Count > $scope.pageNumber * $scope.pageSize) {
             $("#nextButton").removeStudentDiary('disabled');
         } else {
             $("#nextButton").addStudentDiary('disabled');
@@ -32,16 +31,16 @@ SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', fu
         }
     };
     $scope.nextPage = function () {
-        if ($scope.TotalStudentDiary > $scope.pageNumber * $scope.pageSize) {
+        if ($scope.Count > $scope.pageNumber * $scope.pageSize) {
             $scope.pageNumber++;
-            $scope.GetStudentDiary();
+            $scope.GetDesignation();
 
         }
     };
     $scope.MoveToPage = function (page) {
-        if ($scope.TotalStudentDiary > (page - 1) * $scope.pageSize) {
+        if ($scope.Count > (page - 1) * $scope.pageSize) {
             $scope.pageNumber = page;
-            $scope.GetStudentDiary();
+            $scope.GetDesignation();
         } else {
             $scope.growltext("Page " + page + " doesn't exist.", true);
         }
@@ -50,29 +49,29 @@ SMSHO.controller('studentDiaryBaseCtrl', ['$scope', 'apiService', '$cookies', fu
     $scope.previousPage = function () {
         if ($scope.pageNumber > 1)
             $scope.pageNumber--;
-        $scope.GetStudentDiary();
+        $scope.GetDesignation();
     };
     $scope.ConfirmDelete = function (id) {
-        $scope.StudentDiaryToDelete = id;
+        $scope.DesignationToDelete = id;
     };
     $scope.NoDelete = function () {
-        $scope.StudentDiaryToDelete = 0;
+        $scope.DesignationToDelete = 0;
     };
-    $scope.StudentDiaryDelete = function () {
-        var url = '/api/v1/StudentDiary/Delete?id=' + $scope.StudentDiaryToDelete;
+    $scope.DesignationDelete = function () {
+        var url = '/api/v1/Designation/Delete?id=' + $scope.DesignationToDelete;
         var responsedata = apiService.masterdelete(url);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;
-            $scope.growltext("StudentDiary deleted successfully.", false);
+            $scope.growltext("Designation deleted successfully.", false);
             window.location.reload();
-            $scope.StudentDiaryToDelete = 0;
+            $scope.DesignationToDelete = 0;
         },
             function myError(response) {
                 $scope.response = response.data;
-                $scope.growltext("StudentDiary deletion failed", true);
-                $scope.StudentDiaryToDelete = 0;
+                $scope.growltext("Designation deletion failed", true);
+                $scope.DesignationToDelete = 0;
             });
     };
-    $scope.GetStudentDiary();
+    $scope.GetDesignation();
 }]);
 

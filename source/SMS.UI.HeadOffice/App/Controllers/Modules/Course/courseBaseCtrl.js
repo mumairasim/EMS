@@ -3,10 +3,16 @@
 
 SMSHO.controller('courseBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
+    $scope.pageSize = "10";
+    $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetCourses = function () {
-        var responsedata = apiService.masterget('/api/v1/Course/GetAll');
+        var responsedata = apiService.masterget('/api/v1/Course/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.courseList = response.data;
+            $scope.courseList = response.data.Courses;
+            $scope.Count = response.data.Count;
+            $scope.NextAndPreviousButtonsEnablingAndDisabling();
+            $scope.loader(false);
         },
             function myError(response) {
                 $scope.response = response.data;
