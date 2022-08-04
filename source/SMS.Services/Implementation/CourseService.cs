@@ -48,6 +48,8 @@ namespace SMS.Services.Implementation
                 {
                     dtoCourse.Id = Guid.NewGuid();
                 }
+                dtoCourse.SchoolId = dtoCourse.School.Id;
+                dtoCourse.School = null;
                 _repository.Add(_mapper.Map<DTOCourse, Course>(dtoCourse));
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
 
