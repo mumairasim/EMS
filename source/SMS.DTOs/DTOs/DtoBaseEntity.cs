@@ -21,10 +21,5 @@ namespace SMS.DTOs.DTOs
         public Guid? SchoolId { get; set; }
         public School School { get; set; }
 
-        public string RequestTypeString { get; set; }
-        public string RequestStatusString { get; set; }
-        public Guid? RequestTypeId { get; set; }
-        public Guid? RequestStatusId { get; set; }
-
     }
 }
