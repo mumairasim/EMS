@@ -5,18 +5,12 @@
         Text: '',
         FromDate: '',
         ToDate: '',
-        School: $scope.School
-    };
-    $scope.School = {
-        Id: '',
-        Name: '',
-        Location: ''
     };
 
     $scope.GetSchools = function () {
         var responsedata = apiService.masterget('/api/v1/School/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Schools = response.data;
+            $scope.Schools = response.data.Schools;
             $scope.LessonPlanModel.School = $scope.Schools[0];
         },
             function myError(response) {

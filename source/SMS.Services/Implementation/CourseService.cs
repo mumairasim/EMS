@@ -113,6 +113,8 @@ namespace SMS.Services.Implementation
                 if (course != null)
                 {
                     dtoCourse.UpdateDate = DateTime.UtcNow;
+                    dtoCourse.SchoolId = dtoCourse.School.Id;
+                    dtoCourse.School = null;
                     var updated = _mapper.Map(dtoCourse, course);
                     dtoCourse.IsDeleted = false;
 

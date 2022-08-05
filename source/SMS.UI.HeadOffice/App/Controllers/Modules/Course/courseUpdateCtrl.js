@@ -41,4 +41,15 @@
     };
     $scope.FetchCourse();
 
+    $scope.GetSchools = function () {
+        var responsedata = apiService.masterget('/api/v1/School/Get');
+        responsedata.then(function mySucces(response) {
+            $scope.Schools = response.data.Schools;
+            $scope.CourseModel.School = $scope.Schools[0];
+        },
+            function myError(response) {
+                $scope.response = response.data;
+            });
+    };
+    $scope.GetSchools()
 }]);

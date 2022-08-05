@@ -30,7 +30,6 @@
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data.Schools;
             $scope.CourseModel.School = $scope.Schools[0];
-            $scope.GetClasses();
         },
             function myError(response) {
                 $scope.response = response.data;
