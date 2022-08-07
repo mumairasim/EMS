@@ -31,7 +31,7 @@ namespace SMS.Services.Implementation
                 .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.FirstName.ToLower().Contains(searchString.ToLower())))
                 .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.Employee.Person.LastName.ToLower().Contains(searchString.ToLower())))
                 .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var courseCount = resultSet.Count();
+            var courseCount = resultSet.Count;
             var tempList = new List<DTOTeacherDiary>();
             foreach (var item in resultSet)
             {
@@ -104,8 +104,6 @@ namespace SMS.Services.Implementation
 
         private TeacherDiaryResponse Validation(DTOTeacherDiary dtoteacherDiary)
         {
-            //var alphaRegex = new Regex("^[a-zA-Z ]+$");
-            //var numericRegex = new Regex("^[0-9]*$");
             var alphanumericRegex = new Regex("^[a-zA-Z0-9 ]*$");
             if (dtoteacherDiary == null)
             {

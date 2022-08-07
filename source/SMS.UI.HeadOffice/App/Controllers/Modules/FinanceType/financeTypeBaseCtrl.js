@@ -3,10 +3,14 @@
 
 SMSHO.controller('financeTypeBaseCtrl', ['$scope', 'apiService', '$cookies', function ($scope, apiService, $cookies) {
     'use strict';
+    $scope.pageSize = "10";
+    $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetFinanceTypes = function () {
-        var responsedata = apiService.masterget('/api/v1/FinanceType/GetAll');
+        var responsedata = apiService.masterget('/api/v1/FinanceType/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
-            $scope.financeTypeList = response.data;
+            $scope.financeTypeList = response.data.Items;
+            $scope.Count = response.data.Count;
         },
             function myError(response) {
                 $scope.response = response.data;

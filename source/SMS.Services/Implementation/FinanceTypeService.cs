@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -116,15 +117,23 @@ namespace SMS.Services.Implementation
         /// Service level call : Return all records of a FinanceType
         /// </summary>
         /// <returns></returns>
-        List<DTOFinanceType> IFinanceTypeService.GetAll()
+        public ItemsList<DTOFinanceType> Get(string searchString, int pageNumber, int pageSize)
         {
-            var financeTypes = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
-            var financeTypeList = new List<DTOFinanceType>();
-            foreach (var financeType in financeTypes)
+            var resultSet = _repository.Get()
+                .Where(cl => string.IsNullOrEmpty(searchString) || cl.Type.ToLower().Contains(searchString.ToLower()))
+                .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var resultCount = resultSet.Count;
+            var tempList = new List<DTOFinanceType>();
+            foreach (var item in resultSet)
             {
-                financeTypeList.Add(_mapper.Map<DBFinanceType, DTOFinanceType>(financeType));
+                tempList.Add(_mapper.Map<DBFinanceType, DTOFinanceType>(item));
             }
-            return financeTypeList;
+            var finalList = new ItemsList<DTOFinanceType>()
+            {
+                Items = tempList,
+                Count = resultCount
+            };
+            return finalList;
         }
 
         #endregion

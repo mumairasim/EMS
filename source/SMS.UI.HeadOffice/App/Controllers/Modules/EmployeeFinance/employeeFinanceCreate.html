@@ -9,10 +9,11 @@
                 ng-options="School.Name for School in Schools track by School.Id">
         </select>
     </div>
-    <div ng-if="FinanceList.length > 0">
+    <!--<div ng-if="FinanceList.length > 0">-->
         <div class="col-sm-4">
             <label for="month" class="col-form-label">Month</label> 
-            <select name="month" id="month" class="form-control" ng-options="month.text for month in Months track by month.value" ng-Model="Month">
+            <select name="month" id="month" class="form-control"  ng-Model="Month" 
+                    ng-options="Month.name for Month in Months track by Month.id">
             </select>
         </div>
 
@@ -20,7 +21,7 @@
             <label for="school" class="col-form-label">Year</label>
             <input class="form-control" ng-model="Year" />
         </div>
-    </div>
+    <!--</div>-->
     <!--filters end-->
 
 

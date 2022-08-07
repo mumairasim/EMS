@@ -5,10 +5,10 @@ SMSHO.controller('employeeFinanceCreateCtrl', ['$scope', 'apiService', '$cookies
     'use strict';
     var fullDate = new Date();
     $scope.Year = fullDate.getFullYear();
-
-    $scope.Months = [{ value: '0', text: 'January' }, { value: '1', text: 'February' }, { value: '2', text: 'March' },
-    { value: '3', text: 'April' }, { value: '4', text: 'May' }, { value: '5', text: 'June' }, { value: '6', text: 'July' },
-    { value: '7', text: 'August' }, { value: '8', text: 'September' }, { value: '9', text: 'October' }, { value: '10', text: 'November' }, { value: '11', text: 'December' }];
+    $scope.Month = 0;
+    $scope.Months = [{ id: '0', name: 'January' }, { id: '1', name: 'February' }, { id: '2', name: 'March' },
+    { id: '3', name: 'April' }, { id: '4', name: 'May' }, { id: '5', name: 'June' }, { id: '6', name: 'July' },
+    { id: '7', name: 'August' }, { id: '8', name: 'September' }, { id: '9', name: 'October' }, { id: '10', name: 'November' }, { id: '11', name: 'December' }];
 
     $scope.Month = $scope.Months[fullDate.getMonth()];
 
@@ -65,7 +65,7 @@ SMSHO.controller('employeeFinanceCreateCtrl', ['$scope', 'apiService', '$cookies
     $scope.SaveFinances = function () {
         var data = $scope.FinanceList;
         for (var i = 0; i < data.length; i++) {
-            data[i].SalaryMonth = $scope.Months[$scope.Month.value].text;
+            data[i].SalaryMonth = $scope.Months[$scope.Month.id].name;
             data[i].SalaryYear = $scope.Year;
         }
         var formData = new FormData();

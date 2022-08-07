@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SMS.DTOs.DTOs;
+using System;
 using DTOFinanceType = SMS.DTOs.DTOs.FinanceType;
 
 namespace SMS.Services.Infrastructure
@@ -11,7 +11,7 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return all records of a FinanceType
         /// </summary>
         /// <returns></returns>
-        List<DTOFinanceType> GetAll();
+        ItemsList<DTOFinanceType> Get(string searchString, int pageNumber, int pageSize);
 
         /// <summary>
         /// Retruns a Single Record of a FinanceType
