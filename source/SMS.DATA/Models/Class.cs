@@ -7,7 +7,8 @@ namespace SMS.DATA.Models
 {
 
     [Table("Class")]
-    public partial class Class : BaseEntity
+    public partial class Class : DomainBaseEnitity
+    //public partial class Class : BaseEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Class()

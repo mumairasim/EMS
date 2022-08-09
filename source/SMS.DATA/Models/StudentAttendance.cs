@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.DATA.Models
 {
     [Table("StudentAttendance")]
-    public partial class StudentAttendance : BaseEntity
+    public partial class StudentAttendance : DomainBaseEnitity
     {
         public DateTime AttendanceDate { get; set; }
         public Guid? SchoolId { get; set; }

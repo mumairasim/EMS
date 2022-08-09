@@ -12,6 +12,7 @@ namespace SMS.DATA.Models
         {
             return base.Set<TEntity>();
         }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<ClassAssignement> ClassAssignements { get; set; }

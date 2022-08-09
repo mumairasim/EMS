@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.DATA.Models
 {
     [Table("LessonPlan")]
-    public partial class LessonPlan : BaseEntity
+    public partial class LessonPlan : DomainBaseEnitity
     {
         public string Text { get; set; }
 
