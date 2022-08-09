@@ -53,9 +53,9 @@
         Location: ''
     };
     $scope.GetClasses = function () {
-        var responsedata = apiService.masterget('/api/v1/Class/Get');
+        var responsedata = apiService.masterget('/api/v1/Class/GetBySchool?schoolId=' + $scope.StudentModel.School.Id);
         responsedata.then(function mySucces(response) {
-            $scope.Classes = response.data.Classes;
+            $scope.Classes = response.data;
             $scope.StudentModel.Class = $scope.Classes[0];
         },
             function myError(response) {
@@ -67,6 +67,7 @@
         responsedata.then(function mySucces(response) {
             $scope.Schools = response.data.Schools;
             $scope.StudentModel.School = $scope.Schools[0];
+            $scope.GetClasses();
         },
             function myError(response) {
                 $scope.response = response.data;
@@ -196,5 +197,5 @@
 
 
     $scope.GetSchools();
-    $scope.GetClasses();
+   
 }]);
