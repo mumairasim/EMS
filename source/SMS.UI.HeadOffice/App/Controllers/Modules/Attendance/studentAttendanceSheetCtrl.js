@@ -106,7 +106,7 @@ SMSHO.controller('studentAttendanceSheetCtrl', ['$scope', 'apiService', '$cookie
                 $scope.showSuccessInfo = true;
                 $scope.showfailureInfo = false;
                 $scope.growltext("Attendance marked successfully.", false);
-                window.location = "#!/dashboard";
+                window.location = "#!/studentAttendanceSheetBase";
             }
             if ($scope.attendanceCreationResponse.StatusCode == '400') {
                 $scope.showSuccessInfo = false;
