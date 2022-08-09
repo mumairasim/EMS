@@ -1,33 +1,42 @@
 ﻿using AutoMapper;
+using MoreLinq;
 using SMS.DATA.Infrastructure;
+using SMS.DATA.Models;
 using SMS.Services.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using DBStudentFinances = SMS.DATA.Models.Student_Finances;
-using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
 using DTOStudentFinanceCustom = SMS.DTOs.DTOs.StudentFinanceInfo;
-using DBStudentFinanceCustom = SMS.DATA.Models.NonDbContextModels.StudentFinanceInfo;
+using DTOStudentFinances = SMS.DTOs.DTOs.Student_Finances;
 namespace SMS.Services.Implementation
 {
     public class StudentFinanceService : IStudentFinanceService
     {
         #region Properties
-        private readonly IRepository<DBStudentFinances> _repository;
-        private readonly IStoredProcCaller _storedProcCaller;
+        private readonly IRepository<DBStudentFinances> _repositoryStuFin;
+        private readonly IRepository<Person> _repositoryPerson;
+        private readonly IRepository<Student> _repositoryStudent;
+        private readonly IRepository<Class> _repositoryClass;
+        private readonly IRepository<StudentFinanceDetail> _repositoryStuFinDetails;
+        private readonly IRepository<School> _repositorySchool;
+        private readonly IRepository<FinanceType> _repositoryFinType;
         private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
-
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Init
-
-        public StudentFinanceService(IRepository<DBStudentFinances> repository, IMapper mapper, IStoredProcCaller storedProcCaller, IStudentFinanceDetailsService studentFinanceDetailsService)
+        public StudentFinanceService(IRepository<DBStudentFinances> repository, IRepository<Person> repositoryPerson, IRepository<Student> repositoryStudent, IRepository<Class> repositoryClass, IRepository<StudentFinanceDetail> repositoryStuFinDetails, IRepository<School> repositorySchool, IRepository<FinanceType> repositoryFinType, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
-            _storedProcCaller = storedProcCaller;
+            _repositoryStuFin = repository;
+            _repositoryPerson = repositoryPerson;
+            _repositoryStudent = repositoryStudent;
+            _repositoryClass = repositoryClass;
+            _repositoryStuFinDetails = repositoryStuFinDetails;
+            _repositorySchool = repositorySchool;
+            _repositoryFinType = repositoryFinType;
             _studentFinanceDetailsService = studentFinanceDetailsService;
+            _mapper = mapper;
         }
 
         #endregion
@@ -56,9 +65,14 @@ namespace SMS.Services.Implementation
                 newFinance.Id = Guid.NewGuid();
             }
 
-            if (newFinance.FeeSubmitted ?? false)
+            if ((newFinance.FeeSubmitted ?? false) &&
+                !IsFeeTransferredByMonthAndYear(
+                    dtoStudentFinances.StudentId,
+                    dtoStudentFinances.FeeMonth,
+                    dtoStudentFinances.FeeYear)
+                )
             {
-                _repository.Add(newFinance);
+                _repositoryStuFin.Add(newFinance);
             }
 
         }
@@ -76,7 +90,7 @@ namespace SMS.Services.Implementation
             {
                 StudentFinances.IsDeleted = true;
                 StudentFinances.DeletedDate = DateTime.UtcNow;
-                _repository.Update(_mapper.Map<DTOStudentFinances, DBStudentFinances>(StudentFinances));
+                _repositoryStuFin.Update(_mapper.Map<DTOStudentFinances, DBStudentFinances>(StudentFinances));
             }
 
         }
@@ -93,7 +107,7 @@ namespace SMS.Services.Implementation
                 return null;
             }
 
-            var StudentFinances = _repository.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
+            var StudentFinances = _repositoryStuFin.Get().FirstOrDefault(x => x.Id == id && (x.IsDeleted == false || x.IsDeleted == null));
             var StudentFinancesDto = _mapper.Map<DBStudentFinances, DTOStudentFinances>(StudentFinances);
 
             return StudentFinancesDto;
@@ -101,14 +115,65 @@ namespace SMS.Services.Implementation
 
         public List<DTOStudentFinanceCustom> GetByFilter(Guid? schoolId, Guid? classId, Guid? studentId, string feeMonth)
         {
-            var rs = _storedProcCaller.GetStudentFinance(schoolId, classId, studentId, feeMonth);
-            return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
+            var list = (from person in _repositoryPerson.Get()
+                        join student in _repositoryStudent.Get().Where(x => x.IsDeleted == false) on person.Id equals student.PersonId
+                        join stuFinDet in _repositoryStuFinDetails.Get().Where(x => x.IsDeleted == false) on student.Id equals stuFinDet.StudentId
+                        join finType in _repositoryFinType.Get().Where(x => x.IsDeleted == false) on stuFinDet.FinanceTypeId equals finType.Id
+                        join stuFin in _repositoryStuFin.Get().Where(x => (x.IsDeleted == false) && string.IsNullOrEmpty(feeMonth) || x.FeeMonth.Contains(feeMonth)) on stuFinDet.Id equals stuFin.StudentFinanceDetailsId
+                        join school in _repositorySchool.Get().Where(x => schoolId == null || schoolId == x.Id) on student.SchoolId equals school.Id
+                        join cls in _repositoryClass.Get().Where(x => (x.IsDeleted == false) && classId == null || classId == x.Id) on student.ClassId equals cls.Id
+                        select new DTOStudentFinanceCustom
+                        {
+                            FirstName = person.FirstName,
+                            LastName = person.LastName,
+                            FeeMonth = stuFin.FeeMonth,
+                            FeeYear = stuFin.FeeYear,
+                            StudentFinanceDetailsId = stuFinDet.Id,
+                            FeeSubmitted = stuFin.FeeSubmitted ?? false,
+                            RegistrationNumber = student.RegistrationNumber,
+                            SchoolName = school.Name,
+                            SchoolId = school.Id,
+                            StudentId = student.Id,
+                            Fee = stuFinDet.Fee,
+                            Arears = stuFinDet.Arears,
+                            ClassName = cls.ClassName,
+                            Type = finType.Type,
+                            StudentFinanceId = stuFin.Id,
+                            ClassId = cls.Id
+                        }).DistinctBy(x => x.StudentFinanceId).ToList();
+            return list;
+        }
+
+        public bool IsFeeTransferredByMonthAndYear(Guid stuId, string month, string year)
+        {
+            var isExists = (from fin in _repositoryStuFin.Get().Where(x => x.FeeMonth.Contains(month) && x.FeeYear == year)
+                            join stuFinDet in _repositoryStuFinDetails.Get() on fin.StudentFinanceDetailsId equals stuFinDet.Id
+                            where stuFinDet.StudentId == stuId
+                            select fin).Any();
+            return isExists;
         }
 
         public List<DTOStudentFinanceCustom> GetDetailByFilter(Guid? schoolId, Guid? ClassId, int? Regno, string Month, string Year)
         {
-            var rs = _storedProcCaller.GetStudentFinanceDetail(schoolId, ClassId, Regno, Month, Year);
-            return _mapper.Map<List<DBStudentFinanceCustom>, List<DTOStudentFinanceCustom>>(rs);
+            var list = (from person in _repositoryPerson.Get()
+                        join student in _repositoryStudent.Get().Where(x => x.IsDeleted == false) on person.Id equals student.PersonId
+                        join stuFinDet in _repositoryStuFinDetails.Get().Where(x => x.IsDeleted == false) on student.Id equals stuFinDet.StudentId
+                        join school in _repositorySchool.Get().Where(x => schoolId == null || schoolId == x.Id) on student.SchoolId equals school.Id
+                        join cls in _repositoryClass.Get().Where(x => (x.IsDeleted == false) && ClassId == null || ClassId == x.Id) on student.SchoolId equals cls.SchoolId
+                        select new DTOStudentFinanceCustom
+                        {
+                            FirstName = person.FirstName,
+                            LastName = person.LastName,
+                            StudentFinanceDetailsId = stuFinDet.Id,
+                            RegistrationNumber = student.RegistrationNumber,
+                            SchoolName = school.Name,
+                            SchoolId = school.Id,
+                            StudentId = student.Id,
+                            Fee = stuFinDet.Fee,
+                            Arears = stuFinDet.Arears,
+                            ClassName = cls.ClassName
+                        }).DistinctBy(x => x.StudentId).ToList();
+            return list;
         }
 
 
@@ -137,8 +202,8 @@ namespace SMS.Services.Implementation
 
             if (newFinance.FeeSubmitted ?? false)
             {
-                _repository.Add(newFinance);
-                var studentFinanceDetails=_studentFinanceDetailsService.Get(dtoStudentFinances.StudentFinanceDetailsId);
+                _repositoryStuFin.Add(newFinance);
+                var studentFinanceDetails = _studentFinanceDetailsService.Get(dtoStudentFinances.StudentFinanceDetailsId);
                 studentFinanceDetails.Arears = dtoStudentFinances.Arears;
                 _studentFinanceDetailsService.Update(studentFinanceDetails);
             }
@@ -150,7 +215,7 @@ namespace SMS.Services.Implementation
         /// <returns></returns>
         List<DTOStudentFinances> IStudentFinanceService.GetAll()
         {
-            var StudentFinancess = _repository.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
+            var StudentFinancess = _repositoryStuFin.Get().Where(x => (x.IsDeleted == false || x.IsDeleted == null)).ToList();
             var StudentFinancesList = new List<DTOStudentFinances>();
             foreach (var StudentFinances in StudentFinancess)
             {

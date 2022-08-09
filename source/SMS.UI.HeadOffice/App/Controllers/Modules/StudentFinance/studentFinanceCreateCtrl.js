@@ -86,8 +86,8 @@ SMSHO.controller('studentFinanceCreateCtrl', ['$scope', 'apiService', 'financeSe
     $scope.SaveFinances = function () {
         var data = $scope.FinanceList;
         for (var i = 0; i < data.length; i++) {
-            data[i].SalaryMonth = $scope.Months[$scope.Month.value].text;
-            data[i].SalaryYear = $scope.Year;
+            data[i].FeeMonth = $scope.Months[$scope.Month.value].text;
+            data[i].FeeYear = $scope.Year;
         }
         var formData = new FormData();
         formData.append('form', JSON.stringify(data));

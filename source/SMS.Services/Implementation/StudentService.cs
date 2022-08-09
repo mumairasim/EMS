@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
 using SMS.DTOs.DTOs;
-using SMS.Services.Infrastructure;
-using Student = SMS.DATA.Models.Student;
-using DTOStudent = SMS.DTOs.DTOs.Student;
 using SMS.DTOs.ReponseDTOs;
+using SMS.Services.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using DTOStudent = SMS.DTOs.DTOs.Student;
 using DTOStudentFinanceDetail = SMS.DTOs.DTOs.StudentFinanceDetail;
+using Student = SMS.DATA.Models.Student;
 
 namespace SMS.Services.Implementation
 {
@@ -463,7 +463,7 @@ namespace SMS.Services.Implementation
         #endregion
 
         #region RequestSMS Section
-        
+
         private StudentResponse PrepareFailureResponse(Guid id, string errorMessage, string descriptionMessage)
         {
             return new StudentResponse

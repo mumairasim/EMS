@@ -20,10 +20,11 @@ namespace SMS.API.Controllers
         }
         #region SMS Section
         [HttpGet]
-        [Route("GetAll")]
-        public IHttpActionResult Get()
+        [Route("Get")]
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_financeTypeService.GetAll());
+            var reseltSet = _financeTypeService.Get(searchString, pageNumber, pageSize);
+            return Ok(reseltSet);
         }
 
         [HttpGet]

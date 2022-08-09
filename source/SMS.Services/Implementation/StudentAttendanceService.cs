@@ -31,7 +31,7 @@ namespace SMS.Services.Implementation
              .Where(cl => string.IsNullOrEmpty(searchString) || cl.Class.ClassName.ToLower().Contains(searchString.ToLower()))
              .Union(_repository.Get().Where(cl => string.IsNullOrEmpty(searchString) || cl.School.Name.ToLower().Contains(searchString.ToLower())))
              .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var resultCount = resultSet.Count();
+            var resultCount = resultSet.Count;
             var tempList = new List<DTOStudentAttendance>();
             foreach (var item in resultSet)
             {
@@ -98,7 +98,10 @@ namespace SMS.Services.Implementation
                         "Attendance Record for Date: " + dtoStudentAttendance.AttendanceDate.Value.ToShortDateString() + " already exist and can not be created. Please Update if you want to edit attendance.");
                 dtoStudentAttendance.CreatedDate = DateTime.UtcNow;
                 dtoStudentAttendance.IsDeleted = false;
-
+                if (dtoStudentAttendance.Id == Guid.Empty)
+                {
+                    dtoStudentAttendance.Id = Guid.NewGuid();
+                }
                 _repository.Add(_mapper.Map<DTOStudentAttendance, StudentAttendance>(dtoStudentAttendance));
                 _studentAttendanceDetailService.Create(dtoStudentAttendance.StudentAttendanceDetail,
                     dtoStudentAttendance.CreatedBy,

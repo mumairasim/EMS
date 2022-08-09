@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
             var resultSet = _repository.Get()
               .Where(cl => string.IsNullOrEmpty(searchString) || cl.Name.ToLower().Contains(searchString.ToLower()))
               .Where(cl => cl.IsDeleted == false).OrderByDescending(st => st.Id).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var resultCount = resultSet.Count();
+            var resultCount = resultSet.Count;
             var tempList = new List<DTODesignation>();
             foreach (var item in resultSet)
             {

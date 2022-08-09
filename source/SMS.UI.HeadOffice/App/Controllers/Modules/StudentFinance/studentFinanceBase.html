@@ -27,11 +27,11 @@
             <option value="?">Choose</option>
         </select>
     </div>
-    <div ng-if="classLoaded" class="col-sm-4">
-        <label for="class" class="col-form-label">Class</label>
-        <select name="class" id="class" class="form-control" ng-change="test()" ng-Model="Class"
-                ng-options="Class.ClassName for Class in Classes  track by Class.Id">
-        </select>
+     <div class="col-sm-4">
+    <label for="class" class="col-form-label">Class</label>
+    <select name="class" id="class" class="form-control" ng-change="test()" ng-Model="Class"
+            ng-options="Class.ClassName for Class in Classes  track by Class.Id">
+    </select>
     </div>
     <div class="col-sm-4">
         <br />

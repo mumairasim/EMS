@@ -102,6 +102,7 @@
     <Compile Include="Infrastructure\ITimeTableService.cs" />
     <Compile Include="Infrastructure\ITeacherDiaryService.cs" />
     <Compile Include="Infrastructure\IWorksheetService.cs" />
+    <Compile Include="MoreLinq\MoreEnumerable.DistinctBy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

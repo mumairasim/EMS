@@ -49,6 +49,8 @@ namespace SMS.API.Controllers
         {
             try
             {
+                //var result = _empFinanceService.GetByFilter(schoolId, designationId, string.Empty);
+
                 var result = _empFinanceService.GetDetailByFilter(schoolId, designationId);
                 return Ok(result);
             }
