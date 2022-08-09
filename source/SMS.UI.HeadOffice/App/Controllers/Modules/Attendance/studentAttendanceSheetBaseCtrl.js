@@ -55,7 +55,7 @@ SMSHO.controller('studentAttendanceSheetBaseCtrl', ['$scope', 'apiService', '$co
         $scope.StudentToDelete = 0;
     };
     $scope.StudentDelete = function() {
-        var url = '/api/v1/Student/Delete?id=' + $scope.StudentToDelete;
+        var url = '/api/v1/StudentAttendance/Delete?id=' + $scope.StudentToDelete;
         var responsedata = apiService.masterdelete(url);
         responsedata.then(function mySucces(response) {
             $scope.response = response.data;

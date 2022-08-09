@@ -48,6 +48,8 @@ namespace SMS.Services.Implementation
                 {
                     dtoCourse.Id = Guid.NewGuid();
                 }
+                dtoCourse.SchoolId = dtoCourse.School.Id;
+                dtoCourse.School = null;
                 _repository.Add(_mapper.Map<DTOCourse, Course>(dtoCourse));
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
 
@@ -111,6 +113,8 @@ namespace SMS.Services.Implementation
                 if (course != null)
                 {
                     dtoCourse.UpdateDate = DateTime.UtcNow;
+                    dtoCourse.SchoolId = dtoCourse.School.Id;
+                    dtoCourse.School = null;
                     var updated = _mapper.Map(dtoCourse, course);
                     dtoCourse.IsDeleted = false;
 

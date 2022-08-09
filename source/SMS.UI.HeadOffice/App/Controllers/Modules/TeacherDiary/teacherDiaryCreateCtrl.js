@@ -47,7 +47,7 @@
             responsedata.then(function mySucces(response) {
                 $scope.response = response.data;
                 $scope.growltext("Teacher Diary created successfully.", false);
-                window.location = "#!/dashboard";
+                window.location = "#!/teacherDiaryBase";
             },
                 function myError(response) {
                     $scope.response = response.data;
