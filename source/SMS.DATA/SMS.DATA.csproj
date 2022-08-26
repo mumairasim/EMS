@@ -71,7 +71,12 @@
     <Compile Include="Migrations\202207302036327_ApprovalStatusAddition.designer.cs">
       <DependentUpon>202207302036327_ApprovalStatusAddition.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208092053444_Initial.cs" />
+    <Compile Include="Migrations\202208092053444_Initial.designer.cs">
+      <DependentUpon>202208092053444_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\Assignment.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\ClassAssignement.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\AttendanceStatus.cs" />
     <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\DomainBaseEnitity.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
     <Compile Include="Models\EmployeeFinanceDetail.cs" />
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207302036327_ApprovalStatusAddition.resx">
       <DependentUpon>202207302036327_ApprovalStatusAddition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208092053444_Initial.resx">
+      <DependentUpon>202208092053444_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

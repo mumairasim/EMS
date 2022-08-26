@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.DATA.Models
 {
-    public partial class Student_Finances : BaseEntity
+    public partial class Student_Finances : DomainBaseEnitity
     {
         public Guid? StudentFinanceDetailsId { get; set; }
 

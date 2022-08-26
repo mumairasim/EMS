@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SMS.DATA.Models
 {
     [Table("Employee")]
-    public partial class Employee : BaseEntity
+    public partial class Employee : DomainBaseEnitity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()

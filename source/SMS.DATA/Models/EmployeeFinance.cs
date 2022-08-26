@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DATA.Models
 {
-    public partial class EmployeeFinance : BaseEntity
+    public partial class EmployeeFinance : DomainBaseEnitity
     {
 
         public Guid? EmployeeFinanceDetailsId { get; set; }

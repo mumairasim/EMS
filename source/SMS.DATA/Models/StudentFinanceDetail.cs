@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMS.DATA.Models
 {
-    public partial class StudentFinanceDetail : BaseEntity
+    public partial class StudentFinanceDetail : DomainBaseEnitity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StudentFinanceDetail()

@@ -1,6 +1,6 @@
+using SMS.DTOs.DTOs.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
-using SMS.DTOs.DTOs.Enums;
 
 namespace SMS.DTOs.DTOs
 {
@@ -69,7 +69,7 @@ namespace SMS.DTOs.DTOs
         [StringLength(50)]
         public string Phone { get; set; }
         public Guid? ImageId { get; set; }
-        public virtual File Image { get; set; }
+        //public virtual File Image { get; set; }
 
     }
 }

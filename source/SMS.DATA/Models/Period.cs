@@ -2,7 +2,7 @@ using System;
 
 namespace SMS.DATA.Models
 {
-    public partial class Period : BaseEntity
+    public partial class Period : DomainBaseEnitity
     {
         public TimeSpan? StartTime { get; set; }
 

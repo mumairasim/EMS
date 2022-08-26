@@ -5,7 +5,7 @@ namespace SMS.DATA.Models
 {
 
     [Table("ClassAssignement")]
-    public partial class ClassAssignement : BaseEntity
+    public partial class ClassAssignement : DomainBaseEnitity
     {
 
         public Guid? ClassId { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SMS.DATA.Models
 {
-    public partial class TimeTableDetail : BaseEntity
+    public partial class TimeTableDetail : DomainBaseEnitity
     {
         [StringLength(50)]
         public string Day { get; set; }
