@@ -5,6 +5,8 @@ using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
 using Period = SMS.DATA.Models.Period;
 using DTOPeriod = SMS.DTOs.DTOs.Period;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SMS.Services.Implementation
 {
@@ -43,6 +45,16 @@ namespace SMS.Services.Implementation
                 return PrepareFailureResponse("error", e.Message);
             }
 
+        }
+        public List<DTOPeriod> View(Guid Id)
+        {
+            var periods = _repository.Get().Where(tt => tt.IsDeleted == false && tt.TimeTableDetailId == Id).OrderBy(x=>x.StartTime).ToList();
+            var mappedPeriods = new List<DTOPeriod>();
+            foreach (var item in periods)
+            {
+                mappedPeriods.Add(_mapper.Map<Period, DTOPeriod>(item));
+            }
+            return mappedPeriods;
         }
         private void HelpingMethodForRelationship(DTOPeriod dtoTimeTableDetail)
         {

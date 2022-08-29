@@ -38,6 +38,12 @@ namespace SMS.API.Controllers
             TimeTableService.Create(timeTable);
             return Ok();
         }
+        [HttpGet]
+        [Route("View")]
+        public IHttpActionResult View(Guid Id)
+        {
+            return Ok(TimeTableService.View(Id));
+        }
 
         #endregion
 

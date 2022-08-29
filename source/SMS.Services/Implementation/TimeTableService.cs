@@ -68,6 +68,13 @@ namespace SMS.Services.Implementation
             }
 
         }
+        public DTOTimeTable View(Guid Id)
+        {
+            var timeTable = _repository.Get().FirstOrDefault(tt => tt.IsDeleted == false && tt.Id == Id);
+            var mappedTimeTable = _mapper.Map<TimeTable, DTOTimeTable>(timeTable);
+            mappedTimeTable.TimeTableDetails = _timeTableDetailService.View(mappedTimeTable.Id);
+            return mappedTimeTable;
+        }
         private void HelpingMethodForRelationship(DTOTimeTable dtoTimeTable)
         {
             dtoTimeTable.SchoolId = dtoTimeTable.School.Id;

@@ -1,4 +1,6 @@
 ﻿using SMS.DTOs.ReponseDTOs;
+using System;
+using System.Collections.Generic;
 using DTOPeriod= SMS.DTOs.DTOs.Period;
 
 namespace SMS.Services.Infrastructure
@@ -7,6 +9,7 @@ namespace SMS.Services.Infrastructure
     {
         #region SMS Section
         GenericApiResponse Create(DTOPeriod timeTableDetail);
+        List<DTOPeriod> View(Guid Id);
         #endregion
 
     }

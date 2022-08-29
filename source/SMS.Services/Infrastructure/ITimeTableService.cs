@@ -10,6 +10,7 @@ namespace SMS.Services.Infrastructure
         #region SMS Section
         TimeTableList Get(Guid? schoolId, Guid? classId, int pageNumber, int pageSize);
         GenericApiResponse Create(DTOTimeTable teacherDiary);
+        DTOTimeTable View(Guid Id);
         #endregion
 
     }

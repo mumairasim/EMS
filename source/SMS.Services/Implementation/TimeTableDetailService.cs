@@ -5,6 +5,8 @@ using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
 using TimeTableDetail = SMS.DATA.Models.TimeTableDetail;
 using DTOTimeTableDetail = SMS.DTOs.DTOs.TimeTableDetail;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SMS.Services.Implementation
 {
@@ -46,6 +48,18 @@ namespace SMS.Services.Implementation
             {
                 return PrepareFailureResponse("error", e.Message);
             }
+        }
+        public List<DTOTimeTableDetail> View(Guid Id)
+        {
+            var timeTableDetails = _repository.Get().Where(tt => tt.IsDeleted == false && tt.TimeTableId == Id).ToList();
+            var mappedTimeTableDetailsList = new List<DTOTimeTableDetail>();
+            foreach (var item in timeTableDetails)
+            {
+                var mappedTimeTableDetail = _mapper.Map<TimeTableDetail, DTOTimeTableDetail>(item);
+                mappedTimeTableDetail.Periods = _periodService.View(mappedTimeTableDetail.Id);
+                mappedTimeTableDetailsList.Add(mappedTimeTableDetail);
+            }
+            return mappedTimeTableDetailsList;
         }
         private GenericApiResponse PrepareFailureResponse(string errorMessage, string descriptionMessage)
         {

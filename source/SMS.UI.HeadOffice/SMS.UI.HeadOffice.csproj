@@ -175,6 +175,8 @@
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryUpdate.html" />
     <Content Include="App\Controllers\Modules\TeacherDiary\teacherDiaryUpdateCtrl.js" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableBase.html" />
+    <Content Include="App\Controllers\Modules\TimeTable\timeTableViewCtrl.js" />
+    <Content Include="App\Controllers\Modules\TimeTable\timeTableView.html" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableCreate.html" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableBaseCtrl.js" />
     <Content Include="App\Controllers\Modules\TimeTable\timeTableCreateCtrl.js" />
