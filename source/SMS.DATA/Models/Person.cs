@@ -1,13 +1,13 @@
+using SMS.DATA.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SMS.DATA.Models.Enums;
 
 namespace SMS.DATA.Models
 {
     [Table("Person")]
-    public partial class Person : BaseEntity
+    public partial class Person : DomainBaseEnitity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
@@ -52,6 +52,7 @@ namespace SMS.DATA.Models
         public string ParentEmergencyMobile { get; set; }
         public Guid? ImageId { get; set; }
         public virtual File Image { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
 
         [StringLength(50)]
         public string Phone { get; set; }
