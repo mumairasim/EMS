@@ -25,7 +25,7 @@ namespace SMS.Services.Implementation
             _studentAttendanceDetailService = studentAttendanceDetailService;
         }
         #region SMS Section
-        public ItemsList<DTOStudentAttendance> Get(string searchString, int pageNumber, int pageSize)
+        public ServiceResponse<DTOStudentAttendance> Get(string searchString, int pageNumber, int pageSize)
         {
             var resultSet = _repository.Get()
              .Where(cl => string.IsNullOrEmpty(searchString) || cl.Class.ClassName.ToLower().Contains(searchString.ToLower()))
@@ -37,7 +37,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<StudentAttendance, DTOStudentAttendance>(item));
             }
-            var finalList = new ItemsList<DTOStudentAttendance>()
+            var finalList = new ServiceResponse<DTOStudentAttendance>()
             {
                 Items = tempList,
                 Count = resultCount

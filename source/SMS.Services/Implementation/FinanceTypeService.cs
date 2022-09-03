@@ -117,7 +117,7 @@ namespace SMS.Services.Implementation
         /// Service level call : Return all records of a FinanceType
         /// </summary>
         /// <returns></returns>
-        public ItemsList<DTOFinanceType> Get(string searchString, int pageNumber, int pageSize)
+        public ServiceResponse<DTOFinanceType> Get(string searchString, int pageNumber, int pageSize)
         {
             var resultSet = _repository.Get()
                 .Where(cl => string.IsNullOrEmpty(searchString) || cl.Type.ToLower().Contains(searchString.ToLower()))
@@ -128,7 +128,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<DBFinanceType, DTOFinanceType>(item));
             }
-            var finalList = new ItemsList<DTOFinanceType>()
+            var finalList = new ServiceResponse<DTOFinanceType>()
             {
                 Items = tempList,
                 Count = resultCount

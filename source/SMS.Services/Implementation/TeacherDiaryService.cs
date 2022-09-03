@@ -22,7 +22,7 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
         }
         #region SMS Section
-        public ItemsList<DTOTeacherDiary> Get(int pageNumber, int pageSize, string searchString)
+        public ServiceResponse<DTOTeacherDiary> Get(int pageNumber, int pageSize, string searchString)
         {
             var resultSet = _repository.Get()
                 .Where(cl => string.IsNullOrEmpty(searchString) || cl.Name.ToLower().Contains(searchString.ToLower()))
@@ -37,7 +37,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<TeacherDiary, DTOTeacherDiary>(item));
             }
-            var finalList = new ItemsList<DTOTeacherDiary>()
+            var finalList = new ServiceResponse<DTOTeacherDiary>()
             {
                 Items = tempList,
                 Count = courseCount

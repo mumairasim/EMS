@@ -23,6 +23,5 @@ namespace SMS.DATA.Models
 
         public bool? IsDeleted { get; set; }
 
-        public RequestStatus? ApprovalStatus { get; set; }
     }
 }

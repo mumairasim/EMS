@@ -20,7 +20,7 @@ namespace SMS.Services.Implementation
             _mapper = mapper;
         }
         #region SMS Section
-        public ItemsList<DTODesignation> Get(string searchString, int pageNumber, int pageSize)
+        public ServiceResponse<DTODesignation> Get(string searchString, int pageNumber, int pageSize)
         {
             var resultSet = _repository.Get()
               .Where(cl => string.IsNullOrEmpty(searchString) || cl.Name.ToLower().Contains(searchString.ToLower()))
@@ -31,7 +31,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<Designation, DTODesignation>(item));
             }
-            var finalList = new ItemsList<DTODesignation>()
+            var finalList = new ServiceResponse<DTODesignation>()
             {
                 Items = tempList,
                 Count = resultCount

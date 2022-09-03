@@ -42,6 +42,7 @@ namespace SMS.DATA.Models
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<AttendanceStatus> AttendanceStatus { get; set; }
         public virtual DbSet<StudentAttendanceDetail> StudentAttendance { get; set; }
+        public virtual DbSet<RequestMeta> RequestMeta { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

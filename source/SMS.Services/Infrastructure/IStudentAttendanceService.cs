@@ -10,7 +10,7 @@ namespace SMS.Services.Infrastructure
     public interface IStudentAttendanceService
     {
         #region SMS Section
-        ItemsList<DTOStudentAttendance> Get(string searchString, int pageNumber, int pageSize); StudentsAttendanceList Get(Guid? classId, Guid? schoolId, int pageNumber, int pageSize);
+        ServiceResponse<DTOStudentAttendance> Get(string searchString, int pageNumber, int pageSize); StudentsAttendanceList Get(Guid? classId, Guid? schoolId, int pageNumber, int pageSize);
         StudentsAttendanceList Search(Expression<Func<StudentAttendance, bool>> predicate, int pageNumber, int pageSize);
         DTOStudentAttendance Get(Guid? id);
         StudentAttendanceResponse Create(DTOStudentAttendance dtoStudentAttendance);

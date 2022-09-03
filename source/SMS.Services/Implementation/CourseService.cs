@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SMS.DATA.Infrastructure;
+using SMS.DATA.Models.Enums;
 using SMS.DTOs.DTOs;
 using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Course = SMS.DATA.Models.Course;
 using DTOCourse = SMS.DTOs.DTOs.Course;
+using RequestMeta = SMS.DATA.Models.RequestMeta;
 
 namespace SMS.Services.Implementation
 {
@@ -15,6 +17,7 @@ namespace SMS.Services.Implementation
     {
         #region Properties
         private readonly IRepository<Course> _repository;
+        public IRequestMetaService _requestMetaService;
         private const string error_not_found = "Record not found";
         private const string server_error = "Server error";
         private IMapper _mapper;
@@ -22,10 +25,11 @@ namespace SMS.Services.Implementation
 
         #region Init
 
-        public CourseService(IRepository<Course> repository, IMapper mapper)
+        public CourseService(IRepository<Course> repository, IMapper mapper, IRequestMetaService requestMetaService)
         {
             _repository = repository;
             _mapper = mapper;
+            _requestMetaService = requestMetaService;
         }
 
         #endregion
@@ -51,6 +55,17 @@ namespace SMS.Services.Implementation
                 dtoCourse.SchoolId = dtoCourse.School.Id;
                 dtoCourse.School = null;
                 _repository.Add(_mapper.Map<DTOCourse, Course>(dtoCourse));
+                if (dtoCourse.IsClient == true)
+                {
+                    _requestMetaService.Create(new RequestMeta
+                    {
+                        ModuleId = dtoCourse.Id,
+                        SchoolId = dtoCourse.SchoolId,
+                        ModuleName = Module.Course,
+                        ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                        Type = DATA.Models.Enums.RequestType.Create
+                    });
+                }
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
 
             }
@@ -119,6 +134,17 @@ namespace SMS.Services.Implementation
                     dtoCourse.IsDeleted = false;
 
                     _repository.Update(_mapper.Map<DTOCourse, Course>(updated));
+                    if (dtoCourse.IsClient == true)
+                    {
+                        _requestMetaService.Create(new RequestMeta
+                        {
+                            ModuleId = dtoCourse.Id,
+                            SchoolId = dtoCourse.SchoolId,
+                            ModuleName = Module.Course,
+                            ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                            Type = DATA.Models.Enums.RequestType.Update
+                        });
+                    }
                     return PrepareSuccessResponse("Updated", "Instance Updated Successfully");
                 }
                 return PrepareFailureResponse("Error", error_not_found);

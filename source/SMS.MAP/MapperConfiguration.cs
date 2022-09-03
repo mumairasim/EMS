@@ -55,6 +55,8 @@ using StudentDiary = SMS.DATA.Models.StudentDiary;
 using TeacherDiary = SMS.DATA.Models.TeacherDiary;
 using TimeTable = SMS.DATA.Models.TimeTable;
 using TimeTableDetail = SMS.DATA.Models.TimeTableDetail;
+using RequestMeta = SMS.DATA.Models.RequestMeta;
+using DTORequestMeta = SMS.DTOs.DTOs.RequestMeta;
 
 
 
@@ -200,6 +202,13 @@ namespace SMS.MAP
             CreateMap<DTOStudentDiary, DTOStudentDiary>()
                 .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
 
+            CreateMap<RequestMeta, DTORequestMeta>()
+                .ForMember(dest => dest.ModuleName, opt => opt.MapFrom(src => src.ModuleName.ToString()))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
+                .ForMember(dest => dest.ApprovalStatus, opt => opt.MapFrom(src => src.ApprovalStatus.ToString()))
+                .ForAllMembers(o => o.Condition((source, destination, member) => member != null));
+
+
             #endregion
 
             #region DTO to DB
@@ -234,6 +243,7 @@ namespace SMS.MAP
             CreateMap<DTOTimeTableDetail, TimeTableDetail>();
             CreateMap<DTOPeriod, Period>();
             CreateMap<DTOStudentDiary, DBStudentDiary>();
+            CreateMap<DTORequestMeta, RequestMeta>();
 
             #endregion
 

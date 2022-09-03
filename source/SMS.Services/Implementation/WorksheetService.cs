@@ -136,7 +136,7 @@ namespace SMS.Services.Implementation
         /// Service level call : Return all records of a Worksheet
         /// </summary>
         /// <returns></returns>
-        public ItemsList<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize)
+        public ServiceResponse<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize)
         {
             var resultSet = _repository.Get()
              .Where(cl => string.IsNullOrEmpty(searchString) || cl.Text.ToLower().Contains(searchString.ToLower()))
@@ -150,7 +150,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<DBWorksheet, DTOWorksheet>(item));
             }
-            var finalList = new ItemsList<DTOWorksheet>()
+            var finalList = new ServiceResponse<DTOWorksheet>()
             {
                 Items = tempList,
                 Count = resultCount

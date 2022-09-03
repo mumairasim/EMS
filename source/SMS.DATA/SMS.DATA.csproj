@@ -75,6 +75,10 @@
     <Compile Include="Migrations\202208092053444_Initial.designer.cs">
       <DependentUpon>202208092053444_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209030635529_RequestMetaAddition.cs" />
+    <Compile Include="Migrations\202209030635529_RequestMetaAddition.designer.cs">
+      <DependentUpon>202209030635529_RequestMetaAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\Assignment.cs" />
@@ -89,6 +93,8 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeFinance.cs" />
     <Compile Include="Models\EmployeeFinanceDetail.cs" />
+    <Compile Include="Models\Enums\RequestType.cs" />
+    <Compile Include="Models\Enums\Module.cs" />
     <Compile Include="Models\Enums\RequestStatus.cs" />
     <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Models\File.cs" />
@@ -113,6 +119,7 @@
     <Compile Include="Models\TimeTable.cs" />
     <Compile Include="Models\Period.cs" />
     <Compile Include="Models\TimeTableDetail.cs" />
+    <Compile Include="Models\RequestMeta.cs" />
     <Compile Include="Models\Worksheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -132,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208092053444_Initial.resx">
       <DependentUpon>202208092053444_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209030635529_RequestMetaAddition.resx">
+      <DependentUpon>202209030635529_RequestMetaAddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

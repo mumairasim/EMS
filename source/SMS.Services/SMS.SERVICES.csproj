@@ -62,6 +62,7 @@
     <Compile Include="Implementation\CourseService.cs" />
     <Compile Include="Implementation\EmployeeFinanceService.cs" />
     <Compile Include="Implementation\FinanceTypeService.cs" />
+    <Compile Include="Infrastructure\IRequestMetaService.cs" />
     <Compile Include="Implementation\StudentAttendanceDetailService.cs" />
     <Compile Include="Implementation\StudentAttendanceService.cs" />
     <Compile Include="Implementation\DesignationService.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Implementation\TimeTableDetailService.cs" />
     <Compile Include="Implementation\TimeTableService.cs" />
     <Compile Include="Implementation\TeacherDiaryService.cs" />
+    <Compile Include="Implementation\RequestMetaService.cs" />
     <Compile Include="Implementation\WorksheetService.cs" />
     <Compile Include="Infrastructure\IAccountService.cs" />
     <Compile Include="Infrastructure\IClassService.cs" />

@@ -11,7 +11,7 @@ namespace SMS.Services.Infrastructure
         /// Service level call : Return all records of a Worksheet
         /// </summary>
         /// <returns></returns>
-        ItemsList<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize);
+        ServiceResponse<DTOWorksheet> Get(string searchString, int pageNumber, int pageSize);
 
 
         /// <summary>

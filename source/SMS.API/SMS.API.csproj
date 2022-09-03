@@ -260,6 +260,7 @@
     <Compile Include="Controllers\TimeTableController.cs" />
     <Compile Include="Controllers\TeacherDiaryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\RequestMetaController.cs" />
     <Compile Include="Controllers\WorksheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

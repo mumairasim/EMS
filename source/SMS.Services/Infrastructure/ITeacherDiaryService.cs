@@ -8,7 +8,7 @@ namespace SMS.Services.Infrastructure
     public interface ITeacherDiaryService
     {
         #region SMS Section
-        ItemsList<DTOTeacherDiary> Get(int pageNumber, int pageSize, string searchString);
+        ServiceResponse<DTOTeacherDiary> Get(int pageNumber, int pageSize, string searchString);
         DTOTeacherDiary Get(Guid? id);
         TeacherDiaryResponse Create(DTOTeacherDiary teacherDiary);
         TeacherDiaryResponse Update(DTOTeacherDiary dtoTeacherDiary);

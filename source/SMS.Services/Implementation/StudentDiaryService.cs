@@ -32,7 +32,7 @@ namespace SMS.Services.Implementation
             HelpingMethodForRelationship(dtoStudentDiary);
             _repository.Add(_mapper.Map<DTOStudentDiary, StudentDiary>(dtoStudentDiary));
         }
-        public ItemsList<DTOStudentDiary> Get(string searchString, int pageNumber, int pageSize)
+        public ServiceResponse<DTOStudentDiary> Get(string searchString, int pageNumber, int pageSize)
         {
             var resultSet = _repository.Get()
                 .Where(cl => string.IsNullOrEmpty(searchString) || cl.DiaryText.ToLower().Contains(searchString.ToLower()))
@@ -46,7 +46,7 @@ namespace SMS.Services.Implementation
             {
                 tempList.Add(_mapper.Map<StudentDiary, DTOStudentDiary>(item));
             }
-            var finalList = new ItemsList<DTOStudentDiary>()
+            var finalList = new ServiceResponse<DTOStudentDiary>()
             {
                 Items = tempList,
                 Count = resultCount

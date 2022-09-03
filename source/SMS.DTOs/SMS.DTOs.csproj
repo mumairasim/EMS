@@ -75,6 +75,7 @@
     <Compile Include="DTOs\Period.cs" />
     <Compile Include="DTOs\TimeTableList.cs" />
     <Compile Include="DTOs\UserInfo.cs" />
+    <Compile Include="DTOs\RequestMeta.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTOs\Student.cs" />
     <Compile Include="DTOs\StudentDiary.cs" />

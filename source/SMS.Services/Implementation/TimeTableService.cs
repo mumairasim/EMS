@@ -8,6 +8,7 @@ using SMS.Services.Infrastructure;
 using TimeTable = SMS.DATA.Models.TimeTable;
 using DTOTimeTable = SMS.DTOs.DTOs.TimeTable;
 using SMS.DTOs.ReponseDTOs;
+using RequestMeta = SMS.DATA.Models.RequestMeta;
 
 namespace SMS.Services.Implementation
 {
@@ -16,12 +17,14 @@ namespace SMS.Services.Implementation
         private readonly IRepository<TimeTable> _repository;
         private readonly IMapper _mapper;
         private readonly ITimeTableDetailService _timeTableDetailService;
+        public IRequestMetaService _requestMetaService;
 
-        public TimeTableService(IRepository<TimeTable> repository, IMapper mapper, ITimeTableDetailService timeTableDetailService)
+        public TimeTableService(IRepository<TimeTable> repository, IMapper mapper, ITimeTableDetailService timeTableDetailService, IRequestMetaService requestMetaService = null)
         {
             _repository = repository;
             _mapper = mapper;
             _timeTableDetailService = timeTableDetailService;
+            _requestMetaService = requestMetaService;
         }
         #region SMS Section
         public TimeTableList Get(Guid? schoolId, Guid? classId, int pageNumber, int pageSize)
@@ -60,6 +63,17 @@ namespace SMS.Services.Implementation
                         timeTableDetail.CreatedBy = dtoTimeTable.CreatedBy;
                         _timeTableDetailService.Create(timeTableDetail);
                     }
+                if (dtoTimeTable.IsClient == true)
+                {
+                    _requestMetaService.Create(new RequestMeta
+                    {
+                        ModuleId = dtoTimeTable.Id,
+                        SchoolId = dtoTimeTable.SchoolId,
+                        ModuleName = DATA.Models.Enums.Module.TimeTable,
+                        ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                        Type = DATA.Models.Enums.RequestType.Create
+                    });
+                }
                 return PrepareSuccessResponse("success", "");
             }
             catch (Exception e)

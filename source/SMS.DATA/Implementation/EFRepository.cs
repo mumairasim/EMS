@@ -28,6 +28,10 @@ namespace SMS.DATA.Implementation
 
         public IQueryable<T> Get()
         {
+            return _unitOfWork.Context.Set<T>().Where(x => x.ApprovalStatus == Models.Enums.RequestStatus.Approved || x.ApprovalStatus == Models.Enums.RequestStatus.GeneratedInSystem || x.ApprovalStatus == null);
+        }
+        public IQueryable<T> GetRaw()
+        {
             return _unitOfWork.Context.Set<T>();
         }
         public IQueryable<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
@@ -37,10 +41,10 @@ namespace SMS.DATA.Implementation
 
         public void Update(T entity)
         {
-            //_unitOfWork.Context.Entry(entity).State = EntityState.Modified;
             _unitOfWork.Context.Set<T>().AddOrUpdate(entity);
             _unitOfWork.Commit();
         }
+
 
         public IQueryable<T> Table => _unitOfWork.Context.Set<T>().AsNoTracking();
         public IQueryable<T> TableNoTracking => _unitOfWork.Context.Set<T>().AsNoTracking();

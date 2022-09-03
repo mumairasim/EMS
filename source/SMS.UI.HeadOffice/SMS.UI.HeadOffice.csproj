@@ -186,6 +186,8 @@
     <Content Include="App\Controllers\Modules\Course\courseCreateCtrl.js" />
     <Content Include="App\Controllers\Modules\Course\courseUpdate.html" />
     <Content Include="App\Controllers\Modules\Course\courseUpdateCtrl.js" />
+    <Content Include="App\Controllers\Modules\RequestMeta\requestMetaBase.html" />
+    <Content Include="App\Controllers\Modules\RequestMeta\requestMetaBaseCtrl.js" />
     <Content Include="App\Controllers\UserProfile\ChangePassword.html" />
     <Content Include="App\Controllers\UserProfile\UserProfile.html" />
     <Content Include="App\Controllers\UserProfile\ChangePasswordCtrl.js" />

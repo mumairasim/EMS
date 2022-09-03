@@ -7,6 +7,7 @@ using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using Employee = SMS.DATA.Models.Employee;
 using DTOEmployee = SMS.DTOs.DTOs.Employee;
+using RequestMeta = SMS.DATA.Models.RequestMeta;
 using SMS.DTOs.ReponseDTOs;
 using System.Text.RegularExpressions;
 
@@ -18,12 +19,14 @@ namespace SMS.Services.Implementation
         private readonly IPersonService _personService;
         private readonly IEmployeeFinanceService _employeeFinanceService;
         private readonly IMapper _mapper;
-        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper)
+        public IRequestMetaService _requestMetaService;
+        public EmployeeService(IRepository<Employee> repository, IPersonService personService, IEmployeeFinanceService employeeFinanceService, IMapper mapper, IRequestMetaService requestMetaService)
         {
             _repository = repository;
             _personService = personService;
             _employeeFinanceService = employeeFinanceService;
             _mapper = mapper;
+            _requestMetaService = requestMetaService;
         }
 
         #region SMS Section
@@ -137,6 +140,17 @@ namespace SMS.Services.Implementation
             HelpingMethodForRelationship(dtoEmployee);
             _repository.Add(_mapper.Map<DTOEmployee, Employee>(dtoEmployee));
             InsertFinanceDetails(dtoEmployee);
+            if (dtoEmployee.IsClient == true)
+            {
+                _requestMetaService.Create(new RequestMeta
+                {
+                    ModuleId = dtoEmployee.Id,
+                    SchoolId = dtoEmployee.SchoolId,
+                    ModuleName = DATA.Models.Enums.Module.Employee,
+                    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                    Type = DATA.Models.Enums.RequestType.Create
+                });
+            }
             return validationResult;
         }
 
@@ -172,6 +186,17 @@ namespace SMS.Services.Implementation
             else
             {
                 InsertFinanceDetails(dtoEmployee);
+            }
+            if (dtoEmployee.IsClient == true)
+            {
+                _requestMetaService.Create(new RequestMeta
+                {
+                    ModuleId = dtoEmployee.Id,
+                    SchoolId = dtoEmployee.SchoolId,
+                    ModuleName = DATA.Models.Enums.Module.Employee,
+                    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                    Type = DATA.Models.Enums.RequestType.Update
+                });
             }
             return validationResult;
         }

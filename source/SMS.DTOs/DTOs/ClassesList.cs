@@ -20,7 +20,7 @@ namespace SMS.DTOs.DTOs
         public int Count { get; set; }
     }
 
-    public class ItemsList<T>
+    public class ServiceResponse<T>
     {
         public List<T> Items { get; set; }
         public int Count { get; set; }

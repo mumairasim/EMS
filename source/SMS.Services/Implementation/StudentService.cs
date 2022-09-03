@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using DTOStudent = SMS.DTOs.DTOs.Student;
 using DTOStudentFinanceDetail = SMS.DTOs.DTOs.StudentFinanceDetail;
 using Student = SMS.DATA.Models.Student;
+using RequestMeta = SMS.DATA.Models.RequestMeta;
 
 namespace SMS.Services.Implementation
 {
@@ -20,13 +21,15 @@ namespace SMS.Services.Implementation
         private readonly IStudentFinanceDetailsService _studentFinanceDetailsService;
         private readonly IFinanceTypeService _financeTypeService;
         private readonly IMapper _mapper;
-        public StudentService(IRepository<Student> repository, IPersonService personService, IFinanceTypeService financeTypeService, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper)
+        public IRequestMetaService _requestMetaService;
+        public StudentService(IRepository<Student> repository, IPersonService personService, IFinanceTypeService financeTypeService, IStudentFinanceDetailsService studentFinanceDetailsService, IMapper mapper, IRequestMetaService requestMetaService)
         {
             _repository = repository;
             _personService = personService;
             _studentFinanceDetailsService = studentFinanceDetailsService;
             _financeTypeService = financeTypeService;
             _mapper = mapper;
+            _requestMetaService = requestMetaService;
         }
 
         #region SMS Section
@@ -150,6 +153,17 @@ namespace SMS.Services.Implementation
             HelpingMethodForRelationship(dtoStudent);
             _repository.Add(_mapper.Map<DTOStudent, Student>(dtoStudent));
             InsertStudentFinanceDetail(dtoStudent);
+            if (dtoStudent.IsClient == true)
+            {
+                _requestMetaService.Create(new RequestMeta
+                {
+                    ModuleId = dtoStudent.Id,
+                    SchoolId = dtoStudent.SchoolId,
+                    ModuleName = DATA.Models.Enums.Module.Student,
+                    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                    Type = DATA.Models.Enums.RequestType.Create
+                });
+            }
             return validationResult;
         }
 
@@ -167,6 +181,17 @@ namespace SMS.Services.Implementation
             HelpingMethodForRelationship(dtoStudentUpdatedState);
             _repository.Update(_mapper.Map<DTOStudent, Student>(mergedStudent));
             UpsertFinanceDetailsAgainstStudent(dtoStudentUpdatedState, dtoStudentCurrentState);
+            if (dtoStudentUpdatedState.IsClient == true)
+            {
+                _requestMetaService.Create(new RequestMeta
+                {
+                    ModuleId = dtoStudentUpdatedState.Id,
+                    SchoolId = dtoStudentUpdatedState.SchoolId,
+                    ModuleName = DATA.Models.Enums.Module.Student,
+                    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                    Type = DATA.Models.Enums.RequestType.Update
+                });
+            }
             return validationResult;
         }
 

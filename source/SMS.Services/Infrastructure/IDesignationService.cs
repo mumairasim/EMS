@@ -6,7 +6,7 @@ namespace SMS.Services.Infrastructure
     public interface IDesignationService
     {
         #region SMS Section
-        ItemsList<DTODesignation> Get(string searchString, int pageNumber, int pageSize);
+        ServiceResponse<DTODesignation> Get(string searchString, int pageNumber, int pageSize);
         DTODesignation Get(Guid? id);
         Guid Create(DTODesignation dtoDesignation);
         void Update(DTODesignation dtoDesignation);

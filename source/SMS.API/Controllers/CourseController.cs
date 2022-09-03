@@ -87,7 +87,7 @@ namespace SMS.API.Controllers
         {
             var httpRequest = HttpContext.Current.Request;
             var course = JsonConvert.DeserializeObject<Course>(httpRequest.Params["courseModel"]);
-            course.UpdateBy = Request.Headers.GetValues("UserName").FirstOrDefault();
+            course.CreatedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             if (course == null)
             {
                 return BadRequest("Course not Recieved");
