@@ -95,6 +95,13 @@ namespace SMS.DATA.Models
                 .HasMany(e => e.Student_Finances)
                 .WithOptional(e => e.StudentFinanceDetail)
                 .HasForeignKey(e => e.StudentFinanceDetailsId);
+
+            //modelBuilder.Types<DomainBaseEnitity>()
+            //    .Where(t => t.BaseType == typeof(School))
+            //    .Configure(x => x.Ignore(prop => prop.SchoolId));
+            //modelBuilder.Types<DomainBaseEnitity>()
+            //    .Where(t => t.BaseType == typeof(School))
+            //    .Configure(x => x.Ignore(prop => prop.School));
         }
         public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
         {

@@ -1,4 +1,7 @@
-﻿using SMS.DATA.Infrastructure;
+﻿using Newtonsoft.Json;
+using SMS.DATA.Infrastructure;
+using SMS.DATA.Models;
+using SMS.DATA.Models.Enums;
 using System;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
@@ -16,6 +19,22 @@ namespace SMS.DATA.Implementation
         public T Add(T entity)
         {
             var res = _unitOfWork.Context.Set<T>().Add(entity);
+            if (entity.ApprovalStatus != RequestStatus.GeneratedInSystem)
+            {
+                var tempelateJson = JsonConvert.SerializeObject(entity);
+                var template = JsonConvert.DeserializeObject<DomainBaseEnitity>(tempelateJson);
+                _unitOfWork.Context.Set<RequestMeta>().Add(new RequestMeta
+                {
+                    Id= Guid.NewGuid(),
+                    ModuleId = template.Id,
+                    ModuleName = (Module)Enum.Parse(typeof(Module), entity.GetType().Name),
+                    SchoolId = template.SchoolId,
+                    ApprovalStatus = template.ApprovalStatus,
+                    Type = RequestType.Create,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = template.CreatedBy
+                });
+            }
             _unitOfWork.Commit();
             return res;
         }
@@ -42,6 +61,22 @@ namespace SMS.DATA.Implementation
         public void Update(T entity)
         {
             _unitOfWork.Context.Set<T>().AddOrUpdate(entity);
+            if (entity.ApprovalStatus != RequestStatus.GeneratedInSystem)
+            {
+                var tempelateJson = JsonConvert.SerializeObject(entity);
+                var template = JsonConvert.DeserializeObject<DomainBaseEnitity>(tempelateJson);
+                _unitOfWork.Context.Set<RequestMeta>().Add(new RequestMeta
+                {
+                    Id = Guid.NewGuid(),
+                    ModuleId = template.Id,
+                    ModuleName = (Module)Enum.Parse(typeof(Module), entity.GetType().Name),
+                    SchoolId = template.SchoolId,
+                    ApprovalStatus = template.ApprovalStatus,
+                    Type = RequestType.Update,
+                    UpdateDate = DateTime.Now,
+                    UpdateBy = template.UpdateBy,
+                });
+            }
             _unitOfWork.Commit();
         }
 

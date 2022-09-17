@@ -40,6 +40,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -78,6 +81,10 @@
     <Compile Include="Migrations\202209030635529_RequestMetaAddition.cs" />
     <Compile Include="Migrations\202209030635529_RequestMetaAddition.designer.cs">
       <DependentUpon>202209030635529_RequestMetaAddition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209170608022_SchoolIdToBase.cs" />
+    <Compile Include="Migrations\202209170608022_SchoolIdToBase.designer.cs">
+      <DependentUpon>202209170608022_SchoolIdToBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AspNetUser.cs" />
@@ -142,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209030635529_RequestMetaAddition.resx">
       <DependentUpon>202209030635529_RequestMetaAddition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209170608022_SchoolIdToBase.resx">
+      <DependentUpon>202209170608022_SchoolIdToBase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -12,7 +12,5 @@ namespace SMS.DATA.Models
         public RequestType Type { get; set; }
 
         public Guid? ModuleId { get; set; }
-        public Guid? SchoolId { get; set; }
-        public virtual School School { get; set; }
     }
 }

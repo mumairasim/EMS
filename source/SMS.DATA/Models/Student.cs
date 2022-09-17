@@ -24,9 +24,7 @@ namespace SMS.DATA.Models
         public Guid? ClassId { get; set; }
         public Guid? ImageId { get; set; }
 
-        public Guid? SchoolId { get; set; }
-
-        public virtual School School { get; set; }
+        
 
         public virtual Class Class { get; set; }
         public virtual File Image { get; set; }

@@ -69,7 +69,7 @@ namespace SMS.Services.Implementation
                 return PrepareSuccessResponse("Created", "Instance Created Successfully");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return PrepareFailureResponse("Error", server_error);
             }

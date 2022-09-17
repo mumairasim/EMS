@@ -12,8 +12,5 @@ namespace SMS.DATA.Models
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }
-        public Guid? SchoolId { get; set; }
-
-        public virtual School School { get; set; }
     }
 }

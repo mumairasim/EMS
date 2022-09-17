@@ -20,8 +20,5 @@ namespace SMS.DATA.Models
         [Required]
         [StringLength(250)]
         public string CourseName { get; set; }
-        public Guid? SchoolId { get; set; }
-
-        public virtual School School { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace SMS.DATA.Models
     public class DomainBaseEnitity : BaseEntity
     {
         public Guid Id { get; set; }
+        public Guid? SchoolId { get; set; }
+        public virtual School School { get; set; }
         public DateTime? CreatedDate { get; set; }
 
         public string CreatedBy { get; set; }
