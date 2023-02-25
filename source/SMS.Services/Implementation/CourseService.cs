@@ -182,6 +182,30 @@ namespace SMS.Services.Implementation
 
         #endregion
 
+        #region SchoolsRequest
+        public GenericApiResponse BulkCreate(List<Course> list)
+        {
+            try
+            {
+                foreach (var item in list)
+                {
+                    if (_repository.Get(x => x.Id.Equals(item.Id)).Any())
+                    {
+                        return PrepareSuccessResponse("Already Created", "Already exist");
+                    }
+                    item.ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending;
+                    _repository.Add(item);
+
+                }
+                return PrepareSuccessResponse("Created", "Created Successfully");
+            }
+            catch (Exception)
+            {
+                return PrepareFailureResponse("Error", server_error);
+            }
+
+        }
+        #endregion
 
         private GenericApiResponse PrepareFailureResponse(string errorMessage, string descriptionMessage)
         {
@@ -221,5 +245,6 @@ namespace SMS.Services.Implementation
             };
             return classesList;
         }
+
     }
 }

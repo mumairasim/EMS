@@ -149,16 +149,13 @@ namespace SMS.Services.Implementation
             {
                 foreach (var item in list)
                 {
+                    if (_repository.Get(x => x.Id.Equals(item.Id)).Any())
+                    {
+                        return PrepareSuccessResponse("Already Created", "Already exist");
+                    }
                     item.ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending;
                     _repository.Add(item);
-                    //_requestMetaService.Create(new RequestMeta
-                    //{
-                    //    ModuleId = item.Id,
-                    //    SchoolId = item.SchoolId,
-                    //    ModuleName = Module.Class,
-                    //    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
-                    //    Type = DATA.Models.Enums.RequestType.Create
-                    //});
+
                 }
                 return PrepareSuccessResponse("Created", "Created Successfully");
             }

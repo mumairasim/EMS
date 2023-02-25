@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using SMS.DTOs.DTOs;
+using SMS.DTOs.ReponseDTOs;
 using SMS.Services.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -15,10 +17,12 @@ namespace SMS.API.Controllers
     {
         #region Props and Init
         public ICourseService _courseService;
+        public ISchoolService _schoolService;
 
-        public CourseController(ICourseService courseService)
+        public CourseController(ICourseService courseService, ISchoolService schoolService)
         {
             _courseService = courseService;
+            _schoolService = schoolService;
         }
 
         #endregion
@@ -147,6 +151,30 @@ namespace SMS.API.Controllers
             return Ok();
         }
         #endregion
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("BulkCreate")]
+        public IHttpActionResult BulkCreate(List<DATA.Models.Course> coursesDetail)
+        {
+            if (coursesDetail == null || coursesDetail.Count < 1)
+                return Ok(new GenericApiResponse
+                {
+                    StatusCode = "400",
+                    Message = "Invalid Input",
+                    Description = "Invalid Parameter"
+                });
+            if (_schoolService.IsSchoolExist(coursesDetail.FirstOrDefault().SchoolId))
+                return Ok(_courseService.BulkCreate(coursesDetail));
+            return Ok(new GenericApiResponse
+            {
+                StatusCode = "400",
+                Message = "School Not Found",
+                Description = "School Not Found"
+            });
+
+        }
 
     }
 }

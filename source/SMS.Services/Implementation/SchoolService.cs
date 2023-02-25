@@ -105,6 +105,10 @@ namespace SMS.Services.Implementation
             school.DeletedDate = DateTime.UtcNow;
             _repository.Update(_mapper.Map<DTOSchool, School>(school));
         }
+        public bool IsSchoolExist(Guid? Id)
+        {
+            return _repository.Get(x => x.Id == Id).Any();
+        }
         #endregion
 
     }
