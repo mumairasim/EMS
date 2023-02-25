@@ -17,5 +17,7 @@ namespace SMS.Services.Infrastructure
         List<DTOClass> GetBySchool(Guid? schoolId);
         #endregion
 
+        GenericApiResponse BulkCreate(List<DATA.Models.Class> list);
+
     }
 }

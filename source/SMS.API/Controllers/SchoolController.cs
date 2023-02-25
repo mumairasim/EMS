@@ -32,6 +32,7 @@ namespace SMS.API.Controllers
         {
             return Ok(_schoolService.Get(searchString, pageNumber, pageSize));
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("Get")]
         public IHttpActionResult Get(Guid id)

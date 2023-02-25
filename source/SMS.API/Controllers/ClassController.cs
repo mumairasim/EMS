@@ -2,6 +2,7 @@
 using SMS.DTOs.DTOs;
 using SMS.Services.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -76,6 +77,14 @@ namespace SMS.API.Controllers
             var DeletedBy = Request.Headers.GetValues("UserName").FirstOrDefault();
             _classService.Delete(id, DeletedBy);
             return Ok();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("BulkCreate")]
+        public IHttpActionResult BulkCreate(List<DATA.Models.Class> classesDetail)
+        {
+            return Ok(_classService.BulkCreate(classesDetail));
+
         }
         #endregion
     }

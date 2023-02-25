@@ -141,6 +141,35 @@ namespace SMS.Services.Implementation
             _repository.Update(_mapper.Map<DTOClass, Class>(classes));
         }
         #endregion
+
+        #region SchoolsRequest
+        public GenericApiResponse BulkCreate(List<Class> list)
+        {
+            try
+            {
+                foreach (var item in list)
+                {
+                    item.ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending;
+                    _repository.Add(item);
+                    //_requestMetaService.Create(new RequestMeta
+                    //{
+                    //    ModuleId = item.Id,
+                    //    SchoolId = item.SchoolId,
+                    //    ModuleName = Module.Class,
+                    //    ApprovalStatus = DATA.Models.Enums.RequestStatus.Pending,
+                    //    Type = DATA.Models.Enums.RequestType.Create
+                    //});
+                }
+                return PrepareSuccessResponse("Created", "Created Successfully");
+            }
+            catch (Exception)
+            {
+                return PrepareFailureResponse("Error", server_error);
+            }
+
+        }
+        #endregion
+
         private void HelpingMethodForRelationship(DTOClass dtoClass)
         {
             dtoClass.SchoolId = dtoClass.School.Id;
