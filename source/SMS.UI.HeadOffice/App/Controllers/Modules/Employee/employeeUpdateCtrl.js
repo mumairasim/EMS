@@ -43,7 +43,8 @@
     $scope.GetDesignations = function () {
         var responsedata = apiService.masterget('/api/v1/Designation/Get');
         responsedata.then(function mySucces(response) {
-            $scope.Designations = response.data;
+            debugger;
+            $scope.Designations = response.data.Items;
             $scope.FetchEmployee();
         },
             function myError(response) {

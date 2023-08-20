@@ -72,10 +72,11 @@ namespace SMS.Services.Implementation
                 };
                 return Create(newFile);
             }
-            catch
+            catch(Exception ex)
             {
                 // ignored
-                return null;
+                throw ex;
+                //return null;
             }
         }
 
@@ -144,10 +145,11 @@ namespace SMS.Services.Implementation
                 }
                 return Create(file);
             }
-            catch
+            catch(Exception ex)
             {
                 // ignored
-                return null;
+                throw ex;
+                //return null;
             }
         }
 
