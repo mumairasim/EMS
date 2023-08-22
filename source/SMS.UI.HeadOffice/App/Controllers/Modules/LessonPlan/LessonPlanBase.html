@@ -6,9 +6,9 @@
             <label class="col-form-label recordsCount">Total lesson plans found:<span>{{TotalLessonPlans}}</span></label>
         </div>
         <div class="input-group col-sm-6">
-            <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button">
+            <input type="text" class="form-control searchField" aria-label="Text input with segmented dropdown button" ng-Model="searchedText">
             <div class="input-group-append">
-                <button type="button" class="btn btn-outline-primary searchButton"><i class="fa fa-search fa-fw"></i></button>
+                <button type="button" class="btn btn-outline-primary searchButton" ng-click="GetLessonPlans()"><i class="fa fa-search fa-fw"></i></button>
             </div>
         </div>
 

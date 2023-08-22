@@ -12,7 +12,7 @@
                         <input name="firstname" id="firstname" placeholder="firstname" type="text" class="form-control" ng-Model="StudentModel.Person.FirstName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastname" class="col-form-label "><span class="mendatory">* </span>Lastname</label>
+                        <label for="lastname" class="col-form-label ">Lastname</label>
                         <input name="lastname" id="lastname" placeholder="lastname" type="text" class="form-control" ng-Model="StudentModel.Person.LastName" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                         <input name="phone" id="phone" placeholder="phone" type="text" class="form-control" ng-Model="StudentModel.Person.Phone" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
-                        <label for="nationality" class="col-form-label"> <span class="mendatory">* </span>Nationality</label>
+                        <label for="nationality" class="col-form-label"> <span class="mendatory"></span>Nationality</label>
                         <input name="nationality" id="nationality" placeholder="Nationality" type="text" class="form-control" ng-Model="StudentModel.Person.Nationality" pattern="^[A-Za-z ]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-3">
@@ -170,7 +170,7 @@
                 <input name="city" id="city" placeholder="city" type="text" class="form-control" ng-Model="StudentModel.Person.ParentCity">
             </div>
             <div class="col-sm-4">
-                <label for="mobile1" class="col-form-label required">
+                <label for="mobile1" class="col-form-label">
                     Mobile 1
                     <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
                 </label>
@@ -221,7 +221,7 @@
                         <input name="name" id="AdmissionFee" placeholder="Admission Fee" type="text" class="form-control" ng-Model="StudentModel.AdmissionFee" pattern="^[0-9]*$" ng-pattern-restrict>
                     </div>
                     <div class="col-sm-6">
-                        <label for="cnic" class="col-form-label">
+                        <label for="cnic" class="col-form-label required">
                             Monthly Fee
                             <a href="#" data-toggle="tooltip" title="Only numbers and spaces are not allowed" data-placement="top"><i class="metismenu-icon pe-7s-info"></i></a>
                         </label>

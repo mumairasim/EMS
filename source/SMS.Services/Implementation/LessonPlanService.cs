@@ -25,10 +25,10 @@ namespace SMS.Services.Implementation
         }
 
         #region SMS Section
-        public LessonPlansList Get(int pageNumber, int pageSize)
+        public LessonPlansList Get(string searchString, int pageNumber, int pageSize)
         {
-            var lessonPlans = _repository.Get().Where(lp => lp.IsDeleted == false).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            var lessonPlanCount = _repository.Get().Where(st => st.IsDeleted == false).Count();
+            var lessonPlans = _repository.Get().Where(lp => lp.IsDeleted == false && (string.IsNullOrEmpty(searchString) || lp.Name.Contains(searchString) || lp.Text.Contains(searchString))).OrderByDescending(lp => lp.CreatedDate).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            var lessonPlanCount = _repository.Get().Where(st => st.IsDeleted == false && (string.IsNullOrEmpty(searchString) || st.Name.Contains(searchString) || st.Text.Contains(searchString))).Count();
             var lessonPlanList = new List<DTOLessonPlan>();
             foreach (var lessonPlan in lessonPlans)
             {

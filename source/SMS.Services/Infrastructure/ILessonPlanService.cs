@@ -9,7 +9,7 @@ namespace SMS.Services.Infrastructure
     public interface ILessonPlanService
     {
         #region SMS Section
-        LessonPlansList Get(int pageNumber, int pageSize);
+        LessonPlansList Get(string searchString,int pageNumber, int pageSize);
         //List<DTOLessonPlan> Get();
         DTOLessonPlan Get(Guid? id);
         LessonPlanResponse Create(DTOLessonPlan lessonplan);

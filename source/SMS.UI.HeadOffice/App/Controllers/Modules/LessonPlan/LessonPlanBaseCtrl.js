@@ -3,9 +3,10 @@ SMSHO.controller('lessonPlanBaseCtrl', ['$scope', 'apiService', '$cookies', func
     'use strict';
     $scope.pageSize = "10";
     $scope.pageNumber = 1;
+    $scope.searchedText = "";
     $scope.GetLessonPlans = function () {
         $scope.loader(true);
-        var responsedata = apiService.masterget('/api/v1/LessonPlan/Get?pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
+        var responsedata = apiService.masterget('/api/v1/LessonPlan/Get?searchString=' + $scope.searchedText + '&pageNumber=' + $scope.pageNumber + '&pageSize=' + $scope.pageSize);
         responsedata.then(function mySucces(response) {
             $scope.lessonPlanList = response.data.LessonPlans;
             $scope.TotalLessonPlans = response.data.LessonPlansCount;

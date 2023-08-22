@@ -132,26 +132,26 @@
             $scope.growltext("FirstName cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName == "" || $scope.StudentModel.Person.LastName.length > 100) {
-            $scope.IsError = "Name cannot be null";
-            $scope.growltext("LastName cannot be null", true);
-            return false;
-        }
+        //if ($scope.StudentModel.Person.LastName == null || $scope.StudentModel.Person.LastName == "" || $scope.StudentModel.Person.LastName.length > 100) {
+        //    $scope.IsError = "Name cannot be null";
+        //    $scope.growltext("LastName cannot be null", true);
+        //    return false;
+        //}
         if ($scope.StudentModel.Person.Cnic == null || $scope.StudentModel.Person.Cnic.length != 13) {
             $scope.IsError = "Cnic must be of 13 digits";
             $scope.growltext("Cnic must be of 13 digits", true);
             return false;
         }
-        if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone == "" || $scope.StudentModel.Person.Phone.length > 15) {
-            $scope.IsError = "Phone cannot exceed from 15 digits";
-            $scope.growltext("Phone cannot be null or cannot exceed from 15 digits", true);
-            return false;
-        }
-        if ($scope.StudentModel.Person.Nationality == null || $scope.StudentModel.Person.Nationality == "") {
-            $scope.IsError = "Nationality cannot be null";
-            $scope.growltext("Nationality cannot be null", true);
-            return false;
-        }
+        //if ($scope.StudentModel.Person.Phone == null || $scope.StudentModel.Person.Phone == "" || $scope.StudentModel.Person.Phone.length > 15) {
+        //    $scope.IsError = "Phone cannot exceed from 15 digits";
+        //    $scope.growltext("Phone cannot be null or cannot exceed from 15 digits", true);
+        //    return false;
+        //}
+        //if ($scope.StudentModel.Person.Nationality == null || $scope.StudentModel.Person.Nationality == "") {
+        //    $scope.IsError = "Nationality cannot be null";
+        //    $scope.growltext("Nationality cannot be null", true);
+        //    return false;
+        //}
         if ($scope.StudentModel.School == null) {
             $scope.IsError = "School cannot be null";
             $scope.growltext("School cannot be null", true);
@@ -172,11 +172,11 @@
             $scope.growltext("ParentRelation cannot be null", true);
             return false;
         }
-        if ($scope.StudentModel.Person.ParentMobile1 == null || $scope.StudentModel.Person.ParentMobile1 == "" || $scope.StudentModel.Person.ParentMobile1.length > 15) {
-            $scope.IsError = "Number cannot be null";
-            $scope.growltext("ParentMobile1 cannot be null", true);
-            return false;
-        }
+        //if ($scope.StudentModel.Person.ParentMobile1 == null || $scope.StudentModel.Person.ParentMobile1 == "" || $scope.StudentModel.Person.ParentMobile1.length > 15) {
+        //    $scope.IsError = "Number cannot be null";
+        //    $scope.growltext("ParentMobile1 cannot be null", true);
+        //    return false;
+        //}
         if ($scope.StudentModel.Person.ParentEmergencyName == null || $scope.StudentModel.Person.ParentEmergencyName == "" || $scope.StudentModel.Person.ParentEmergencyName.length > 100) {
             $scope.IsError = "Name cannot be null";
             $scope.growltext("ParentName cannot be null", true);
@@ -190,6 +190,11 @@
         if ($scope.StudentModel.Person.ParentEmergencyMobile == null || $scope.StudentModel.Person.ParentEmergencyMobile == "" || $scope.StudentModel.Person.ParentEmergencyMobile.length > 15) {
             $scope.IsError = "Number cannot be null";
             $scope.growltext("ParentEmergencyMobile cannot be null", true);
+            return false;
+        }
+        if ($scope.StudentModel.MonthlyFee == null || $scope.StudentModel.MonthlyFee == "" ) {
+            $scope.IsError = "MonthlyFee cannot be null";
+            $scope.growltext("Monthly Fee cannot be null", true);
             return false;
         }
         return true;

@@ -26,9 +26,9 @@ namespace SMS.API.Controllers
         #region SMS Section
         [HttpGet]
         [Route("Get")]
-        public IHttpActionResult Get(int pageNumber = 1, int pageSize = 10)
+        public IHttpActionResult Get(string searchString = "", int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(_lessonplanService.Get(pageNumber, pageSize));
+            return Ok(_lessonplanService.Get(searchString,pageNumber, pageSize));
         }
 
         [HttpGet]
